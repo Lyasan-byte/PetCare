@@ -1,0 +1,29 @@
+# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# GoogleService-Info (contains API keys - DO NOT COMMIT!)
+GoogleService-Info.plist
+
+# Environment files
+.env
+
+# macOS
+.DS_Store
