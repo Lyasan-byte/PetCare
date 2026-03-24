@@ -14,6 +14,9 @@
 		3CA09EDC2F7324DE008800BC /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDB2F7324DE008800BC /* FirebaseFirestoreCombine-Community */; };
 		3CA09EDE2F7324DE008800BC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDD2F7324DE008800BC /* FirebaseStorage */; };
 		3CA09EE02F7324DE008800BC /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDF2F7324DE008800BC /* FirebaseStorageCombine-Community */; };
+		B97BED0A2F72AEC5008C382F /* SwiftGenCLI in Frameworks */ = {isa = PBXBuildFile; productRef = B97BED092F72AEC5008C382F /* SwiftGenCLI */; };
+		B97BED0C2F72AEC5008C382F /* SwiftGenKit in Frameworks */ = {isa = PBXBuildFile; productRef = B97BED0B2F72AEC5008C382F /* SwiftGenKit */; };
+		B97BED0E2F72AEC5008C382F /* swiftgen in Frameworks */ = {isa = PBXBuildFile; productRef = B97BED0D2F72AEC5008C382F /* swiftgen */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,10 +51,13 @@
 			files = (
 				3CA09ED42F7324DE008800BC /* FirebaseAnalytics in Frameworks */,
 				3CA09EE02F7324DE008800BC /* FirebaseStorageCombine-Community in Frameworks */,
+				B97BED0A2F72AEC5008C382F /* SwiftGenCLI in Frameworks */,
 				3CA09EDA2F7324DE008800BC /* FirebaseFirestore in Frameworks */,
 				3CA09ED82F7324DE008800BC /* FirebaseAuthCombine-Community in Frameworks */,
 				3CA09EDC2F7324DE008800BC /* FirebaseFirestoreCombine-Community in Frameworks */,
 				3CA09ED62F7324DE008800BC /* FirebaseAuth in Frameworks */,
+				B97BED0E2F72AEC5008C382F /* swiftgen in Frameworks */,
+				B97BED0C2F72AEC5008C382F /* SwiftGenKit in Frameworks */,
 				3CA09EDE2F7324DE008800BC /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,6 +108,9 @@
 				3CA09EDB2F7324DE008800BC /* FirebaseFirestoreCombine-Community */,
 				3CA09EDD2F7324DE008800BC /* FirebaseStorage */,
 				3CA09EDF2F7324DE008800BC /* FirebaseStorageCombine-Community */,
+				B97BED092F72AEC5008C382F /* SwiftGenCLI */,
+				B97BED0B2F72AEC5008C382F /* SwiftGenKit */,
+				B97BED0D2F72AEC5008C382F /* swiftgen */,
 			);
 			productName = PetCare;
 			productReference = B9420F042F72945A00ED997A /* PetCare.app */;
@@ -133,6 +142,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				3CA09ED22F7324DE008800BC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B97BED082F72AEC5008C382F /* XCRemoteSwiftPackageReference "SwiftGen" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9420F052F72945A00ED997A /* Products */;
@@ -382,6 +392,14 @@
 				minimumVersion = 12.11.0;
 			};
 		};
+		B97BED082F72AEC5008C382F /* XCRemoteSwiftPackageReference "SwiftGen" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftGen/SwiftGen.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.6.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -419,6 +437,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3CA09ED22F7324DE008800BC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		B97BED092F72AEC5008C382F /* SwiftGenCLI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B97BED082F72AEC5008C382F /* XCRemoteSwiftPackageReference "SwiftGen" */;
+			productName = SwiftGenCLI;
+		};
+		B97BED0B2F72AEC5008C382F /* SwiftGenKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B97BED082F72AEC5008C382F /* XCRemoteSwiftPackageReference "SwiftGen" */;
+			productName = SwiftGenKit;
+		};
+		B97BED0D2F72AEC5008C382F /* swiftgen */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B97BED082F72AEC5008C382F /* XCRemoteSwiftPackageReference "SwiftGen" */;
+			productName = swiftgen;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
