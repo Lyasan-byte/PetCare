@@ -85,6 +85,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9420F1A2F72945A00ED997A /* Build configuration list for PBXNativeTarget "PetCare" */;
 			buildPhases = (
+				3C1EF8FA2F74A47B004A9D33 /* ShellScript */,
 				B9420F002F72945A00ED997A /* Sources */,
 				B9420F012F72945A00ED997A /* Frameworks */,
 				B9420F022F72945A00ED997A /* Resources */,
@@ -159,6 +160,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C1EF8FA2F74A47B004A9D33 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftgen >/dev/null; then\n  swiftgen config run --config \"${SRCROOT}/swiftgen.yml\"\nelse\n  echo \"warning: SwiftGen not installed. Install: brew install swiftgen\" >&2\nfi\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B9420F002F72945A00ED997A /* Sources */ = {
