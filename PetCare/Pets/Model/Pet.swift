@@ -25,7 +25,7 @@ enum PetIconStatus {
         case .sparkle:
             Asset.petPurple.color
         case .star:
-            Asset.petPink.color
+            Asset.petGray.color
         }
     }
 }
