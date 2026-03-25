@@ -1,0 +1,42 @@
+//
+//  swiftgen.yml
+//  PetCare
+//
+//  Created by Ляйсан on 25/3/26.
+//
+
+# Откуда брать исходные файлы
+input_dir: ${PROJECT_DIR}/PetCare/Resources/
+
+# Куда сохранять сгенерированные файлы
+# (ставим в DerivedData, чтобы не засорять репозиторий)
+output_dir: ${DERIVED_SOURCES_DIR}
+
+# Настройка для цветов из Assets
+xcassets:
+  inputs:
+    - Assets.xcassets
+  outputs:
+    - templateName: swift6
+      output: Assets+Generated.swift
+      params:
+        enumName: Asset
+        publicAccess: true
+
+# Настройка для локализации
+strings:
+  inputs:
+    - en.lproj/Localizable.strings
+  outputs:
+    - templateName: structured-swift6
+      output: Strings+Generated.swift
+
+# Настройка для шрифтов (если есть)
+fonts:
+  inputs:
+    - Fonts
+  outputs:
+    - templateName: swift6
+      output: Fonts+Generated.swift
+      params:
+        enumName: CustomFont
