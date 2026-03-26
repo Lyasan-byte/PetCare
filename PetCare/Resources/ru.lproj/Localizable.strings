@@ -5,3 +5,30 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
+"auth.login.nav_title" = "Вход";
+"auth.login.title" = "С возвращением";
+"auth.login.subtitle" = "Войдите с помощью почты и пароля или продолжите через Google";
+"auth.login.button" = "Войти";
+"auth.login.switch_to_register" = "Нет аккаунта? Зарегистрироваться";
+
+"auth.register.nav_title" = "Регистрация";
+"auth.register.title" = "Создать аккаунт";
+"auth.register.subtitle" = "Зарегистрируйтесь с помощью почты и пароля или продолжите через Google";
+"auth.register.button" = "Зарегистрироваться";
+"auth.register.switch_to_login" = "Уже есть аккаунт? Войти";
+
+"auth.email.placeholder" = "Почта";
+"auth.password.placeholder" = "Пароль";
+"auth.confirm_password.placeholder" = "Повторите пароль";
+"auth.google.button" = "Продолжить через Google";
+
+"auth.validation.fill_all_fields" = "Пожалуйста, заполните все поля";
+"auth.validation.passwords_not_match" = "Пароли не совпадают";
+"auth.validation.password_too_short" = "Пароль должен содержать минимум 6 символов";
+
+"error.common.try_again" = "Что-то пошло не так. Попробуйте еще раз";
+"error.google.clientId.missing" = "Не найден Google client ID";
+"error.google.token.missing" = "Не найден Google token";
+
+"common.error" = "Ошибка";
+"common.ok" = "ОК";

@@ -5,3 +5,30 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
+"auth.login.nav_title" = "Login";
+"auth.login.title" = "Welcome back";
+"auth.login.subtitle" = "Sign in with your email and password or continue with Google";
+"auth.login.button" = "Login";
+"auth.login.switch_to_register" = "Don't have an account? Register";
+
+"auth.register.nav_title" = "Register";
+"auth.register.title" = "Create account";
+"auth.register.subtitle" = "Register with your email and password or continue with Google";
+"auth.register.button" = "Register";
+"auth.register.switch_to_login" = "Already have an account? Login";
+
+"auth.email.placeholder" = "Email";
+"auth.password.placeholder" = "Password";
+"auth.confirm_password.placeholder" = "Confirm password";
+"auth.google.button" = "Continue with Google";
+
+"auth.validation.fill_all_fields" = "Please fill in all fields";
+"auth.validation.passwords_not_match" = "Passwords do not match";
+"auth.validation.password_too_short" = "Password must contain at least 6 characters";
+
+"error.common.try_again" = "Something went wrong. Please try again";
+"error.google.clientId.missing" = "Google client ID is missing";
+"error.google.token.missing" = "Google token is missing";
+
+"common.error" = "Error";
+"common.ok" = "OK";
