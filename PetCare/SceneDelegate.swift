@@ -15,7 +15,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         self.window = UIWindow(windowScene: scene)
-        self.window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        
+        let authService = FirebaseAuthService()
+        let googleService = GoogleSignInService()
+        let onOpenRegister = {}
+        let onAuthorized = {}
+        let loginViewModel = LoginViewModel(
+            authService: authService,
+            googleService: googleService,
+            onOpenRegister: onOpenRegister,
+            onAuthorized: onAuthorized
+        )
+        let loginVC = LoginViewController(viewModel: loginViewModel)
+        self.window?.rootViewController = UINavigationController(rootViewController: loginVC)
+        
         self.window?.makeKeyAndVisible()
     }
 
@@ -52,4 +65,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-

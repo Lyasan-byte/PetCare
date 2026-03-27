@@ -5,7 +5,6 @@
 //  Created by Artur Bagautdinov on 26.03.2026.
 //
 
-import Foundation
 import UIKit
 import Combine
 
@@ -47,16 +46,16 @@ final class LoginViewModel: ViewModel {
         case .onDidLoad:
             updateContent()
 
-        case .emailChanged(let email):
-            self.email = email
+        case .emailChanged(let value):
+            email = value
             updateContent()
 
-        case .passwordChanged(let password):
-            self.password = password
+        case .passwordChanged(let value):
+            password = value
             updateContent()
 
         case .loginTapped:
-            signIn()
+            login()
 
         case .googleTapped:
             signInWithGoogle()
@@ -84,7 +83,7 @@ final class LoginViewModel: ViewModel {
         !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
-    private func signIn() {
+    private func login() {
         guard isValidCredentials else {
             state = .error(NSLocalizedString("auth.validation.fill_all_fields", comment: ""))
             updateContent()
@@ -107,7 +106,7 @@ final class LoginViewModel: ViewModel {
     }
 
     private func signInWithGoogle() {
-        guard let presentingViewController else {
+        guard let vc = presentingViewController else {
             state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             updateContent()
             return
@@ -115,7 +114,7 @@ final class LoginViewModel: ViewModel {
 
         updateContent(isLoading: true)
 
-        googleService.signIn(presentingViewController: presentingViewController) { [weak self] result in
+        googleService.signIn(presentingViewController: vc) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
@@ -128,4 +127,3 @@ final class LoginViewModel: ViewModel {
         }
     }
 }
-
