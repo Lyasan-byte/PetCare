@@ -29,3 +29,6 @@
 "common.error" = "Ошибка";
 "common.ok" = "ОК";
 "error.common.try_again" = "Что-то пошло не так. Попробуйте еще раз";
+
+"error.google.clientId.missing" = "Конфигурация Google входа отсутствует.";
+"error.google.token.missing" = "Не удалось получить Google ID токен.";

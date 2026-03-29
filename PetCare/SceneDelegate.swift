@@ -10,26 +10,13 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private let appCoordinator = AppCoordinator()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         
-        self.window = UIWindow(windowScene: scene)
-        
-        let authService = FirebaseAuthService()
-        let googleService = GoogleSignInService()
-        let onOpenRegister = {}
-        let onAuthorized = {}
-        let loginViewModel = LoginViewModel(
-            authService: authService,
-            googleService: googleService,
-            onOpenRegister: onOpenRegister,
-            onAuthorized: onAuthorized
-        )
-        let loginVC = LoginViewController(viewModel: loginViewModel)
-        self.window?.rootViewController = UINavigationController(rootViewController: loginVC)
-        
-        self.window?.makeKeyAndVisible()
+        appCoordinator.start(scene)
+        window = appCoordinator.window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -65,3 +52,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
+

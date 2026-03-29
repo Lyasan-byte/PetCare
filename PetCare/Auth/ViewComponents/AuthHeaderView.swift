@@ -64,7 +64,7 @@ final class AuthHeaderView: UIView {
 
         let contentStack = UIStackView(arrangedSubviews: [brandStack, titleStack])
         contentStack.axis = .vertical
-        contentStack.spacing = 36
+        contentStack.spacing = 44
         contentStack.alignment = .center
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 

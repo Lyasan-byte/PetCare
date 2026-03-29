@@ -11,8 +11,8 @@ enum RegisterIntent {
     case onDidLoad
     case emailChanged(String)
     case passwordChanged(String)
-    case confirmPasswordChanged(String)
     case registerTapped
     case googleTapped
     case loginTapped
 }
+

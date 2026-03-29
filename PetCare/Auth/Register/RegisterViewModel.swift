@@ -25,7 +25,6 @@ final class RegisterViewModel: ViewModel {
 
     private var email = ""
     private var password = ""
-    private var confirmPassword = ""
 
     init(
         authService: AuthServiceProtocol,
@@ -48,16 +47,12 @@ final class RegisterViewModel: ViewModel {
         case .onDidLoad:
             updateContent()
 
-        case .emailChanged(let email):
-            self.email = email
+        case .emailChanged(let value):
+            email = value
             updateContent()
 
-        case .passwordChanged(let password):
-            self.password = password
-            updateContent()
-
-        case .confirmPasswordChanged(let confirmPassword):
-            self.confirmPassword = confirmPassword
+        case .passwordChanged(let value):
+            password = value
             updateContent()
 
         case .registerTapped:
@@ -78,7 +73,6 @@ final class RegisterViewModel: ViewModel {
                 subtitle: NSLocalizedString("auth.register.subtitle", comment: ""),
                 email: email,
                 password: password,
-                confirmPassword: confirmPassword,
                 isRegisterEnabled: isValidCredentials && !isLoading,
                 isLoading: isLoading
             )
@@ -88,20 +82,12 @@ final class RegisterViewModel: ViewModel {
     private var isValidCredentials: Bool {
         !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        password == confirmPassword &&
         password.count >= 6
     }
 
     private func register() {
-        guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
+        guard !email.isEmpty, !password.isEmpty else {
             state = .error(NSLocalizedString("auth.validation.fill_all_fields", comment: ""))
-            updateContent()
-            return
-        }
-
-        guard password == confirmPassword else {
-            state = .error(NSLocalizedString("auth.validation.passwords_not_match", comment: ""))
             updateContent()
             return
         }
@@ -128,7 +114,7 @@ final class RegisterViewModel: ViewModel {
     }
 
     private func signInWithGoogle() {
-        guard let presentingViewController else {
+        guard let vc = presentingViewController else {
             state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             updateContent()
             return
@@ -136,7 +122,7 @@ final class RegisterViewModel: ViewModel {
 
         updateContent(isLoading: true)
 
-        googleService.signIn(presentingViewController: presentingViewController) { [weak self] result in
+        googleService.signIn(presentingViewController: vc) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
@@ -149,4 +135,3 @@ final class RegisterViewModel: ViewModel {
         }
     }
 }
-

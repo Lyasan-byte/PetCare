@@ -1,14 +1,14 @@
 //
-//  LoginView.swift
+//  RegisterView.swift
 //  PetCare
 //
-//  Created by Artur Bagautdinov on 27.03.2026.
+//  Created by Artur Bagautdinov on 28.03.2026.
 //
 
 import Foundation
 import UIKit
 
-final class LoginView: UIView {
+final class RegisterView: UIView {
 
     let headerView = AuthHeaderView()
     let emailFieldView = AuthTextFieldView(
@@ -21,13 +21,13 @@ final class LoginView: UIView {
         isSecure: true
     )
 
-    let loginButton = UIButton(type: .system)
+    let registerButton = UIButton(type: .system)
     let dividerView = AuthDividerView()
     let googleButton = UIButton(type: .system)
     let switchButton = UIButton(type: .system)
     let switchWrapperView = UIView()
     let activityIndicator = UIActivityIndicatorView(style: .medium)
-    
+
     let switchContainerView = UIStackView()
     let switchTitleLabel = UILabel()
 
@@ -49,14 +49,14 @@ final class LoginView: UIView {
         headerView.configure(title: title, subtitle: subtitle)
     }
 
-    func setLoginButtonEnabled(_ isEnabled: Bool) {
-        loginButton.isEnabled = isEnabled
-        loginButton.alpha = isEnabled ? 1 : 0.7
+    func setRegisterButtonEnabled(_ isEnabled: Bool) {
+        registerButton.isEnabled = isEnabled
+        registerButton.alpha = isEnabled ? 1 : 0.7
     }
 
     func setLoading(_ isLoading: Bool) {
         isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-        loginButton.isEnabled = !isLoading
+        registerButton.isEnabled = !isLoading
         googleButton.isEnabled = !isLoading
         switchButton.isEnabled = !isLoading
     }
@@ -112,17 +112,17 @@ final class LoginView: UIView {
             UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
         )
 
-        loginButton.configuration = .filled()
-        loginButton.configuration?.title = NSLocalizedString("auth.login.button", comment: "")
-        loginButton.configuration?.image = arrowImage
-        loginButton.configuration?.imagePlacement = .trailing
-        loginButton.configuration?.imagePadding = 8
-        loginButton.configuration?.cornerStyle = .capsule
-        loginButton.configuration?.baseBackgroundColor = Asset.accentColor.color
-        loginButton.configuration?.baseForegroundColor = .white
-        loginButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-        loginButton.layer.cornerRadius = 28
-        loginButton.clipsToBounds = true
+        registerButton.configuration = .filled()
+        registerButton.configuration?.title = NSLocalizedString("auth.register.button", comment: "")
+        registerButton.configuration?.image = arrowImage
+        registerButton.configuration?.imagePlacement = .trailing
+        registerButton.configuration?.imagePadding = 8
+        registerButton.configuration?.cornerStyle = .capsule
+        registerButton.configuration?.baseBackgroundColor = Asset.accentColor.color
+        registerButton.configuration?.baseForegroundColor = .white
+        registerButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        registerButton.layer.cornerRadius = 28
+        registerButton.clipsToBounds = true
 
         dividerView.configure(text: NSLocalizedString("auth.or", comment: ""))
 
@@ -136,20 +136,20 @@ final class LoginView: UIView {
         googleButton.setTitle(NSLocalizedString("auth.google.button", comment: ""), for: .normal)
         googleButton.setTitleColor(.label, for: .normal)
         googleButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-        
+
         let googleImage = UIImage(named: "google_icon")
         let resizedImage = googleImage?.preparingThumbnail(of: CGSize(width: 20, height: 20))
-        
+
         googleButton.configuration?.image = resizedImage
         googleButton.tintColor = nil
         googleButton.semanticContentAttribute = .forceLeftToRight
         googleButton.imageView?.contentMode = .scaleAspectFit
 
-        switchTitleLabel.text = NSLocalizedString("auth.login.switch_prefix", comment: "")
+        switchTitleLabel.text = NSLocalizedString("auth.register.switch_prefix", comment: "")
         switchTitleLabel.textColor = Asset.petGray.color
         switchTitleLabel.font = .systemFont(ofSize: 14, weight: .regular)
 
-        switchButton.setTitle(NSLocalizedString("auth.login.switch_action", comment: ""), for: .normal)
+        switchButton.setTitle(NSLocalizedString("auth.register.switch_action", comment: ""), for: .normal)
         switchButton.setTitleColor(Asset.accentColor.color, for: .normal)
         switchButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
 
@@ -160,9 +160,9 @@ final class LoginView: UIView {
         switchContainerView.translatesAutoresizingMaskIntoConstraints = false
         switchContainerView.addArrangedSubview(switchTitleLabel)
         switchContainerView.addArrangedSubview(switchButton)
-        switchContainerView.translatesAutoresizingMaskIntoConstraints = false
+
         switchWrapperView.addSubview(switchContainerView)
-        
+
         switchTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
         switchTitleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
@@ -172,14 +172,13 @@ final class LoginView: UIView {
         switchContainerView.setContentHuggingPriority(.required, for: .horizontal)
         switchContainerView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = Asset.accentColor.color
 
         let fieldsStack = UIStackView(arrangedSubviews: [
             emailFieldView,
             passwordFieldView,
-            loginButton,
+            registerButton,
             dividerView,
             googleButton,
             switchWrapperView,
@@ -196,14 +195,14 @@ final class LoginView: UIView {
             fieldsStack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 24),
             fieldsStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -24),
             fieldsStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -24),
-            
+
             switchContainerView.centerXAnchor.constraint(equalTo: switchWrapperView.centerXAnchor),
             switchContainerView.topAnchor.constraint(equalTo: switchWrapperView.topAnchor),
             switchContainerView.bottomAnchor.constraint(equalTo: switchWrapperView.bottomAnchor),
 
             emailFieldView.heightAnchor.constraint(equalToConstant: 80),
             passwordFieldView.heightAnchor.constraint(equalToConstant: 80),
-            loginButton.heightAnchor.constraint(equalToConstant: 52),
+            registerButton.heightAnchor.constraint(equalToConstant: 52),
             googleButton.heightAnchor.constraint(equalToConstant: 52)
         ])
     }

@@ -33,3 +33,6 @@
 "common.error" = "Error";
 "common.ok" = "OK";
 "error.common.try_again" = "Something went wrong. Please try again";
+
+"error.google.clientId.missing" = "Google Sign-In configuration is missing.";
+"error.google.token.missing" = "Failed to obtain Google ID token.";
