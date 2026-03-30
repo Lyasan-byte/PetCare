@@ -21,12 +21,13 @@ final class CircleIconView: UIView {
     }
     
     convenience init(
-        symbolName: String = "star",
-        iconColor: UIColor = Asset.pinkAccent.color,
-        circleColor: UIColor = Asset.petPink.color,
+        symbolName: String = "heart",
+        iconColor: UIColor = Asset.accentColor.color,
+        circleColor: UIColor = Asset.petGreen.color,
         circleSize: CGFloat = 50,
         iconSize: CGFloat = 35,
-        weight: UIImage.SymbolWeight = .regular
+        weight: UIImage.SymbolWeight = .regular,
+        shadowColor: UIColor = .clear
     ) {
         self.init(frame: .zero)
         configure(
@@ -35,7 +36,8 @@ final class CircleIconView: UIView {
             circleColor: circleColor,
             circleSize: circleSize,
             iconSize: iconSize,
-            weight: weight
+            weight: weight,
+            shadowColor: shadowColor
         )
     }
     
@@ -74,13 +76,18 @@ final class CircleIconView: UIView {
         circleColor: UIColor,
         circleSize: CGFloat,
         iconSize: CGFloat,
-        weight: UIImage.SymbolWeight = .regular
+        weight: UIImage.SymbolWeight = .regular,
+        shadowColor: UIColor = .clear
     ) {
         let config = UIImage.SymbolConfiguration(pointSize: iconSize, weight: weight)
         imageView.image = UIImage(systemName: symbolName, withConfiguration: config)
         imageView.tintColor = iconColor
         
         backgroundColor = circleColor
+        layer.shadowColor = shadowColor.cgColor
+        layer.shadowOpacity = 0.3
+        layer.shadowOffset = CGSize(width: 0, height: 5)
+        layer.shadowRadius = 10
         
         widthConstraint?.constant = circleSize
         heightConstraint?.constant = circleSize

@@ -27,14 +27,20 @@ final class PetFormCoordinator: Coordinator {
     }
     
     func start(mode: PetFormMode) {
-        let viewController = PetFormViewController(petFormViewModel: PetFormViewModel(petRepository: petRepository, mode: mode))
-        
+        let viewController = PetFormViewController(
+            petFormViewModel: PetFormViewModel(
+                petRepository: petRepository,
+                mode: mode
+            )
+        )
         viewController.onFinish = { [weak self] result in
-            self?.onFinish?(result)
-            
-            self?.navigationController.popViewController(animated: true)
+            guard let self else { return }
+
+            self.onFinish?(result)
+
+            self.navigationController.popViewController(animated: true)
         }
-        
+
         navigationController.pushViewController(viewController, animated: true)
     }
 }

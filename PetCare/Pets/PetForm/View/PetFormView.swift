@@ -16,7 +16,7 @@ final class PetFormView: UIView {
     let petIconStatusPicker = PetIconStatusPicker()
     let petNameTextField = TextFieldView(title: "PET NAME", placeholder: "Cooper")
     
-    let petBreedTextField = TextFieldView(title: "BREED", placeholder: "Golden Retriever")
+    let petBreedTextField = TextFieldView(title: "BREED", placeholder: "Golden Retriever", autocorrectionType: .default)
     let petWeightTextField = TextFieldView(title: "WEIGHT (KG)", placeholder: "28.5", keyboardType: .decimalPad)
     private lazy var petInfoStack = HStack(spacing: 10, arrangedSubviews: [petBreedTextField, petWeightTextField])
     
@@ -75,9 +75,7 @@ final class PetFormView: UIView {
             contentStack.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -16),
             contentStack.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -16),
             
-            petIconStatusPicker.heightAnchor.constraint(equalToConstant: 90),
-            saveButton.heightAnchor.constraint(equalToConstant: 52),
-            deleteButton.heightAnchor.constraint(equalToConstant: 52)
+            petIconStatusPicker.heightAnchor.constraint(equalToConstant: 90)
         ])
     }
     

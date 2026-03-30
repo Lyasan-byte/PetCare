@@ -65,7 +65,9 @@ struct Pet: Identifiable, Codable, Equatable {
         case gameScore = "game_score"
         case iconStatus = "icon_status"
     }
+}
 
+extension Pet {
     var ageText: String {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: dateOfBirth, to: Date())

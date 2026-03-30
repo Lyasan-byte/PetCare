@@ -13,5 +13,4 @@ enum PetsMainIntent {
     case onAddPetTap
     case onPetTap(Pet)
     case refreshPets
-    
 }

@@ -20,11 +20,11 @@ final class PetCardRowView: UIView {
     var petStatusView = CircleIconView()
     
     lazy var imageStack = VStack(arrangedSubviews: [petImageView, petStatusView])
-    lazy var petInfoStack = VStack(arrangedSubviews: [petNameLabel, petBreedLabel])
+    lazy var petInfoStack = VStack(spacing: 10, arrangedSubviews: [petNameLabel, petBreedLabel])
     
     var petImageContainer = BackgroundView(backgroundColor: .clear, cornerRadius: 0)
     var petNameLabel = TextLabel(font: .systemFont(ofSize: 16, weight: .bold), textAlignment: .left)
-    var petBreedLabel = TextLabel(font: .systemFont(ofSize: 12, weight: .medium), textColor: .gray, textAlignment: .left)
+    var petBreedLabel = TextLabel(font: .systemFont(ofSize: 12, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,10 +68,9 @@ final class PetCardRowView: UIView {
             petImageView.trailingAnchor.constraint(equalTo: petImageContainer.trailingAnchor),
             petImageView.bottomAnchor.constraint(equalTo: petImageContainer.bottomAnchor),
             
-            petStatusView.bottomAnchor.constraint(equalTo: petImageContainer.bottomAnchor, constant: 0),
-            petStatusView.trailingAnchor.constraint(equalTo: petImageContainer.trailingAnchor),
-            petStatusView.widthAnchor.constraint(equalToConstant: 20),
-            petStatusView.heightAnchor.constraint(equalToConstant: 20)
+            petStatusView.bottomAnchor.constraint(equalTo: petImageContainer.bottomAnchor, constant: -5),
+            petStatusView.trailingAnchor.constraint(equalTo: petImageContainer.trailingAnchor, constant: -5),
+
         ])
     }
     
@@ -79,7 +78,8 @@ final class PetCardRowView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         petImageView.image = UIImage(named: "defaultProfilePhoto")
         petNameLabel.text = pet.name
-        petBreedLabel.text = pet.breed
+        petBreedLabel.text = "\(pet.breed) • \(pet.ageText)"
+        petStatusView.configure(status: pet.iconStatus, circleSize: 22, iconSize: 10)
     }
     
     required init?(coder: NSCoder) {

@@ -25,6 +25,7 @@ final class PrimaryButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 26
         titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        heightAnchor.constraint(equalToConstant: 52).isActive = true
         addTarget(self, action: #selector(didButtonTap), for: .touchUpInside)
     }
     

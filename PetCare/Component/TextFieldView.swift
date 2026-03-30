@@ -12,7 +12,7 @@ final class TextFieldView: UIView {
     
     private let background = BackgroundView(backgroundColor: Asset.petLightGray.color, cornerRadius: 28)
     
-    let textFieldTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
+    private let textFieldTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
     var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter text"
@@ -27,11 +27,12 @@ final class TextFieldView: UIView {
         configure()
     }
     
-    convenience init(title: String, placeholder: String, keyboardType: UIKeyboardType = .default) {
+    convenience init(title: String, placeholder: String, keyboardType: UIKeyboardType = .default, autocorrectionType: UITextAutocorrectionType = .no) {
         self.init(frame: .zero)
         textFieldTitle.text = title
         textField.placeholder = placeholder
         textField.keyboardType = keyboardType
+        textField.autocorrectionType = autocorrectionType
     }
     
     @objc private func textDidChange() {

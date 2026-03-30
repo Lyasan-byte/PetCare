@@ -26,7 +26,7 @@ final class TabBarController: UITabBarController {
         petsNavigationController.tabBarItem.image = UIImage(systemName: "pawprint.fill")
         petsNavigationController.tabBarItem.title = nil
 
-        let publicPetsViewController = UIViewController()
+        let publicPetsViewController = PetProfileViewController()
         let navPublicPetsViewController = setupTabBatItem(for: publicPetsViewController, image: "globe.americas.fill")
         
         let gameViewController = UIViewController()

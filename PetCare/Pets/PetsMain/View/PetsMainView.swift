@@ -19,7 +19,7 @@ final class PetsMainView: UIView {
     private let petsHeader = PetsViewHeader()
     private let quickActionsButtonsHeader = QuickActionButtonsHeader()
     private let quickActionButtonsCollection = QuickActionButtonsCollectionView()
-    let addPetButton = CircleIconView(symbolName: "plus", iconColor: .white, circleColor: Asset.accentColor.color, circleSize: 52, iconSize: 18, weight: .medium)
+    let addPetButton = CircleIconView(symbolName: "plus", iconColor: .white, circleColor: Asset.accentColor.color, circleSize: 52, iconSize: 18, weight: .medium, shadowColor: Asset.accentColor.color)
     private let petTableViewTitle = PetsTableViewTitle()
     
     let tip = TipView()
@@ -80,7 +80,7 @@ final class PetsMainView: UIView {
             petsTableView.topAnchor.constraint(equalTo: petTableViewTitle.bottomAnchor, constant: 10),
             petsTableView.leadingAnchor.constraint(equalTo: viewContainer.leadingAnchor, constant: 16),
             petsTableView.trailingAnchor.constraint(equalTo: viewContainer.trailingAnchor, constant: -16),
-            petsTableView.bottomAnchor.constraint(equalTo: viewContainer.bottomAnchor, constant: -16),
+            petsTableView.bottomAnchor.constraint(equalTo: viewContainer.bottomAnchor),
             
             addPetButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             addPetButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
