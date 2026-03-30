@@ -5,3 +5,34 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
+"auth.login.title" = "Login";
+"auth.login.subtitle" = "Welcome back!";
+"auth.login.button" = "Login";
+"auth.login.switch_to_register" = "Don't have an account? Register";
+"auth.register.switch_prefix" = "Already have an account?";
+"auth.register.switch_action" = "Login";
+
+"auth.register.title" = "Register";
+"auth.register.subtitle" = "Join our family!";
+"auth.register.button" = "Register";
+"auth.register.switch_to_login" = "Already have an account? Login";
+"auth.login.switch_prefix" = "Don't have an account?";
+"auth.login.switch_action" = "Register";
+
+"auth.email.title" = "EMAIL";
+"auth.email.placeholder" = "hello@petcare.com";
+"auth.password.title" = "PASSWORD";
+"auth.password.placeholder" = "••••••••";
+
+"auth.google.button" = "Continue with Google";
+"auth.or" = "OR";
+
+"auth.validation.fill_all_fields" = "Please fill in all fields";
+"auth.validation.password_too_short" = "Password must contain at least 6 characters";
+
+"common.error" = "Error";
+"common.ok" = "OK";
+"error.common.try_again" = "Something went wrong. Please try again";
+
+"error.google.clientId.missing" = "Google Sign-In configuration is missing.";
+"error.google.token.missing" = "Failed to obtain Google ID token.";

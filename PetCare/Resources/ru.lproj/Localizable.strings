@@ -5,3 +5,30 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
+"auth.login.title" = "Вход";
+"auth.login.subtitle" = "С возвращением!";
+"auth.login.button" = "Войти";
+"auth.login.switch_to_register" = "Нет аккаунта? Зарегистрироваться";
+
+"auth.register.title" = "Регистрация";
+"auth.register.subtitle" = "Присоединяйтесь к нашей семье!";
+"auth.register.button" = "Зарегистрироваться";
+"auth.register.switch_to_login" = "Уже есть аккаунт? Войти";
+
+"auth.email.title" = "ПОЧТА";
+"auth.email.placeholder" = "hello@petcare.com";
+"auth.password.title" = "ПАРОЛЬ";
+"auth.password.placeholder" = "••••••••";
+
+"auth.google.button" = "Продолжить через Google";
+"auth.or" = "ИЛИ";
+
+"auth.validation.fill_all_fields" = "Пожалуйста, заполните все поля";
+"auth.validation.password_too_short" = "Пароль должен содержать минимум 6 символов";
+
+"common.error" = "Ошибка";
+"common.ok" = "ОК";
+"error.common.try_again" = "Что-то пошло не так. Попробуйте еще раз";
+
+"error.google.clientId.missing" = "Конфигурация Google входа отсутствует.";
+"error.google.token.missing" = "Не удалось получить Google ID токен.";

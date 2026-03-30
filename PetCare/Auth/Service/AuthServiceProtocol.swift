@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import UIKit
+
+protocol AuthServiceProtocol {
+    func signIn(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func register(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func signInWithGoogle(presentingViewController: UIViewController, completion: @escaping (Result<Void, Error>) -> Void)
+}
