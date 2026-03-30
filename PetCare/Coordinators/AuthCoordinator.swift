@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol Coordinator: AnyObject {
+protocol AuthCoordinatorProtocol: AnyObject {
     var navigationController: UINavigationController { get }
     func start()
 }

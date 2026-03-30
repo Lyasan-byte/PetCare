@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class AuthCoordinator: Coordinator {
+final class AuthCoordinator: AuthCoordinatorProtocol {
 
     var navigationController: UINavigationController
     weak var output: AuthFlowOutput?
