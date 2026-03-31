@@ -27,6 +27,7 @@ final class CircleIconView: UIView {
         circleSize: CGFloat = 50,
         iconSize: CGFloat = 35,
         weight: UIImage.SymbolWeight = .regular,
+        borderColor: UIColor = .clear,
         shadowColor: UIColor = .clear
     ) {
         self.init(frame: .zero)
@@ -77,6 +78,7 @@ final class CircleIconView: UIView {
         circleSize: CGFloat,
         iconSize: CGFloat,
         weight: UIImage.SymbolWeight = .regular,
+        borderColor: UIColor = .clear,
         shadowColor: UIColor = .clear
     ) {
         let config = UIImage.SymbolConfiguration(pointSize: iconSize, weight: weight)
@@ -88,6 +90,8 @@ final class CircleIconView: UIView {
         layer.shadowOpacity = 0.3
         layer.shadowOffset = CGSize(width: 0, height: 5)
         layer.shadowRadius = 10
+        layer.borderColor = borderColor.cgColor
+        layer.borderWidth = 1.5
         
         widthConstraint?.constant = circleSize
         heightConstraint?.constant = circleSize

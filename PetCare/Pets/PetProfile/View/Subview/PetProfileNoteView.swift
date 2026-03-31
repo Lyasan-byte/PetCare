@@ -9,13 +9,13 @@ import UIKit
 
 final class PetProfileNoteView: UIView {
     private let backgroundView = BackgroundView(backgroundColor: Asset.lightPurple.color)
-    private let title = TextLabel(font: .systemFont(ofSize: 13, weight: .semibold), text: "FEATURES / NOTES", textColor: Asset.purpleAccent.color, textAlignment: .left)
+    private let title = TextLabel(font: .systemFont(ofSize: 11, weight: .semibold), text: "FEATURES / NOTES", textColor: Asset.purpleAccent.color, textAlignment: .left)
     
     private var noteText: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .clear
         textView.textColor = Asset.purpleAccent.color
-        textView.font = .systemFont(ofSize: 14.5, weight: .regular)
+        textView.font = .systemFont(ofSize: 13, weight: .regular)
         textView.isEditable = false
         textView.isScrollEnabled = true
         textView.showsVerticalScrollIndicator = false

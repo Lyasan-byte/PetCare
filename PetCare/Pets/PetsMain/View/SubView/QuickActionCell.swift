@@ -87,7 +87,7 @@ enum QuickActionCellType: CaseIterable {
     var color: UIColor {
         switch self {
         case .walk:
-            Asset.accentColor.color
+            Asset.primaryGreen.color
         case .grooming:
             Asset.purpleAccent.color
         case .vet:
@@ -98,11 +98,11 @@ enum QuickActionCellType: CaseIterable {
     var backgroundColor: UIColor {
         switch self {
         case .walk:
-            Asset.petGreen.color
+            Asset.petGreenAction.color
         case .grooming:
-            Asset.petPurple.color
+            Asset.petPurpleAction.color
         case .vet:
-            Asset.petPink.color
+            Asset.petPinkAction.color
         }
     }
 }

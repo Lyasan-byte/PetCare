@@ -15,6 +15,7 @@ final class PetIconStatusPicker: UIView {
     private lazy var petStatusCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(section: createSection()))
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.backgroundColor = .clear
         collection.dataSource = self
         collection.delegate = self
         collection.register(PetIconStatusCollectionViewCell.self, forCellWithReuseIdentifier: PetIconStatusCollectionViewCell.identifier)
@@ -22,7 +23,7 @@ final class PetIconStatusPicker: UIView {
     }()
     
     private let statuses = PetIconStatus.allCases
-    private var selectedStatus: PetIconStatus = PetIconStatus.heart
+    private var selectedStatus: PetIconStatus = PetIconStatus.none
     
     override init(frame: CGRect) {
         super.init(frame: frame)

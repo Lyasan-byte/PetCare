@@ -8,7 +8,7 @@
 import UIKit
 
 final class PetCardRowView: UIView {
-    var background = BackgroundView()
+    var background = BackgroundView(backgroundColor: .tertiarySystemBackground)
     lazy var hstack = HStack(spacing: 20, alignment: .top, arrangedSubviews: [petImageContainer, petInfoStack])
     
     var petImageView: UIImageView = {
@@ -69,8 +69,7 @@ final class PetCardRowView: UIView {
             petImageView.bottomAnchor.constraint(equalTo: petImageContainer.bottomAnchor),
             
             petStatusView.bottomAnchor.constraint(equalTo: petImageContainer.bottomAnchor, constant: -5),
-            petStatusView.trailingAnchor.constraint(equalTo: petImageContainer.trailingAnchor, constant: -5),
-
+            petStatusView.trailingAnchor.constraint(equalTo: petImageContainer.trailingAnchor),
         ])
     }
     

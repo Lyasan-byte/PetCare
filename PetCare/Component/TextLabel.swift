@@ -17,7 +17,7 @@ final class TextLabel: UILabel {
     convenience init(
         font: UIFont = .systemFont(ofSize: 21, weight: .bold),
         text: String = "",
-        textColor: UIColor = .black,
+        textColor: UIColor = .label,
         textAlignment: NSTextAlignment = .center
     ) {
         self.init(frame: .zero)

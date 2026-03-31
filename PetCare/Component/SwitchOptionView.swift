@@ -9,7 +9,7 @@ import UIKit
 
 final class SwitchOptionView: UIView {
     var onSwitchChange: ((Bool) -> Void)?
-    private let background = BackgroundView(backgroundColor: Asset.petLightGray.color)
+    private let background = BackgroundView(backgroundColor: .quaternarySystemFill)
     
     let icon = CircleIconView()
     

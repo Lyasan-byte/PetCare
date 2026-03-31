@@ -8,19 +8,20 @@
 import UIKit
 
 final class PetProfileView: UIView {
+    private let scrollView = ScrollView()
     private let petCardView = PetProfileCardView()
     
     private let petNoteView = PetProfileNoteView()
     
     let createActivityButton = PrimaryButton(title: "Create Activity")
     
-    let editButton = PetProfileButton(text: "Edit Profile", image: "pencil", textColor: .black, backgroundColor: Asset.petGray.color.withAlphaComponent(0.3))
-    let analyticsButton = PetProfileButton(text: "Analytics", image: "chart.bar.fill", textColor: Asset.pinkAccent.color, backgroundColor: Asset.petPink.color.withAlphaComponent(0.7))
+    let editButton = PetProfileButton(text: "Edit Profile", image: "pencil", textColor: .label, backgroundColor: .tertiarySystemBackground)
+    let analyticsButton = PetProfileButton(text: "Analytics", image: "chart.bar.fill", textColor: Asset.pinkAccent.color, backgroundColor: Asset.lightPink.color)
     private lazy var buttonsStack = HStack(spacing: 10, alignment: .center, distribution: .fillEqually, arrangedSubviews: [editButton, analyticsButton])
     
     private lazy var buttonsContainer = VStack(spacing: 16, arrangedSubviews: [createActivityButton, buttonsStack])
     
-    private lazy var viewContainer = VStack(spacing: 30, arrangedSubviews: [petCardView, petNoteView, buttonsContainer])
+    private lazy var scrollContent = VStack(spacing: 30, arrangedSubviews: [petCardView, petNoteView])
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,18 +34,32 @@ final class PetProfileView: UIView {
         self.init(frame: .zero)
     }
     
+    func setPetData(_ pet: Pet) {
+        petCardView.configure(pet: pet)
+    }
+    
     private func setupHierarchy() {
-        addSubview(viewContainer)
+        addSubview(scrollView)
+        addSubview(buttonsContainer)
+        scrollView.addSubview(scrollContent)
     }
     
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            viewContainer.topAnchor.constraint(equalTo: topAnchor),
-            viewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            viewContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-            viewContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+            buttonsContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            buttonsContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            buttonsContainer.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
-//            createActivityButton.topAnchor.constraint(equalTo: petNoteView.bottomAnchor, constant: 16)
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: buttonsContainer.topAnchor, constant: -16),
+            
+            scrollContent.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            scrollContent.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            scrollContent.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            scrollContent.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            scrollContent.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
     }
     

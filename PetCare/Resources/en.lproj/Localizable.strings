@@ -5,6 +5,7 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
+// MARK: - Auth
 "auth.login.title" = "Login";
 "auth.login.subtitle" = "Welcome back!";
 "auth.login.button" = "Login";
@@ -36,3 +37,6 @@
 
 "error.google.clientId.missing" = "Google Sign-In configuration is missing.";
 "error.google.token.missing" = "Failed to obtain Google ID token.";
+
+
+// MARK: - Pets Main View

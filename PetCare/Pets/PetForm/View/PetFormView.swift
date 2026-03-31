@@ -8,7 +8,7 @@
 import UIKit
 
 final class PetFormView: UIView {
-    private let background = BackgroundView(backgroundColor: .white)
+    private let background = BackgroundView(backgroundColor: .tertiarySystemBackground)
     private let scrollView = ScrollView()
     private let scrollContentView = UIView()
     
@@ -27,7 +27,7 @@ final class PetFormView: UIView {
     private lazy var genderStack = VStack(spacing: 10, arrangedSubviews: [genderPickerTitle, petGenderPicker])
     
     let noteTextView = NoteTextView()
-    let isPublicProfileSwitch = SwitchOptionView(title: "Public Profile", subtitle: "Visible to local pet owners.", symbolName: "globe.americas.fill", iconColor: .black, circleColor: Asset.lightPink.color, circleSize: 45, iconSize: 20)
+    let isPublicProfileSwitch = SwitchOptionView(title: "Public Profile", subtitle: "Visible to local pet owners.", symbolName: "globe.americas.fill", iconColor: Asset.pinkAccent.color, circleColor: Asset.lightPink.color, circleSize: 45, iconSize: 20)
     let saveButton = PrimaryButton(title: "Save Changes")
     let deleteButton = PrimaryButton(title: "Delete Profile", backgroundColor: Asset.lightRed.color, textColor: Asset.redAccent.color)
     
