@@ -20,7 +20,7 @@ final class PetsMainView: UIView {
     private let quickActionsButtonsHeader = QuickActionButtonsHeader()
     private let quickActionButtonsCollection = QuickActionButtonsCollectionView()
     let addPetButton = CircleIconView(symbolName: "plus", iconColor: .white, circleColor: Asset.accentColor.color, circleSize: 52, iconSize: 18, weight: .medium, shadowColor: Asset.accentColor.color)
-    private let petTableViewTitle = PetsTableViewTitle()
+    private let petTableViewTitle = TextLabel(text: "Your Family", textAlignment: .left)
     
     let tip = TipView()
     

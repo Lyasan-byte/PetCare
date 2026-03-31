@@ -32,8 +32,8 @@ final class PetsMainCoordinator: Coordinator {
                 self?.showAddPetView(petsMainViewModel: petsMainViewModel)
             case .showQuickAction(_):
                  break
-            case .showPet(_):
-                 break
+            case .showPet(let pet):
+                self?.showPet(pet, petsMainViewModel: petsMainViewModel)
             case .showError(_):
                  break
             }
@@ -51,18 +51,35 @@ final class PetsMainCoordinator: Coordinator {
             switch result {
             case .saved(_):
                 petsMainViewModel?.trigger(.refreshPets)
-            case .closed:
-                break
             case .deleted:
-                break
+                petsMainViewModel?.trigger(.refreshPets)
+            case .closed: break
             }
-                        
             if let petFormCoordinator {
                 self?.removeChildCoordinator(petFormCoordinator)
             }
         }
-        
         petFormCoordinator.showCreate(ownerId: ownerId)
+    }
+    
+    private func showPet(_ pet: Pet, petsMainViewModel: PetsMainViewModel?) {
+        let petProfileCoordinator = PetProfileCoordinator(navigationController: navigationController, petRepository: petRepository, pet: pet)
+        
+        childCoordinators.append(petProfileCoordinator)
+        petProfileCoordinator.onFinish = { [weak self, weak petsMainViewModel, weak petProfileCoordinator] result in
+            switch result {
+            case .updated:
+                petsMainViewModel?.trigger(.refreshPets)
+            case .deleted:
+                petsMainViewModel?.trigger(.refreshPets)
+            case .closed:
+                break
+            }
+            if let petProfileCoordinator {
+                self?.removeChildCoordinator(petProfileCoordinator)
+            }
+        }
+        petProfileCoordinator.start()
     }
     
     private func removeChildCoordinator(_ coordinator: Coordinator) {

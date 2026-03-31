@@ -8,6 +8,7 @@
 import UIKit
 
 enum PetIconStatus: String, Codable, CaseIterable {
+    case none
     case heart
     case sparkle
     case star
@@ -16,6 +17,8 @@ enum PetIconStatus: String, Codable, CaseIterable {
 extension PetIconStatus {
     var icon: String {
         switch self {
+        case .none:
+            "xmark"
         case .heart:
             "heart.fill"
         case .sparkle:
@@ -27,17 +30,21 @@ extension PetIconStatus {
     
     var iconColor: UIColor {
         switch self {
+        case .none:
+            Asset.redAccent.color
         case .heart:
             Asset.accentColor.color
         case .sparkle:
-            Asset.purpleAccent.color
+            Asset.purpleAccentStatus.color
         case .star:
-            Asset.pinkAccent.color
+            Asset.pinkAccentStatus.color
         }
     }
     
     var backgroundColor: UIColor {
         switch self {
+        case .none:
+            Asset.lightRed.color
         case .heart:
             Asset.petGreen.color
         case .sparkle:

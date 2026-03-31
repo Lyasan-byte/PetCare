@@ -43,7 +43,7 @@ final class PetsMainViewController: UIViewController {
             petsMainView.topAnchor.constraint(equalTo: view.topAnchor),
             petsMainView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             petsMainView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            petsMainView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            petsMainView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     

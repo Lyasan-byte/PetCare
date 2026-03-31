@@ -9,13 +9,14 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private var petsMainCoordinator: PetsMainCoordinator?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
     }
     
     private func setupTabs() {
+
         let petsNavigationController = UINavigationController()
         let petsMainCoordinator = PetsMainCoordinator(navigationController: petsNavigationController, petRepository: PetService(), tipRepository: TipService(), ownerId: "test_owner_id")
         self.petsMainCoordinator = petsMainCoordinator
@@ -26,7 +27,7 @@ final class TabBarController: UITabBarController {
         petsNavigationController.tabBarItem.image = UIImage(systemName: "pawprint.fill")
         petsNavigationController.tabBarItem.title = nil
 
-        let publicPetsViewController = PetProfileViewController()
+        let publicPetsViewController = UIViewController()
         let navPublicPetsViewController = setupTabBatItem(for: publicPetsViewController, image: "globe.americas.fill")
         
         let gameViewController = UIViewController()

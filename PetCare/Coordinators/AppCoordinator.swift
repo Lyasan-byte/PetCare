@@ -56,9 +56,6 @@ final class AppCoordinator {
         }
 
         authCoordinator = nil
-//        let rootVC = UIViewController()
-//        rootVC.view.backgroundColor = .systemBackground
-//        rootVC.title = "Home"
         let nav = TabBarController()
         window?.rootViewController = nav
         window?.makeKeyAndVisible()

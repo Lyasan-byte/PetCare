@@ -8,12 +8,12 @@
 import UIKit
 
 final class PetProfileCardView: UIView {
-    var backgroundView = BackgroundView(backgroundColor: Asset.petGray.color.withAlphaComponent(0.2))
+    var backgroundView = BackgroundView(backgroundColor: .tertiarySystemBackground)
     var petImage: UIImageView = {
         let image = ImageView(contentMode: .scaleAspectFill)
         image.layer.cornerRadius = 48
         image.layer.borderWidth = 8
-        image.layer.borderColor = UIColor.white.cgColor
+        image.layer.borderColor = UIColor.secondarySystemFill.cgColor
         return image
     }()
     var petStatus = CircleIconView()
@@ -23,7 +23,7 @@ final class PetProfileCardView: UIView {
     lazy var petNameStack = HStack(spacing: 10, alignment: .center, arrangedSubviews: [petNameLabel, isOPenProfileStatus])
     
     var petNameLabel = TextLabel(font: .systemFont(ofSize: 34, weight: .bold))
-    var isOPenProfileStatus = CircleIconView(symbolName: "globe.americas.fill", circleSize: 25, iconSize: 15)
+    var isOPenProfileStatus = CircleIconView(symbolName: "globe.americas.fill", circleSize: 30, iconSize: 20)
     
     var petBreedLabel = TextLabel(font: .systemFont(ofSize: 11, weight: .semibold), textColor: Asset.accentColor.color)
     
@@ -65,18 +65,18 @@ final class PetProfileCardView: UIView {
             backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            imageContainer.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+            imageContainer.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 16),
             imageContainer.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            imageContainer.widthAnchor.constraint(equalToConstant: 176),
-            imageContainer.heightAnchor.constraint(equalToConstant: 176),
+            imageContainer.widthAnchor.constraint(equalToConstant: 160),
+            imageContainer.heightAnchor.constraint(equalToConstant: 160),
             
             petImage.topAnchor.constraint(equalTo: imageContainer.topAnchor),
             petImage.leadingAnchor.constraint(equalTo: imageContainer.leadingAnchor),
             petImage.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             petImage.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
             
-            petStatus.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
-            petStatus.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
+            petStatus.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: 5),
+            petStatus.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
             
             petNameStack.topAnchor.constraint(equalTo: petImage.bottomAnchor, constant: 20),
             petNameStack.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
@@ -101,7 +101,7 @@ final class PetProfileCardView: UIView {
         ])
     }
         
-    private func configure(pet: Pet) {
+    func configure(pet: Pet) {
         petImage.image = UIImage(named: "defaulProfilePhoto")
         petNameLabel.text = pet.name
         petBreedLabel.text = pet.breed.uppercased()
@@ -109,7 +109,7 @@ final class PetProfileCardView: UIView {
         petWeightInfo.setData(info: "Weight: \(pet.weight) kg")
         petGenderInfo.setData(info: "Gender: \(pet.gender.rawValue.capitalized)")
         
-        petStatus.configure(status: pet.iconStatus, circleSize: 40, iconSize: 25)
+        petStatus.configure(status: pet.iconStatus, circleSize: 35, iconSize: 18)
         
         isOPenProfileStatus.isHidden = !pet.isPublic
     }
