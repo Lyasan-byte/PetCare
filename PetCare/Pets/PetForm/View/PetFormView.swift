@@ -14,22 +14,23 @@ final class PetFormView: UIView {
     
     let photoPickerView = PetImagePickerView()
     let petIconStatusPicker = PetIconStatusPicker()
-    let petNameTextField = TextFieldView(title: "PET NAME", placeholder: "Cooper")
-    
-    let petBreedTextField = TextFieldView(title: "BREED", placeholder: "Golden Retriever", autocorrectionType: .default)
-    let petWeightTextField = TextFieldView(title: "WEIGHT (KG)", placeholder: "28.5", keyboardType: .decimalPad)
+    let petNameTextField = TextFieldView(title: L10n.Pets.Form.Name.title, placeholder: L10n.Pets.Form.Name.placeholder)
+
+    let petBreedTextField = TextFieldView(title: L10n.Pets.Form.Breed.title, placeholder: L10n.Pets.Form.Breed.placeholder, autocorrectionType: .default)
+    let petWeightTextField = TextFieldView(title: L10n.Pets.Form.Weight.title, placeholder: L10n.Pets.Form.Weight.placeholder, keyboardType: .decimalPad)
+
     private lazy var petInfoStack = HStack(spacing: 10, arrangedSubviews: [petBreedTextField, petWeightTextField])
     
-    let petDateOfBirthPicker = DatePickerView(title: "DATE OF BIRTH")
+    let petDateOfBirthPicker = DatePickerView(title: L10n.Pets.Form.BirthDate.title)
     
-    private let genderPickerTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), text: "GENDER", textColor: Asset.petGray.color, textAlignment: .left)
+    private let genderPickerTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), text: L10n.Pets.Form.Gender.title, textColor: Asset.petGray.color, textAlignment: .left)
     let petGenderPicker = SegmentedPickerView(items: Gender.allCases.map(\.rawValue))
     private lazy var genderStack = VStack(spacing: 10, arrangedSubviews: [genderPickerTitle, petGenderPicker])
     
     let noteTextView = NoteTextView()
-    let isPublicProfileSwitch = SwitchOptionView(title: "Public Profile", subtitle: "Visible to local pet owners.", symbolName: "globe.americas.fill", iconColor: Asset.pinkAccent.color, circleColor: Asset.lightPink.color, circleSize: 45, iconSize: 20)
-    let saveButton = PrimaryButton(title: "Save Changes")
-    let deleteButton = PrimaryButton(title: "Delete Profile", backgroundColor: Asset.lightRed.color, textColor: Asset.redAccent.color)
+    let isPublicProfileSwitch = SwitchOptionView(title: L10n.Pets.Form.PublicProfile.title, subtitle: L10n.Pets.Form.PublicProfile.subtitle, symbolName: "globe.americas.fill", iconColor: Asset.pinkAccent.color, circleColor: Asset.lightPink.color, circleSize: 45, iconSize: 20)
+    let saveButton = PrimaryButton(title: L10n.Pets.Form.saveButton)
+    let deleteButton = PrimaryButton(title: L10n.Pets.Form.deleteButton, backgroundColor: Asset.lightRed.color, textColor: Asset.redAccent.color)
     
     private lazy var contentStack = VStack(spacing: 16, arrangedSubviews: [photoPickerView, petIconStatusPicker, petNameTextField, petInfoStack, petDateOfBirthPicker, genderStack, noteTextView, isPublicProfileSwitch,
         saveButton, deleteButton])

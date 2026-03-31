@@ -39,4 +39,62 @@
 "error.google.token.missing" = "Failed to obtain Google ID token.";
 
 
-// MARK: - Pets Main View
+// MARK: - Pets
+
+"pets.form.note.title" = "FEATURES / NOTES";
+"pets.form.icon_picker.title" = "SELECT ICON";
+"pets.form.photo_picker.title" = "Change Profile Photo";
+
+"pets.form.name.title" = "PET NAME";
+"pets.form.name.placeholder" = "Cooper";
+
+"pets.form.breed.title" = "BREED";
+"pets.form.breed.placeholder" = "Golden Retriever";
+
+"pets.form.weight.title" = "WEIGHT (KG)";
+"pets.form.weight.placeholder" = "28.5";
+
+"pets.form.birth_date.title" = "DATE OF BIRTH";
+
+"pets.form.gender.title" = "GENDER";
+
+"pets.form.public_profile.title" = "Public Profile";
+"pets.form.public_profile.subtitle" = "Visible to local pet owners.";
+
+"pets.form.save_button" = "Save Changes";
+"pets.form.delete_button" = "Delete Profile";
+
+"pets.form.validation.enter_pet_name" = "Enter pet name";
+"pets.form.validation.enter_breed" = "Enter breed";
+"pets.form.validation.enter_weight" = "Enter weight";
+"pets.form.validation.weight_greater_than_zero" = "Weight must be greater than 0";
+"pets.form.validation.check_form_fields" = "Please check the form fields.";
+
+"pets.profile.age" = "Age";
+"pets.profile.weight" = "Weight";
+"pets.profile.gender" = "Gender";
+"pets.profile.weight_unit_kg" = "kg";
+
+"pets.profile.note_title" = "FEATURES / NOTES";
+
+"pets.profile.create_activity_button" = "Create Activity";
+"pets.profile.edit_button" = "Edit Profile";
+"pets.profile.analytics_button" = "Analytics";
+
+"pets.main.title" = "My Pets";
+
+"pets.main.quick_actions.title" = "Quick Actions";
+"pets.main.quick_actions.subtitle" = "CREATE ACTIVITY";
+
+"pets.main.quick_actions.walk" = "Walk";
+"pets.main.quick_actions.grooming" = "Grooming";
+"pets.main.quick_actions.vet" = "Vet";
+
+"pets.main.family_title" = "Your Family";
+"pets.main.empty_state.title" = "No Pets";
+"pets.main.empty_state.subtitle" = "Tap the plus button to add your first friend.";
+
+"pets.main.tip.default_text" = "Movement is medicine! Daily walks and playtime prevent boredom, reduce destructive behavior, and keep your pet’s body and mind sharp.";
+
+"pets.main.tip.title" = "Pet Health Tip";
+

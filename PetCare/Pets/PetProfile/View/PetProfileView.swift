@@ -13,10 +13,10 @@ final class PetProfileView: UIView {
     
     private let petNoteView = PetProfileNoteView()
     
-    let createActivityButton = PrimaryButton(title: "Create Activity")
+    let createActivityButton = PrimaryButton(title: L10n.Pets.Profile.createActivityButton)
     
-    let editButton = PetProfileButton(text: "Edit Profile", image: "pencil", textColor: .label, backgroundColor: .tertiarySystemBackground)
-    let analyticsButton = PetProfileButton(text: "Analytics", image: "chart.bar.fill", textColor: Asset.pinkAccent.color, backgroundColor: Asset.lightPink.color)
+    let editButton = PetProfileButton(text:  L10n.Pets.Profile.editButton, image: "pencil", textColor: .label, backgroundColor: .tertiarySystemBackground)
+    let analyticsButton = PetProfileButton(text: L10n.Pets.Profile.analyticsButton, image: "chart.bar.fill", textColor: Asset.pinkAccent.color, backgroundColor: Asset.lightPink.color)
     private lazy var buttonsStack = HStack(spacing: 10, alignment: .center, distribution: .fillEqually, arrangedSubviews: [editButton, analyticsButton])
     
     private lazy var buttonsContainer = VStack(spacing: 16, arrangedSubviews: [createActivityButton, buttonsStack])

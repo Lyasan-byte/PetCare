@@ -5,15 +5,20 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
+// MARK: - Auth
 "auth.login.title" = "Вход";
 "auth.login.subtitle" = "С возвращением!";
 "auth.login.button" = "Войти";
 "auth.login.switch_to_register" = "Нет аккаунта? Зарегистрироваться";
+"auth.register.switch_prefix" = "Уже есть аккаунт?";
+"auth.register.switch_action" = "Войти";
 
 "auth.register.title" = "Регистрация";
 "auth.register.subtitle" = "Присоединяйтесь к нашей семье!";
 "auth.register.button" = "Зарегистрироваться";
 "auth.register.switch_to_login" = "Уже есть аккаунт? Войти";
+"auth.login.switch_prefix" = "Нет аккаунта?";
+"auth.login.switch_action" = "Зарегистрироваться";
 
 "auth.email.title" = "ПОЧТА";
 "auth.email.placeholder" = "hello@petcare.com";
@@ -32,3 +37,63 @@
 
 "error.google.clientId.missing" = "Конфигурация Google входа отсутствует.";
 "error.google.token.missing" = "Не удалось получить Google ID токен.";
+
+
+// MARK: - Pets
+
+"pets.form.note.title" = "ОСОБЕННОСТИ / ЗАМЕТКИ";
+"pets.form.icon_picker.title" = "ВЫБЕРИТЕ ИКОНКУ";
+"pets.form.photo_picker.title" = "Изменить фото профиля";
+
+"pets.form.name.title" = "ИМЯ ПИТОМЦА";
+"pets.form.name.placeholder" = "Купер";
+
+"pets.form.breed.title" = "ПОРОДА";
+"pets.form.breed.placeholder" = "Золотистый ретривер";
+
+"pets.form.weight.title" = "ВЕС (КГ)";
+"pets.form.weight.placeholder" = "28.5";
+
+"pets.form.birth_date.title" = "ДАТА РОЖДЕНИЯ";
+
+"pets.form.gender.title" = "ПОЛ";
+
+"pets.form.public_profile.title" = "Публичный профиль";
+"pets.form.public_profile.subtitle" = "Виден местным владельцам питомцев.";
+
+"pets.form.save_button" = "Сохранить изменения";
+"pets.form.delete_button" = "Удалить профиль";
+
+"pets.form.validation.enter_pet_name" = "Введите имя питомца";
+"pets.form.validation.enter_breed" = "Введите породу";
+"pets.form.validation.enter_weight" = "Введите вес";
+"pets.form.validation.weight_greater_than_zero" = "Вес должен быть больше 0";
+"pets.form.validation.check_form_fields" = "Пожалуйста, проверьте поля формы.";
+
+"pets.profile.age" = "Возраст";
+"pets.profile.weight" = "Вес";
+"pets.profile.gender" = "Пол";
+"pets.profile.weight_unit_kg" = "кг";
+
+"pets.profile.note_title" = "ОСОБЕННОСТИ / ЗАМЕТКИ";
+
+"pets.profile.create_activity_button" = "Создать активность";
+"pets.profile.edit_button" = "Редактировать профиль";
+"pets.profile.analytics_button" = "Аналитика";
+
+"pets.main.title" = "Мои питомцы";
+
+"pets.main.quick_actions.title" = "Быстрые действия";
+"pets.main.quick_actions.subtitle" = "СОЗДАТЬ АКТИВНОСТЬ";
+
+"pets.main.quick_actions.walk" = "Прогулка";
+"pets.main.quick_actions.grooming" = "Груминг";
+"pets.main.quick_actions.vet" = "Вет";
+
+"pets.main.family_title" = "Ваша семья";
+"pets.main.empty_state.title" = "Нет питомцев";
+"pets.main.empty_state.subtitle" = "Нажмите на кнопку плюс, чтобы добавить своего первого друга.";
+
+"pets.main.tip.default_text" = "Движение — это здоровье! Ежедневные прогулки и игры предотвращают скуку, уменьшают деструктивное поведение и поддерживают тело и ум питомца в тонусе.";
+
+"pets.main.tip.title" = "Совет по здоровью питомца";

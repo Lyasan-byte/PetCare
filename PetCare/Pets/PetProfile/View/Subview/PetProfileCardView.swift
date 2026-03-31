@@ -11,9 +11,7 @@ final class PetProfileCardView: UIView {
     var backgroundView = BackgroundView(backgroundColor: .tertiarySystemBackground)
     var petImage: UIImageView = {
         let image = ImageView(contentMode: .scaleAspectFill)
-        image.layer.cornerRadius = 48
-        image.layer.borderWidth = 8
-        image.layer.borderColor = UIColor.secondarySystemFill.cgColor
+        image.layer.cornerRadius = 80
         return image
     }()
     var petStatus = CircleIconView()
@@ -75,8 +73,8 @@ final class PetProfileCardView: UIView {
             petImage.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             petImage.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
             
-            petStatus.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: 5),
-            petStatus.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
+            petStatus.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: -8),
+            petStatus.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             
             petNameStack.topAnchor.constraint(equalTo: petImage.bottomAnchor, constant: 20),
             petNameStack.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
@@ -102,14 +100,16 @@ final class PetProfileCardView: UIView {
     }
         
     func configure(pet: Pet) {
-        petImage.image = UIImage(named: "defaulProfilePhoto")
+        petImage.image = UIImage(named: "defaultProfilePhoto")
         petNameLabel.text = pet.name
         petBreedLabel.text = pet.breed.uppercased()
-        petAgeInfo.setData(info: "Age: \(pet.ageText)")
-        petWeightInfo.setData(info: "Weight: \(pet.weight) kg")
-        petGenderInfo.setData(info: "Gender: \(pet.gender.rawValue.capitalized)")
+        
+        petAgeInfo.setData(info: "\(L10n.Pets.Profile.age): \(pet.ageText)")
+        petWeightInfo.setData(info: "\(L10n.Pets.Profile.weight): \(pet.weight) \(L10n.Pets.Profile.weightUnitKg)")
+        petGenderInfo.setData(info: "\(L10n.Pets.Profile.gender): \(pet.gender.rawValue.capitalized)")
         
         petStatus.configure(status: pet.iconStatus, circleSize: 35, iconSize: 18)
+        petStatus.isHidden = pet.iconStatus == .none
         
         isOPenProfileStatus.isHidden = !pet.isPublic
     }
@@ -118,6 +118,3 @@ final class PetProfileCardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
-

@@ -23,9 +23,9 @@ final class PetImagePickerView: UIView {
         return view
     }()
     
-    private var photoPickerIcon = CircleIconView(symbolName: "pencil", iconColor: .white, circleColor: Asset.accentColor.color, circleSize: 22, iconSize: 12, weight: .bold)
+    private var photoPickerIcon = CircleIconView(symbolName: "pencil", iconColor: .white, circleColor: Asset.primaryGreen.color, circleSize: 22, iconSize: 12, weight: .bold)
     
-    private let photoPickerTitle = TextLabel(font: .systemFont(ofSize: 13, weight: .semibold), text: "Change Profile Photo", textColor: Asset.petGray.color)
+    private let photoPickerTitle = TextLabel(font: .systemFont(ofSize: 13, weight: .semibold), text: L10n.Pets.Form.PhotoPicker.title, textColor: Asset.petGray.color)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,7 +58,7 @@ final class PetImagePickerView: UIView {
             imageView.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
 
-            photoPickerIcon.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -18),
+            photoPickerIcon.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -7),
             photoPickerIcon.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -5),
             
             photoPickerTitle.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),

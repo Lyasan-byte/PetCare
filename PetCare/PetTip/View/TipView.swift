@@ -47,7 +47,7 @@ final class TipView: UIView {
     
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
-        tipTitle.text = "Pet Health Tip"
+        tipTitle.text = L10n.Pets.Main.Tip.title
     }
     
     private func setupAction() {

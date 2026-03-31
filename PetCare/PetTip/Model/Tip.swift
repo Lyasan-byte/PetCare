@@ -14,5 +14,5 @@ struct Tip: Identifiable, Codable {
 }
 
 extension Tip {
-    static let defaultTip = "Movement is medicine! Daily walks and playtime prevent boredom, reduce destructive behavior, and keep your pet’s body and mind sharp."
+    static let defaultTip = L10n.Pets.Main.Tip.defaultText
 }

@@ -39,9 +39,5 @@ final class PetProfileViewModel: PetProfileViewModeling {
     
     private func getPetInfo(breed: String) {
         
-    }
-    
-   
-    
-    
+    }   
 }

@@ -33,7 +33,7 @@ extension PetIconStatus {
         case .none:
             Asset.redAccent.color
         case .heart:
-            Asset.accentColor.color
+            Asset.primaryGreen.color
         case .sparkle:
             Asset.purpleAccentStatus.color
         case .star:

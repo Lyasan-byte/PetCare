@@ -8,8 +8,8 @@
 import UIKit
 
 final class QuickActionButtonsHeader: UIView {
-    var quickActionsTitle = TextLabel(font: .systemFont(ofSize: 20, weight: .semibold), text: "Quick Actions")
-    var quickActionsSubtitle = TextLabel(font: .systemFont(ofSize: 10, weight: .medium), text: "CREATE ACTIVITY", textColor: .systemGray)
+    var quickActionsTitle = TextLabel(font: .systemFont(ofSize: 20, weight: .semibold), text: L10n.Pets.Main.QuickActions.title)
+    var quickActionsSubtitle = TextLabel(font: .systemFont(ofSize: 10, weight: .medium), text: L10n.Pets.Main.QuickActions.subtitle, textColor: .systemGray)
     
     lazy var quickActionsTitleStack: UIStackView = {
         let stack = HStack(spacing: 0, arrangedSubviews: [quickActionsTitle, quickActionsSubtitle])

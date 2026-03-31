@@ -30,11 +30,12 @@ final class PetFormViewModel: PetFormViewModeling {
         
         let petId: String
         switch mode {
-        case .create(_):
+        case .create:
             petId = petRepository.makeNewPetId()
         case .edit(let pet):
             petId = pet.id
         }
+        
         self.state = State(mode: mode, petId: petId)
     }
     
@@ -68,7 +69,7 @@ final class PetFormViewModel: PetFormViewModeling {
         case .onDelete:
             routeSubject.send(.showDeleteConfirmation)
         case .onConfirmDelete:
-           delete()
+            delete()
         }
     }
     
@@ -78,16 +79,16 @@ final class PetFormViewModel: PetFormViewModeling {
         let normalizedWeight = state.weightText
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: ",", with: ".")
-
-        state.nameError = trimmedName.isEmpty ? "Enter pet name" : nil
-        state.breedError = trimmedBreed.isEmpty ? "Enter breed" : nil
-
+        
+        state.nameError = trimmedName.isEmpty ? L10n.Pets.Form.Validation.enterPetName : nil
+        state.breedError = trimmedBreed.isEmpty ? L10n.Pets.Form.Validation.enterBreed : nil
+        
         if normalizedWeight.isEmpty {
-            state.weightError = "Enter weight"
+            state.weightError = L10n.Pets.Form.Validation.enterWeight
         } else if let value = Double(normalizedWeight), value > 0 {
             state.weightError = nil
         } else {
-            state.weightError = "Weight must be greater than 0"
+            state.weightError = L10n.Pets.Form.Validation.weightGreaterThanZero
         }
     }
     
@@ -96,7 +97,7 @@ final class PetFormViewModel: PetFormViewModeling {
         
         guard state.isSaveEnabled else { return }
         guard let pet = makePetFromState() else {
-            routeSubject.send(.showErrorAlert("Please check the form fields."))
+            routeSubject.send(.showErrorAlert(L10n.Pets.Form.Validation.checkFormFields))
             return
         }
         
@@ -107,6 +108,7 @@ final class PetFormViewModel: PetFormViewModeling {
             .sink { [weak self] completion in
                 guard let self else { return }
                 state.isSaving = false
+                
                 if case .failure(let error) = completion {
                     routeSubject.send(.showErrorAlert(error.localizedDescription))
                 }
@@ -118,11 +120,13 @@ final class PetFormViewModel: PetFormViewModeling {
     
     private func delete() {
         state.isSaving = true
+        
         petRepository.delete(petId: state.petId)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
                 self.state.isSaving = false
+                
                 if case .failure(let error) = completion {
                     self.routeSubject.send(.showErrorAlert(error.localizedDescription))
                 }
@@ -133,7 +137,10 @@ final class PetFormViewModel: PetFormViewModeling {
     }
     
     private func makePetFromState() -> Pet? {
-        let normalizedWeight = state.weightText.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: ",", with: ".")
+        let normalizedWeight = state.weightText
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: ",", with: ".")
+        
         guard let weight = Double(normalizedWeight), weight > 0 else { return nil }
         
         switch state.mode {
@@ -151,6 +158,7 @@ final class PetFormViewModel: PetFormViewModeling {
                 isPublic: state.isPublicProfile,
                 iconStatus: state.iconStatus
             )
+            
         case .edit(let pet):
             return Pet(
                 id: pet.id,

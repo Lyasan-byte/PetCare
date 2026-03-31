@@ -79,6 +79,7 @@ final class PetCardRowView: UIView {
         petNameLabel.text = pet.name
         petBreedLabel.text = "\(pet.breed) • \(pet.ageText)"
         petStatusView.configure(status: pet.iconStatus, circleSize: 22, iconSize: 10)
+        petStatusView.isHidden = pet.iconStatus == .none
     }
     
     required init?(coder: NSCoder) {

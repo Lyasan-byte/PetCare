@@ -14,7 +14,7 @@ final class ImageView: UIImageView {
         configure()
     }
     
-    convenience init(contentMode: UIView.ContentMode = .scaleAspectFit, tintColor: UIColor = Asset.primaryGreen.color) {
+    convenience init(contentMode: UIView.ContentMode = .scaleAspectFit, tintColor: UIColor = Asset.accentColor.color) {
         self.init(frame: .zero)
         self.contentMode = contentMode
         self.tintColor = tintColor

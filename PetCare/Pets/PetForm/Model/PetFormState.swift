@@ -68,7 +68,7 @@ struct PetFormState {
             self.dateOfBirth = Date()
             self.gender = .male
             self.note = ""
-            self.iconStatus = .heart
+            self.iconStatus = .none
             self.isPublicProfile = false
             self.existingPhotoUrl = nil
             self.selectedPhotoData = nil

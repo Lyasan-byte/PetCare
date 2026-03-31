@@ -18,7 +18,7 @@ final class DatePickerView: UIView {
         let imageView = UIImageView(
             image: UIImage(systemName: "calendar", withConfiguration: config)
         )
-        imageView.tintColor = Asset.primaryGreen.color
+        imageView.tintColor = Asset.accentColor.color
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
