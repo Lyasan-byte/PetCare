@@ -10,7 +10,7 @@ import UIKit
 final class PetIconStatusPicker: UIView {
     var onSelectStatus: ((PetIconStatus) -> Void)?
     
-    private let pickerTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), text: "SELECT ICON", textColor: Asset.petGray.color, textAlignment: .left)
+    private let pickerTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), text:  L10n.Pets.Form.IconPicker.title, textColor: Asset.petGray.color, textAlignment: .left)
     
     private lazy var petStatusCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(section: createSection()))

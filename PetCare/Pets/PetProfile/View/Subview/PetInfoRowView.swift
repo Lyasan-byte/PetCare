@@ -8,7 +8,7 @@
 import UIKit
 
 final class PetInfoRowView: UIView {
-    private let background = BackgroundView(backgroundColor: .quaternarySystemFill, cornerRadius: 19)
+    private let background = BackgroundView(backgroundColor: Asset.petLightGray.color, cornerRadius: 19)
     private let text = TextLabel(font: .systemFont(ofSize: 12.5, weight: .medium))
     
     override init(frame: CGRect) {

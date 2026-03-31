@@ -11,7 +11,7 @@ final class NoteTextView: UIView {
     var onNoteChange: ((String) -> Void)?
     
     private let background = BackgroundView(backgroundColor: Asset.petLightGray.color, cornerRadius: 28)
-    private let noteTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), text: "FEATURES / NOTES", textColor: Asset.petGray.color, textAlignment: .left)
+    private let noteTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), text: L10n.Pets.Form.Note.title, textColor: Asset.petGray.color, textAlignment: .left)
     
     let noteTextView: UITextView = {
         let textView = UITextView()

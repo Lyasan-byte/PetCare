@@ -12,15 +12,15 @@ final class PetsMainView: UIView {
     
     let loader = UIActivityIndicatorView()
     let petsTableView = PetsTableView()
-    private let emptyStateView = EmptyStateView(title: "No Pets", subtitle: "Tap the plus button to add your first friend.", image: "pawprint")
+    private let emptyStateView = EmptyStateView(title: L10n.Pets.Main.EmptyState.title, subtitle: L10n.Pets.Main.EmptyState.subtitle, image: "pawprint")
     
     private let viewContainer = UIView()
     
     private let petsHeader = PetsViewHeader()
     private let quickActionsButtonsHeader = QuickActionButtonsHeader()
     private let quickActionButtonsCollection = QuickActionButtonsCollectionView()
-    let addPetButton = CircleIconView(symbolName: "plus", iconColor: .white, circleColor: Asset.accentColor.color, circleSize: 52, iconSize: 18, weight: .medium, shadowColor: Asset.accentColor.color)
-    private let petTableViewTitle = TextLabel(text: "Your Family", textAlignment: .left)
+    let addPetButton = CircleIconView(symbolName: "plus", iconColor: .white, circleColor: Asset.primaryGreen.color, circleSize: 52, iconSize: 18, weight: .medium, shadowColor: Asset.accentColor.color)
+    private let petTableViewTitle = TextLabel(text: L10n.Pets.Main.familyTitle, textAlignment: .left)
     
     let tip = TipView()
     

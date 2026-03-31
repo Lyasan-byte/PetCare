@@ -22,7 +22,7 @@ final class CircleIconView: UIView {
     
     convenience init(
         symbolName: String = "heart",
-        iconColor: UIColor = Asset.accentColor.color,
+        iconColor: UIColor = Asset.primaryGreen.color,
         circleColor: UIColor = Asset.petGreen.color,
         circleSize: CGFloat = 50,
         iconSize: CGFloat = 35,

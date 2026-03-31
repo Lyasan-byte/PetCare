@@ -14,7 +14,7 @@ final class PetsViewHeader: UIView {
         return imageView
     }()
     
-    var screenTitle = TextLabel(font: .systemFont(ofSize: 24, weight: .semibold), text: "My Pets", textColor: Asset.primaryGreen.color, textAlignment: .left)
+    var screenTitle = TextLabel(font: .systemFont(ofSize: 24, weight: .semibold), text: L10n.Pets.Main.title, textColor: Asset.accentColor.color, textAlignment: .left)
     lazy var headerStack = HStack(spacing: 10, arrangedSubviews: [titleIcon, screenTitle])
     
     override init(frame: CGRect) {

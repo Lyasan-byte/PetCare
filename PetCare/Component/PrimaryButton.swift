@@ -14,7 +14,7 @@ final class PrimaryButton: UIButton {
         configure()
     }
     
-    convenience init(title: String, backgroundColor: UIColor = Asset.accentColor.color, textColor: UIColor = Asset.textGreen.color) {
+    convenience init(title: String, backgroundColor: UIColor = Asset.primaryGreen.color, textColor: UIColor = Asset.textGreen.color) {
         self.init(frame: .zero)
         setTitle(title, for: .normal)
         setTitleColor(textColor, for: .normal)

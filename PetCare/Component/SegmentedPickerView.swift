@@ -26,7 +26,7 @@ final class SegmentedPickerView: UISegmentedControl {
         addTarget(self, action: #selector(valueChanged), for: .valueChanged)
         
         setTitleTextAttributes([.foregroundColor : Asset.petGray.color], for: .normal)
-        setTitleTextAttributes([.foregroundColor : Asset.primaryGreen.color], for: .selected)
+        setTitleTextAttributes([.foregroundColor : Asset.accentColor.color], for: .selected)
     }
     
     func configureSegments(items: [String], selectedIndex: Int = 0) {
