@@ -10,7 +10,7 @@ import UIKit
 
 final class LoginView: UIView {
 
-    let headerView = AuthHeaderView()
+    private let containerView = AuthContainerView(headerBottomSpacing: -60)
     let emailFieldView = AuthTextFieldView(
         title: NSLocalizedString("auth.email.title", comment: ""),
         placeholder: NSLocalizedString("auth.email.placeholder", comment: "")
@@ -21,19 +21,15 @@ final class LoginView: UIView {
         isSecure: true
     )
 
-    let loginButton = UIButton(type: .system)
+    let loginButton = AuthPrimaryButton(title: NSLocalizedString("auth.login.button", comment: ""))
     let dividerView = AuthDividerView()
-    let googleButton = UIButton(type: .system)
+    let googleButton = AuthGoogleButton()
     let switchButton = UIButton(type: .system)
     let switchWrapperView = UIView()
     let activityIndicator = UIActivityIndicatorView(style: .medium)
     
     let switchContainerView = UIStackView()
     let switchTitleLabel = UILabel()
-
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
-    private let cardView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,8 +41,8 @@ final class LoginView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(title: String, subtitle: String) {
-        headerView.configure(title: title, subtitle: subtitle)
+    func configureHeaderView(title: String, subtitle: String) {
+        containerView.configureHeaderView(title: title, subtitle: subtitle)
     }
 
     func setLoginButtonEnabled(_ isEnabled: Bool) {
@@ -62,67 +58,28 @@ final class LoginView: UIView {
     }
 
     private func setup() {
-        backgroundColor = .systemGroupedBackground
-
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-
-        addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(headerView)
-        contentView.addSubview(cardView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(containerView)
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 24),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-
-            headerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
-            headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            headerView.bottomAnchor.constraint(equalTo: cardView.topAnchor, constant: -80),
-
-            cardView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 24),
-            cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            cardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            cardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-
-        cardView.backgroundColor = .white
-        cardView.layer.cornerRadius = 40
-        cardView.layer.shadowColor = UIColor.black.cgColor
-        cardView.layer.shadowOpacity = 0.06
-        cardView.layer.shadowRadius = 20
-        cardView.layer.shadowOffset = CGSize(width: 0, height: 10)
 
         setupCardContent()
     }
 
     private func setupCardContent() {
-        setupLoginButton()
         setupDividerView()
-        setupGoogleButton()
         setupSwitchSection()
         setupActivityIndicator()
 
         let fieldsStack = makeFieldsStack()
-        cardView.addSubview(fieldsStack)
+        containerView.addCardContentView(fieldsStack)
 
         NSLayoutConstraint.activate([
-            fieldsStack.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 24),
-            fieldsStack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 24),
-            fieldsStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -24),
-            fieldsStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -24),
-            
             switchContainerView.centerXAnchor.constraint(equalTo: switchWrapperView.centerXAnchor),
             switchContainerView.topAnchor.constraint(equalTo: switchWrapperView.topAnchor),
             switchContainerView.bottomAnchor.constraint(equalTo: switchWrapperView.bottomAnchor),
@@ -134,47 +91,8 @@ final class LoginView: UIView {
         ])
     }
 
-    private func setupLoginButton() {
-        let arrowImage = UIImage(systemName: "arrow.right")?.withConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
-        )
-
-        loginButton.configuration = .filled()
-        loginButton.configuration?.title = NSLocalizedString("auth.login.button", comment: "")
-        loginButton.configuration?.image = arrowImage
-        loginButton.configuration?.imagePlacement = .trailing
-        loginButton.configuration?.imagePadding = 8
-        loginButton.configuration?.cornerStyle = .capsule
-        loginButton.configuration?.baseBackgroundColor = Asset.accentColor.color
-        loginButton.configuration?.baseForegroundColor = .white
-        loginButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-        loginButton.layer.cornerRadius = 28
-        loginButton.clipsToBounds = true
-    }
-
     private func setupDividerView() {
         dividerView.configure(text: NSLocalizedString("auth.or", comment: ""))
-    }
-
-    private func setupGoogleButton() {
-        googleButton.configuration = .plain()
-        googleButton.backgroundColor = .white
-        googleButton.configuration?.cornerStyle = .capsule
-        googleButton.configuration?.imagePadding = 8
-        googleButton.layer.cornerRadius = 28
-        googleButton.layer.borderWidth = 1
-        googleButton.layer.borderColor = Asset.petGray.color.cgColor
-        googleButton.setTitle(NSLocalizedString("auth.google.button", comment: ""), for: .normal)
-        googleButton.setTitleColor(.label, for: .normal)
-        googleButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-
-        let googleImage = UIImage(named: "google_icon")
-        let resizedImage = googleImage?.preparingThumbnail(of: CGSize(width: 20, height: 20))
-
-        googleButton.configuration?.image = resizedImage
-        googleButton.tintColor = nil
-        googleButton.semanticContentAttribute = .forceLeftToRight
-        googleButton.imageView?.contentMode = .scaleAspectFit
     }
 
     private func setupSwitchSection() {

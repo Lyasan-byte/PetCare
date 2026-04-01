@@ -13,13 +13,16 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     var navigationController: UINavigationController
     weak var output: AuthFlowOutput?
     private var isSwipeBackEnabled = true
+    private let authRepository: AuthRepository
 
     init(
         navigationController: UINavigationController,
-        output: AuthFlowOutput? = nil
+        output: AuthFlowOutput? = nil,
+        authRepository: AuthRepository = FirebaseAuthService()
     ) {
         self.navigationController = navigationController
         self.output = output
+        self.authRepository = authRepository
     }
 
     func start() {
@@ -30,8 +33,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     private func makeLoginViewController() -> UIViewController {
         let viewModel = LoginViewModel(
-            authService: FirebaseAuthService(),
-            googleService: GoogleSignInService(),
+            authService: authRepository,
             moduleOutput: self
         )
 
@@ -40,8 +42,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
 
     private func makeRegisterViewController() -> UIViewController {
         let viewModel = RegisterViewModel(
-            authService: FirebaseAuthService(),
-            googleService: GoogleSignInService(),
+            authService: authRepository,
             moduleOutput: self
         )
 

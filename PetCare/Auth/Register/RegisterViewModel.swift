@@ -18,8 +18,7 @@ final class RegisterViewModel: RegisterViewModeling {
         }
     }
 
-    private let authService: AuthServiceProtocol
-    private let googleService: GoogleSignInService
+    private let authService: AuthRepository
     private weak var moduleOutput: RegisterModuleOutput?
 
     private weak var presentingViewController: UIViewController?
@@ -27,14 +26,13 @@ final class RegisterViewModel: RegisterViewModeling {
     private var email = ""
     private var password = ""
     private var confirmPassword = ""
+    private var bag = Set<AnyCancellable>()
 
     init(
-        authService: AuthServiceProtocol,
-        googleService: GoogleSignInService,
+        authService: AuthRepository,
         moduleOutput: RegisterModuleOutput?
     ) {
         self.authService = authService
-        self.googleService = googleService
         self.moduleOutput = moduleOutput
     }
 
@@ -113,17 +111,17 @@ final class RegisterViewModel: RegisterViewModeling {
 
         updateContent(isLoading: true)
 
-        authService.register(email: email, password: password) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    self?.moduleOutput?.moduleWantsToOpenMainScreen()
-                case .failure(let error):
+        authService.register(email: email, password: password)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()
                 }
+            } receiveValue: { [weak self] in
+                self?.moduleOutput?.moduleWantsToOpenMainScreen()
             }
-        }
+            .store(in: &bag)
     }
 
     private func signInWithGoogle() {
@@ -135,16 +133,16 @@ final class RegisterViewModel: RegisterViewModeling {
 
         updateContent(isLoading: true)
 
-        googleService.signIn(presentingViewController: vc) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    self?.moduleOutput?.moduleWantsToOpenMainScreen()
-                case .failure(let error):
+        authService.signInWithGoogle(presentingViewController: vc)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()
                 }
+            } receiveValue: { [weak self] in
+                self?.moduleOutput?.moduleWantsToOpenMainScreen()
             }
-        }
+            .store(in: &bag)
     }
 }
