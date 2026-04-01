@@ -32,12 +32,7 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         let viewModel = LoginViewModel(
             authService: FirebaseAuthService(),
             googleService: GoogleSignInService(),
-            onOpenRegister: { [weak self] in
-                self?.showRegister()
-            },
-            onAuthorized: { [weak self] in
-                self?.finishAuthFlow()
-            }
+            moduleOutput: self
         )
 
         return LoginViewController(viewModel: viewModel)
@@ -47,17 +42,15 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         let viewModel = RegisterViewModel(
             authService: FirebaseAuthService(),
             googleService: GoogleSignInService(),
-            onOpenLogin: { [weak self] in
-                guard let self = self else { return }
-                let loginVC = self.makeLoginViewController()
-                self.navigationController.setViewControllers([loginVC], animated: false)
-            },
-            onAuthorized: { [weak self] in
-                self?.finishAuthFlow()
-            }
+            moduleOutput: self
         )
 
         return RegisterViewController(viewModel: viewModel)
+    }
+
+    private func showLogin() {
+        let loginViewController = makeLoginViewController()
+        navigationController.setViewControllers([loginViewController], animated: false)
     }
 
     private func showRegister() {
@@ -66,9 +59,22 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     private func finishAuthFlow() {
-        (output as? AppCoordinator)?.showMainFlow()
+        output?.authFlowWantsToOpenMainScreen()
     }
 }
 
 extension AuthCoordinator: AuthFlowInput {}
 
+extension AuthCoordinator: LoginModuleOutput, RegisterModuleOutput {
+    func moduleWantsToOpenMainScreen() {
+        finishAuthFlow()
+    }
+
+    func tapRegister() {
+        showRegister()
+    }
+    
+    func tapLogin() {
+        showLogin()
+    }
+}

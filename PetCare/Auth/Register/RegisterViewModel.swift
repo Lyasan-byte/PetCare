@@ -9,17 +9,18 @@ import Foundation
 import UIKit
 import Combine
 
-final class RegisterViewModel: ViewModel {
+final class RegisterViewModel: RegisterViewModeling {
 
-    typealias State = RegisterState
-    typealias Intent = RegisterIntent
-
-    @Published private(set) var state: RegisterState = .loading
+    private(set) var stateDidChange = ObservableObjectPublisher()
+    @Published private(set) var state: RegisterState = .loading {
+        didSet {
+            stateDidChange.send()
+        }
+    }
 
     private let authService: AuthServiceProtocol
     private let googleService: GoogleSignInService
-    private let onOpenLogin: () -> Void
-    private let onAuthorized: () -> Void
+    private weak var moduleOutput: RegisterModuleOutput?
 
     private weak var presentingViewController: UIViewController?
 
@@ -30,13 +31,11 @@ final class RegisterViewModel: ViewModel {
     init(
         authService: AuthServiceProtocol,
         googleService: GoogleSignInService,
-        onOpenLogin: @escaping () -> Void,
-        onAuthorized: @escaping () -> Void
+        moduleOutput: RegisterModuleOutput?
     ) {
         self.authService = authService
         self.googleService = googleService
-        self.onOpenLogin = onOpenLogin
-        self.onAuthorized = onAuthorized
+        self.moduleOutput = moduleOutput
     }
 
     func attach(viewController: UIViewController) {
@@ -67,7 +66,7 @@ final class RegisterViewModel: ViewModel {
             signInWithGoogle()
 
         case .loginTapped:
-            onOpenLogin()
+            moduleOutput?.tapLogin()
         }
     }
 
@@ -118,7 +117,7 @@ final class RegisterViewModel: ViewModel {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self?.onAuthorized()
+                    self?.moduleOutput?.moduleWantsToOpenMainScreen()
                 case .failure(let error):
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()
@@ -140,7 +139,7 @@ final class RegisterViewModel: ViewModel {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self?.onAuthorized()
+                    self?.moduleOutput?.moduleWantsToOpenMainScreen()
                 case .failure(let error):
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()

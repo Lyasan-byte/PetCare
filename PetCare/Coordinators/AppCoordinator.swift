@@ -69,4 +69,8 @@ final class AppCoordinator {
     }
 }
 
-extension AppCoordinator: AuthFlowOutput {}
+extension AppCoordinator: AuthFlowOutput {
+    func authFlowWantsToOpenMainScreen() {
+        showMainFlow()
+    }
+}

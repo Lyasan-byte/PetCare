@@ -37,10 +37,10 @@ final class LoginViewController: UIViewController {
     }
 
     private func bind() {
-        viewModel.$state
+        viewModel.stateDidChange
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.render(state)
+            .sink { [weak self] in
+                self?.render()
             }
             .store(in: &bag)
     }
@@ -53,8 +53,8 @@ final class LoginViewController: UIViewController {
         contentView.switchButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
     }
 
-    private func render(_ state: LoginState) {
-        switch state {
+    private func render() {
+        switch viewModel.state {
         case .loading:
             contentView.setLoading(true)
 
@@ -101,4 +101,3 @@ final class LoginViewController: UIViewController {
         viewModel.trigger(.registerTapped)
     }
 }
-
