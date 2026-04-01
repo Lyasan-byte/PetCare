@@ -2,7 +2,7 @@
 //  AuthContainerView.swift
 //  PetCare
 //
-//  Created by Codex on 01.04.2026.
+//  Created by Artur Bagautdinov on 01.04.2026.
 //
 
 import Foundation
