@@ -27,7 +27,6 @@ final class LoginView: UIView {
     let switchButton = UIButton(type: .system)
     let switchWrapperView = UIView()
     let activityIndicator = UIActivityIndicatorView(style: .medium)
-    
     let switchContainerView = UIStackView()
     let switchTitleLabel = UILabel()
 

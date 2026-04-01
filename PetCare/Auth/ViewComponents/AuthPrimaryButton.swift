@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 final class AuthPrimaryButton: UIButton {
+    
     init(title: String) {
         super.init(frame: .zero)
         setup(title: title)

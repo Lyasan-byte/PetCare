@@ -20,9 +20,7 @@ final class RegisterViewModel: RegisterViewModeling {
 
     private let authService: AuthRepository
     private weak var moduleOutput: RegisterModuleOutput?
-
     private weak var presentingViewController: UIViewController?
-
     private var email = ""
     private var password = ""
     private var confirmPassword = ""

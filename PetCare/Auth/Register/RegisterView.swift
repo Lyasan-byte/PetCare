@@ -11,6 +11,7 @@ import UIKit
 final class RegisterView: UIView {
 
     private let containerView = AuthContainerView(headerBottomSpacing: -24)
+    
     let emailFieldView = AuthTextFieldView(
         title: NSLocalizedString("auth.email.title", comment: ""),
         placeholder: NSLocalizedString("auth.email.placeholder", comment: "")
@@ -32,7 +33,6 @@ final class RegisterView: UIView {
     let switchButton = UIButton(type: .system)
     let switchWrapperView = UIView()
     let activityIndicator = UIActivityIndicatorView(style: .medium)
-
     let switchContainerView = UIStackView()
     let switchTitleLabel = UILabel()
 
@@ -65,7 +65,7 @@ final class RegisterView: UIView {
     private func setup() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(containerView)
-
+        
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
