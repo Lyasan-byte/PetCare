@@ -11,7 +11,7 @@ final class PetProfileNoteView: UIView {
     private let backgroundView = BackgroundView(backgroundColor: Asset.lightPurple.color)
     private let title = TextLabel(font: .systemFont(ofSize: 11, weight: .semibold), text: L10n.Pets.Profile.noteTitle, textColor: Asset.purpleAccent.color, textAlignment: .left)
     
-    private var noteText: UITextView = {
+    var noteText: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .clear
         textView.textColor = Asset.purpleAccent.color
@@ -57,7 +57,7 @@ final class PetProfileNoteView: UIView {
             noteText.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
             noteText.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
             noteText.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
-            noteText.heightAnchor.constraint(lessThanOrEqualToConstant: 90)
+            noteText.heightAnchor.constraint(equalToConstant: 70)
         ])
     }
     

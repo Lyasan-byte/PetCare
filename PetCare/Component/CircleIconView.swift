@@ -38,6 +38,7 @@ final class CircleIconView: UIView {
             circleSize: circleSize,
             iconSize: iconSize,
             weight: weight,
+            borderColor: borderColor,
             shadowColor: shadowColor
         )
     }
@@ -57,10 +58,11 @@ final class CircleIconView: UIView {
         widthConstraint = widthAnchor.constraint(equalToConstant: 40)
         heightConstraint = heightAnchor.constraint(equalToConstant: 40)
         
+        guard let widthConstraint, let heightConstraint else { return }
+        
         NSLayoutConstraint.activate([
-            widthConstraint!,
-            heightConstraint!,
-            
+            widthConstraint,
+            heightConstraint,
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])

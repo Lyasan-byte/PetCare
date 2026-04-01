@@ -8,8 +8,6 @@
 import Foundation
 
 enum PetFormIntent {
-    case onDidLoad
-    
     case onChangeName(String)
     case onChangeBreed(String)
     case onChangeWeight(String)
@@ -24,5 +22,6 @@ enum PetFormIntent {
     case onSave
     case onDelete
     case onConfirmDelete
-    
+    case onDismissAlert
+    case onCloseTap
 }

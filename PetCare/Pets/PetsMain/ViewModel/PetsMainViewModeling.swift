@@ -7,6 +7,4 @@
 
 import Combine
 
-protocol PetsMainViewModeling: UIKitViewModel where State == PetsMainState, Intent == PetsMainIntent {
-    var routePublisher: AnyPublisher<PetsMainRoute, Never> { get }
-}
+protocol PetsMainViewModeling: UIKitViewModel where State == PetsMainState, Intent == PetsMainIntent {}

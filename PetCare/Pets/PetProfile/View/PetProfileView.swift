@@ -8,17 +8,14 @@
 import UIKit
 
 final class PetProfileView: UIView {
-    private let scrollView = ScrollView()
-    private let petCardView = PetProfileCardView()
-    
-    private let petNoteView = PetProfileNoteView()
-    
     let createActivityButton = PrimaryButton(title: L10n.Pets.Profile.createActivityButton)
-    
     let editButton = PetProfileButton(text:  L10n.Pets.Profile.editButton, image: "pencil", textColor: .label, backgroundColor: .tertiarySystemBackground)
     let analyticsButton = PetProfileButton(text: L10n.Pets.Profile.analyticsButton, image: "chart.bar.fill", textColor: Asset.pinkAccent.color, backgroundColor: Asset.lightPink.color)
-    private lazy var buttonsStack = HStack(spacing: 10, alignment: .center, distribution: .fillEqually, arrangedSubviews: [editButton, analyticsButton])
     
+    private let scrollView = ScrollView()
+    private let petCardView = PetProfileCardView()
+    private let petNoteView = PetProfileNoteView()
+    private lazy var buttonsStack = HStack(spacing: 10, alignment: .center, distribution: .fillEqually, arrangedSubviews: [editButton, analyticsButton])
     private lazy var buttonsContainer = VStack(spacing: 16, arrangedSubviews: [createActivityButton, buttonsStack])
     
     private lazy var scrollContent = VStack(spacing: 30, arrangedSubviews: [petCardView, petNoteView])
@@ -27,15 +24,17 @@ final class PetProfileView: UIView {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
-        configure()
     }
     
     convenience init() {
         self.init(frame: .zero)
     }
     
-    func setPetData(_ pet: Pet) {
-        petCardView.configure(pet: pet)
+    func setPetData(_ pet: Pet, imageLoader: ImageLoader) {
+        petCardView.configure(pet: pet, imageLoader: imageLoader)
+        petNoteView.noteText.text = pet.note
+        
+        petNoteView.isHidden = pet.note.isEmpty
     }
     
     private func setupHierarchy() {
@@ -45,6 +44,8 @@ final class PetProfileView: UIView {
     }
     
     private func setupLayout() {
+        translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             buttonsContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             buttonsContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -61,10 +62,6 @@ final class PetProfileView: UIView {
             scrollContent.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             scrollContent.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
-    }
-    
-    private func configure() {
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {

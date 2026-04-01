@@ -15,6 +15,12 @@
 			</array>
 		</dict>
 	</array>
+    
+    <key>CLOUDINARY_CLOUD_NAME</key>
+    <string>do7dnw8rl</string>
+    <key>CLOUDINARY_UPLOAD_PRESET</key>
+    <string>petcare_unsigned_pets</string>
+    
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

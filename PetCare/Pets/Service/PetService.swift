@@ -16,21 +16,40 @@ enum PetRepositoryError: LocalizedError {
         case .repositoryDeallocated:
             return "Repository was deallocated"
         }
-       
     }
 }
 
 final class PetService: PetRepository {
+    private let imageService: ImageUploader
     private let petsCollection = Firestore.firestore().collection("pets")
+    
+    init(imageService: ImageUploader) {
+        self.imageService = imageService
+    }
     
     func makeNewPetId() -> String {
         petsCollection.document().documentID
     }
     
-    func save(pet: Pet) -> AnyPublisher<Pet, Error> {
+    func save(pet: Pet, selectedPhoto: Data?) -> AnyPublisher<Pet, Error> {
+        guard let selectedPhoto else { return savePet(pet)}
+        
+        return imageService
+            .uploadImage(data: selectedPhoto,
+                         resource: UploadImageResource.pet(id: pet.id))
+            .flatMap { [weak self] url -> AnyPublisher<Pet, Error> in
+                guard let self else { return Fail(error: PetRepositoryError.repositoryDeallocated)
+                    .eraseToAnyPublisher() }
+                var updatedPet = pet
+                updatedPet.photoUrl = url.absoluteString
+                return self.savePet(updatedPet)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func savePet(_ pet: Pet) -> AnyPublisher<Pet, Error> {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(PetRepositoryError.repositoryDeallocated)) }
-            
             do {
                 try self.petsCollection.document(pet.id).setData(from: pet, merge: true) { error in
                     if let error {
@@ -44,7 +63,6 @@ final class PetService: PetRepository {
             }
         }
         .eraseToAnyPublisher()
-        
     }
     
     func delete(petId: String) -> AnyPublisher<Void, Error> {

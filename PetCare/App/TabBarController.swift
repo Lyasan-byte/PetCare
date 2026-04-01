@@ -16,9 +16,15 @@ final class TabBarController: UITabBarController {
     }
     
     private func setupTabs() {
-
         let petsNavigationController = UINavigationController()
-        let petsMainCoordinator = PetsMainCoordinator(navigationController: petsNavigationController, petRepository: PetService(), tipRepository: TipService(), ownerId: "test_owner_id")
+        let petsMainCoordinator = PetsMainCoordinator(
+            navigationController: petsNavigationController,
+            petRepository: PetService(
+                imageService: ImageUploadService()
+            ),
+            tipRepository: TipService(),
+            ownerId: "test_owner_id", imageLoader: ImageLoadService()
+        )
         self.petsMainCoordinator = petsMainCoordinator
         
         let petsViewController = petsMainCoordinator.start()

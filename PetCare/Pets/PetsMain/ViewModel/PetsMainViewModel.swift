@@ -15,20 +15,17 @@ final class PetsMainViewModel: PetsMainViewModeling {
         }
     }
     
-    var routePublisher: AnyPublisher<PetsMainRoute, Never> {
-        routeSubject.eraseToAnyPublisher()
-    }
-    
     private(set) var stateDidChange = ObservableObjectPublisher()
-    private let routeSubject = PassthroughSubject<PetsMainRoute, Never>()
     private var bag = Set<AnyCancellable>()
+    private let moduleOutput: PetsMainModuleOutput?
     private let petRepository: PetRepository
     private let tipRepository: TipRepository
     
-    init(petRepository: PetRepository, tipRepository: TipRepository, ownerId: String) {
-        self.state = PetsMainState(ownerId: ownerId)
+    init(petRepository: PetRepository, tipRepository: TipRepository, moduleOutput: PetsMainModuleOutput, ownerId: String) {
         self.petRepository = petRepository
         self.tipRepository = tipRepository
+        self.moduleOutput = moduleOutput
+        self.state = PetsMainState(ownerId: ownerId)
     }
     
     func trigger(_ intent: PetsMainIntent) {
@@ -39,11 +36,15 @@ final class PetsMainViewModel: PetsMainViewModeling {
         case .onTipTap:
             state.tipText = state.tips.randomElement()?.text ?? Tip.defaultTip
         case .onAddPetTap:
-            routeSubject.send(.showAddPet)
+            moduleOutput?.petsMainModuleDidRequestAddPet()
         case .refreshPets:
             getPets()
         case .onPetTap(let pet):
-            routeSubject.send(.showPet(pet))
+            moduleOutput?.petsMainModuleDidRequestOpenPet(pet)
+        case .onDismissAlert:
+            state.errorMessage = nil
+        case .onAddActivity:
+            moduleOutput?.petsMainModuleDidRequestAddActivity()
         }
     }
     
@@ -71,7 +72,7 @@ final class PetsMainViewModel: PetsMainViewModeling {
                 guard let self else { return }
                 
                 if case .failure(let error) = completion {
-                    self.routeSubject.send(.showError(error.localizedDescription))
+                    self.state.errorMessage = error.localizedDescription
                     self.state.isLoading = false
                 }
             } receiveValue: { [weak self] pets in

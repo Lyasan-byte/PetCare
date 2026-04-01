@@ -25,43 +25,47 @@ struct PetFormState {
     var isPublicProfile: Bool
     var existingPhotoUrl: String?
     var selectedPhotoData: Data?
-    
+
     var isSaving: Bool
-    
-    var nameError: String?
-    var breedError: String?
-    var weightError: String?
-    
+    var errorMessage: String?
+    var isDeleteConfirmationPresented: Bool
+
     var title: String {
         switch mode {
-        case .create(_):
-            "Create Pet"
-        case .edit(_):
-            "Edit Profile"
+        case .create:
+            return "Create Pet"
+        case .edit:
+            return "Edit Profile"
         }
     }
-    
+
     var showsDeleteButton: Bool {
         if case .edit = mode {
             return true
         }
         return false
     }
-    
+
     var isSaveEnabled: Bool {
-        let isNameValid = !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        let isBreedValid = !breed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        let isWeightValid = weightError == nil && !weightText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedBreed = breed.trimmingCharacters(in: .whitespacesAndNewlines)
+        let normalizedWeight = weightText
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: ",", with: ".")
+
+        let isNameValid = !trimmedName.isEmpty
+        let isBreedValid = !trimmedBreed.isEmpty
+        let isWeightValid = Double(normalizedWeight).map { $0 > 0 } ?? false
+
         return !isSaving && isNameValid && isBreedValid && isWeightValid
     }
-    
+
     init(mode: PetFormMode, petId: String) {
         self.mode = mode
         self.petId = petId
-        
+
         switch mode {
-        case .create(_):
+        case .create:
             self.name = ""
             self.breed = ""
             self.weightText = ""
@@ -73,10 +77,9 @@ struct PetFormState {
             self.existingPhotoUrl = nil
             self.selectedPhotoData = nil
             self.isSaving = false
-            self.nameError = nil
-            self.breedError = nil
-            self.weightError = nil
-            
+            self.errorMessage = nil
+            self.isDeleteConfirmationPresented = false
+
         case .edit(let pet):
             self.name = pet.name
             self.breed = pet.breed
@@ -89,9 +92,8 @@ struct PetFormState {
             self.existingPhotoUrl = pet.photoUrl
             self.selectedPhotoData = nil
             self.isSaving = false
-            self.nameError = nil
-            self.breedError = nil
-            self.weightError = nil
+            self.errorMessage = nil
+            self.isDeleteConfirmationPresented = false
         }
     }
 }

@@ -14,27 +14,29 @@ final class PetProfileViewModel: PetProfileViewModeling {
             stateDidChange.send()
         }
     }
-    
-    var routePublisher: AnyPublisher<PetProfileRoute, Never> {
-        routeSubject.eraseToAnyPublisher()
-    }
-    
-    private(set) var routeSubject = PassthroughSubject<PetProfileRoute, Never>()
     private(set) var stateDidChange = ObservableObjectPublisher()
+    private let moduleOutput: PetProfileModuleOutput?
     
-    init(pet: Pet) {
+    init(pet: Pet, moduleOutput: PetProfileModuleOutput) {
         self.state = PetProfileState(pet: pet)
+        self.moduleOutput = moduleOutput
     }
     
     func trigger(_ intent: PetProfileIntent) {
         switch intent {
-        case .onEditTap(let pet):
-            routeSubject.send(.showEdit(pet))
-        case .onAnalyticsTap(let pet):
-            routeSubject.send(.showAnalytics(pet))
-        case .onBreedTap(let breed):
-            getPetInfo(breed: breed)
+        case .onEditTap:
+            moduleOutput?.petProfileModuleDidRequestEdit(state.pet)
+        case .onAnalyticsTap:
+            moduleOutput?.petProfileModuleDidRequestAnalytics(state.pet)
+        case .onBreedTap:
+            getPetInfo(breed: state.pet.breed)
+        case .onCloseTap:
+            moduleOutput?.petProfileModuleDidClose()
         }
+    }
+    
+    func update(_ pet: Pet) {
+        state.pet = pet
     }
     
     private func getPetInfo(breed: String) {

@@ -6,25 +6,24 @@
 //
 
 import UIKit
+import Combine
 
 final class PetCardRowView: UIView {
-    var background = BackgroundView(backgroundColor: .tertiarySystemBackground)
-    lazy var hstack = HStack(spacing: 20, alignment: .top, arrangedSubviews: [petImageContainer, petInfoStack])
-    
-    var petImageView: UIImageView = {
-        let imageView = ImageView(contentMode: .scaleAspectFill)
+    private var petImageView: PetRemoteImageView = {
+        let imageView = PetRemoteImageView()
         imageView.layer.cornerRadius = 35
         return imageView
     }()
     
-    var petStatusView = CircleIconView()
+    private var background = BackgroundView(backgroundColor: .tertiarySystemBackground)
     
-    lazy var imageStack = VStack(arrangedSubviews: [petImageView, petStatusView])
-    lazy var petInfoStack = VStack(spacing: 10, arrangedSubviews: [petNameLabel, petBreedLabel])
+    private lazy var hstack = HStack(spacing: 20, alignment: .top, arrangedSubviews: [petImageContainer, petInfoStack])
+    private lazy var petInfoStack = VStack(spacing: 10, arrangedSubviews: [petNameLabel, petBreedLabel])
     
-    var petImageContainer = BackgroundView(backgroundColor: .clear, cornerRadius: 0)
-    var petNameLabel = TextLabel(font: .systemFont(ofSize: 16, weight: .bold), textAlignment: .left)
-    var petBreedLabel = TextLabel(font: .systemFont(ofSize: 12, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
+    private var petStatusView = CircleIconView()
+    private var petImageContainer = BackgroundView(backgroundColor: .clear, cornerRadius: 0)
+    private var petNameLabel = TextLabel(font: .systemFont(ofSize: 16, weight: .bold), textAlignment: .left)
+    private var petBreedLabel = TextLabel(font: .systemFont(ofSize: 12, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,8 +36,14 @@ final class PetCardRowView: UIView {
         configure(pet: pet)
     }
     
-    func setData(pet: Pet) {
+    func setData(pet: Pet, imageLoader: ImageLoader) {
         configure(pet: pet)
+        petImageView.setImage(urlString: pet.photoUrl, imageLoader: imageLoader)
+    }
+    
+    func prepareForReuse() {
+        petImageView.cancelLoading()
+        petImageView.image = UIImage(named: "defaultProfilePhoto")
     }
     
     private func setupHierarchy() {
@@ -49,6 +54,7 @@ final class PetCardRowView: UIView {
     }
     
     private func setupLayout() {
+        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: topAnchor),
             background.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -74,8 +80,6 @@ final class PetCardRowView: UIView {
     }
     
     private func configure(pet: Pet) {
-        translatesAutoresizingMaskIntoConstraints = false
-        petImageView.image = UIImage(named: "defaultProfilePhoto")
         petNameLabel.text = pet.name
         petBreedLabel.text = "\(pet.breed) • \(pet.ageText)"
         petStatusView.configure(status: pet.iconStatus, circleSize: 22, iconSize: 10)
