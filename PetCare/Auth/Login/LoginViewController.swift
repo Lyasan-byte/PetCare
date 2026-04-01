@@ -32,15 +32,15 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         bind()
         setupActions()
+        setupKeyboardDismiss()
         viewModel.attach(viewController: self)
         viewModel.trigger(.onDidLoad)
     }
 
     private func bind() {
-        viewModel.$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.render(state)
+        viewModel.stateDidChange
+            .sink { [weak self] in
+                self?.render()
             }
             .store(in: &bag)
     }
@@ -53,13 +53,19 @@ final class LoginViewController: UIViewController {
         contentView.switchButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
     }
 
-    private func render(_ state: LoginState) {
-        switch state {
+    private func setupKeyboardDismiss() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    private func render() {
+        switch viewModel.state {
         case .loading:
             contentView.setLoading(true)
 
         case .content(let content):
-            contentView.configure(title: content.title, subtitle: content.subtitle)
+            contentView.configureHeaderView(title: content.title, subtitle: content.subtitle)
             contentView.emailFieldView.textField.text = content.email
             contentView.passwordFieldView.textField.text = content.password
             contentView.setLoginButtonEnabled(content.isLoginEnabled)
@@ -100,5 +106,8 @@ final class LoginViewController: UIViewController {
     @objc private func registerTapped() {
         viewModel.trigger(.registerTapped)
     }
-}
 
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}

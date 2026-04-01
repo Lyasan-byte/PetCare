@@ -8,4 +8,6 @@
 import Foundation
 
 protocol AuthFlowInput: AnyObject {}
-protocol AuthFlowOutput: AnyObject {}
+protocol AuthFlowOutput: AnyObject {
+    func authFlowWantsToOpenMainScreen()
+}

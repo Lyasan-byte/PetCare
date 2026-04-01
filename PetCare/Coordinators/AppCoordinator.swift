@@ -11,11 +11,11 @@ import FirebaseAuth
 
 final class AppCoordinator {
 
-    var window: UIWindow?
+    private var window: UIWindow?
     private var authCoordinator: AuthCoordinator?
     private var stateDidChangeHandle: AuthStateDidChangeListenerHandle?
 
-    func start(_ scene: UIWindowScene) {
+    func start(_ scene: UIWindowScene) -> UIWindow {
         let window = UIWindow(windowScene: scene)
         self.window = window
 
@@ -28,6 +28,8 @@ final class AppCoordinator {
                 self.showMainFlow()
             }
         }
+
+        return window
     }
 
     func showAuthFlow() {
@@ -69,4 +71,8 @@ final class AppCoordinator {
     }
 }
 
-extension AppCoordinator: AuthFlowOutput {}
+extension AppCoordinator: AuthFlowOutput {
+    func authFlowWantsToOpenMainScreen() {
+        showMainFlow()
+    }
+}

@@ -24,12 +24,15 @@
 "auth.email.placeholder" = "hello@petcare.com";
 "auth.password.title" = "ПАРОЛЬ";
 "auth.password.placeholder" = "••••••••";
+"auth.confirm_password.title" = "ПОДТВЕРДИТЕ ПАРОЛЬ";
+"auth.confirm_password.placeholder" = "••••••••";
 
 "auth.google.button" = "Продолжить через Google";
 "auth.or" = "ИЛИ";
 
 "auth.validation.fill_all_fields" = "Пожалуйста, заполните все поля";
 "auth.validation.password_too_short" = "Пароль должен содержать минимум 6 символов";
+"auth.validation.passwords_do_not_match" = "Пароли не совпадают";
 
 "common.error" = "Ошибка";
 "common.ok" = "ОК";

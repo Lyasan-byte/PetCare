@@ -9,33 +9,29 @@ import Foundation
 import UIKit
 import Combine
 
-final class RegisterViewModel: ViewModel {
+final class RegisterViewModel: RegisterViewModeling {
 
-    typealias State = RegisterState
-    typealias Intent = RegisterIntent
+    private(set) var stateDidChange = ObservableObjectPublisher()
+    @Published private(set) var state: RegisterState = .loading {
+        didSet {
+            stateDidChange.send()
+        }
+    }
 
-    @Published private(set) var state: RegisterState = .loading
-
-    private let authService: AuthServiceProtocol
-    private let googleService: GoogleSignInService
-    private let onOpenLogin: () -> Void
-    private let onAuthorized: () -> Void
-
+    private let authService: AuthRepository
+    private weak var moduleOutput: RegisterModuleOutput?
     private weak var presentingViewController: UIViewController?
-
     private var email = ""
     private var password = ""
+    private var confirmPassword = ""
+    private var bag = Set<AnyCancellable>()
 
     init(
-        authService: AuthServiceProtocol,
-        googleService: GoogleSignInService,
-        onOpenLogin: @escaping () -> Void,
-        onAuthorized: @escaping () -> Void
+        authService: AuthRepository,
+        moduleOutput: RegisterModuleOutput?
     ) {
         self.authService = authService
-        self.googleService = googleService
-        self.onOpenLogin = onOpenLogin
-        self.onAuthorized = onAuthorized
+        self.moduleOutput = moduleOutput
     }
 
     func attach(viewController: UIViewController) {
@@ -55,6 +51,10 @@ final class RegisterViewModel: ViewModel {
             password = value
             updateContent()
 
+        case .confirmPasswordChanged(let value):
+            confirmPassword = value
+            updateContent()
+
         case .registerTapped:
             register()
 
@@ -62,7 +62,7 @@ final class RegisterViewModel: ViewModel {
             signInWithGoogle()
 
         case .loginTapped:
-            onOpenLogin()
+            moduleOutput?.tapLogin()
         }
     }
 
@@ -73,6 +73,7 @@ final class RegisterViewModel: ViewModel {
                 subtitle: NSLocalizedString("auth.register.subtitle", comment: ""),
                 email: email,
                 password: password,
+                confirmPassword: confirmPassword,
                 isRegisterEnabled: isValidCredentials && !isLoading,
                 isLoading: isLoading
             )
@@ -82,11 +83,13 @@ final class RegisterViewModel: ViewModel {
     private var isValidCredentials: Bool {
         !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        password == confirmPassword &&
         password.count >= 6
     }
 
     private func register() {
-        guard !email.isEmpty, !password.isEmpty else {
+        guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
             state = .error(NSLocalizedString("auth.validation.fill_all_fields", comment: ""))
             updateContent()
             return
@@ -98,19 +101,25 @@ final class RegisterViewModel: ViewModel {
             return
         }
 
+        guard password == confirmPassword else {
+            state = .error(NSLocalizedString("auth.validation.passwords_do_not_match", comment: ""))
+            updateContent()
+            return
+        }
+
         updateContent(isLoading: true)
 
-        authService.register(email: email, password: password) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    self?.onAuthorized()
-                case .failure(let error):
+        authService.register(email: email, password: password)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()
                 }
+            } receiveValue: { [weak self] in
+                self?.moduleOutput?.moduleWantsToOpenMainScreen()
             }
-        }
+            .store(in: &bag)
     }
 
     private func signInWithGoogle() {
@@ -122,16 +131,16 @@ final class RegisterViewModel: ViewModel {
 
         updateContent(isLoading: true)
 
-        googleService.signIn(presentingViewController: vc) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    self?.onAuthorized()
-                case .failure(let error):
+        authService.signInWithGoogle(presentingViewController: vc)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()
                 }
+            } receiveValue: { [weak self] in
+                self?.moduleOutput?.moduleWantsToOpenMainScreen()
             }
-        }
+            .store(in: &bag)
     }
 }

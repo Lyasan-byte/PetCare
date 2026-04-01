@@ -8,33 +8,30 @@
 import UIKit
 import Combine
 
-final class LoginViewModel: ViewModel {
+final class LoginViewModel: LoginViewModeling {
 
-    typealias State = LoginState
-    typealias Intent = LoginIntent
+    private(set) var stateDidChange = ObservableObjectPublisher()
+    @Published private(set) var state: LoginState = .loading {
+        didSet {
+            stateDidChange.send()
+        }
+    }
 
-    @Published private(set) var state: LoginState = .loading
-
-    private let authService: AuthServiceProtocol
-    private let googleService: GoogleSignInService
-    private let onOpenRegister: () -> Void
-    private let onAuthorized: () -> Void
+    private let authService: AuthRepository
+    private weak var moduleOutput: LoginModuleOutput?
 
     private weak var presentingViewController: UIViewController?
 
     private var email = ""
     private var password = ""
+    private var bag = Set<AnyCancellable>()
 
     init(
-        authService: AuthServiceProtocol,
-        googleService: GoogleSignInService,
-        onOpenRegister: @escaping () -> Void,
-        onAuthorized: @escaping () -> Void
+        authService: AuthRepository,
+        moduleOutput: LoginModuleOutput?
     ) {
         self.authService = authService
-        self.googleService = googleService
-        self.onOpenRegister = onOpenRegister
-        self.onAuthorized = onAuthorized
+        self.moduleOutput = moduleOutput
     }
 
     func attach(viewController: UIViewController) {
@@ -61,7 +58,7 @@ final class LoginViewModel: ViewModel {
             signInWithGoogle()
 
         case .registerTapped:
-            onOpenRegister()
+            moduleOutput?.tapRegister()
         }
     }
 
@@ -92,17 +89,17 @@ final class LoginViewModel: ViewModel {
 
         updateContent(isLoading: true)
 
-        authService.signIn(email: email, password: password) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    self?.onAuthorized()
-                case .failure(let error):
+        authService.signIn(email: email, password: password)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()
                 }
+            } receiveValue: { [weak self] in
+                self?.moduleOutput?.moduleWantsToOpenMainScreen()
             }
-        }
+            .store(in: &bag)
     }
 
     private func signInWithGoogle() {
@@ -114,16 +111,16 @@ final class LoginViewModel: ViewModel {
 
         updateContent(isLoading: true)
 
-        googleService.signIn(presentingViewController: vc) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    self?.onAuthorized()
-                case .failure(let error):
+        authService.signInWithGoogle(presentingViewController: vc)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
                     self?.state = .error(error.localizedDescription)
                     self?.updateContent()
                 }
+            } receiveValue: { [weak self] in
+                self?.moduleOutput?.moduleWantsToOpenMainScreen()
             }
-        }
+            .store(in: &bag)
     }
 }

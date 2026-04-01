@@ -25,12 +25,15 @@
 "auth.email.placeholder" = "hello@petcare.com";
 "auth.password.title" = "PASSWORD";
 "auth.password.placeholder" = "••••••••";
+"auth.confirm_password.title" = "CONFIRM PASSWORD";
+"auth.confirm_password.placeholder" = "••••••••";
 
 "auth.google.button" = "Continue with Google";
 "auth.or" = "OR";
 
 "auth.validation.fill_all_fields" = "Please fill in all fields";
 "auth.validation.password_too_short" = "Password must contain at least 6 characters";
+"auth.validation.passwords_do_not_match" = "Passwords do not match";
 
 "common.error" = "Error";
 "common.ok" = "OK";

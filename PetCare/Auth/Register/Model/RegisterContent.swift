@@ -12,6 +12,7 @@ struct RegisterContent {
     let subtitle: String
     let email: String
     let password: String
+    let confirmPassword: String
     let isRegisterEnabled: Bool
     let isLoading: Bool
 }

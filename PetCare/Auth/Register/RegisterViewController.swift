@@ -32,15 +32,15 @@ final class RegisterViewController: UIViewController {
         super.viewDidLoad()
         bind()
         setupActions()
+        setupKeyboardDismiss()
         viewModel.attach(viewController: self)
         viewModel.trigger(.onDidLoad)
     }
 
     private func bind() {
-        viewModel.$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.render(state)
+        viewModel.stateDidChange
+            .sink { [weak self] in
+                self?.render()
             }
             .store(in: &bag)
     }
@@ -48,20 +48,28 @@ final class RegisterViewController: UIViewController {
     private func setupActions() {
         contentView.emailFieldView.textField.addTarget(self, action: #selector(emailChanged), for: .editingChanged)
         contentView.passwordFieldView.textField.addTarget(self, action: #selector(passwordChanged), for: .editingChanged)
+        contentView.confirmPasswordFieldView.textField.addTarget(self, action: #selector(confirmPasswordChanged), for: .editingChanged)
         contentView.registerButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
         contentView.googleButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
         contentView.switchButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
     }
 
-    private func render(_ state: RegisterState) {
-        switch state {
+    private func setupKeyboardDismiss() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    private func render() {
+        switch viewModel.state {
         case .loading:
             contentView.setLoading(true)
 
         case .content(let content):
-            contentView.configure(title: content.title, subtitle: content.subtitle)
+            contentView.configureHeaderView(title: content.title, subtitle: content.subtitle)
             contentView.emailFieldView.textField.text = content.email
             contentView.passwordFieldView.textField.text = content.password
+            contentView.confirmPasswordFieldView.textField.text = content.confirmPassword
             contentView.setRegisterButtonEnabled(content.isRegisterEnabled)
             contentView.setLoading(content.isLoading)
 
@@ -89,6 +97,10 @@ final class RegisterViewController: UIViewController {
         viewModel.trigger(.passwordChanged(contentView.passwordFieldView.textField.text ?? ""))
     }
 
+    @objc private func confirmPasswordChanged() {
+        viewModel.trigger(.confirmPasswordChanged(contentView.confirmPasswordFieldView.textField.text ?? ""))
+    }
+
     @objc private func registerTapped() {
         viewModel.trigger(.registerTapped)
     }
@@ -99,5 +111,9 @@ final class RegisterViewController: UIViewController {
 
     @objc private func loginTapped() {
         viewModel.trigger(.loginTapped)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

@@ -45,6 +45,7 @@ public enum Asset {
   public static let purpleAccent = ColorAsset(name: "purpleAccent")
   public static let purpleAccentStatus = ColorAsset(name: "purpleAccentStatus")
   public static let redAccent = ColorAsset(name: "redAccent")
+  public static let authCardViewColor = ColorAsset(name: "authCardViewColor")
   public static let textGreen = ColorAsset(name: "textGreen")
   public static let defaultProfilePhoto = ImageAsset(name: "defaultProfilePhoto")
   public static let googleIcon = ImageAsset(name: "google_icon")
