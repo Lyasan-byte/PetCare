@@ -108,87 +108,13 @@ final class LoginView: UIView {
     }
 
     private func setupCardContent() {
-        let arrowImage = UIImage(systemName: "arrow.right")?.withConfiguration(
-            UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
-        )
+        setupLoginButton()
+        setupDividerView()
+        setupGoogleButton()
+        setupSwitchSection()
+        setupActivityIndicator()
 
-        loginButton.configuration = .filled()
-        loginButton.configuration?.title = NSLocalizedString("auth.login.button", comment: "")
-        loginButton.configuration?.image = arrowImage
-        loginButton.configuration?.imagePlacement = .trailing
-        loginButton.configuration?.imagePadding = 8
-        loginButton.configuration?.cornerStyle = .capsule
-        loginButton.configuration?.baseBackgroundColor = Asset.accentColor.color
-        loginButton.configuration?.baseForegroundColor = .white
-        loginButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-        loginButton.layer.cornerRadius = 28
-        loginButton.clipsToBounds = true
-
-        dividerView.configure(text: NSLocalizedString("auth.or", comment: ""))
-
-        googleButton.configuration = .plain()
-        googleButton.backgroundColor = .white
-        googleButton.configuration?.cornerStyle = .capsule
-        googleButton.configuration?.imagePadding = 8
-        googleButton.layer.cornerRadius = 28
-        googleButton.layer.borderWidth = 1
-        googleButton.layer.borderColor = Asset.petGray.color.cgColor
-        googleButton.setTitle(NSLocalizedString("auth.google.button", comment: ""), for: .normal)
-        googleButton.setTitleColor(.label, for: .normal)
-        googleButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-        
-        let googleImage = UIImage(named: "google_icon")
-        let resizedImage = googleImage?.preparingThumbnail(of: CGSize(width: 20, height: 20))
-        
-        googleButton.configuration?.image = resizedImage
-        googleButton.tintColor = nil
-        googleButton.semanticContentAttribute = .forceLeftToRight
-        googleButton.imageView?.contentMode = .scaleAspectFit
-
-        switchTitleLabel.text = NSLocalizedString("auth.login.switch_prefix", comment: "")
-        switchTitleLabel.textColor = Asset.petGray.color
-        switchTitleLabel.font = .systemFont(ofSize: 14, weight: .regular)
-
-        switchButton.setTitle(NSLocalizedString("auth.login.switch_action", comment: ""), for: .normal)
-        switchButton.setTitleColor(Asset.accentColor.color, for: .normal)
-        switchButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-
-        switchContainerView.axis = .horizontal
-        switchContainerView.alignment = .center
-        switchContainerView.distribution = .fill
-        switchContainerView.spacing = 6
-        switchContainerView.translatesAutoresizingMaskIntoConstraints = false
-        switchContainerView.addArrangedSubview(switchTitleLabel)
-        switchContainerView.addArrangedSubview(switchButton)
-        switchContainerView.translatesAutoresizingMaskIntoConstraints = false
-        switchWrapperView.addSubview(switchContainerView)
-        
-        switchTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
-        switchTitleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-        switchButton.setContentHuggingPriority(.required, for: .horizontal)
-        switchButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-        switchContainerView.setContentHuggingPriority(.required, for: .horizontal)
-        switchContainerView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = Asset.accentColor.color
-
-        let fieldsStack = UIStackView(arrangedSubviews: [
-            emailFieldView,
-            passwordFieldView,
-            loginButton,
-            dividerView,
-            googleButton,
-            switchWrapperView,
-            activityIndicator
-        ])
-        fieldsStack.axis = .vertical
-        fieldsStack.spacing = 22
-        fieldsStack.translatesAutoresizingMaskIntoConstraints = false
-
+        let fieldsStack = makeFieldsStack()
         cardView.addSubview(fieldsStack)
 
         NSLayoutConstraint.activate([
@@ -206,6 +132,98 @@ final class LoginView: UIView {
             loginButton.heightAnchor.constraint(equalToConstant: 52),
             googleButton.heightAnchor.constraint(equalToConstant: 52)
         ])
+    }
+
+    private func setupLoginButton() {
+        let arrowImage = UIImage(systemName: "arrow.right")?.withConfiguration(
+            UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
+        )
+
+        loginButton.configuration = .filled()
+        loginButton.configuration?.title = NSLocalizedString("auth.login.button", comment: "")
+        loginButton.configuration?.image = arrowImage
+        loginButton.configuration?.imagePlacement = .trailing
+        loginButton.configuration?.imagePadding = 8
+        loginButton.configuration?.cornerStyle = .capsule
+        loginButton.configuration?.baseBackgroundColor = Asset.accentColor.color
+        loginButton.configuration?.baseForegroundColor = .white
+        loginButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        loginButton.layer.cornerRadius = 28
+        loginButton.clipsToBounds = true
+    }
+
+    private func setupDividerView() {
+        dividerView.configure(text: NSLocalizedString("auth.or", comment: ""))
+    }
+
+    private func setupGoogleButton() {
+        googleButton.configuration = .plain()
+        googleButton.backgroundColor = .white
+        googleButton.configuration?.cornerStyle = .capsule
+        googleButton.configuration?.imagePadding = 8
+        googleButton.layer.cornerRadius = 28
+        googleButton.layer.borderWidth = 1
+        googleButton.layer.borderColor = Asset.petGray.color.cgColor
+        googleButton.setTitle(NSLocalizedString("auth.google.button", comment: ""), for: .normal)
+        googleButton.setTitleColor(.label, for: .normal)
+        googleButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+
+        let googleImage = UIImage(named: "google_icon")
+        let resizedImage = googleImage?.preparingThumbnail(of: CGSize(width: 20, height: 20))
+
+        googleButton.configuration?.image = resizedImage
+        googleButton.tintColor = nil
+        googleButton.semanticContentAttribute = .forceLeftToRight
+        googleButton.imageView?.contentMode = .scaleAspectFit
+    }
+
+    private func setupSwitchSection() {
+        switchTitleLabel.text = NSLocalizedString("auth.login.switch_prefix", comment: "")
+        switchTitleLabel.textColor = Asset.petGray.color
+        switchTitleLabel.font = .systemFont(ofSize: 14, weight: .regular)
+
+        switchButton.setTitle(NSLocalizedString("auth.login.switch_action", comment: ""), for: .normal)
+        switchButton.setTitleColor(Asset.accentColor.color, for: .normal)
+        switchButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+
+        switchContainerView.axis = .horizontal
+        switchContainerView.alignment = .center
+        switchContainerView.distribution = .fill
+        switchContainerView.spacing = 6
+        switchContainerView.translatesAutoresizingMaskIntoConstraints = false
+        switchContainerView.addArrangedSubview(switchTitleLabel)
+        switchContainerView.addArrangedSubview(switchButton)
+        switchWrapperView.addSubview(switchContainerView)
+
+        switchTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
+        switchTitleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        switchButton.setContentHuggingPriority(.required, for: .horizontal)
+        switchButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        switchContainerView.setContentHuggingPriority(.required, for: .horizontal)
+        switchContainerView.setContentCompressionResistancePriority(.required, for: .horizontal)
+    }
+
+    private func setupActivityIndicator() {
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = Asset.accentColor.color
+    }
+
+    private func makeFieldsStack() -> UIStackView {
+        let fieldsStack = UIStackView(arrangedSubviews: [
+            emailFieldView,
+            passwordFieldView,
+            loginButton,
+            dividerView,
+            googleButton,
+            switchWrapperView,
+            activityIndicator
+        ])
+        fieldsStack.axis = .vertical
+        fieldsStack.spacing = 22
+        fieldsStack.translatesAutoresizingMaskIntoConstraints = false
+        return fieldsStack
     }
 
     private func setupActionsStyle() {

@@ -20,6 +20,11 @@ final class RegisterView: UIView {
         placeholder: NSLocalizedString("auth.password.placeholder", comment: ""),
         isSecure: true
     )
+    let confirmPasswordFieldView = AuthTextFieldView(
+        title: NSLocalizedString("auth.confirm_password.title", comment: ""),
+        placeholder: NSLocalizedString("auth.confirm_password.placeholder", comment: ""),
+        isSecure: true
+    )
 
     let registerButton = UIButton(type: .system)
     let dividerView = AuthDividerView()
@@ -89,7 +94,7 @@ final class RegisterView: UIView {
             headerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            headerView.bottomAnchor.constraint(equalTo: cardView.topAnchor, constant: -80),
+            headerView.bottomAnchor.constraint(equalTo: cardView.topAnchor, constant: -24),
 
             cardView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 24),
             cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
@@ -108,6 +113,34 @@ final class RegisterView: UIView {
     }
 
     private func setupCardContent() {
+        setupRegisterButton()
+        setupDividerView()
+        setupGoogleButton()
+        setupSwitchSection()
+        setupActivityIndicator()
+
+        let fieldsStack = makeFieldsStack()
+        cardView.addSubview(fieldsStack)
+
+        NSLayoutConstraint.activate([
+            fieldsStack.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 24),
+            fieldsStack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 24),
+            fieldsStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -24),
+            fieldsStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -24),
+
+            switchContainerView.centerXAnchor.constraint(equalTo: switchWrapperView.centerXAnchor),
+            switchContainerView.topAnchor.constraint(equalTo: switchWrapperView.topAnchor),
+            switchContainerView.bottomAnchor.constraint(equalTo: switchWrapperView.bottomAnchor),
+
+            emailFieldView.heightAnchor.constraint(equalToConstant: 80),
+            passwordFieldView.heightAnchor.constraint(equalToConstant: 80),
+            confirmPasswordFieldView.heightAnchor.constraint(equalToConstant: 80),
+            registerButton.heightAnchor.constraint(equalToConstant: 52),
+            googleButton.heightAnchor.constraint(equalToConstant: 52)
+        ])
+    }
+
+    private func setupRegisterButton() {
         let arrowImage = UIImage(systemName: "arrow.right")?.withConfiguration(
             UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
         )
@@ -123,9 +156,13 @@ final class RegisterView: UIView {
         registerButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         registerButton.layer.cornerRadius = 28
         registerButton.clipsToBounds = true
+    }
 
+    private func setupDividerView() {
         dividerView.configure(text: NSLocalizedString("auth.or", comment: ""))
+    }
 
+    private func setupGoogleButton() {
         googleButton.configuration = .plain()
         googleButton.backgroundColor = .white
         googleButton.configuration?.cornerStyle = .capsule
@@ -144,7 +181,9 @@ final class RegisterView: UIView {
         googleButton.tintColor = nil
         googleButton.semanticContentAttribute = .forceLeftToRight
         googleButton.imageView?.contentMode = .scaleAspectFit
+    }
 
+    private func setupSwitchSection() {
         switchTitleLabel.text = NSLocalizedString("auth.register.switch_prefix", comment: "")
         switchTitleLabel.textColor = Asset.petGray.color
         switchTitleLabel.font = .systemFont(ofSize: 14, weight: .regular)
@@ -160,7 +199,6 @@ final class RegisterView: UIView {
         switchContainerView.translatesAutoresizingMaskIntoConstraints = false
         switchContainerView.addArrangedSubview(switchTitleLabel)
         switchContainerView.addArrangedSubview(switchButton)
-
         switchWrapperView.addSubview(switchContainerView)
 
         switchTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
@@ -171,13 +209,18 @@ final class RegisterView: UIView {
 
         switchContainerView.setContentHuggingPriority(.required, for: .horizontal)
         switchContainerView.setContentCompressionResistancePriority(.required, for: .horizontal)
+    }
 
+    private func setupActivityIndicator() {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = Asset.accentColor.color
+    }
 
+    private func makeFieldsStack() -> UIStackView {
         let fieldsStack = UIStackView(arrangedSubviews: [
             emailFieldView,
             passwordFieldView,
+            confirmPasswordFieldView,
             registerButton,
             dividerView,
             googleButton,
@@ -187,28 +230,12 @@ final class RegisterView: UIView {
         fieldsStack.axis = .vertical
         fieldsStack.spacing = 22
         fieldsStack.translatesAutoresizingMaskIntoConstraints = false
-
-        cardView.addSubview(fieldsStack)
-
-        NSLayoutConstraint.activate([
-            fieldsStack.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 24),
-            fieldsStack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 24),
-            fieldsStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -24),
-            fieldsStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -24),
-
-            switchContainerView.centerXAnchor.constraint(equalTo: switchWrapperView.centerXAnchor),
-            switchContainerView.topAnchor.constraint(equalTo: switchWrapperView.topAnchor),
-            switchContainerView.bottomAnchor.constraint(equalTo: switchWrapperView.bottomAnchor),
-
-            emailFieldView.heightAnchor.constraint(equalToConstant: 80),
-            passwordFieldView.heightAnchor.constraint(equalToConstant: 80),
-            registerButton.heightAnchor.constraint(equalToConstant: 52),
-            googleButton.heightAnchor.constraint(equalToConstant: 52)
-        ])
+        return fieldsStack
     }
 
     private func setupActionsStyle() {
         emailFieldView.textField.returnKeyType = .next
-        passwordFieldView.textField.returnKeyType = .done
+        passwordFieldView.textField.returnKeyType = .next
+        confirmPasswordFieldView.textField.returnKeyType = .done
     }
 }

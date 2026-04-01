@@ -48,6 +48,7 @@ final class RegisterViewController: UIViewController {
     private func setupActions() {
         contentView.emailFieldView.textField.addTarget(self, action: #selector(emailChanged), for: .editingChanged)
         contentView.passwordFieldView.textField.addTarget(self, action: #selector(passwordChanged), for: .editingChanged)
+        contentView.confirmPasswordFieldView.textField.addTarget(self, action: #selector(confirmPasswordChanged), for: .editingChanged)
         contentView.registerButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
         contentView.googleButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
         contentView.switchButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
@@ -62,6 +63,7 @@ final class RegisterViewController: UIViewController {
             contentView.configure(title: content.title, subtitle: content.subtitle)
             contentView.emailFieldView.textField.text = content.email
             contentView.passwordFieldView.textField.text = content.password
+            contentView.confirmPasswordFieldView.textField.text = content.confirmPassword
             contentView.setRegisterButtonEnabled(content.isRegisterEnabled)
             contentView.setLoading(content.isLoading)
 
@@ -87,6 +89,10 @@ final class RegisterViewController: UIViewController {
 
     @objc private func passwordChanged() {
         viewModel.trigger(.passwordChanged(contentView.passwordFieldView.textField.text ?? ""))
+    }
+
+    @objc private func confirmPasswordChanged() {
+        viewModel.trigger(.confirmPasswordChanged(contentView.confirmPasswordFieldView.textField.text ?? ""))
     }
 
     @objc private func registerTapped() {

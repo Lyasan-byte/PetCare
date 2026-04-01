@@ -25,6 +25,7 @@ final class RegisterViewModel: ViewModel {
 
     private var email = ""
     private var password = ""
+    private var confirmPassword = ""
 
     init(
         authService: AuthServiceProtocol,
@@ -55,6 +56,10 @@ final class RegisterViewModel: ViewModel {
             password = value
             updateContent()
 
+        case .confirmPasswordChanged(let value):
+            confirmPassword = value
+            updateContent()
+
         case .registerTapped:
             register()
 
@@ -73,6 +78,7 @@ final class RegisterViewModel: ViewModel {
                 subtitle: NSLocalizedString("auth.register.subtitle", comment: ""),
                 email: email,
                 password: password,
+                confirmPassword: confirmPassword,
                 isRegisterEnabled: isValidCredentials && !isLoading,
                 isLoading: isLoading
             )
@@ -82,11 +88,13 @@ final class RegisterViewModel: ViewModel {
     private var isValidCredentials: Bool {
         !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        password == confirmPassword &&
         password.count >= 6
     }
 
     private func register() {
-        guard !email.isEmpty, !password.isEmpty else {
+        guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
             state = .error(NSLocalizedString("auth.validation.fill_all_fields", comment: ""))
             updateContent()
             return
@@ -94,6 +102,12 @@ final class RegisterViewModel: ViewModel {
 
         guard password.count >= 6 else {
             state = .error(NSLocalizedString("auth.validation.password_too_short", comment: ""))
+            updateContent()
+            return
+        }
+
+        guard password == confirmPassword else {
+            state = .error(NSLocalizedString("auth.validation.passwords_do_not_match", comment: ""))
             updateContent()
             return
         }
