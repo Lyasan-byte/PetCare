@@ -1,0 +1,47 @@
+# Minimal SwiftLint config for day-to-day use.
+
+excluded:
+  - Pods
+  - Carthage
+  - fastlane
+  - DerivedData
+  - .build
+  - Assets+Generated.swift
+  - Fonts+Generated.swift
+  - Strings+Generated.swift
+  - PetCare/Assets+Generated.swift
+  - PetCare/Fonts+Generated.swift
+  - PetCare/Strings+Generated.swift
+
+disabled_rules:
+  - todo
+  - trailing_whitespace
+  - trailing_newline
+
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+  - sorted_imports
+
+line_length:
+  warning: 140
+  ignores_urls: true
+  ignores_comments: true
+
+file_length:
+  warning: 800
+
+type_body_length:
+  warning: 400
+
+function_body_length:
+  warning: 80
+
+cyclomatic_complexity:
+  warning: 15
+
+force_cast: warning
+force_try: warning
+force_unwrapping: warning
+
+reporter: "xcode"
