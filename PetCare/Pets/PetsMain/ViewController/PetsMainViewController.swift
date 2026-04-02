@@ -11,12 +11,12 @@ import Combine
 final class PetsMainViewController: UIViewController {
     private let petsMainView = PetsMainView()
     private let petsMainViewModel: any PetsMainViewModeling
+    private let imageLoader: ImageLoader
     private var bag = Set<AnyCancellable>()
     
-    var onRoute: ((PetsMainRoute) -> ())?
-    
-    init(petsMainviewModel: PetsMainViewModel) {
+    init(petsMainviewModel: PetsMainViewModel, imageLoader: ImageLoader) {
         self.petsMainViewModel = petsMainviewModel
+        self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,8 +25,7 @@ final class PetsMainViewController: UIViewController {
         view.backgroundColor = .secondarySystemBackground
         setupHierarchy()
         setupLayout()
-        setupPetsTableView()
-        
+        setupCollectionView()
         bindAction()
         bindViewModel()
         render(petsMainViewModel.state)
@@ -47,40 +46,28 @@ final class PetsMainViewController: UIViewController {
         ])
     }
     
-    private func setupPetsTableView() {
-        petsMainView.petsTableView.register(PetCardCell.self, forCellReuseIdentifier: PetCardCell.identifier)
-        petsMainView.petsTableView.dataSource = self
-        petsMainView.petsTableView.delegate = self
+    private func setupCollectionView() {
+        petsMainView.collectionView.dataSource = self
+        petsMainView.collectionView.delegate = self
+        
+        petsMainView.collectionView.register(
+            PetsMainTopCell.self,
+            forCellWithReuseIdentifier: PetsMainTopCell.identifier
+        )
+        
+        petsMainView.collectionView.register(
+            PetCardCollectionCell.self,
+            forCellWithReuseIdentifier: PetCardCollectionCell.identifier
+        )
     }
     
     private func render(_ state: PetsMainState) {
-        petsMainView.tip.setText(text: state.tipText)
-        
-        petsMainView.petsTableView.reloadData()
-        
+        petsMainView.collectionView.reloadData()
         petsMainView.showEmptyStateView(state.isEmptyState)
-        
         petsMainView.setLoading(state.isLoading)
     }
     
-    private func handle(_ route: PetsMainRoute) {
-        switch route {
-        case .showQuickAction(_):
-            break
-        case .showPet(let pet):
-            onRoute?(.showPet(pet))
-        case .showAddPet:
-            onRoute?(.showAddPet)
-        case .showError(let string):
-            showError(string)
-        }
-    }
-    
     private func bindAction() {
-        petsMainView.tip.onTipTap = { [weak self] in
-            self?.petsMainViewModel.trigger(.onTipTap)
-        }
-        
         petsMainView.onAddPetButtonTap = { [weak self] in
             self?.petsMainViewModel.trigger(.onAddPetTap)
         }
@@ -88,23 +75,12 @@ final class PetsMainViewController: UIViewController {
     
     private func bindViewModel() {
         petsMainViewModel.stateDidChange
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
                 self.render(self.petsMainViewModel.state)
             }
             .store(in: &bag)
-        
-        petsMainViewModel.routePublisher
-            .sink { [weak self] route in
-                self?.handle(route)
-            }
-            .store(in: &bag)
-    }
-    
-    private func showError(_ message: String) {
-        let alert = UIAlertController(title: L10n.Common.error, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default))
-        present(alert, animated: true)
     }
     
     required init?(coder: NSCoder) {
@@ -112,22 +88,55 @@ final class PetsMainViewController: UIViewController {
     }
 }
 
-extension PetsMainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        petsMainViewModel.state.pets.count
+extension PetsMainViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: PetCardCell.identifier, for: indexPath) as? PetCardCell {
-            cell.setData(pet: petsMainViewModel.state.pets[indexPath.row])
-            return cell
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else {
+            return petsMainViewModel.state.pets.count
         }
-        return UITableViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            if let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PetsMainTopCell.identifier,
+                for: indexPath
+            ) as? PetsMainTopCell {
+                cell.configure(
+                    tipText: petsMainViewModel.state.tipText,
+                    onTipTap: { [weak self] in
+                        self?.petsMainViewModel.trigger(.onTipTap)
+                    },
+                    onQuickActionTap: { action in
+                        print(action)
+                    }
+                )
+                return cell
+            }
+            return UICollectionViewCell()
+        } else {
+            if let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PetCardCollectionCell.identifier,
+                for: indexPath
+            ) as? PetCardCollectionCell {
+                let pet = petsMainViewModel.state.pets[indexPath.item]
+                cell.setData(pet: pet, imageLoader: imageLoader)
+                return cell
+            }
+            return UICollectionViewCell()  
+        }
     }
 }
 
-extension PetsMainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        petsMainViewModel.trigger(.onPetTap(petsMainViewModel.state.pets[indexPath.row]))
+extension PetsMainViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.section == 1 else { return }
+        let pet = petsMainViewModel.state.pets[indexPath.item]
+        petsMainViewModel.trigger(.onPetTap(pet))
     }
 }

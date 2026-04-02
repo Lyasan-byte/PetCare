@@ -8,5 +8,5 @@
 import Foundation
 
 struct PetProfileState {
-    let pet: Pet
+    var pet: Pet
 }

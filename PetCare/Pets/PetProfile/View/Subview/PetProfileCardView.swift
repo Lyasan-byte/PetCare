@@ -9,8 +9,8 @@ import UIKit
 
 final class PetProfileCardView: UIView {
     var backgroundView = BackgroundView(backgroundColor: .tertiarySystemBackground)
-    var petImage: UIImageView = {
-        let image = ImageView(contentMode: .scaleAspectFill)
+    var petImage: PetRemoteImageView = {
+        let image = PetRemoteImageView(contentMode: .scaleAspectFill)
         image.layer.cornerRadius = 80
         return image
     }()
@@ -37,11 +37,6 @@ final class PetProfileCardView: UIView {
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
         setupHierarchy()
         setupLayout()
-    }
-    
-    convenience init(pet: Pet) {
-        self.init(frame: .zero)
-        configure(pet: pet)
     }
     
     private func setupHierarchy() {
@@ -99,8 +94,8 @@ final class PetProfileCardView: UIView {
         ])
     }
         
-    func configure(pet: Pet) {
-        petImage.image = UIImage(named: "defaultProfilePhoto")
+    func configure(pet: Pet, imageLoader: ImageLoader) {
+        petImage.setImage(urlString: pet.photoUrl, imageLoader: imageLoader)
         petNameLabel.text = pet.name
         petBreedLabel.text = pet.breed.uppercased()
         

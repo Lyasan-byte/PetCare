@@ -11,12 +11,12 @@ import Combine
 final class PetProfileViewController: UIViewController {
     private let petProfileView = PetProfileView()
     private let petProfileViewModel: any PetProfileViewModeling
+    private let imageLoader: ImageLoader
     private var bag = Set<AnyCancellable>()
     
-    var onRoute: ((PetProfileRoute) -> Void)?
-    
-    init(petProfileViewModel: any PetProfileViewModeling) {
+    init(petProfileViewModel: any PetProfileViewModeling, imageLoader: ImageLoader) {
         self.petProfileViewModel = petProfileViewModel
+        self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,7 +25,19 @@ final class PetProfileViewController: UIViewController {
         view.backgroundColor = .secondarySystemBackground
         setupHierarchy()
         setupLayout()
+        bindViewModel()
+        bindActions()
         render(petProfileViewModel.state)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func setupHierarchy() {
@@ -43,32 +55,28 @@ final class PetProfileViewController: UIViewController {
     
     private func bindViewModel() {
         petProfileViewModel.stateDidChange
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
                 self.render(self.petProfileViewModel.state)
             }
             .store(in: &bag)
-        petProfileViewModel.routePublisher
-            .sink { [weak self] route in
-                self?.handle(route)
-            }
-            .store(in: &bag)
+    }
+    
+    private func bindActions() {
+        petProfileView.editButton.onTap = { [weak self] in
+            self?.petProfileViewModel.trigger(.onEditTap)
+        }
+        
+        petProfileView.analyticsButton.onTap = { [weak self] in
+            self?.petProfileViewModel.trigger(.onAnalyticsTap)
+        }
     }
     
     private func render(_ state: PetProfileState) {
-        petProfileView.setPetData(state.pet)
+        petProfileView.setPetData(state.pet, imageLoader: imageLoader)
     }
     
-    private func handle(_ route: PetProfileRoute) {
-        switch route {
-        case .showEdit(let pet):
-            onRoute?(.showEdit(pet))
-        case .showAnalytics(let pet):
-            onRoute?(.showAnalytics(pet))
-        case .close:
-            onRoute?(.close)
-        }
-    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

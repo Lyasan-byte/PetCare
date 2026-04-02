@@ -10,9 +10,8 @@ import UIKit
 final class PetImagePickerView: UIView {
     var onPhotoPickerTap: (() -> Void)?
     
-    private var imageView: UIImageView = {
-        let imageView = ImageView(contentMode: .scaleAspectFill)
-        imageView.image = UIImage(named: "defaultProfilePhoto")
+    private var imageView: PetRemoteImageView = {
+        let imageView = PetRemoteImageView(contentMode: .scaleAspectFill)
         imageView.layer.cornerRadius = 65
         return imageView
     }()
@@ -83,7 +82,17 @@ final class PetImagePickerView: UIView {
     }
     
     func setImage(_ image: UIImage?) {
+        imageView.cancelLoading()
         imageView.image = image ?? UIImage(named: "defaultProfilePhoto")
+    }
+
+    func setRemoteImage(urlString: String?, imageLoader: ImageLoader) {
+        imageView.setImage(urlString: urlString, imageLoader: imageLoader)
+    }
+
+    func resetImage() {
+        imageView.cancelLoading()
+        imageView.image = UIImage(named: "defaultProfilePhoto")
     }
     
     required init?(coder: NSCoder) {

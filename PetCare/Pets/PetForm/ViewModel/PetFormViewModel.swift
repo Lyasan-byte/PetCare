@@ -16,17 +16,14 @@ final class PetFormViewModel: PetFormViewModeling {
     }
     
     private(set) var stateDidChange = ObservableObjectPublisher()
-    
-    var routePublisher: AnyPublisher<PetFormRoute, Never> {
-        routeSubject.eraseToAnyPublisher()
-    }
+    private var bag = Set<AnyCancellable>()
+    private weak var moduleOutput: PetFormModuleOutput?
     
     private let petRepository: PetRepository
-    private var routeSubject = PassthroughSubject<PetFormRoute, Never>()
-    private var bag = Set<AnyCancellable>()
     
-    init(petRepository: PetRepository, mode: PetFormMode) {
+    init(petRepository: PetRepository, mode: PetFormMode, moduleOutput: PetFormModuleOutput) {
         self.petRepository = petRepository
+        self.moduleOutput = moduleOutput
         
         let petId: String
         switch mode {
@@ -41,17 +38,12 @@ final class PetFormViewModel: PetFormViewModeling {
     
     func trigger(_ intent: PetFormIntent) {
         switch intent {
-        case .onDidLoad:
-            validate()
         case .onChangeName(let name):
             state.name = name
-            validate()
         case .onChangeBreed(let breed):
             state.breed = breed
-            validate()
         case .onChangeWeight(let weight):
             state.weightText = weight
-            validate()
         case .onChangeDate(let date):
             state.dateOfBirth = date
         case .onChangeGender(let gender):
@@ -67,53 +59,68 @@ final class PetFormViewModel: PetFormViewModeling {
         case .onSave:
             save()
         case .onDelete:
-            routeSubject.send(.showDeleteConfirmation)
+            state.isDeleteConfirmationPresented = true
         case .onConfirmDelete:
+            state.isDeleteConfirmationPresented = false
             delete()
+        case .onCloseTap:
+            moduleOutput?.petFormModuleDidClose()
+        case .onDismissAlert:
+            state.errorMessage = nil
+            state.isDeleteConfirmationPresented = false
         }
     }
     
-    private func validate() {
+    private func validateForm() -> String? {
         let trimmedName = state.name.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedBreed = state.breed.trimmingCharacters(in: .whitespacesAndNewlines)
         let normalizedWeight = state.weightText
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: ",", with: ".")
-        
-        state.nameError = trimmedName.isEmpty ? L10n.Pets.Form.Validation.enterPetName : nil
-        state.breedError = trimmedBreed.isEmpty ? L10n.Pets.Form.Validation.enterBreed : nil
-        
-        if normalizedWeight.isEmpty {
-            state.weightError = L10n.Pets.Form.Validation.enterWeight
-        } else if let value = Double(normalizedWeight), value > 0 {
-            state.weightError = nil
-        } else {
-            state.weightError = L10n.Pets.Form.Validation.weightGreaterThanZero
+
+        if trimmedName.isEmpty {
+            return L10n.Pets.Form.Validation.enterPetName
         }
+
+        if trimmedBreed.isEmpty {
+            return L10n.Pets.Form.Validation.enterBreed
+        }
+
+        if normalizedWeight.isEmpty {
+            return L10n.Pets.Form.Validation.enterWeight
+        }
+
+        guard let weight = Double(normalizedWeight), weight > 0 else {
+            return L10n.Pets.Form.Validation.weightGreaterThanZero
+        }
+
+        return nil
     }
     
     private func save() {
-        validate()
-        
-        guard state.isSaveEnabled else { return }
-        guard let pet = makePetFromState() else {
-            routeSubject.send(.showErrorAlert(L10n.Pets.Form.Validation.checkFormFields))
+        if let validationError = validateForm() {
+            state.errorMessage = validationError
             return
         }
         
+        guard let pet = makePetFromState() else {
+            state.errorMessage = L10n.Pets.Form.Validation.checkFormFields
+            return
+        }
+
         state.isSaving = true
         
-        petRepository.save(pet: pet)
+        petRepository.save(pet: pet, selectedPhoto: state.selectedPhotoData)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
                 state.isSaving = false
                 
                 if case .failure(let error) = completion {
-                    routeSubject.send(.showErrorAlert(error.localizedDescription))
+                    state.errorMessage = error.localizedDescription
                 }
             } receiveValue: { [weak self] pet in
-                self?.routeSubject.send(.didSavePet(pet))
+                self?.moduleOutput?.petFormModuleDidSave(pet)
             }
             .store(in: &bag)
     }
@@ -128,10 +135,10 @@ final class PetFormViewModel: PetFormViewModeling {
                 self.state.isSaving = false
                 
                 if case .failure(let error) = completion {
-                    self.routeSubject.send(.showErrorAlert(error.localizedDescription))
+                    state.errorMessage = error.localizedDescription
                 }
             } receiveValue: { [weak self] in
-                self?.routeSubject.send(.didDeletePet)
+                self?.moduleOutput?.petFormModuleDidDelete()
             }
             .store(in: &bag)
     }

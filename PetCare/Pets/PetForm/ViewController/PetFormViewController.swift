@@ -12,14 +12,14 @@ import Combine
 final class PetFormViewController: UIViewController {
     private let petFormView = PetFormView()
     private let petFormViewModel: any PetFormViewModeling
+    private let imageLoader: ImageLoader
     
     private var bag = Set<AnyCancellable>()
     private var selectedImage: UIImage?
-    
-    var onFinish: ((PetFormScreenResult) -> Void)?
-    
-    init(petFormViewModel: any PetFormViewModeling) {
+        
+    init(petFormViewModel: any PetFormViewModeling, imageLoader: ImageLoader) {
         self.petFormViewModel = petFormViewModel
+        self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -97,23 +97,17 @@ final class PetFormViewController: UIViewController {
             self?.petFormViewModel.trigger(.onSave)
         }
         
-        petFormView.deleteButton.addAction(UIAction { [weak self] _ in
+        petFormView.deleteButton.onTap = { [weak self] in
             self?.petFormViewModel.trigger(.onDelete)
-        }, for: .touchUpInside)
+        }
     }
     
     private func bindViewModel() {
         petFormViewModel.stateDidChange
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
                 self.render(state: self.petFormViewModel.state)
-            }
-            .store(in: &bag)
-        
-        petFormViewModel.routePublisher
-            .sink { [weak self] route in
-                guard let self else { return }
-                self.handle(route: route)
             }
             .store(in: &bag)
     }
@@ -145,37 +139,70 @@ final class PetFormViewController: UIViewController {
         petFormView.petGenderPicker.setSelectedIndex(genderIndex)
         
         petFormView.saveButton.isEnabled = state.isSaveEnabled
+        petFormView.deleteButton.isEnabled = !state.isSaving
         petFormView.deleteButton.isHidden = !state.showsDeleteButton
-    }
-    
-    private func handle(route: PetFormRoute) {
-        switch route {
-        case .showDeleteConfirmation:
-            showDeleteConfirmation()
-        case .showErrorAlert(let message):
-            showAlert(message)
-        case .didSavePet(let pet):
-            onFinish?(.saved(pet))
-        case .didDeletePet:
-            onFinish?(.deleted)
-        case .close:
-            onFinish?(.closed)
+        petFormView.setLoading(state.isSaving)
+                
+        if let data = state.selectedPhotoData,
+           let image = UIImage(data: data) {
+            petFormView.photoPickerView.setImage(image)
         }
+
+        renderPhoto(state: state)
+        renderDeleteConfirmationIfNeeded(state.isDeleteConfirmationPresented)
+        renderErrorIfNeeded(state.errorMessage)
     }
     
-    private func showDeleteConfirmation() {
-        let alert = UIAlertController(title: "Delete", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
-            self?.petFormViewModel.trigger(.onConfirmDelete)
-        }))
+    private func renderPhoto(state: PetFormState) {
+        if let data = state.selectedPhotoData,
+           let image = UIImage(data: data) {
+            petFormView.photoPickerView.setImage(image)
+            return
+        }
         
+        if let urlString = state.existingPhotoUrl, !urlString.isEmpty {
+            petFormView.photoPickerView.setRemoteImage(
+                urlString: urlString,
+                imageLoader: imageLoader
+            )
+            return
+        }
+        
+        petFormView.photoPickerView.resetImage()
+    }
+    
+    private func renderDeleteConfirmationIfNeeded(_ isPresented: Bool) {
+        guard isPresented else { return }
+        guard presentedViewController == nil else { return }
+
+        let alert = UIAlertController(
+            title: "Delete",
+            message: "Are you sure you want to delete this pet?",
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(title: "Cancel", style: .cancel) { [weak self] _ in
+                self?.petFormViewModel.trigger(.onDismissAlert)
+            }
+        )
+        alert.addAction(
+            UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
+                self?.petFormViewModel.trigger(.onConfirmDelete)
+            }
+        )
         present(alert, animated: true)
     }
-    
-    private func showAlert(_ message: String) {
+
+    private func renderErrorIfNeeded(_ message: String?) {
+        guard let message else { return }
+        guard presentedViewController == nil else { return }
+
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(
+            UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                self?.petFormViewModel.trigger(.onDismissAlert)
+            }
+        )
         present(alert, animated: true)
     }
     
@@ -200,23 +227,20 @@ final class PetFormViewController: UIViewController {
 extension PetFormViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
-        
-        guard let provider = results.first?.itemProvider,
-              provider.canLoadObject(ofClass: UIImage.self) else { return }
-        
-        provider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-            guard let image = image as? UIImage,
-                  error == nil else { return }
-            DispatchQueue.main.async {
-                self?.selectedImage = image
-                self?.petFormView.photoPickerView.setImage(image)
+
+        guard let provider = results.first?.itemProvider else { return }
+
+        if provider.hasItemConformingToTypeIdentifier("public.image") {
+            provider.loadDataRepresentation(forTypeIdentifier: "public.image") { [weak self] data, error in
+                guard let self, let data, error == nil else { return }
+                guard let image = UIImage(data: data),
+                      let compressedData = image.jpegData(compressionQuality: 0.7) else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.petFormViewModel.trigger(.onPickPhoto(compressedData))
+                }
             }
         }
-    }   
-}
-
-enum PetFormScreenResult {
-    case closed
-    case saved(Pet)
-    case deleted
+    }
 }

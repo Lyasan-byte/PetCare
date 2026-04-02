@@ -8,7 +8,8 @@
 import Foundation
 
 enum PetProfileIntent {
-    case onEditTap(Pet)
-    case onAnalyticsTap(Pet)
-    case onBreedTap(String)
+    case onEditTap
+    case onAnalyticsTap
+    case onBreedTap
+    case onCloseTap
 }

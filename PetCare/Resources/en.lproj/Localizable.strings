@@ -6,6 +6,7 @@
 //
 
 // MARK: - Auth
+
 "auth.login.title" = "Login";
 "auth.login.subtitle" = "Welcome back!";
 "auth.login.button" = "Login";
@@ -97,4 +98,3 @@
 "pets.main.tip.default_text" = "Movement is medicine! Daily walks and playtime prevent boredom, reduce destructive behavior, and keep your pet’s body and mind sharp.";
 
 "pets.main.tip.title" = "Pet Health Tip";
-

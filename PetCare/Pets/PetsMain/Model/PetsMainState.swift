@@ -14,4 +14,5 @@ struct PetsMainState {
     var tipText: String = Tip.defaultTip
     var isEmptyState: Bool = false
     var isLoading: Bool = false
+    var errorMessage: String?
 }

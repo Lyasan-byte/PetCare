@@ -10,7 +10,9 @@ import Foundation
 enum PetsMainIntent {
     case viewDidLoad
     case onTipTap
+    case onAddActivity
     case onAddPetTap
     case onPetTap(Pet)
     case refreshPets
+    case onDismissAlert
 }

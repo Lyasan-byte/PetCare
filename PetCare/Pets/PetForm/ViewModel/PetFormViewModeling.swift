@@ -7,6 +7,4 @@
 
 import Combine
 
-protocol PetFormViewModeling: UIKitViewModel where State == PetFormState, Intent == PetFormIntent {
-    var routePublisher: AnyPublisher<PetFormRoute, Never> { get }
-}
+protocol PetFormViewModeling: UIKitViewModel where State == PetFormState, Intent == PetFormIntent {}

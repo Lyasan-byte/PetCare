@@ -8,6 +8,8 @@
 import UIKit
 
 final class PetProfileButton: UIView {
+    var onTap: (() -> Void)?
+    
     var background = BackgroundView(cornerRadius: 20)
     var buttonText = TextLabel(font: .systemFont(ofSize: 16, weight: .semibold))
     
@@ -53,6 +55,11 @@ final class PetProfileButton: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 25
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+        button.addTarget(self, action: #selector(didButtonTap), for: .touchUpInside)
+    }
+    
+    @objc private func didButtonTap() {
+        onTap?()
     }
     
     required init?(coder: NSCoder) {

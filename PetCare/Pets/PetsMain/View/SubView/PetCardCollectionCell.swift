@@ -1,24 +1,28 @@
 //
-//  PetCardCell.swift
+//  PetCardCollectionCell.swift
 //  PetCare
 //
-//  Created by Ляйсан on 28/3/26.
+//  Created by Ляйсан on 1/4/26.
 //
 
 import UIKit
 
-final class PetCardCell: UITableViewCell {
+final class PetCardCollectionCell: UICollectionViewCell {
+    static let identifier = "PetCardCollectionCell"
     
-    static let identifier = "PetCardCell"
-    var petCard = PetCardRowView()
+    private let petCard = PetCardRowView()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         contentView.backgroundColor = .clear
         backgroundColor = .clear
         setupHierarchy()
         setupLayout()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        petCard.prepareForReuse()
     }
     
     private func setupHierarchy() {
@@ -34,8 +38,8 @@ final class PetCardCell: UITableViewCell {
         ])
     }
     
-    func setData(pet: Pet) {
-        petCard.setData(pet: pet)
+    func setData(pet: Pet, imageLoader: ImageLoader) {
+        petCard.setData(pet: pet, imageLoader: imageLoader)
     }
     
     required init?(coder: NSCoder) {
