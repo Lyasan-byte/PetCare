@@ -10,7 +10,7 @@ import UIKit
 final class PetProfileCardView: UIView {
     var backgroundView = BackgroundView(backgroundColor: .tertiarySystemBackground)
     var petImage: PetRemoteImageView = {
-        let image = PetRemoteImageView(contentMode: .scaleAspectFill)
+        let image = PetRemoteImageView()
         image.layer.cornerRadius = 80
         return image
     }()

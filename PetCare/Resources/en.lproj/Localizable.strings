@@ -62,6 +62,9 @@
 
 "pets.form.gender.title" = "GENDER";
 
+"pets.gender.male" = "Male";
+"pets.gender.female" = "Female";
+
 "pets.form.public_profile.title" = "Public Profile";
 "pets.form.public_profile.subtitle" = "Visible to local pet owners.";
 
@@ -101,3 +104,7 @@
 "pets.main.tip.default_text" = "Movement is medicine! Daily walks and playtime prevent boredom, reduce destructive behavior, and keep your pet’s body and mind sharp.";
 
 "pets.main.tip.title" = "Pet Health Tip";
+
+"pets.public.header.title" = "Public Profiles";
+"pets.public.header.subtitle" = "COMMUNITY FEED";
+"pets.public.header.feed_title" = "Meet the Pack";

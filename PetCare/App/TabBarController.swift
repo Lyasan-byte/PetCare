@@ -9,6 +9,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private var petsMainCoordinator: PetsMainCoordinator?
+    private let imageLoader: ImageLoader = ImageLoadService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,7 @@ final class TabBarController: UITabBarController {
                 imageService: ImageUploadService()
             ),
             tipRepository: TipService(),
-            ownerId: "test_owner_id", imageLoader: ImageLoadService()
+            ownerId: "test_owner_id", imageLoader: imageLoader
         )
         self.petsMainCoordinator = petsMainCoordinator
         
@@ -33,7 +34,7 @@ final class TabBarController: UITabBarController {
         petsNavigationController.tabBarItem.image = UIImage(systemName: "pawprint.fill")
         petsNavigationController.tabBarItem.title = nil
 
-        let publicPetsViewController = UIViewController()
+        let publicPetsViewController = PublicPetsViewController(publicPetsViewModel: PublicPetsViewModel(moduleOutput: PublicPetsCoordinator()), imageLoader: imageLoader)
         let navPublicPetsViewController = setupTabBatItem(for: publicPetsViewController, image: "globe.americas.fill")
         
         let gameViewController = UIViewController()

@@ -10,11 +10,11 @@ import UIKit
 final class PetsMainTopCell: UICollectionViewCell {
     static let identifier = "PetsMainTopCell"
     
-    let petsHeader = PetsViewHeader()
-    let quickActionsButtonsHeader = QuickActionButtonsHeader()
-    let quickActionButtonsCollection = QuickActionButtonsCollectionView()
-    let tip = TipView()
-    let petTableViewTitle = TextLabel(
+    private let header = Header(icon: "pawprint.fill", text: L10n.Pets.Main.title)
+    private let quickActionsButtonsHeader = QuickActionButtonsHeader()
+    private let quickActionButtonsCollection = QuickActionButtonsCollectionView()
+    private let tip = TipView()
+    private let petTableViewTitle = TextLabel(
         text: L10n.Pets.Main.familyTitle,
         textAlignment: .left
     )
@@ -28,7 +28,7 @@ final class PetsMainTopCell: UICollectionViewCell {
     }
     
     private func setupHierarchy() {
-        contentView.addSubview(petsHeader)
+        contentView.addSubview(header)
         contentView.addSubview(quickActionsButtonsHeader)
         contentView.addSubview(quickActionButtonsCollection)
         contentView.addSubview(tip)
@@ -37,11 +37,11 @@ final class PetsMainTopCell: UICollectionViewCell {
     
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            petsHeader.topAnchor.constraint(equalTo: contentView.topAnchor),
-            petsHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            petsHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            header.topAnchor.constraint(equalTo: contentView.topAnchor),
+            header.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            header.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            quickActionsButtonsHeader.topAnchor.constraint(equalTo: petsHeader.bottomAnchor, constant: 35),
+            quickActionsButtonsHeader.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 35),
             quickActionsButtonsHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             quickActionsButtonsHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             

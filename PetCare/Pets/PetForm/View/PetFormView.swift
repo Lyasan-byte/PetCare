@@ -36,7 +36,7 @@ final class PetFormView: UIView {
     let petBreedTextField = TextFieldView(title: L10n.Pets.Form.Breed.title, placeholder: L10n.Pets.Form.Breed.placeholder, autocorrectionType: .default)
     let petWeightTextField = TextFieldView(title: L10n.Pets.Form.Weight.title, placeholder: L10n.Pets.Form.Weight.placeholder, keyboardType: .decimalPad)
     let petDateOfBirthPicker = DatePickerView(title: L10n.Pets.Form.BirthDate.title)
-    let petGenderPicker = SegmentedPickerView(items: Gender.allCases.map(\.rawValue))
+    let petGenderPicker = SegmentedPickerView(items: Gender.allCases.map(\.title))
     
     let noteTextView = NoteTextView()
     let isPublicProfileSwitch = SwitchOptionView(title: L10n.Pets.Form.PublicProfile.title, subtitle: L10n.Pets.Form.PublicProfile.subtitle, symbolName: "globe.americas.fill", iconColor: Asset.pinkAccent.color, circleColor: Asset.lightPink.color, circleSize: 45, iconSize: 20)
