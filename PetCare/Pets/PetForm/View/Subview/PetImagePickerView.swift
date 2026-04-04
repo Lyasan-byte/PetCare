@@ -30,7 +30,6 @@ final class PetImagePickerView: UIView {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
-        configure()
         setupActions()
     }
     
@@ -46,6 +45,8 @@ final class PetImagePickerView: UIView {
     }
     
     private func setupLayout() {
+        translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             imageContainer.topAnchor.constraint(equalTo: topAnchor),
             imageContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -65,10 +66,6 @@ final class PetImagePickerView: UIView {
             photoPickerTitle.trailingAnchor.constraint(equalTo: trailingAnchor),
             photoPickerTitle.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-    }
-    
-    private func configure() {
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupActions() {

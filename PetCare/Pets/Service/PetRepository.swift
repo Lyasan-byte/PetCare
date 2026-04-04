@@ -14,3 +14,5 @@ protocol PetRepository {
     func delete(petId: String) -> AnyPublisher<Void, Error>
     func fetchPets(for ownerId: String) -> AnyPublisher<[Pet], Error>
 }
+
+

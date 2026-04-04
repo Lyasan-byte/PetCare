@@ -16,25 +16,19 @@ enum PetFormScreenResult {
 final class PetFormCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let petRepository: PetRepository
+    private let mode: PetFormMode
     private let imageLoader: ImageLoader
     
     var onFinish: ((PetFormScreenResult) -> Void)?
     
-    init(navigationController: UINavigationController, petRepository: PetRepository, imageLoader: ImageLoader) {
+    init(navigationController: UINavigationController, petRepository: PetRepository, imageLoader: ImageLoader, mode: PetFormMode) {
         self.navigationController = navigationController
         self.petRepository = petRepository
         self.imageLoader = imageLoader
+        self.mode = mode
     }
     
-    func showCreate(ownerId: String) {
-        start(mode: .create(ownerId: ownerId))
-    }
-    
-    func showEdit(pet: Pet) {
-        start(mode: .edit(pet))
-    }
-    
-    func start(mode: PetFormMode) {
+    func start() {
         let viewController = PetFormViewController(
             petFormViewModel: PetFormViewModel(
                 petRepository: petRepository,
