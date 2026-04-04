@@ -13,6 +13,12 @@ public enum L10n {
   public enum Auth {
     /// OR
     public static let or = L10n.tr("Localizable", "auth.or", fallback: "OR")
+    public enum ConfirmPassword {
+      /// ••••••••
+      public static let placeholder = L10n.tr("Localizable", "auth.confirm_password.placeholder", fallback: "••••••••")
+      /// CONFIRM PASSWORD
+      public static let title = L10n.tr("Localizable", "auth.confirm_password.title", fallback: "CONFIRM PASSWORD")
+    }
     public enum Email {
       /// hello@petcare.com
       public static let placeholder = L10n.tr("Localizable", "auth.email.placeholder", fallback: "hello@petcare.com")
@@ -62,6 +68,8 @@ public enum L10n {
       public static let fillAllFields = L10n.tr("Localizable", "auth.validation.fill_all_fields", fallback: "Please fill in all fields")
       /// Password must contain at least 6 characters
       public static let passwordTooShort = L10n.tr("Localizable", "auth.validation.password_too_short", fallback: "Password must contain at least 6 characters")
+      /// Passwords do not match
+      public static let passwordsDoNotMatch = L10n.tr("Localizable", "auth.validation.passwords_do_not_match", fallback: "Passwords do not match")
     }
   }
   public enum Common {
@@ -149,6 +157,12 @@ public enum L10n {
         public static let title = L10n.tr("Localizable", "pets.form.weight.title", fallback: "WEIGHT (KG)")
       }
     }
+    public enum Gender {
+      /// Female
+      public static let female = L10n.tr("Localizable", "pets.gender.female", fallback: "Female")
+      /// Male
+      public static let male = L10n.tr("Localizable", "pets.gender.male", fallback: "Male")
+    }
     public enum Main {
       /// Your Family
       public static let familyTitle = L10n.tr("Localizable", "pets.main.family_title", fallback: "Your Family")
@@ -196,6 +210,16 @@ public enum L10n {
       public static let weight = L10n.tr("Localizable", "pets.profile.weight", fallback: "Weight")
       /// kg
       public static let weightUnitKg = L10n.tr("Localizable", "pets.profile.weight_unit_kg", fallback: "kg")
+    }
+    public enum Public {
+      public enum Header {
+        /// Meet the Pack
+        public static let feedTitle = L10n.tr("Localizable", "pets.public.header.feed_title", fallback: "Meet the Pack")
+        /// COMMUNITY FEED
+        public static let subtitle = L10n.tr("Localizable", "pets.public.header.subtitle", fallback: "COMMUNITY FEED")
+        /// Public Profiles
+        public static let title = L10n.tr("Localizable", "pets.public.header.title", fallback: "Public Profiles")
+      }
     }
   }
 }

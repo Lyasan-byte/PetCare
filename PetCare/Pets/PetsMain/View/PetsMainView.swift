@@ -7,19 +7,22 @@ final class PetsMainView: UIView {
     private let emptyStateView = EmptyStateView(
         title: L10n.Pets.Main.EmptyState.title,
         subtitle: L10n.Pets.Main.EmptyState.subtitle,
-        image: "pawprint"
+        image: "pawprint.fill"
     )
     
-    let collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            if sectionIndex == 0 {
+            guard let section = PetsMainSection(rawValue: sectionIndex) else {
+                return nil
+            }
+            switch section {
+            case .top:
                 return createTopSection()
-            } else {
+            case .pets:
                 return createPetsSection()
             }
         }
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         view.showsVerticalScrollIndicator = false
         return view
@@ -82,17 +85,40 @@ final class PetsMainView: UIView {
         }
         
         loader.isHidden = !isLoading
-        collectionView.isHidden = isLoading
         addPetButton.isHidden = isLoading
-        emptyStateView.isHidden = true
+        collectionView.isHidden = isLoading
+    }
+    
+    func setupCollection(dataSource: UICollectionViewDataSource,
+                         delegate: UICollectionViewDelegate) {
+        collectionView.dataSource = dataSource
+        collectionView.delegate = delegate
+    }
+    
+    func registerCells() {
+        collectionView.register(
+            PetsMainTopCell.self,
+            forCellWithReuseIdentifier: PetsMainTopCell.identifier
+        )
+        
+        collectionView.register(
+            PetCardCollectionCell.self,
+            forCellWithReuseIdentifier: PetCardCollectionCell.identifier
+        )
+    }
+    
+    func reloadData() {
+        collectionView.reloadData()
     }
     
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         loader.translatesAutoresizingMaskIntoConstraints = false
         loader.isHidden = true
         loader.style = .medium
         loader.hidesWhenStopped = true
+        emptyStateView.isHidden = true
     }
     
     private func setupAction() {
@@ -126,9 +152,7 @@ extension PetsMainView {
             ),
             subitems: [item]
         )
-        
-        let section = NSCollectionLayoutSection(group: group)
-        return section
+        return NSCollectionLayoutSection(group: group)
     }
     
     private static func createPetsSection() -> NSCollectionLayoutSection {

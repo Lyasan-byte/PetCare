@@ -30,7 +30,10 @@ final class PetFormViewModel: PetFormViewModeling {
         case .create:
             petId = petRepository.makeNewPetId()
         case .edit(let pet):
-            petId = pet.id
+            guard let existingId = pet.id else {
+                fatalError("PetFormViewModel: edit mode requires pet id")
+            }
+            petId = existingId
         }
         
         self.state = State(mode: mode, petId: petId)
@@ -110,7 +113,7 @@ final class PetFormViewModel: PetFormViewModeling {
 
         state.isSaving = true
         
-        petRepository.save(pet: pet, selectedPhoto: state.selectedPhotoData)
+        petRepository.save(pet: pet, petId: state.petId, selectedPhoto: state.selectedPhotoData)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
@@ -168,7 +171,7 @@ final class PetFormViewModel: PetFormViewModeling {
             
         case .edit(let pet):
             return Pet(
-                id: pet.id,
+                id: state.petId,
                 name: state.name.trimmingCharacters(in: .whitespacesAndNewlines),
                 breed: state.breed.trimmingCharacters(in: .whitespacesAndNewlines),
                 weight: weight,

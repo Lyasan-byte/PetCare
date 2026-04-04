@@ -61,6 +61,9 @@
 
 "pets.form.gender.title" = "ПОЛ";
 
+"pets.gender.male" = "Мальчик";
+"pets.gender.female" = "Девочка";
+
 "pets.form.public_profile.title" = "Публичный профиль";
 "pets.form.public_profile.subtitle" = "Виден местным владельцам питомцев.";
 
@@ -100,3 +103,7 @@
 "pets.main.tip.default_text" = "Движение — это здоровье! Ежедневные прогулки и игры предотвращают скуку, уменьшают деструктивное поведение и поддерживают тело и ум питомца в тонусе.";
 
 "pets.main.tip.title" = "Совет по здоровью питомца";
+
+"pets.public.header.title" = "Публичные профили";
+"pets.public.header.subtitle" = "СООБЩЕСТВО";
+"pets.public.header.feed_title" = "Знакомьтесь с питомцами";

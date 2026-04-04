@@ -25,7 +25,7 @@ final class QuickActionButtonsCollectionView: UIView {
         item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 10)
         let group: NSCollectionLayoutGroup = .horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(90)), repeatingSubitem: item, count: 3)
         let section: NSCollectionLayoutSection = .init(group: group)
-        section.contentInsets = .init(top: 0, leading: 20, bottom: 0, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 6)
         return section
     }
     
@@ -33,7 +33,6 @@ final class QuickActionButtonsCollectionView: UIView {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
-        configure()
     }
     
     convenience init(onTapAction: ((QuickActionCellType) -> Void)?) {
@@ -46,17 +45,13 @@ final class QuickActionButtonsCollectionView: UIView {
     }
     
     private func setupLayout() {
+        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             quickActionCollection.topAnchor.constraint(equalTo: topAnchor),
             quickActionCollection.leadingAnchor.constraint(equalTo: leadingAnchor),
             quickActionCollection.trailingAnchor.constraint(equalTo: trailingAnchor),
             quickActionCollection.bottomAnchor.constraint(equalTo: bottomAnchor)
-            
         ])
-    }
-    
-    private func configure() {
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
