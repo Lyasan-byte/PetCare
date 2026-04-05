@@ -33,11 +33,6 @@ final class AppCoordinator {
     }
 
     func showAuthFlow() {
-        if let handle = stateDidChangeHandle {
-            Auth.auth().removeStateDidChangeListener(handle)
-            stateDidChangeHandle = nil
-        }
-
         let navigationController = UINavigationController()
         let authCoordinator = AuthCoordinator(
             navigationController: navigationController,
@@ -52,11 +47,6 @@ final class AppCoordinator {
     }
 
     func showMainFlow() {
-        if let handle = stateDidChangeHandle {
-            Auth.auth().removeStateDidChangeListener(handle)
-            stateDidChangeHandle = nil
-        }
-
         authCoordinator = nil
         let nav = TabBarController()
         window?.rootViewController = nav

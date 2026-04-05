@@ -100,3 +100,17 @@
 "pets.main.tip.default_text" = "Движение — это здоровье! Ежедневные прогулки и игры предотвращают скуку, уменьшают деструктивное поведение и поддерживают тело и ум питомца в тонусе.";
 
 "pets.main.tip.title" = "Совет по здоровью питомца";
+
+
+// MARK: - User Profile
+
+"user.profile.screen.title" = "Профиль";
+"user.profile.name.placeholder" = "Любитель питомцев";
+"user.profile.email.missing" = "Почта не указана";
+"user.profile.pets.count" = "Number of Pets";
+"user.profile.best.score" = "Best Score";
+"user.profile.settings.title" = "Settings";
+"user.profile.settings.subtitle" = "Notifications, Appearance & Account Management";
+"user.profile.settings.placeholder" = "Экран настроек появится позже.";
+"user.profile.logout.title" = "Logout";
+"user.profile.edit.navigation.title" = "Редактировать профиль";

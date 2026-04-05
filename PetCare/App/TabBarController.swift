@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class TabBarController: UITabBarController {
     private var petsMainCoordinator: PetsMainCoordinator?
+    private var userProfileCoordinator: UserProfileCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,14 +18,20 @@ final class TabBarController: UITabBarController {
     }
     
     private func setupTabs() {
+        let ownerId = Auth.auth().currentUser?.uid ?? "test_owner_id"
+        let petRepository = PetService(
+            imageService: ImageUploadService()
+        )
+        let imageLoader = ImageLoadService()
+        let userProfileRepository = FirebaseUserProfileService()
+
         let petsNavigationController = UINavigationController()
         let petsMainCoordinator = PetsMainCoordinator(
             navigationController: petsNavigationController,
-            petRepository: PetService(
-                imageService: ImageUploadService()
-            ),
+            petRepository: petRepository,
             tipRepository: TipService(),
-            ownerId: "test_owner_id", imageLoader: ImageLoadService()
+            ownerId: ownerId,
+            imageLoader: imageLoader
         )
         self.petsMainCoordinator = petsMainCoordinator
         
@@ -39,10 +47,21 @@ final class TabBarController: UITabBarController {
         let gameViewController = UIViewController()
         let navGameViewController = setupTabBatItem(for: gameViewController, image: "gamecontroller.fill")
         
-        let userProfileController = UIViewController()
-        let navUserProfileViewController = setupTabBatItem(for: userProfileController, image: "person.fill")
+        let userProfileNavigationController = UINavigationController()
+        let userProfileCoordinator = UserProfileCoordinator(
+            navigationController: userProfileNavigationController,
+            petRepository: petRepository,
+            userProfileRepository: userProfileRepository,
+            imageLoader: imageLoader
+        )
+        self.userProfileCoordinator = userProfileCoordinator
+
+        let userProfileController = userProfileCoordinator.start()
+        userProfileNavigationController.setViewControllers([userProfileController], animated: false)
+        userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
+        userProfileNavigationController.tabBarItem.title = nil
         
-        setViewControllers([petsNavigationController, navPublicPetsViewController, navGameViewController, navUserProfileViewController], animated: true)
+        setViewControllers([petsNavigationController, navPublicPetsViewController, navGameViewController, userProfileNavigationController], animated: true)
     }
     
     private func setupTabBatItem(for viewController: UIViewController, image: String) -> UINavigationController {

@@ -101,3 +101,17 @@
 "pets.main.tip.default_text" = "Movement is medicine! Daily walks and playtime prevent boredom, reduce destructive behavior, and keep your pet’s body and mind sharp.";
 
 "pets.main.tip.title" = "Pet Health Tip";
+
+
+// MARK: - User Profile
+
+"user.profile.screen.title" = "Profile";
+"user.profile.name.placeholder" = "Pet Lover";
+"user.profile.email.missing" = "No email";
+"user.profile.pets.count" = "Number of Pets";
+"user.profile.best.score" = "Best Score";
+"user.profile.settings.title" = "Settings";
+"user.profile.settings.subtitle" = "Notifications, Appearance & Account Management";
+"user.profile.settings.placeholder" = "Settings screen is coming soon.";
+"user.profile.logout.title" = "Logout";
+"user.profile.edit.navigation.title" = "Edit Profile";

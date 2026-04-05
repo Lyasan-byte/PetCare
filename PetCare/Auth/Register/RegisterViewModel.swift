@@ -20,7 +20,6 @@ final class RegisterViewModel: RegisterViewModeling {
 
     private let authService: AuthRepository
     private weak var moduleOutput: RegisterModuleOutput?
-    private weak var presentingViewController: UIViewController?
     private var email = ""
     private var password = ""
     private var confirmPassword = ""
@@ -32,10 +31,6 @@ final class RegisterViewModel: RegisterViewModeling {
     ) {
         self.authService = authService
         self.moduleOutput = moduleOutput
-    }
-
-    func attach(viewController: UIViewController) {
-        self.presentingViewController = viewController
     }
 
     func trigger(_ intent: RegisterIntent) {
@@ -123,7 +118,7 @@ final class RegisterViewModel: RegisterViewModeling {
     }
 
     private func signInWithGoogle() {
-        guard let vc = presentingViewController else {
+        guard let vc = moduleOutput?.provideViewControllerForGoogleSignIn() else {
             state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             updateContent()
             return

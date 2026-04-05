@@ -71,6 +71,10 @@ extension AuthCoordinator: LoginModuleOutput, RegisterModuleOutput {
         finishAuthFlow()
     }
 
+    func provideViewControllerForGoogleSignIn() -> UIViewController? {
+        navigationController.topViewController
+    }
+
     func tapRegister() {
         showRegister()
     }

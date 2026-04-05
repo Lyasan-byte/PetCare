@@ -33,7 +33,6 @@ final class LoginViewController: UIViewController {
         bind()
         setupActions()
         setupKeyboardDismiss()
-        viewModel.attach(viewController: self)
         viewModel.trigger(.onDidLoad)
     }
 
