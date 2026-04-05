@@ -34,6 +34,7 @@ final class UserProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        contentView.refreshLocalizedTexts()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

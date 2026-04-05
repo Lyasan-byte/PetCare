@@ -24,7 +24,7 @@ final class SettingsNotificationRowView: UIView {
     }
 
     func configure(symbolName: String, title: String, onTintColor: UIColor) {
-        let iconConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
+        let iconConfig = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
         iconImageView.preferredSymbolConfiguration = iconConfig
         iconImageView.image = UIImage(systemName: symbolName)
         iconImageView.tintColor = Asset.petGray.color
@@ -32,8 +32,14 @@ final class SettingsNotificationRowView: UIView {
         switchControl.onTintColor = onTintColor
     }
 
+    func updateTitle(_ title: String) {
+        titleLabel.text = title
+    }
+
     func render(isOn: Bool, isEnabled: Bool) {
-        switchControl.setOn(isOn, animated: false)
+        if switchControl.isOn != isOn {
+            switchControl.setOn(isOn, animated: window != nil)
+        }
         switchControl.isEnabled = isEnabled
         iconImageView.alpha = isEnabled ? 1 : 0.45
         titleLabel.alpha = isEnabled ? 1 : 0.45
@@ -56,18 +62,18 @@ final class SettingsNotificationRowView: UIView {
         switchControl.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 54),
+            heightAnchor.constraint(equalToConstant: 48),
 
             accentLine.leadingAnchor.constraint(equalTo: leadingAnchor),
             accentLine.centerYAnchor.constraint(equalTo: centerYAnchor),
             accentLine.widthAnchor.constraint(equalToConstant: 3),
-            accentLine.heightAnchor.constraint(equalToConstant: 40),
+            accentLine.heightAnchor.constraint(equalToConstant: 36),
 
-            iconImageView.leadingAnchor.constraint(equalTo: accentLine.trailingAnchor, constant: 18),
+            iconImageView.leadingAnchor.constraint(equalTo: accentLine.trailingAnchor, constant: 16),
             iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            iconImageView.widthAnchor.constraint(equalToConstant: 22),
+            iconImageView.widthAnchor.constraint(equalToConstant: 20),
 
-            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 14),
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: switchControl.leadingAnchor, constant: -12),
 
@@ -81,9 +87,10 @@ final class SettingsNotificationRowView: UIView {
         accentLine.backgroundColor = Asset.petGreen.color
         accentLine.layer.cornerRadius = 1.5
 
-        titleLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        titleLabel.font = .systemFont(ofSize: 15, weight: .medium)
         titleLabel.textColor = Asset.petGray.color
 
+        switchControl.transform = CGAffineTransform(scaleX: 0.88, y: 0.88)
         switchControl.addTarget(self, action: #selector(handleToggle), for: .valueChanged)
     }
 

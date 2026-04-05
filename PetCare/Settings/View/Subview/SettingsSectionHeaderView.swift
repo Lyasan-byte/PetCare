@@ -29,8 +29,8 @@ final class SettingsSectionHeaderView: UIView {
             symbolName: symbolName,
             iconColor: iconColor,
             circleColor: circleColor,
-            circleSize: 64,
-            iconSize: 24,
+            circleSize: 56,
+            iconSize: 20,
             weight: .semibold
         )
         titleLabel.text = title
@@ -51,7 +51,7 @@ final class SettingsSectionHeaderView: UIView {
             iconView.topAnchor.constraint(equalTo: topAnchor),
             iconView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            titleLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 14),
             titleLabel.centerYAnchor.constraint(equalTo: iconView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
@@ -59,7 +59,7 @@ final class SettingsSectionHeaderView: UIView {
 
     private func configure() {
         backgroundColor = .clear
-        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         titleLabel.textColor = .label
         titleLabel.numberOfLines = 2
     }

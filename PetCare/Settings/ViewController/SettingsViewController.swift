@@ -25,7 +25,6 @@ final class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NSLocalizedString("settings.screen.title", comment: "")
         navigationItem.largeTitleDisplayMode = .never
         bindViewModel()
         bindActions()
@@ -44,6 +43,8 @@ final class SettingsViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        navigationController?.navigationBar.tintColor = nil
+        navigationController?.navigationBar.titleTextAttributes = nil
         tabBarController?.tabBar.isHidden = false
     }
 
@@ -78,10 +79,70 @@ final class SettingsViewController: UIViewController {
         contentView.onGeneralRemindersToggle = { [weak self] isEnabled in
             self?.viewModel.trigger(.generalRemindersToggled(isEnabled))
         }
+        contentView.onThemeSelected = { [weak self] theme in
+            self?.viewModel.trigger(.themeSelected(theme))
+        }
+        contentView.onLanguageSelected = { [weak self] language in
+            self?.viewModel.trigger(.languageSelected(language))
+        }
+        contentView.onDeleteAccountTap = { [weak self] in
+            self?.viewModel.trigger(.deleteAccountTapped)
+        }
     }
 
     private func render(state: SettingsState) {
+        title = NSLocalizedString("settings.screen.title", comment: "")
         contentView.render(state: state)
+        renderDeleteConfirmationIfNeeded(state.isDeleteConfirmationPresented)
+        renderErrorIfNeeded(state.errorMessage)
+    }
+
+    private func renderDeleteConfirmationIfNeeded(_ isPresented: Bool) {
+        guard isPresented else { return }
+        guard presentedViewController == nil else { return }
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("settings.account.delete.confirmation.title", comment: ""),
+            message: NSLocalizedString("settings.account.delete.confirmation.message", comment: ""),
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("common.cancel", comment: ""),
+                style: .cancel
+            ) { [weak self] _ in
+                self?.viewModel.trigger(.dismissAlert)
+            }
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("common.delete", comment: ""),
+                style: .destructive
+            ) { [weak self] _ in
+                self?.viewModel.trigger(.confirmDeleteAccount)
+            }
+        )
+        present(alert, animated: true)
+    }
+
+    private func renderErrorIfNeeded(_ message: String?) {
+        guard let message else { return }
+        guard presentedViewController == nil else { return }
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("common.error", comment: ""),
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("common.ok", comment: ""),
+                style: .default
+            ) { [weak self] _ in
+                self?.viewModel.trigger(.dismissAlert)
+            }
+        )
+        present(alert, animated: true)
     }
 
     required init?(coder: NSCoder) {

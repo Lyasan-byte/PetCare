@@ -36,6 +36,8 @@
 
 "common.error" = "Ошибка";
 "common.ok" = "ОК";
+"common.cancel" = "Отмена";
+"common.delete" = "Удалить";
 "error.common.try_again" = "Что-то пошло не так. Попробуйте еще раз";
 
 "error.google.clientId.missing" = "Конфигурация Google входа отсутствует.";
@@ -114,3 +116,25 @@
 "user.profile.settings.placeholder" = "Экран настроек появится позже.";
 "user.profile.logout.title" = "Выйти";
 "user.profile.edit.navigation.title" = "Редактировать профиль";
+
+// MARK: - Settings
+"settings.screen.title" = "Настройки";
+"settings.notifications.title" = "Настройки уведомлений";
+"settings.notifications.all" = "Все уведомления";
+"settings.notifications.grooming" = "Груминг";
+"settings.notifications.veterinarian" = "Ветеринар";
+"settings.notifications.general_reminders" = "Общие напоминания";
+"settings.appearance.title" = "Оформление";
+"settings.appearance.theme.title" = "Тема";
+"settings.appearance.theme.subtitle" = "Переключение между светлой и темной темой";
+"settings.appearance.theme.light" = "Светлая";
+"settings.appearance.theme.dark" = "Темная";
+"settings.appearance.language.title" = "Язык";
+"settings.appearance.language.subtitle" = "Предпочитаемый язык приложения";
+"settings.appearance.language.russian" = "Русский";
+"settings.appearance.language.english" = "English";
+"settings.account.title" = "Управление аккаунтом";
+"settings.account.delete" = "Удалить аккаунт";
+"settings.account.delete.confirmation.title" = "Удалить аккаунт";
+"settings.account.delete.confirmation.message" = "Ваш профиль и питомцы будут удалены навсегда. Это действие нельзя отменить.";
+"settings.account.delete.reauth" = "Пожалуйста, войдите в аккаунт заново перед его удалением.";
