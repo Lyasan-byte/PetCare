@@ -7,5 +7,7 @@
 
 import Foundation
 
-protocol Coordinator: AnyObject {}
+protocol Coordinator: AnyObject {
+    func start()
+}
 

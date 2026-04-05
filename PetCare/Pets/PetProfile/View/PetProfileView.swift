@@ -8,7 +8,7 @@
 import UIKit
 
 final class PetProfileView: UIView {
-    let createActivityButton = PrimaryButton(title: L10n.Pets.Profile.createActivityButton)
+    let createActivityButton = PrimaryButton(title: L10n.Pets.Profile.createActivityButton, shadowColor: Asset.primaryGreen.color)
     let editButton = PetProfileButton(text:  L10n.Pets.Profile.editButton, image: "pencil", textColor: .label, backgroundColor: .tertiarySystemBackground)
     let analyticsButton = PetProfileButton(text: L10n.Pets.Profile.analyticsButton, image: "chart.bar.fill", textColor: Asset.pinkAccent.color, backgroundColor: Asset.lightPink.color)
     
@@ -31,7 +31,7 @@ final class PetProfileView: UIView {
     }
     
     func setPetData(_ pet: Pet, imageLoader: ImageLoader) {
-        petCardView.configure(pet: pet, imageLoader: imageLoader)
+        petCardView.setData(isPublic: false, pet: pet, imageLoader: imageLoader)
         petNoteView.noteText.text = pet.note
         
         petNoteView.isHidden = pet.note.isEmpty

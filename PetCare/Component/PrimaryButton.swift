@@ -14,11 +14,21 @@ final class PrimaryButton: UIButton {
         configure()
     }
     
-    convenience init(title: String, backgroundColor: UIColor = Asset.primaryGreen.color, textColor: UIColor = Asset.textGreen.color) {
+    convenience init(
+        title: String,
+        backgroundColor: UIColor = Asset.primaryGreen.color,
+        textColor: UIColor = Asset.textGreen.color,
+        shadowColor: UIColor = .clear
+    ) {
         self.init(frame: .zero)
         setTitle(title, for: .normal)
         setTitleColor(textColor, for: .normal)
         self.backgroundColor = backgroundColor
+        
+        self.layer.shadowColor = shadowColor.cgColor
+        self.layer.shadowOffset = .init(width: 0, height: 5)
+        self.layer.shadowOpacity = 0.3
+        self.layer.shadowRadius = 10
     }
  
     private func configure() {

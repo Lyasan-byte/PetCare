@@ -41,6 +41,7 @@ final class PublicPetsView: UIView {
         } else {
             loader.stopAnimating()
         }
+        loader.isHidden = !isLoading
         collection.isHidden = isLoading
     }
     
@@ -81,6 +82,7 @@ final class PublicPetsView: UIView {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         collection.translatesAutoresizingMaskIntoConstraints = false
+        loader.translatesAutoresizingMaskIntoConstraints = false
         
         loader.hidesWhenStopped = true
         loader.style = .medium

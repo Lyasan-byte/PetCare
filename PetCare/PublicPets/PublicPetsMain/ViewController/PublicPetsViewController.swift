@@ -64,13 +64,18 @@ final class PublicPetsViewController: UIViewController {
     private func render(_ state: PublicPetsState) {
         content.reloadData()
         content.setLoader(state.isLoading)
+        
         if let error = state.errorMessage {
             showError(error)
         }
     }
     
     private func showError(_ message: String) {
-        
+        let alert = UIAlertController(title: L10n.Common.error, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self] _ in
+            self?.publicPetsViewModel.trigger(.onDismissAlert)
+        })
+        present(alert, animated: true)
     }
     
     required init?(coder: NSCoder) {
@@ -124,6 +129,19 @@ extension PublicPetsViewController: UICollectionViewDelegate {
         case .pets:
             let pet = publicPetsViewModel.state.pets[indexPath.item]
             publicPetsViewModel.trigger(.onPetCardTap(pet))
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let section = PublicPetsSection(rawValue: indexPath.section) else {
+            return
+        }
+        
+        switch section {
+        case .header:
+             break
+        case .pets:
+            publicPetsViewModel.trigger(.onReachedItem(index: indexPath.row))
         }
     }
 }
