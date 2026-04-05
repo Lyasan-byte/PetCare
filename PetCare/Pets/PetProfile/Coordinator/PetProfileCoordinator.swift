@@ -37,11 +37,28 @@ final class PetProfileCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = PetProfileViewModel(pet: pet, moduleOutput: self)
+        let viewModel = PetProfileViewModel(pet: pet, petFactsRepository: PetFactsService(), moduleOutput: self)
         self.petProfileViewModel = viewModel
         let viewController = PetProfileViewController(petProfileViewModel: viewModel, imageLoader: imageLoader)
         
         navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    private func showPetFactSheet(_ petFact: PetFact) {
+        let viewController = PetFactsViewController(petFact: petFact)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
+        viewController.onClose = { [weak navigationController] in
+            navigationController?.dismiss(animated: true)
+        }
+        
+        navigationController.modalPresentationStyle = .pageSheet
+        
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+        }
+        
+        self.navigationController.present(navigationController, animated: true)
     }
     
     private func showEditPet(_ pet: Pet) {
@@ -68,21 +85,29 @@ final class PetProfileCoordinator: Coordinator {
         petFormCoordinator.showEdit(pet: pet)
     }
     
+    private func showAnalytics(_ pet: Pet) {
+        
+    }
+    
     private func removeCoordinator(_ coordinator: Coordinator) {
         childCoordinators.removeAll(where: { $0 === coordinator})
     }
 }
 
 extension PetProfileCoordinator: PetProfileModuleOutput {
-    func petProfileModuleDidRequestEdit(_ pet: Pet) {
+    func moduleWantsToOpenEdit(_ pet: Pet) {
          showEditPet(pet)
     }
     
-    func petProfileModuleDidRequestAnalytics(_ pet: Pet) {
-         
+    func moduleWantsToOpenAnalytics(_ pet: Pet) {
+        showAnalytics(pet)
     }
     
-    func petProfileModuleDidClose() {
+    func moduleWantsToOpenBreedFactSheet(_ petFact: PetFact) {
+        showPetFactSheet(petFact)
+    }
+    
+    func moduleWantsToClose() {
         onFinish?(.closed)
         navigationController.popViewController(animated: true)
     }

@@ -8,6 +8,8 @@
 import UIKit
 
 final class PetProfileCardView: UIView {
+    var onBreedTap: (() -> Void)?
+    
     var backgroundView = BackgroundView(backgroundColor: .tertiarySystemBackground)
     var petImage: PetRemoteImageView = {
         let image = PetRemoteImageView()
@@ -37,6 +39,7 @@ final class PetProfileCardView: UIView {
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
         setupHierarchy()
         setupLayout()
+        setupAction()
     }
     
     private func setupHierarchy() {
@@ -92,6 +95,16 @@ final class PetProfileCardView: UIView {
             petGenderInfo.widthAnchor.constraint(equalToConstant: 120),
             petGenderInfo.heightAnchor.constraint(equalToConstant: 36)
         ])
+    }
+    
+    func setupAction() {
+        petBreedLabel.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didBreedTap))
+        petBreedLabel.addGestureRecognizer(tap)
+    }
+    
+    @objc private func didBreedTap() {
+        onBreedTap?()
     }
         
     func configure(pet: Pet, imageLoader: ImageLoader) {

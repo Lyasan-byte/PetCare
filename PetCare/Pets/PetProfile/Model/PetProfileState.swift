@@ -9,4 +9,5 @@ import Foundation
 
 struct PetProfileState {
     var pet: Pet
+    var petFact: PetFact?
 }

@@ -21,6 +21,9 @@
     <key>CLOUDINARY_UPLOAD_PRESET</key>
     <string>petcare_unsigned_pets</string>
     
+    <key>API_NINJAS_KEY</key>
+    <string>6JxgEc4exrrh1ishNTZ3P1Fk1cFXtG4xWYzRd5QA</string>
+    
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

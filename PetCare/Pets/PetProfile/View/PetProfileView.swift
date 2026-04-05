@@ -8,6 +8,8 @@
 import UIKit
 
 final class PetProfileView: UIView {
+    var onBreedTap: (() -> Void)?
+
     let createActivityButton = PrimaryButton(title: L10n.Pets.Profile.createActivityButton)
     let editButton = PetProfileButton(text:  L10n.Pets.Profile.editButton, image: "pencil", textColor: .label, backgroundColor: .tertiarySystemBackground)
     let analyticsButton = PetProfileButton(text: L10n.Pets.Profile.analyticsButton, image: "chart.bar.fill", textColor: Asset.pinkAccent.color, backgroundColor: Asset.lightPink.color)
@@ -24,17 +26,17 @@ final class PetProfileView: UIView {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
+        bindAction()
     }
     
     convenience init() {
         self.init(frame: .zero)
     }
     
-    func setPetData(_ pet: Pet, imageLoader: ImageLoader) {
-        petCardView.configure(pet: pet, imageLoader: imageLoader)
-        petNoteView.noteText.text = pet.note
-        
-        petNoteView.isHidden = pet.note.isEmpty
+    private func bindAction() {
+        petCardView.onBreedTap = { [weak self] in
+            self?.onBreedTap?()
+        }
     }
     
     private func setupHierarchy() {
@@ -62,6 +64,13 @@ final class PetProfileView: UIView {
             scrollContent.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             scrollContent.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
+    }
+    
+    func setPetData(_ pet: Pet, imageLoader: ImageLoader) {
+        petCardView.configure(pet: pet, imageLoader: imageLoader)
+        petNoteView.noteText.text = pet.note
+        
+        petNoteView.isHidden = pet.note.isEmpty
     }
     
     required init?(coder: NSCoder) {
