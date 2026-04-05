@@ -14,6 +14,7 @@ final class UserProfileCoordinator: Coordinator {
     private let imageLoader: ImageLoader
 
     private var userProfileViewModel: UserProfileViewModel?
+    private var childCoordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController,
@@ -25,6 +26,20 @@ final class UserProfileCoordinator: Coordinator {
         self.petRepository = petRepository
         self.userProfileRepository = userProfileRepository
         self.imageLoader = imageLoader
+    }
+    
+    private func showSettings() {
+        let settingsCoordinator = SettingsCoordinator(navigationController: navigationController)
+        childCoordinators.append(settingsCoordinator)
+        settingsCoordinator.onFinish = { [weak self, weak settingsCoordinator] in
+            guard let settingsCoordinator else { return }
+            self?.removeChildCoordinator(settingsCoordinator)
+        }
+        settingsCoordinator.start()
+    }
+    
+    private func removeChildCoordinator(_ coordinator: Coordinator) {
+        childCoordinators.removeAll(where: { $0 === coordinator })
     }
 
     func start() -> UIViewController {
@@ -56,6 +71,6 @@ extension UserProfileCoordinator: UserProfileModuleOutput {
     }
 
     func userProfileModuleDidRequestSettings() {
-        showPlaceholderScreen(titleText: NSLocalizedString("user.profile.settings.title", comment: ""))
+        showSettings()
     }
 }

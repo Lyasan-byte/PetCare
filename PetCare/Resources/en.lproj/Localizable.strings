@@ -115,3 +115,11 @@
 "user.profile.settings.placeholder" = "Settings screen is coming soon.";
 "user.profile.logout.title" = "Logout";
 "user.profile.edit.navigation.title" = "Edit Profile";
+
+// MARK: - Settings
+"settings.screen.title" = "Settings";
+"settings.notifications.title" = "Notification Settings";
+"settings.notifications.all" = "All Notifications";
+"settings.notifications.grooming" = "Grooming";
+"settings.notifications.veterinarian" = "Veterinarian";
+"settings.notifications.general_reminders" = "General Reminders";
