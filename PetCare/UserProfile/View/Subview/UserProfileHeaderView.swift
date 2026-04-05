@@ -122,7 +122,7 @@ final class UserProfileHeaderView: UIView {
         avatarBorderView.layer.shadowRadius = 18
 
         avatarView.layer.cornerRadius = 43
-        avatarView.image = Asset.defaultProfilePhoto.image
+        avatarView.image = Asset.defaultUserProfilePhoto.image
         avatarView.backgroundColor = Asset.lightGreen.color
 
         nameLabel.font = .systemFont(ofSize: 28, weight: .bold)

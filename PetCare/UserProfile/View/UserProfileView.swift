@@ -11,6 +11,7 @@ final class UserProfileView: UIView {
     let settingsRow = UserProfileActionRowView()
     let logoutRow = UserProfileActionRowView()
 
+    private let loader = UIActivityIndicatorView(style: .medium)
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let headerView = UserProfileHeaderView()
@@ -32,8 +33,22 @@ final class UserProfileView: UIView {
         headerView.addEditTarget(target, action: action)
     }
 
+    func setLoading(_ isLoading: Bool) {
+        if isLoading {
+            loader.startAnimating()
+        } else {
+            loader.stopAnimating()
+        }
+
+        loader.isHidden = !isLoading
+        scrollView.isHidden = isLoading
+        settingsRow.isEnabled = !isLoading
+        logoutRow.isEnabled = !isLoading
+    }
+
     private func setupHierarchy() {
         addSubview(scrollView)
+        addSubview(loader)
         scrollView.addSubview(contentView)
 
         [
@@ -45,6 +60,7 @@ final class UserProfileView: UIView {
     }
 
     private func setupLayout() {
+        loader.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -59,6 +75,9 @@ final class UserProfileView: UIView {
             contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+
+            loader.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -83,6 +102,8 @@ final class UserProfileView: UIView {
         backgroundColor = .secondarySystemBackground
         scrollView.backgroundColor = .clear
         contentView.backgroundColor = .clear
+        loader.isHidden = true
+        loader.hidesWhenStopped = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
 

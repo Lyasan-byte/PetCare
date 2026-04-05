@@ -58,10 +58,12 @@ final class UserProfileViewController: UIViewController {
     private func render() {
         switch viewModel.state {
         case .loading:
-            break
+            contentView.setLoading(true)
         case .content(let content):
+            contentView.setLoading(false)
             contentView.configure(content: content, imageLoader: imageLoader)
         case .error(let message):
+            contentView.setLoading(false)
             showAlert(message: message)
         }
     }
