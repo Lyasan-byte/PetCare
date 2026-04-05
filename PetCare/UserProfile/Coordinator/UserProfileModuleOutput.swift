@@ -8,6 +8,6 @@
 import Foundation
 
 protocol UserProfileModuleOutput: AnyObject {
-    func userProfileModuleDidRequestEdit()
+    func userProfileModuleDidRequestEdit(_ user: UserProfileUser)
     func userProfileModuleDidRequestSettings()
 }

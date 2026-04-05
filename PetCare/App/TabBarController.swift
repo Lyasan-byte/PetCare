@@ -19,11 +19,12 @@ final class TabBarController: UITabBarController {
     
     private func setupTabs() {
         let ownerId = Auth.auth().currentUser?.uid ?? "test_owner_id"
+        let imageUploader = ImageUploadService()
         let petRepository = PetService(
-            imageService: ImageUploadService()
+            imageService: imageUploader
         )
         let imageLoader = ImageLoadService()
-        let userProfileRepository = FirebaseUserProfileService()
+        let userProfileRepository = FirebaseUserProfileService(imageService: imageUploader)
 
         let petsNavigationController = UINavigationController()
         let petsMainCoordinator = PetsMainCoordinator(

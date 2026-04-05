@@ -114,3 +114,12 @@
 "user.profile.settings.placeholder" = "Экран настроек появится позже.";
 "user.profile.logout.title" = "Logout";
 "user.profile.edit.navigation.title" = "Редактировать профиль";
+"user.profile.edit.photo.title" = "Изменить фото профиля";
+"user.profile.edit.photo.subtitle" = "Нажмите, чтобы обновить аватар";
+"user.profile.edit.first_name.title" = "Имя";
+"user.profile.edit.first_name.placeholder" = "Введите имя";
+"user.profile.edit.last_name.title" = "Фамилия";
+"user.profile.edit.last_name.placeholder" = "Введите фамилию";
+"user.profile.edit.save_button" = "Сохранить изменения";
+"user.profile.edit.validation.first_name" = "Введите имя";
+"user.profile.edit.validation.last_name" = "Введите фамилию";

@@ -115,3 +115,12 @@
 "user.profile.settings.placeholder" = "Settings screen is coming soon.";
 "user.profile.logout.title" = "Logout";
 "user.profile.edit.navigation.title" = "Edit Profile";
+"user.profile.edit.photo.title" = "Change Profile Photo";
+"user.profile.edit.photo.subtitle" = "Tap to update your avatar";
+"user.profile.edit.first_name.title" = "First Name";
+"user.profile.edit.first_name.placeholder" = "Enter first name";
+"user.profile.edit.last_name.title" = "Last Name";
+"user.profile.edit.last_name.placeholder" = "Enter last name";
+"user.profile.edit.save_button" = "Save Changes";
+"user.profile.edit.validation.first_name" = "Enter first name";
+"user.profile.edit.validation.last_name" = "Enter last name";
