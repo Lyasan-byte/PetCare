@@ -9,6 +9,12 @@ import UIKit
 
 final class UserProfileEditPhotoPickerView: UIView {
     var onTap: (() -> Void)?
+    var hidesDescriptionLabels: Bool = false {
+        didSet {
+            titleLabel.isHidden = hidesDescriptionLabels
+            subtitleLabel.isHidden = hidesDescriptionLabels
+        }
+    }
 
     private let avatarBorderView = UIView()
     private let avatarView = UserProfileRemoteImageView()
@@ -92,6 +98,8 @@ final class UserProfileEditPhotoPickerView: UIView {
 
         titleLabel.textAlignment = .center
         subtitleLabel.textAlignment = .center
+        titleLabel.isHidden = hidesDescriptionLabels
+        subtitleLabel.isHidden = hidesDescriptionLabels
     }
 
     private func setupActions() {

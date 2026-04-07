@@ -9,26 +9,67 @@ import Foundation
 import UIKit
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
+    enum StartDestination {
+        case login
+        case registrationCompletion
+    }
 
     var navigationController: UINavigationController
     weak var output: AuthFlowOutput?
     private var isSwipeBackEnabled = true
     private let authRepository: AuthRepository
+    private let userProfileRepository: UserProfileRepository
+    private let imageLoader: ImageLoader
 
     init(
         navigationController: UINavigationController,
         output: AuthFlowOutput? = nil,
-        authRepository: AuthRepository = FirebaseAuthService()
+        authRepository: AuthRepository = FirebaseAuthService(),
+        userProfileRepository: UserProfileRepository = FirebaseUserProfileService(
+            imageService: ImageUploadService()
+        ),
+        imageLoader: ImageLoader = ImageLoadService()
     ) {
         self.navigationController = navigationController
         self.output = output
         self.authRepository = authRepository
+        self.userProfileRepository = userProfileRepository
+        self.imageLoader = imageLoader
     }
 
     func start() {
-        let loginViewController = makeLoginViewController()
-        navigationController.setViewControllers([loginViewController], animated: false)
+        start(with: .login)
+    }
+
+    func start(with startDestination: StartDestination) {
+        let initialViewController: UIViewController
+
+        switch startDestination {
+        case .login:
+            initialViewController = makeLoginViewController()
+        case .registrationCompletion:
+            initialViewController = makeRegistrationCompletionViewController()
+        }
+
+        navigationController.setViewControllers([initialViewController], animated: false)
         navigationController.navigationBar.isHidden = true
+    }
+
+    private func makeRegistrationCompletionViewController() -> UIViewController {
+        let viewModel = RegistrationCompletionViewModel(
+            userProfileRepository: userProfileRepository,
+            moduleOutput: self
+        )
+
+        return RegistrationCompletionViewController(
+            viewModel: viewModel,
+            imageLoader: imageLoader
+        )
+    }
+
+    private func showRegistrationCompletion() {
+        let viewController = makeRegistrationCompletionViewController()
+        navigationController.setViewControllers([viewController], animated: true)
     }
 
     private func makeLoginViewController() -> UIViewController {
@@ -71,6 +112,10 @@ extension AuthCoordinator: LoginModuleOutput, RegisterModuleOutput {
         finishAuthFlow()
     }
 
+    func moduleWantsToOpenRegistrationCompletion() {
+        showRegistrationCompletion()
+    }
+
     func provideViewControllerForGoogleSignIn() -> UIViewController? {
         navigationController.topViewController
     }
@@ -81,5 +126,11 @@ extension AuthCoordinator: LoginModuleOutput, RegisterModuleOutput {
     
     func tapLogin() {
         showLogin()
+    }
+}
+
+extension AuthCoordinator: RegistrationCompletionModuleOutput {
+    func registrationCompletionModuleDidFinish() {
+        finishAuthFlow()
     }
 }
