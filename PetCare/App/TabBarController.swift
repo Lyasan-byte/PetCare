@@ -35,7 +35,6 @@ final class TabBarController: UITabBarController {
 
         let publicPetsNavigationController = UINavigationController()
         let publicPetsCoordinator = PublicPetsCoordinator(navigationController: publicPetsNavigationController, petRepository: PublicPetService(), imageLoader: imageLoader)
-        self.publicPetsCoordinator = publicPetsCoordinator
         publicPetsCoordinator.start()
         publicPetsNavigationController.tabBarItem.image = UIImage(systemName: "globe.americas.fill")
 
