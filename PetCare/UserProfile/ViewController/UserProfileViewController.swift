@@ -79,6 +79,31 @@ final class UserProfileViewController: UIViewController {
         present(alert, animated: true)
     }
 
+    private func showLogoutConfirmationAlert() {
+        guard presentedViewController == nil else { return }
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("user.profile.logout.confirmation.title", comment: ""),
+            message: NSLocalizedString("user.profile.logout.confirmation.message", comment: ""),
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("common.cancel", comment: ""),
+                style: .cancel
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("user.profile.logout.title", comment: ""),
+                style: .destructive
+            ) { [weak self] _ in
+                self?.viewModel.trigger(.logoutTapped)
+            }
+        )
+        present(alert, animated: true)
+    }
+
     @objc private func editTapped() {
         viewModel.trigger(.editTapped)
     }
@@ -88,7 +113,7 @@ final class UserProfileViewController: UIViewController {
     }
 
     @objc private func logoutTapped() {
-        viewModel.trigger(.logoutTapped)
+        showLogoutConfirmationAlert()
     }
 
     required init?(coder: NSCoder) {

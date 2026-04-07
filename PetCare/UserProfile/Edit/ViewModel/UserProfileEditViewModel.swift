@@ -19,13 +19,16 @@ final class UserProfileEditViewModel: UserProfileEditViewModeling {
     private let userProfileRepository: UserProfileRepository
     private weak var moduleOutput: UserProfileEditModuleOutput?
     private var bag = Set<AnyCancellable>()
+    private var displayData: UserProfileEditDisplayData
 
     init(
         user: UserProfileUser,
         userProfileRepository: UserProfileRepository,
         moduleOutput: UserProfileEditModuleOutput?
     ) {
-        self.state = UserProfileEditState(user: user)
+        let initialDisplayData = UserProfileEditDisplayData(user: user)
+        self.state = .content(initialDisplayData)
+        self.displayData = initialDisplayData
         self.userProfileRepository = userProfileRepository
         self.moduleOutput = moduleOutput
     }
@@ -33,24 +36,27 @@ final class UserProfileEditViewModel: UserProfileEditViewModeling {
     func trigger(_ intent: UserProfileEditIntent) {
         switch intent {
         case .onChangeFirstName(let firstName):
-            state.firstName = firstName
+            displayData.firstName = firstName
+            state = .content(displayData)
         case .onChangeLastName(let lastName):
-            state.lastName = lastName
+            displayData.lastName = lastName
+            state = .content(displayData)
         case .onPickPhoto(let data):
-            state.selectedPhotoData = data
+            displayData.selectedPhotoData = data
+            state = .content(displayData)
         case .onSave:
             save()
         case .onDismissAlert:
-            state.errorMessage = nil
+            state = .content(displayData)
         }
     }
 
     private func validateForm() -> String? {
-        if state.firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if displayData.firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return NSLocalizedString("user.profile.edit.validation.first_name", comment: "")
         }
 
-        if state.lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if displayData.lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return NSLocalizedString("user.profile.edit.validation.last_name", comment: "")
         }
 
@@ -59,37 +65,40 @@ final class UserProfileEditViewModel: UserProfileEditViewModeling {
 
     private func save() {
         if let validationError = validateForm() {
-            state.errorMessage = validationError
+            state = .error(validationError)
             return
         }
 
-        state.isSaving = true
+        displayData.isSaving = true
+        state = .content(displayData)
 
         userProfileRepository
-            .save(user: makeUpdatedUser(), selectedPhoto: state.selectedPhotoData)
+            .save(user: makeUpdatedUser(), selectedPhoto: displayData.selectedPhotoData)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
-                state.isSaving = false
+                self.displayData.isSaving = false
 
                 if case .failure(let error) = completion {
-                    state.errorMessage = error.localizedDescription
+                    self.state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] savedUser in
-                self?.state.existingPhotoUrl = savedUser.avatarURLString
-                self?.state.selectedPhotoData = nil
-                self?.moduleOutput?.userProfileEditModuleDidSave()
+                guard let self else { return }
+                self.displayData.existingPhotoUrl = savedUser.avatarURLString
+                self.displayData.selectedPhotoData = nil
+                self.state = .content(self.displayData)
+                self.moduleOutput?.userProfileEditModuleDidSave()
             }
             .store(in: &bag)
     }
 
     private func makeUpdatedUser() -> UserProfileUser {
         UserProfileUser(
-            id: state.userId,
-            firstName: state.firstName.trimmingCharacters(in: .whitespacesAndNewlines),
-            lastName: state.lastName.trimmingCharacters(in: .whitespacesAndNewlines),
-            email: state.email,
-            avatarURLString: state.existingPhotoUrl
+            id: displayData.userId,
+            firstName: displayData.firstName.trimmingCharacters(in: .whitespacesAndNewlines),
+            lastName: displayData.lastName.trimmingCharacters(in: .whitespacesAndNewlines),
+            email: displayData.email,
+            avatarURLString: displayData.existingPhotoUrl
         )
     }
 }

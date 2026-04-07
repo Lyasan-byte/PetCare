@@ -99,32 +99,45 @@ final class UserProfileEditViewController: UIViewController {
     }
 
     private func render(state: UserProfileEditState) {
-        title = state.title
-
-        if contentView.firstNameTextField.textField.text != state.firstName {
-            contentView.firstNameTextField.textField.text = state.firstName
+        switch state {
+        case .loading:
+            title = NSLocalizedString("user.profile.edit.navigation.title", comment: "")
+            contentView.setLoading(true)
+        case .content(let displayData):
+            renderContent(displayData)
+        case .error(let message):
+            title = NSLocalizedString("user.profile.edit.navigation.title", comment: "")
+            contentView.setLoading(false)
+            renderErrorIfNeeded(message)
         }
-
-        if contentView.lastNameTextField.textField.text != state.lastName {
-            contentView.lastNameTextField.textField.text = state.lastName
-        }
-
-        contentView.saveButton.isEnabled = state.isSaveEnabled
-        contentView.saveButton.alpha = state.isSaveEnabled ? 1 : 0.6
-        contentView.setLoading(state.isSaving)
-
-        renderPhoto(state: state)
-        renderErrorIfNeeded(state.errorMessage)
     }
 
-    private func renderPhoto(state: UserProfileEditState) {
-        if let data = state.selectedPhotoData,
+    private func renderContent(_ displayData: UserProfileEditDisplayData) {
+        title = displayData.title
+
+        if contentView.firstNameTextField.textField.text != displayData.firstName {
+            contentView.firstNameTextField.textField.text = displayData.firstName
+        }
+
+        if contentView.lastNameTextField.textField.text != displayData.lastName {
+            contentView.lastNameTextField.textField.text = displayData.lastName
+        }
+
+        contentView.saveButton.isEnabled = displayData.isSaveEnabled
+        contentView.saveButton.alpha = displayData.isSaveEnabled ? 1 : 0.6
+        contentView.setLoading(displayData.isSaving)
+
+        renderPhoto(displayData)
+    }
+
+    private func renderPhoto(_ displayData: UserProfileEditDisplayData) {
+        if let data = displayData.selectedPhotoData,
            let image = UIImage(data: data) {
             contentView.photoPickerView.setImage(image)
             return
         }
 
-        if let urlString = state.existingPhotoUrl,
+        if let urlString = displayData.existingPhotoUrl,
            !urlString.isEmpty {
             contentView.photoPickerView.setRemoteImage(
                 urlString: urlString,
