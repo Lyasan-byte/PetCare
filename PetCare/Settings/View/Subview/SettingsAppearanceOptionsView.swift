@@ -26,18 +26,18 @@ final class SettingsAppearanceOptionsView: UIView {
         configure()
     }
 
-    func render(state: SettingsState) {
+    func render(displayData: SettingsDisplayData) {
         themeRow.configure(
             title: NSLocalizedString("settings.appearance.theme.title", comment: ""),
             subtitle: NSLocalizedString("settings.appearance.theme.subtitle", comment: ""),
             items: SettingsTheme.allCases.map(\.localizedTitle),
-            selectedIndex: SettingsTheme.allCases.firstIndex(of: state.theme) ?? 0
+            selectedIndex: SettingsTheme.allCases.firstIndex(of: displayData.theme) ?? 0
         )
         languageRow.configure(
             title: NSLocalizedString("settings.appearance.language.title", comment: ""),
             subtitle: NSLocalizedString("settings.appearance.language.subtitle", comment: ""),
             items: SettingsLanguage.allCases.map(\.localizedTitle),
-            selectedIndex: SettingsLanguage.allCases.firstIndex(of: state.language) ?? 0
+            selectedIndex: SettingsLanguage.allCases.firstIndex(of: displayData.language) ?? 0
         )
     }
 

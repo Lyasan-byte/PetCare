@@ -26,9 +26,10 @@ final class UserProfileEditViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         configure()
+        setupKeyboardDismissGesture()
         bindActions()
         bindViewModel()
-        render(state: viewModel.state)
+        render()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -88,18 +89,23 @@ final class UserProfileEditViewController: UIViewController {
         view.backgroundColor = .secondarySystemBackground
     }
 
+    private func setupKeyboardDismissGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardTap))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
     private func bindViewModel() {
         viewModel.stateDidChange
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                guard let self else { return }
-                self.render(state: self.viewModel.state)
+                self?.render()
             }
             .store(in: &bag)
     }
 
-    private func render(state: UserProfileEditState) {
-        switch state {
+    private func render() {
+        switch viewModel.state {
         case .loading:
             title = NSLocalizedString("user.profile.edit.navigation.title", comment: "")
             contentView.setLoading(true)
@@ -185,6 +191,10 @@ final class UserProfileEditViewController: UIViewController {
 
     @objc private func dismissKeyboard() {
         contentView.lastNameTextField.textField.resignFirstResponder()
+    }
+
+    @objc private func dismissKeyboardTap() {
+        view.endEditing(true)
     }
 
     required init?(coder: NSCoder) {

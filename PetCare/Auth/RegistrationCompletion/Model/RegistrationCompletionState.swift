@@ -7,15 +7,13 @@
 
 import Foundation
 
-struct RegistrationCompletionState {
+struct RegistrationCompletionDisplayData {
     var userId: String?
     var email: String?
     var firstName: String
     var lastName: String
     var existingPhotoUrl: String?
     var selectedPhotoData: Data?
-    var isLoading: Bool
-    var errorMessage: String?
 
     var title: String {
         NSLocalizedString("auth.registration_completion.title", comment: "")
@@ -30,19 +28,22 @@ struct RegistrationCompletionState {
     }
 
     var isSaveEnabled: Bool {
-        !isLoading &&
         !firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
-    init() {
-        self.userId = nil
-        self.email = nil
-        self.firstName = ""
-        self.lastName = ""
-        self.existingPhotoUrl = nil
-        self.selectedPhotoData = nil
-        self.isLoading = false
-        self.errorMessage = nil
-    }
+    static let empty = RegistrationCompletionDisplayData(
+        userId: nil,
+        email: nil,
+        firstName: "",
+        lastName: "",
+        existingPhotoUrl: nil,
+        selectedPhotoData: nil
+    )
+}
+
+enum RegistrationCompletionState {
+    case loading
+    case content(RegistrationCompletionDisplayData)
+    case error(String)
 }

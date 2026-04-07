@@ -48,12 +48,12 @@ final class SettingsView: UIView {
         configure()
     }
 
-    func render(state: SettingsState) {
+    func render(displayData: SettingsDisplayData) {
         applyLocalizedTexts()
-        primaryNotificationToggleView.render(isOn: state.isNotificationsEnabled)
-        notificationOptionsView.render(state: state)
-        appearanceOptionsView.render(state: state)
-        setDeleting(state.isDeletingAccount)
+        primaryNotificationToggleView.render(isOn: displayData.isNotificationsEnabled)
+        notificationOptionsView.render(displayData: displayData)
+        appearanceOptionsView.render(displayData: displayData)
+        setDeleting(displayData.isDeletingAccount)
     }
 
     private func setupHierarchy() {

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 final class RegistrationCompletionViewModel: RegistrationCompletionViewModeling {
-    @Published private(set) var state = RegistrationCompletionState() {
+    @Published private(set) var state: RegistrationCompletionState = .loading {
         didSet {
             stateDidChange.send()
         }
@@ -21,6 +21,7 @@ final class RegistrationCompletionViewModel: RegistrationCompletionViewModeling 
     private weak var moduleOutput: RegistrationCompletionModuleOutput?
     private var bag = Set<AnyCancellable>()
     private var didLoadCurrentUser = false
+    private var displayData = RegistrationCompletionDisplayData.empty
 
     init(
         userProfileRepository: UserProfileRepository,
@@ -35,32 +36,34 @@ final class RegistrationCompletionViewModel: RegistrationCompletionViewModeling 
         case .onDidLoad:
             loadCurrentUserIfNeeded()
         case .onChangeFirstName(let firstName):
-            state.firstName = firstName
+            displayData.firstName = firstName
+            state = .content(displayData)
         case .onChangeLastName(let lastName):
-            state.lastName = lastName
+            displayData.lastName = lastName
+            state = .content(displayData)
         case .onPickPhoto(let data):
-            state.selectedPhotoData = data
+            displayData.selectedPhotoData = data
+            state = .content(displayData)
         case .onSave:
             save()
         case .onDismissAlert:
-            state.errorMessage = nil
+            state = .content(displayData)
         }
     }
 
     private func loadCurrentUserIfNeeded() {
         guard !didLoadCurrentUser else { return }
         didLoadCurrentUser = true
-        state.isLoading = true
+        state = .loading
 
         userProfileRepository
             .fetchCurrentUser()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
-                self.state.isLoading = false
 
                 if case .failure(let error) = completion {
-                    self.state.errorMessage = error.localizedDescription
+                    self.state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] user in
                 self?.applyLoadedUser(user)
@@ -69,20 +72,21 @@ final class RegistrationCompletionViewModel: RegistrationCompletionViewModeling 
     }
 
     private func applyLoadedUser(_ user: UserProfileUser) {
-        state.userId = user.id
-        state.email = user.email
-        state.firstName = user.firstName
-        state.lastName = user.lastName
-        state.existingPhotoUrl = user.avatarURLString
-        state.selectedPhotoData = nil
+        displayData.userId = user.id
+        displayData.email = user.email
+        displayData.firstName = user.firstName
+        displayData.lastName = user.lastName
+        displayData.existingPhotoUrl = user.avatarURLString
+        displayData.selectedPhotoData = nil
+        state = .content(displayData)
     }
 
     private func validateForm() -> String? {
-        if state.firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if displayData.firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return NSLocalizedString("user.profile.edit.validation.first_name", comment: "")
         }
 
-        if state.lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if displayData.lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return NSLocalizedString("user.profile.edit.validation.last_name", comment: "")
         }
 
@@ -91,42 +95,42 @@ final class RegistrationCompletionViewModel: RegistrationCompletionViewModeling 
 
     private func save() {
         if let validationError = validateForm() {
-            state.errorMessage = validationError
+            state = .error(validationError)
             return
         }
 
-        guard let userId = state.userId else {
-            state.errorMessage = NSLocalizedString("error.common.try_again", comment: "")
+        guard let userId = displayData.userId else {
+            state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             return
         }
 
-        state.isLoading = true
+        state = .loading
 
         userProfileRepository
             .save(
                 user: UserProfileUser(
                     id: userId,
-                    firstName: state.firstName.trimmingCharacters(in: .whitespacesAndNewlines),
-                    lastName: state.lastName.trimmingCharacters(in: .whitespacesAndNewlines),
-                    email: state.email,
-                    avatarURLString: state.existingPhotoUrl
+                    firstName: displayData.firstName.trimmingCharacters(in: .whitespacesAndNewlines),
+                    lastName: displayData.lastName.trimmingCharacters(in: .whitespacesAndNewlines),
+                    email: displayData.email,
+                    avatarURLString: displayData.existingPhotoUrl
                 ),
-                selectedPhoto: state.selectedPhotoData
+                selectedPhoto: displayData.selectedPhotoData
             )
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
-                self.state.isLoading = false
 
                 if case .failure(let error) = completion {
-                    self.state.errorMessage = error.localizedDescription
+                    self.state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] savedUser in
                 guard let self else { return }
-                self.state.firstName = savedUser.firstName
-                self.state.lastName = savedUser.lastName
-                self.state.existingPhotoUrl = savedUser.avatarURLString
-                self.state.selectedPhotoData = nil
+                self.displayData.firstName = savedUser.firstName
+                self.displayData.lastName = savedUser.lastName
+                self.displayData.existingPhotoUrl = savedUser.avatarURLString
+                self.displayData.selectedPhotoData = nil
+                self.state = .content(self.displayData)
                 self.moduleOutput?.registrationCompletionModuleDidFinish()
             }
             .store(in: &bag)

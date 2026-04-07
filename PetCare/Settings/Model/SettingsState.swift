@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SettingsState {
+struct SettingsDisplayData {
     var isNotificationsEnabled: Bool
     var isGroomingEnabled: Bool
     var isVeterinarianEnabled: Bool
@@ -15,10 +15,9 @@ struct SettingsState {
     var theme: SettingsTheme
     var language: SettingsLanguage
     var isDeletingAccount: Bool
-    var errorMessage: String?
     var isDeleteConfirmationPresented: Bool
 
-    static let defaultValue = SettingsState(
+    static let defaultValue = SettingsDisplayData(
         isNotificationsEnabled: true,
         isGroomingEnabled: true,
         isVeterinarianEnabled: true,
@@ -26,7 +25,12 @@ struct SettingsState {
         theme: .light,
         language: .defaultValue,
         isDeletingAccount: false,
-        errorMessage: nil,
         isDeleteConfirmationPresented: false
     )
+}
+
+enum SettingsState {
+    case loading
+    case content(SettingsDisplayData)
+    case error(String)
 }

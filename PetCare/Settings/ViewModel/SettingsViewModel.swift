@@ -21,7 +21,7 @@ final class SettingsViewModel: SettingsViewModeling {
     }
 
     private(set) var stateDidChange = ObservableObjectPublisher()
-    @Published private(set) var state = SettingsState.defaultValue {
+    @Published private(set) var state: SettingsState = .loading {
         didSet {
             stateDidChange.send()
         }
@@ -32,6 +32,7 @@ final class SettingsViewModel: SettingsViewModeling {
     private let accountRepository: SettingsAccountRepository
     private weak var moduleOutput: SettingsModuleOutput?
     private var bag = Set<AnyCancellable>()
+    private var displayData: SettingsDisplayData
     private var savedPreferences = NotificationPreferences(
         grooming: true,
         veterinarian: true,
@@ -48,14 +49,15 @@ final class SettingsViewModel: SettingsViewModeling {
         self.settingsApplicationController = settingsApplicationController
         self.accountRepository = accountRepository
         self.moduleOutput = moduleOutput
-        let storedState = settingsRepository.loadSettings()
-        state = storedState
+        let storedDisplayData = settingsRepository.loadSettings()
+        self.displayData = storedDisplayData
+        state = .content(storedDisplayData)
 
-        if storedState.isNotificationsEnabled {
+        if storedDisplayData.isNotificationsEnabled {
             savedPreferences = NotificationPreferences(
-                grooming: storedState.isGroomingEnabled,
-                veterinarian: storedState.isVeterinarianEnabled,
-                generalReminders: storedState.isGeneralRemindersEnabled
+                grooming: storedDisplayData.isGroomingEnabled,
+                veterinarian: storedDisplayData.isVeterinarianEnabled,
+                generalReminders: storedDisplayData.isGeneralRemindersEnabled
             )
         }
     }
@@ -69,19 +71,19 @@ final class SettingsViewModel: SettingsViewModeling {
         case .groomingToggled(let isEnabled):
             updateNotificationPreferences(
                 grooming: isEnabled,
-                veterinarian: state.isVeterinarianEnabled,
-                generalReminders: state.isGeneralRemindersEnabled
+                veterinarian: displayData.isVeterinarianEnabled,
+                generalReminders: displayData.isGeneralRemindersEnabled
             )
         case .veterinarianToggled(let isEnabled):
             updateNotificationPreferences(
-                grooming: state.isGroomingEnabled,
+                grooming: displayData.isGroomingEnabled,
                 veterinarian: isEnabled,
-                generalReminders: state.isGeneralRemindersEnabled
+                generalReminders: displayData.isGeneralRemindersEnabled
             )
         case .generalRemindersToggled(let isEnabled):
             updateNotificationPreferences(
-                grooming: state.isGroomingEnabled,
-                veterinarian: state.isVeterinarianEnabled,
+                grooming: displayData.isGroomingEnabled,
+                veterinarian: displayData.isVeterinarianEnabled,
                 generalReminders: isEnabled
             )
         case .themeSelected(let theme):
@@ -89,13 +91,15 @@ final class SettingsViewModel: SettingsViewModeling {
         case .languageSelected(let language):
             updateLanguage(language)
         case .deleteAccountTapped:
-            state.isDeleteConfirmationPresented = true
+            displayData.isDeleteConfirmationPresented = true
+            state = .content(displayData)
         case .confirmDeleteAccount:
-            state.isDeleteConfirmationPresented = false
+            displayData.isDeleteConfirmationPresented = false
+            state = .content(displayData)
             deleteAccount()
         case .dismissAlert:
-            state.errorMessage = nil
-            state.isDeleteConfirmationPresented = false
+            displayData.isDeleteConfirmationPresented = false
+            state = .content(displayData)
         }
     }
 
@@ -107,9 +111,9 @@ final class SettingsViewModel: SettingsViewModeling {
             apply(preferences)
         } else {
             savedPreferences = NotificationPreferences(
-                grooming: state.isGroomingEnabled,
-                veterinarian: state.isVeterinarianEnabled,
-                generalReminders: state.isGeneralRemindersEnabled
+                grooming: displayData.isGroomingEnabled,
+                veterinarian: displayData.isVeterinarianEnabled,
+                generalReminders: displayData.isGeneralRemindersEnabled
             )
             apply(
                 NotificationPreferences(
@@ -140,56 +144,52 @@ final class SettingsViewModel: SettingsViewModeling {
     }
 
     private func apply(_ preferences: NotificationPreferences) {
-        state = SettingsState(
-            isNotificationsEnabled: preferences.hasEnabledNotifications,
-            isGroomingEnabled: preferences.grooming,
-            isVeterinarianEnabled: preferences.veterinarian,
-            isGeneralRemindersEnabled: preferences.generalReminders,
-            theme: state.theme,
-            language: state.language,
-            isDeletingAccount: state.isDeletingAccount,
-            errorMessage: state.errorMessage,
-            isDeleteConfirmationPresented: state.isDeleteConfirmationPresented
-        )
+        displayData.isNotificationsEnabled = preferences.hasEnabledNotifications
+        displayData.isGroomingEnabled = preferences.grooming
+        displayData.isVeterinarianEnabled = preferences.veterinarian
+        displayData.isGeneralRemindersEnabled = preferences.generalReminders
+        state = .content(displayData)
         persistSettings()
     }
 
     private func updateTheme(_ theme: SettingsTheme) {
-        guard state.theme != theme else { return }
-        state.theme = theme
+        guard displayData.theme != theme else { return }
+        displayData.theme = theme
+        state = .content(displayData)
         persistSettings()
         settingsApplicationController.applyTheme(theme)
     }
 
     private func updateLanguage(_ language: SettingsLanguage) {
-        guard state.language != language else { return }
-        state.language = language
+        guard displayData.language != language else { return }
+        displayData.language = language
+        state = .content(displayData)
         persistSettings()
         settingsApplicationController.applyLanguage(language)
     }
 
     private func persistSettings() {
-        settingsRepository.save(settings: state)
+        settingsRepository.save(settings: displayData)
     }
 
     private func deleteAccount() {
-        guard !state.isDeletingAccount else { return }
+        guard !displayData.isDeletingAccount else { return }
         guard let presentingViewController = moduleOutput?.provideViewControllerForAccountDeletion() else {
-            state.errorMessage = NSLocalizedString("error.common.try_again", comment: "")
+            state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             return
         }
 
-        state.isDeletingAccount = true
-        state.errorMessage = nil
+        displayData.isDeletingAccount = true
+        state = .content(displayData)
 
         accountRepository.deleteCurrentAccount(presentingViewController: presentingViewController)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
-                self.state.isDeletingAccount = false
+                self.displayData.isDeletingAccount = false
 
                 if case .failure(let error) = completion {
-                    self.state.errorMessage = error.localizedDescription
+                    self.state = .error(error.localizedDescription)
                 }
             } receiveValue: { _ in
             }

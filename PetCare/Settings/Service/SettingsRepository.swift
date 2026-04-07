@@ -8,6 +8,6 @@
 import Foundation
 
 protocol SettingsRepository {
-    func loadSettings() -> SettingsState
-    func save(settings: SettingsState)
+    func loadSettings() -> SettingsDisplayData
+    func save(settings: SettingsDisplayData)
 }

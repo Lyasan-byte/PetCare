@@ -28,18 +28,18 @@ final class SettingsNotificationOptionsView: UIView {
         configure()
     }
 
-    func render(state: SettingsState) {
+    func render(displayData: SettingsDisplayData) {
         groomingRow.render(
-            isOn: state.isGroomingEnabled,
-            isEnabled: state.isNotificationsEnabled
+            isOn: displayData.isGroomingEnabled,
+            isEnabled: displayData.isNotificationsEnabled
         )
         veterinarianRow.render(
-            isOn: state.isVeterinarianEnabled,
-            isEnabled: state.isNotificationsEnabled
+            isOn: displayData.isVeterinarianEnabled,
+            isEnabled: displayData.isNotificationsEnabled
         )
         generalRemindersRow.render(
-            isOn: state.isGeneralRemindersEnabled,
-            isEnabled: state.isNotificationsEnabled
+            isOn: displayData.isGeneralRemindersEnabled,
+            isEnabled: displayData.isNotificationsEnabled
         )
     }
 
