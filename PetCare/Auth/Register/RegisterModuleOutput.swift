@@ -10,5 +10,6 @@ import UIKit
 protocol RegisterModuleOutput: AnyObject {
     func tapLogin()
     func moduleWantsToOpenMainScreen()
+    func moduleWantsToOpenRegistrationCompletion()
     func provideViewControllerForGoogleSignIn() -> UIViewController?
 }

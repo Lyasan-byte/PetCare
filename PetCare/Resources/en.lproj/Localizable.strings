@@ -34,6 +34,9 @@
 "auth.validation.fill_all_fields" = "Please fill in all fields";
 "auth.validation.password_too_short" = "Password must contain at least 6 characters";
 "auth.validation.passwords_do_not_match" = "Passwords do not match";
+"auth.registration_completion.title" = "Welcome!";
+"auth.registration_completion.subtitle" = "Let's finish setting up your account!";
+"auth.registration_completion.button" = "Finish Registration";
 
 "common.error" = "Error";
 "common.ok" = "OK";
@@ -115,3 +118,12 @@
 "user.profile.settings.placeholder" = "Settings screen is coming soon.";
 "user.profile.logout.title" = "Logout";
 "user.profile.edit.navigation.title" = "Edit Profile";
+"user.profile.edit.photo.title" = "Change Profile Photo";
+"user.profile.edit.photo.subtitle" = "Tap to update your avatar";
+"user.profile.edit.first_name.title" = "First Name";
+"user.profile.edit.first_name.placeholder" = "Enter first name";
+"user.profile.edit.last_name.title" = "Last Name";
+"user.profile.edit.last_name.placeholder" = "Enter last name";
+"user.profile.edit.save_button" = "Save Changes";
+"user.profile.edit.validation.first_name" = "Enter first name";
+"user.profile.edit.validation.last_name" = "Enter last name";

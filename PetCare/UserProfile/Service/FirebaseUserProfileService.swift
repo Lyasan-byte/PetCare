@@ -11,9 +11,12 @@ import FirebaseFirestore
 import Combine
 
 final class FirebaseUserProfileService: UserProfileRepository {
+    private let imageService: ImageUploader
     private let usersCollection = Firestore.firestore().collection("users")
 
-    init() {}
+    init(imageService: ImageUploader) {
+        self.imageService = imageService
+    }
 
     func fetchCurrentUser() -> AnyPublisher<UserProfileUser, Error> {
         guard let authUser = Auth.auth().currentUser else {
@@ -33,6 +36,35 @@ final class FirebaseUserProfileService: UserProfileRepository {
                     )
                 }
                 return self.makeProfile(from: authUser, document: document)
+            }
+            .eraseToAnyPublisher()
+    }
+
+    func save(user: UserProfileUser, selectedPhoto: Data?) -> AnyPublisher<UserProfileUser, Error> {
+        guard let selectedPhoto else {
+            return saveUser(user)
+        }
+
+        return imageService
+            .uploadImage(
+                data: selectedPhoto,
+                resource: UploadImageResource.user(id: user.id)
+            )
+            .flatMap { [weak self] url -> AnyPublisher<UserProfileUser, Error> in
+                guard let self else {
+                    return Fail(error: UserProfileRepositoryError.repositoryDeallocated)
+                        .eraseToAnyPublisher()
+                }
+
+                let updatedUser = UserProfileUser(
+                    id: user.id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    avatarURLString: url.absoluteString
+                )
+
+                return self.saveUser(updatedUser)
             }
             .eraseToAnyPublisher()
     }
@@ -59,6 +91,61 @@ final class FirebaseUserProfileService: UserProfileRepository {
 
                 let document = UserProfileDocument(snapshotData: snapshot?.data())
                 promise(.success(document))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    private func saveUser(_ user: UserProfileUser) -> AnyPublisher<UserProfileUser, Error> {
+        updateAuthProfile(for: user)
+            .flatMap { [weak self] _ -> AnyPublisher<Void, Error> in
+                guard let self else {
+                    return Fail(error: UserProfileRepositoryError.repositoryDeallocated)
+                        .eraseToAnyPublisher()
+                }
+
+                return self.saveUserDocument(user)
+            }
+            .map { user }
+            .eraseToAnyPublisher()
+    }
+
+    private func updateAuthProfile(for user: UserProfileUser) -> AnyPublisher<Void, Error> {
+        Future { promise in
+            guard let authUser = Auth.auth().currentUser else {
+                promise(.failure(UserProfileRepositoryError.missingCurrentUser))
+                return
+            }
+
+            let changeRequest = authUser.createProfileChangeRequest()
+            changeRequest.displayName = user.displayName
+            changeRequest.photoURL = user.avatarURL
+            changeRequest.commitChanges { error in
+                if let error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    private func saveUserDocument(_ user: UserProfileUser) -> AnyPublisher<Void, Error> {
+        Future { [usersCollection] promise in
+            let document = UserProfileDocument(
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                photoURLString: user.avatarURLString
+            )
+
+            usersCollection.document(user.id).setData(document.firestoreData, merge: true) { error in
+                if let error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
             }
         }
         .eraseToAnyPublisher()
@@ -137,10 +224,13 @@ private struct UserProfileDocument {
 
 private enum UserProfileRepositoryError: LocalizedError {
     case missingCurrentUser
+    case repositoryDeallocated
 
     var errorDescription: String? {
         switch self {
         case .missingCurrentUser:
+            return NSLocalizedString("error.common.try_again", comment: "")
+        case .repositoryDeallocated:
             return NSLocalizedString("error.common.try_again", comment: "")
         }
     }

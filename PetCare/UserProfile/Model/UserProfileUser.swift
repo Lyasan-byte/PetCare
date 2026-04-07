@@ -14,15 +14,25 @@ struct UserProfileUser {
     let email: String?
     let avatarURLString: String?
 
-    var fullName: String {
+    var displayName: String? {
         let parts = [firstName, lastName]
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
 
-        if parts.isEmpty {
-            return NSLocalizedString("user.profile.name.placeholder", comment: "")
+        guard !parts.isEmpty else { return nil }
+        return parts.joined(separator: " ")
+    }
+
+    var avatarURL: URL? {
+        guard let avatarURLString,
+              let url = URL(string: avatarURLString) else {
+            return nil
         }
 
-        return parts.joined(separator: " ")
+        return url
+    }
+
+    var fullName: String {
+        displayName ?? NSLocalizedString("user.profile.name.placeholder", comment: "")
     }
 }

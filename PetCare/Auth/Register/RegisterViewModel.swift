@@ -112,7 +112,7 @@ final class RegisterViewModel: RegisterViewModeling {
                     self?.updateContent()
                 }
             } receiveValue: { [weak self] in
-                self?.moduleOutput?.moduleWantsToOpenMainScreen()
+                self?.moduleOutput?.moduleWantsToOpenRegistrationCompletion()
             }
             .store(in: &bag)
     }
