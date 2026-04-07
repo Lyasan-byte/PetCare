@@ -9,11 +9,15 @@ import UIKit
 import Combine
 
 final class PublicPetsViewController: UIViewController {
-    private let content = PublicPetsView()
+    private let publicPetsView = PublicPetsView()
     private let publicPetsViewModel: any PublicPetsViewModeling
     private let imageLoader: ImageLoader
     
     private var bag = Set<AnyCancellable>()
+    private var content: PublicPetsContent? {
+        guard case .content(let content) = publicPetsViewModel.state else { return nil }
+        return content
+    }
     
     init(publicPetsViewModel: any PublicPetsViewModeling, imageLoader: ImageLoader) {
         self.publicPetsViewModel = publicPetsViewModel
@@ -33,21 +37,21 @@ final class PublicPetsViewController: UIViewController {
     }
     
     private func setupCollection() {
-        content.setupCollection(dataSource: self, delegate: self)
-        content.registerCells()
+        publicPetsView.setupCollection(dataSource: self, delegate: self)
+        publicPetsView.registerCells()
     }
     
     private func setupAppearance() {
         view.backgroundColor = .secondarySystemBackground
-        view.addSubview(content)
+        view.addSubview(publicPetsView)
     }
     
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            content.topAnchor.constraint(equalTo: view.topAnchor),
-            content.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            content.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            content.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            publicPetsView.topAnchor.constraint(equalTo: view.topAnchor),
+            publicPetsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            publicPetsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            publicPetsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -62,10 +66,14 @@ final class PublicPetsViewController: UIViewController {
     }
     
     private func render(_ state: PublicPetsState) {
-        content.reloadData()
-        content.setLoader(state.isLoading)
-        
-        if let error = state.errorMessage {
+        switch state {
+        case .loading:
+            publicPetsView.setLoader(true)
+        case .content(let content):
+            publicPetsView.setLoader(false)
+            publicPetsView.reloadData()
+        case .error(let error):
+            publicPetsView.setLoader(false)
             showError(error)
         }
     }
@@ -96,7 +104,7 @@ extension PublicPetsViewController: UICollectionViewDataSource {
         case .header:
             return 1
         case .pets:
-            return publicPetsViewModel.state.pets.count
+            return content?.pets.count ?? 0
         }
     }
     
@@ -108,8 +116,8 @@ extension PublicPetsViewController: UICollectionViewDataSource {
         case .header:
             return collectionView.dequeueReusableCell(withReuseIdentifier: PublicPetsHeaderCollectionViewCell.identifier, for: indexPath)
         case .pets:
-            let pet = publicPetsViewModel.state.pets[indexPath.row]
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PublicPetCollectionViewCell.identifier, for: indexPath) as? PublicPetCollectionViewCell {
+            if let content, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PublicPetCollectionViewCell.identifier, for: indexPath) as? PublicPetCollectionViewCell {
+                let pet = content.pets[indexPath.row]
                 cell.setData(pet: pet, imageLoader: imageLoader)
                 return cell
             }
@@ -127,8 +135,10 @@ extension PublicPetsViewController: UICollectionViewDelegate {
         case .header:
             break
         case .pets:
-            let pet = publicPetsViewModel.state.pets[indexPath.item]
-            publicPetsViewModel.trigger(.onPetCardTap(pet))
+            if let content {
+                let pet = content.pets[indexPath.item]
+                publicPetsViewModel.trigger(.onPetCardTap(pet))
+            }
         }
     }
     
