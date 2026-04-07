@@ -67,6 +67,9 @@
 
 "pets.form.gender.title" = "GENDER";
 
+"pets.gender.male" = "Male";
+"pets.gender.female" = "Female";
+
 "pets.form.public_profile.title" = "Public Profile";
 "pets.form.public_profile.subtitle" = "Visible to local pet owners.";
 
@@ -151,3 +154,6 @@
 "user.profile.edit.save_button" = "Save Changes";
 "user.profile.edit.validation.first_name" = "Enter first name";
 "user.profile.edit.validation.last_name" = "Enter last name";
+"pets.public.header.title" = "Public Profiles";
+"pets.public.header.subtitle" = "COMMUNITY FEED";
+"pets.public.header.feed_title" = "Meet the Pack";

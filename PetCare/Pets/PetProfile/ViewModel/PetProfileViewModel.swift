@@ -14,32 +14,57 @@ final class PetProfileViewModel: PetProfileViewModeling {
             stateDidChange.send()
         }
     }
+
     private(set) var stateDidChange = ObservableObjectPublisher()
-    private let moduleOutput: PetProfileModuleOutput?
-    
-    init(pet: Pet, moduleOutput: PetProfileModuleOutput) {
+    private var bag = Set<AnyCancellable>()
+
+    private let petFactsRepository: PetFactsRepository
+    private weak var moduleOutput: PetProfileModuleOutput?
+
+    init(
+        pet: Pet,
+        petFactsRepository: PetFactsRepository,
+        moduleOutput: PetProfileModuleOutput
+    ) {
         self.state = PetProfileState(pet: pet)
+        self.petFactsRepository = petFactsRepository
         self.moduleOutput = moduleOutput
     }
-    
+
     func trigger(_ intent: PetProfileIntent) {
         switch intent {
         case .onEditTap:
-            moduleOutput?.petProfileModuleDidRequestEdit(state.pet)
+            moduleOutput?.moduleWantsToOpenEdit(state.pet)
+
         case .onAnalyticsTap:
-            moduleOutput?.petProfileModuleDidRequestAnalytics(state.pet)
+            moduleOutput?.moduleWantsToOpenAnalytics(state.pet)
+
         case .onBreedTap:
             getPetInfo(breed: state.pet.breed)
+
         case .onCloseTap:
-            moduleOutput?.petProfileModuleDidClose()
+            moduleOutput?.moduleWantsToClose()
         }
     }
-    
+
     func update(_ pet: Pet) {
         state.pet = pet
     }
-    
+
     private func getPetInfo(breed: String) {
-        
-    }   
+        petFactsRepository.fetcFact(for: breed)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case .failure = completion {
+                    print(completion)
+                }
+            } receiveValue: { [weak self] result in
+                guard let self,
+                      let result else { return }
+
+                self.state.petFact = result
+                self.moduleOutput?.moduleWantsToOpenBreedFactSheet(result)
+            }
+            .store(in: &bag)
+    }
 }

@@ -5,12 +5,11 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
-import Foundation
 import UIKit
 import FirebaseFirestore
 
 struct Pet: Identifiable, Codable, Equatable {
-    var id: String
+    @DocumentID var id: String?
     var name: String
     var breed: String
     var weight: Double
@@ -24,7 +23,7 @@ struct Pet: Identifiable, Codable, Equatable {
     var iconStatus: PetIconStatus
 
     init(
-        id: String,
+        id: String?,
         name: String,
         breed: String,
         weight: Double,
@@ -52,7 +51,7 @@ struct Pet: Identifiable, Codable, Equatable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
+        case id
         case name = "name"
         case breed = "breed"
         case weight = "weight"

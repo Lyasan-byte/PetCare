@@ -47,24 +47,23 @@ final class PetsMainViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        petsMainView.collectionView.dataSource = self
-        petsMainView.collectionView.delegate = self
-        
-        petsMainView.collectionView.register(
-            PetsMainTopCell.self,
-            forCellWithReuseIdentifier: PetsMainTopCell.identifier
-        )
-        
-        petsMainView.collectionView.register(
-            PetCardCollectionCell.self,
-            forCellWithReuseIdentifier: PetCardCollectionCell.identifier
-        )
+        petsMainView.setupCollection(dataSource: self, delegate: self)
+        petsMainView.registerCells()
     }
     
     private func render(_ state: PetsMainState) {
-        petsMainView.collectionView.reloadData()
-        petsMainView.showEmptyStateView(state.isEmptyState)
         petsMainView.setLoading(state.isLoading)
+        
+        if state.isLoading {
+            return
+        }
+        
+        petsMainView.showEmptyStateView(state.isEmptyState)
+        petsMainView.reloadData()
+        
+        if let errorMessage = state.errorMessage {
+            showError(errorMessage)
+        }
     }
     
     private func bindAction() {
@@ -83,6 +82,14 @@ final class PetsMainViewController: UIViewController {
             .store(in: &bag)
     }
     
+    private func showError(_ message: String) {
+        let alert = UIAlertController(title: L10n.Common.error, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self] _ in
+            self?.petsMainViewModel.trigger(.onDismissAlert)
+        })
+        present(alert, animated: true)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -90,23 +97,28 @@ final class PetsMainViewController: UIViewController {
 
 extension PetsMainViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        PetsMainSection.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
+        guard let section = PetsMainSection(rawValue: section) else { return 0 }
+        switch section {
+        case .top:
             return 1
-        } else {
+        case .pets:
             return petsMainViewModel.state.pets.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
+        guard let section = PetsMainSection(rawValue: indexPath.section) else {
+            return UICollectionViewCell()
+        }
+        switch section {
+        case .top:
             if let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: PetsMainTopCell.identifier,
-                for: indexPath
-            ) as? PetsMainTopCell {
+                for: indexPath) as? PetsMainTopCell {
                 cell.configure(
                     tipText: petsMainViewModel.state.tipText,
                     onTipTap: { [weak self] in
@@ -114,12 +126,10 @@ extension PetsMainViewController: UICollectionViewDataSource {
                     },
                     onQuickActionTap: { action in
                         print(action)
-                    }
-                )
+                    })
                 return cell
             }
-            return UICollectionViewCell()
-        } else {
+        case .pets:
             if let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: PetCardCollectionCell.identifier,
                 for: indexPath
@@ -128,15 +138,20 @@ extension PetsMainViewController: UICollectionViewDataSource {
                 cell.setData(pet: pet, imageLoader: imageLoader)
                 return cell
             }
-            return UICollectionViewCell()  
         }
+        return UICollectionViewCell()
     }
 }
 
 extension PetsMainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard indexPath.section == 1 else { return }
-        let pet = petsMainViewModel.state.pets[indexPath.item]
-        petsMainViewModel.trigger(.onPetTap(pet))
+        guard let section = PetsMainSection(rawValue: indexPath.section) else { return }
+        switch section {
+        case .top:
+            break
+        case .pets:
+            let pet = petsMainViewModel.state.pets[indexPath.item]
+            petsMainViewModel.trigger(.onPetTap(pet))
+        }
     }
 }
