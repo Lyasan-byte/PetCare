@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+protocol PetActivityCreationModuleOutput {
+    func moduleWantsToSave()
+    func moduleWantsToClose()
+}

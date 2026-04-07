@@ -43,8 +43,8 @@ final class PetsMainViewModel: PetsMainViewModeling {
             moduleOutput?.petsMainModuleDidRequestOpenPet(pet)
         case .onDismissAlert:
             state.errorMessage = nil
-        case .onAddActivity:
-            moduleOutput?.petsMainModuleDidRequestAddActivity()
+        case .onAddActivity(let activity):
+            moduleOutput?.petsMainModuleDidRequestAddActivity(activity)
         }
     }
     

@@ -8,6 +8,8 @@
 import UIKit
 
 final class PetsMainTopCell: UICollectionViewCell {
+    var onActivityTap: ((PetActivityType) -> Void)?
+    
     static let identifier = "PetsMainTopCell"
     
     private let header = Header(icon: "pawprint.fill", text: L10n.Pets.Main.title)
@@ -64,7 +66,7 @@ final class PetsMainTopCell: UICollectionViewCell {
     func configure(
         tipText: String,
         onTipTap: (() -> Void)?,
-        onQuickActionTap: ((QuickActionCellType) -> Void)?
+        onQuickActionTap: ((PetActivityType) -> Void)?
     ) {
         tip.setText(text: tipText)
         tip.onTipTap = onTipTap

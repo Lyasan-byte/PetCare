@@ -11,5 +11,6 @@ enum PetProfileIntent {
     case onEditTap
     case onAnalyticsTap
     case onBreedTap
+    case onCreateActivityTap
     case onCloseTap
 }

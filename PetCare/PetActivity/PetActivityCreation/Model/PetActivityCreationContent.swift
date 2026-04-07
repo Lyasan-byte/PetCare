@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias PetActivityCreationState = ViewState<PetActivityCreationContent>
+
 struct PetActivityCreationContent {
     var pets: [Pet] = []
     var selectedPet: Pet?
@@ -24,7 +26,4 @@ struct PetActivityCreationContent {
 
     var vetProcedureType: VetProcedureType?
     var vetCost: Double?
-
-    var isLoading: Bool = false
-    var errorMessage: String?
 }

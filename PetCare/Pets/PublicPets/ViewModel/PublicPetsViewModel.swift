@@ -34,9 +34,6 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
     }
     
     private func fetchPets() {
-        state.pets = Pet.mockPets
-    }
-    
-    
-    
+        
+    }  
 }

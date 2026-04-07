@@ -22,7 +22,7 @@ final class PetProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .secondarySystemBackground
+        setupAppearance()
         setupHierarchy()
         setupLayout()
         bindViewModel()
@@ -42,6 +42,11 @@ final class PetProfileViewController: UIViewController {
     
     private func setupHierarchy() {
         view.addSubview(petProfileView)
+    }
+    
+    private func setupAppearance() {
+        title = "Pet Profile"
+        view.backgroundColor = .secondarySystemBackground
     }
     
     private func setupLayout() {
@@ -64,6 +69,9 @@ final class PetProfileViewController: UIViewController {
     }
     
     private func bindActions() {
+        petProfileView.createActivityButton.onTap = { [weak self] in
+            self?.petProfileViewModel.trigger(.onCreateActivityTap)
+        }
         petProfileView.editButton.onTap = { [weak self] in
             self?.petProfileViewModel.trigger(.onEditTap)
         }
@@ -76,7 +84,6 @@ final class PetProfileViewController: UIViewController {
     private func render(_ state: PetProfileState) {
         petProfileView.setPetData(state.pet, imageLoader: imageLoader)
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

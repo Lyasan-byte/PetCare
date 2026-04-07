@@ -19,7 +19,7 @@ class QuickActionCell: UICollectionViewCell {
         setupLayout()
     }
     
-    func configure(cellData: QuickActionCellType) {
+    func configure(cellData: PetActivityType) {
         layout.backgroundColor = cellData.backgroundColor
         layout.layer.cornerRadius = 35
         icon.image = UIImage(systemName: cellData.icon)
@@ -54,55 +54,5 @@ class QuickActionCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-enum QuickActionCellType: CaseIterable {
-    case walk
-    case grooming
-    case vet
-    
-    var name: String {
-        switch self {
-        case .walk:
-            L10n.Pets.Main.QuickActions.walk
-        case .grooming:
-            L10n.Pets.Main.QuickActions.grooming
-        case .vet:
-            L10n.Pets.Main.QuickActions.vet
-        }
-    }
-    
-    var icon: String {
-        switch self {
-        case .walk:
-            { if #available(iOS 17.0, *) { return "dog.fill" }; return "figure.walk" }()
-        case .grooming:
-            "scissors"
-        case .vet:
-            "cross.case"
-        }
-    }
-    
-    var color: UIColor {
-        switch self {
-        case .walk:
-            Asset.accentColor.color
-        case .grooming:
-            Asset.purpleAccent.color
-        case .vet:
-            Asset.pinkAccent.color
-        }
-    }
-    
-    var backgroundColor: UIColor {
-        switch self {
-        case .walk:
-            Asset.petGreenAction.color
-        case .grooming:
-            Asset.petPurpleAction.color
-        case .vet:
-            Asset.petPinkAction.color
-        }
     }
 }

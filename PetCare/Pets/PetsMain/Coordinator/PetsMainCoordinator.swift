@@ -53,7 +53,7 @@ final class PetsMainCoordinator: Coordinator {
     }
     
     private func showPet(_ pet: Pet) {
-        let petProfileCoordinator = PetProfileCoordinator(navigationController: navigationController, petRepository: petRepository, pet: pet, imageLoader: imageLoader)
+        let petProfileCoordinator = PetProfileCoordinator(navigationController: navigationController, ownerId: ownerId, petRepository: petRepository, pet: pet, imageLoader: imageLoader)
         
         childCoordinators.append(petProfileCoordinator)
         petProfileCoordinator.onFinish = { [weak self, weak petsMainViewModel, weak petProfileCoordinator] result in
@@ -72,6 +72,27 @@ final class PetsMainCoordinator: Coordinator {
         petProfileCoordinator.start()
     }
     
+    private func showAddActivity(_ activity: PetActivityType) {
+        let petActivityCreationCoordinator = PetActivityCreationCoordinator(
+            initialActivity: activity,
+            initialSelectedPet: nil,
+            ownerId: ownerId,
+            petRepository: petRepository,
+            imageLoader: imageLoader,
+            navigationController: navigationController
+        )
+        
+        childCoordinators.append(petActivityCreationCoordinator)
+        
+        petActivityCreationCoordinator.onFinish = { [weak self, weak petActivityCreationCoordinator] in
+            if let petActivityCreationCoordinator {
+                self?.removeChildCoordinator(petActivityCreationCoordinator)
+            }
+        }
+        
+        petActivityCreationCoordinator.start()
+    }
+    
     private func removeChildCoordinator(_ coordinator: Coordinator) {
         childCoordinators.removeAll(where: { $0 === coordinator} )
     }
@@ -86,7 +107,7 @@ extension PetsMainCoordinator: PetsMainModuleOutput {
          showPet(pet)
     }
     
-    func petsMainModuleDidRequestAddActivity() {
-         
-    }   
+    func petsMainModuleDidRequestAddActivity(_ activity: PetActivityType) {
+         showAddActivity(activity)
+    }
 }

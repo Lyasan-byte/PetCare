@@ -32,6 +32,8 @@ final class PetProfileViewModel: PetProfileViewModeling {
             getPetInfo(breed: state.pet.breed)
         case .onCloseTap:
             moduleOutput?.petProfileModuleDidClose()
+        case .onCreateActivityTap:
+            moduleOutput?.petProfileModuleDidRequestAddActivity(state.pet)
         }
     }
     

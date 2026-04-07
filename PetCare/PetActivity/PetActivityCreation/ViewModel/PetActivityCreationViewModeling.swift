@@ -6,3 +6,5 @@
 //
 
 import Foundation
+
+protocol PetActivityCreationViewModeling: UIKitViewModel where State == PetActivityCreationState, Intent == PetActivityCreationIntent {}
