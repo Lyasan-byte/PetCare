@@ -40,6 +40,8 @@
 
 "common.error" = "Error";
 "common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.delete" = "Delete";
 "error.common.try_again" = "Something went wrong. Please try again";
 
 "error.google.clientId.missing" = "Google Sign-In configuration is missing.";
@@ -118,6 +120,28 @@
 "user.profile.settings.placeholder" = "Settings screen is coming soon.";
 "user.profile.logout.title" = "Logout";
 "user.profile.edit.navigation.title" = "Edit Profile";
+
+// MARK: - Settings
+"settings.screen.title" = "Settings";
+"settings.notifications.title" = "Notification Settings";
+"settings.notifications.all" = "All Notifications";
+"settings.notifications.grooming" = "Grooming";
+"settings.notifications.veterinarian" = "Veterinarian";
+"settings.notifications.general_reminders" = "General Reminders";
+"settings.appearance.title" = "Appearance";
+"settings.appearance.theme.title" = "Theme";
+"settings.appearance.theme.subtitle" = "Switch between light and dark";
+"settings.appearance.theme.light" = "Light";
+"settings.appearance.theme.dark" = "Dark";
+"settings.appearance.language.title" = "Language";
+"settings.appearance.language.subtitle" = "Preferred app language";
+"settings.appearance.language.russian" = "Russian";
+"settings.appearance.language.english" = "English";
+"settings.account.title" = "Account Management";
+"settings.account.delete" = "Delete Account";
+"settings.account.delete.confirmation.title" = "Delete Account";
+"settings.account.delete.confirmation.message" = "Your profile and pets will be removed permanently. This action cannot be undone.";
+"settings.account.delete.reauth" = "Please sign in again before deleting your account.";
 "user.profile.edit.photo.title" = "Change Profile Photo";
 "user.profile.edit.photo.subtitle" = "Tap to update your avatar";
 "user.profile.edit.first_name.title" = "First Name";

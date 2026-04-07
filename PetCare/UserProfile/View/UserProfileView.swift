@@ -33,6 +33,26 @@ final class UserProfileView: UIView {
         headerView.addEditTarget(target, action: action)
     }
 
+    func refreshLocalizedTexts() {
+        settingsRow.configure(
+            iconName: "gearshape.fill",
+            iconTint: Asset.darkPink.color,
+            iconBackground: Asset.petPinkAction.color.withAlphaComponent(0.3),
+            title: NSLocalizedString("user.profile.settings.title", comment: ""),
+            subtitle: NSLocalizedString("user.profile.settings.subtitle", comment: ""),
+            titleColor: .label
+        )
+
+        logoutRow.configure(
+            iconName: "rectangle.portrait.and.arrow.right",
+            iconTint: Asset.redAccent.color,
+            iconBackground: Asset.lightRed.color,
+            title: NSLocalizedString("user.profile.logout.title", comment: ""),
+            subtitle: "",
+            titleColor: Asset.redAccent.color
+        )
+    }
+
     func setLoading(_ isLoading: Bool) {
         if isLoading {
             loader.startAnimating()
@@ -107,23 +127,7 @@ final class UserProfileView: UIView {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
 
-        settingsRow.configure(
-            iconName: "gearshape.fill",
-            iconTint: Asset.darkPink.color,
-            iconBackground: Asset.petPinkAction.color.withAlphaComponent(0.3),
-            title: NSLocalizedString("user.profile.settings.title", comment: ""),
-            subtitle: NSLocalizedString("user.profile.settings.subtitle", comment: ""),
-            titleColor: .label
-        )
-
-        logoutRow.configure(
-            iconName: "rectangle.portrait.and.arrow.right",
-            iconTint: Asset.redAccent.color,
-            iconBackground: Asset.lightRed.color,
-            title: NSLocalizedString("user.profile.logout.title", comment: ""),
-            subtitle: "",
-            titleColor: Asset.redAccent.color
-        )
+        refreshLocalizedTexts()
     }
 
     required init?(coder: NSCoder) {

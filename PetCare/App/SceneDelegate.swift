@@ -11,11 +11,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private let appCoordinator = AppCoordinator()
+    private let settingsRepository: SettingsRepository = UserDefaultsSettingsService()
+    private let settingsApplicationController: SettingsApplicationControlling = SettingsApplicationController()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
 
+        let settings = settingsRepository.loadSettings()
+        settingsApplicationController.applyLanguage(settings.language)
         window = appCoordinator.start(scene)
+        settingsApplicationController.applyTheme(settings.theme)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
