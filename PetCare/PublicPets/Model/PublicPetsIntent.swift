@@ -10,4 +10,6 @@ import Foundation
 enum PublicPetsIntent {
     case onDidLoad
     case onPetCardTap(Pet)
+    case onReachedItem(index: Int)
+    case onDismissAlert
 }
