@@ -33,9 +33,14 @@
 "auth.validation.fill_all_fields" = "Пожалуйста, заполните все поля";
 "auth.validation.password_too_short" = "Пароль должен содержать минимум 6 символов";
 "auth.validation.passwords_do_not_match" = "Пароли не совпадают";
+"auth.registration_completion.title" = "Добро пожаловать!";
+"auth.registration_completion.subtitle" = "Давайте завершим настройку вашего аккаунта!";
+"auth.registration_completion.button" = "Завершить регистрацию";
 
 "common.error" = "Ошибка";
 "common.ok" = "ОК";
+"common.cancel" = "Отмена";
+"common.delete" = "Удалить";
 "error.common.try_again" = "Что-то пошло не так. Попробуйте еще раз";
 
 "error.google.clientId.missing" = "Конфигурация Google входа отсутствует.";
@@ -104,6 +109,50 @@
 
 "pets.main.tip.title" = "Совет по здоровью питомца";
 
+
+// MARK: - User Profile
+
+"user.profile.screen.title" = "Профиль";
+"user.profile.name.placeholder" = "Любитель питомцев";
+"user.profile.email.missing" = "Почта не указана";
+"user.profile.pets.count" = "Количество питомцев";
+"user.profile.best.score" = "Лучший счет";
+"user.profile.settings.title" = "Настройки";
+"user.profile.settings.subtitle" = "Уведомления, внешний вид и управление аккаунтом";
+"user.profile.settings.placeholder" = "Экран настроек появится позже.";
+"user.profile.logout.title" = "Выйти";
+"user.profile.edit.navigation.title" = "Редактировать профиль";
+
+// MARK: - Settings
+"settings.screen.title" = "Настройки";
+"settings.notifications.title" = "Настройки уведомлений";
+"settings.notifications.all" = "Все уведомления";
+"settings.notifications.grooming" = "Груминг";
+"settings.notifications.veterinarian" = "Ветеринар";
+"settings.notifications.general_reminders" = "Общие напоминания";
+"settings.appearance.title" = "Оформление";
+"settings.appearance.theme.title" = "Тема";
+"settings.appearance.theme.subtitle" = "Переключение между светлой и темной темой";
+"settings.appearance.theme.light" = "Светлая";
+"settings.appearance.theme.dark" = "Темная";
+"settings.appearance.language.title" = "Язык";
+"settings.appearance.language.subtitle" = "Предпочитаемый язык приложения";
+"settings.appearance.language.russian" = "Русский";
+"settings.appearance.language.english" = "English";
+"settings.account.title" = "Управление аккаунтом";
+"settings.account.delete" = "Удалить аккаунт";
+"settings.account.delete.confirmation.title" = "Удалить аккаунт";
+"settings.account.delete.confirmation.message" = "Ваш профиль и питомцы будут удалены навсегда. Это действие нельзя отменить.";
+"settings.account.delete.reauth" = "Пожалуйста, войдите в аккаунт заново перед его удалением.";
+"user.profile.edit.photo.title" = "Изменить фото профиля";
+"user.profile.edit.photo.subtitle" = "Нажмите, чтобы обновить аватар";
+"user.profile.edit.first_name.title" = "Имя";
+"user.profile.edit.first_name.placeholder" = "Введите имя";
+"user.profile.edit.last_name.title" = "Фамилия";
+"user.profile.edit.last_name.placeholder" = "Введите фамилию";
+"user.profile.edit.save_button" = "Сохранить изменения";
+"user.profile.edit.validation.first_name" = "Введите имя";
+"user.profile.edit.validation.last_name" = "Введите фамилию";
 "pets.public.header.title" = "Публичные профили";
 "pets.public.header.subtitle" = "СООБЩЕСТВО";
 "pets.public.header.feed_title" = "Знакомьтесь с питомцами";

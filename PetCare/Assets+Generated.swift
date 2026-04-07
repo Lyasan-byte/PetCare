@@ -47,10 +47,13 @@ public enum Asset {
   public static let purpleAccent = ColorAsset(name: "purpleAccent")
   public static let purpleAccentStatus = ColorAsset(name: "purpleAccentStatus")
   public static let redAccent = ColorAsset(name: "redAccent")
+  public static let authCardViewColor = ColorAsset(name: "authCardViewColor")
+  public static let userAvatarBorder = ColorAsset(name: "userAvatarBorder")
   public static let textGreen = ColorAsset(name: "textGreen")
   public static let defaultProfilePhoto = ImageAsset(name: "defaultProfilePhoto")
   public static let googleIcon = ImageAsset(name: "google_icon")
   public static let googleIcon21 = ImageAsset(name: "google_icon2 1")
+  public static let defaultUserProfilePhoto = ImageAsset(name: "defaultUserProfilePhoto")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

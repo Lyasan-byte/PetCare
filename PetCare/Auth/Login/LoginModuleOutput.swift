@@ -5,9 +5,10 @@
 //  Created by Artur Bagautdinov on 01.04.2026.
 //
 
-import Foundation
+import UIKit
 
 protocol LoginModuleOutput: AnyObject {
     func tapRegister()
     func moduleWantsToOpenMainScreen()
+    func provideViewControllerForGoogleSignIn() -> UIViewController?
 }

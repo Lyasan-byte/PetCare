@@ -20,8 +20,6 @@ final class LoginViewModel: LoginViewModeling {
     private let authService: AuthRepository
     private weak var moduleOutput: LoginModuleOutput?
 
-    private weak var presentingViewController: UIViewController?
-
     private var email = ""
     private var password = ""
     private var bag = Set<AnyCancellable>()
@@ -32,10 +30,6 @@ final class LoginViewModel: LoginViewModeling {
     ) {
         self.authService = authService
         self.moduleOutput = moduleOutput
-    }
-
-    func attach(viewController: UIViewController) {
-        self.presentingViewController = viewController
     }
 
     func trigger(_ intent: LoginIntent) {
@@ -103,7 +97,7 @@ final class LoginViewModel: LoginViewModeling {
     }
 
     private func signInWithGoogle() {
-        guard let vc = presentingViewController else {
+        guard let vc = moduleOutput?.provideViewControllerForGoogleSignIn() else {
             state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             updateContent()
             return
