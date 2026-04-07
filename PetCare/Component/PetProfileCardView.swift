@@ -39,6 +39,11 @@ final class PetProfileCardView: UIView {
         setupLayout()
     }
     
+    convenience init(isPublicPet: Bool) {
+        self.init(frame: .zero)
+        configure(isPublicPet)
+    }
+    
     private func setupHierarchy() {
         addSubview(backgroundView)
         backgroundView.addSubview(imageContainer)
@@ -93,8 +98,15 @@ final class PetProfileCardView: UIView {
             petGenderInfo.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
+    
+    private func configure(_ isPublicPet: Bool) {
+        if isPublicPet {
+            petStatus.isHidden = true
+            isOPenProfileStatus.isHidden = true
+        }
+    }
         
-    func configure(pet: Pet, imageLoader: ImageLoader) {
+    func setData(isPublic: Bool, pet: Pet, imageLoader: ImageLoader) {
         petImage.setImage(urlString: pet.photoUrl, imageLoader: imageLoader)
         petNameLabel.text = pet.name
         petBreedLabel.text = pet.breed.uppercased()
@@ -103,10 +115,12 @@ final class PetProfileCardView: UIView {
         petWeightInfo.setData(info: "\(L10n.Pets.Profile.weight): \(pet.weight) \(L10n.Pets.Profile.weightUnitKg)")
         petGenderInfo.setData(info: "\(L10n.Pets.Profile.gender): \(pet.gender.rawValue.capitalized)")
         
-        petStatus.configure(status: pet.iconStatus, circleSize: 35, iconSize: 18)
-        petStatus.isHidden = pet.iconStatus == .none
-        
-        isOPenProfileStatus.isHidden = !pet.isPublic
+        if !isPublic {
+            petStatus.configure(status: pet.iconStatus, circleSize: 35, iconSize: 18)
+            petStatus.isHidden = pet.iconStatus == .none
+            
+            isOPenProfileStatus.isHidden = !pet.isPublic
+        }
     }
     
     required init?(coder: NSCoder) {

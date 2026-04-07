@@ -15,7 +15,7 @@ final class PetProfileViewModel: PetProfileViewModeling {
         }
     }
     private(set) var stateDidChange = ObservableObjectPublisher()
-    private let moduleOutput: PetProfileModuleOutput?
+    private weak var moduleOutput: PetProfileModuleOutput?
     
     init(pet: Pet, moduleOutput: PetProfileModuleOutput) {
         self.state = PetProfileState(pet: pet)

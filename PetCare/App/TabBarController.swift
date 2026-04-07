@@ -9,6 +9,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private var petsMainCoordinator: PetsMainCoordinator?
+    private var publicPetsCoordinator: PublicPetsCoordinator?
     private let imageLoader: ImageLoader = ImageLoadService()
 
     override func viewDidLoad() {

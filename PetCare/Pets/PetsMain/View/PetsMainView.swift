@@ -35,7 +35,7 @@ final class PetsMainView: UIView {
         circleSize: 52,
         iconSize: 18,
         weight: .medium,
-        shadowColor: Asset.accentColor.color
+        shadowColor: Asset.primaryGreen.color
     )
     
     override init(frame: CGRect) {
