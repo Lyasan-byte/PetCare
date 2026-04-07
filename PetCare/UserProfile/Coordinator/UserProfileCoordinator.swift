@@ -68,14 +68,35 @@ final class UserProfileCoordinator: Coordinator {
         )
         navigationController.pushViewController(viewController, animated: true)
     }
+
+    private func showEditProfile(for user: UserProfileUser) {
+        let viewModel = UserProfileEditViewModel(
+            user: user,
+            userProfileRepository: userProfileRepository,
+            moduleOutput: self
+        )
+
+        let viewController = UserProfileEditViewController(
+            viewModel: viewModel,
+            imageLoader: imageLoader
+        )
+        navigationController.pushViewController(viewController, animated: true)
+    }
 }
 
 extension UserProfileCoordinator: UserProfileModuleOutput {
-    func userProfileModuleDidRequestEdit() {
-        showPlaceholderScreen(titleText: NSLocalizedString("user.profile.edit.navigation.title", comment: ""))
+    func userProfileModuleDidRequestEdit(_ user: UserProfileUser) {
+        showEditProfile(for: user)
     }
 
     func userProfileModuleDidRequestSettings() {
         showSettings()
+    }
+}
+
+extension UserProfileCoordinator: UserProfileEditModuleOutput {
+    func userProfileEditModuleDidSave() {
+        navigationController.popViewController(animated: true)
+        userProfileViewModel?.trigger(.refresh)
     }
 }

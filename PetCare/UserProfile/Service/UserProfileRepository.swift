@@ -10,5 +10,6 @@ import Combine
 
 protocol UserProfileRepository {
     func fetchCurrentUser() -> AnyPublisher<UserProfileUser, Error>
+    func save(user: UserProfileUser, selectedPhoto: Data?) -> AnyPublisher<UserProfileUser, Error>
     func signOut() -> AnyPublisher<Void, Error>
 }

@@ -33,6 +33,9 @@
 "auth.validation.fill_all_fields" = "Пожалуйста, заполните все поля";
 "auth.validation.password_too_short" = "Пароль должен содержать минимум 6 символов";
 "auth.validation.passwords_do_not_match" = "Пароли не совпадают";
+"auth.registration_completion.title" = "Добро пожаловать!";
+"auth.registration_completion.subtitle" = "Давайте завершим настройку вашего аккаунта!";
+"auth.registration_completion.button" = "Завершить регистрацию";
 
 "common.error" = "Ошибка";
 "common.ok" = "ОК";
@@ -138,3 +141,12 @@
 "settings.account.delete.confirmation.title" = "Удалить аккаунт";
 "settings.account.delete.confirmation.message" = "Ваш профиль и питомцы будут удалены навсегда. Это действие нельзя отменить.";
 "settings.account.delete.reauth" = "Пожалуйста, войдите в аккаунт заново перед его удалением.";
+"user.profile.edit.photo.title" = "Изменить фото профиля";
+"user.profile.edit.photo.subtitle" = "Нажмите, чтобы обновить аватар";
+"user.profile.edit.first_name.title" = "Имя";
+"user.profile.edit.first_name.placeholder" = "Введите имя";
+"user.profile.edit.last_name.title" = "Фамилия";
+"user.profile.edit.last_name.placeholder" = "Введите фамилию";
+"user.profile.edit.save_button" = "Сохранить изменения";
+"user.profile.edit.validation.first_name" = "Введите имя";
+"user.profile.edit.validation.last_name" = "Введите фамилию";

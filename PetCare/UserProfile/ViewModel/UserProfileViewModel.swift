@@ -20,6 +20,7 @@ final class UserProfileViewModel: UserProfileViewModeling {
     private let userProfileRepository: UserProfileRepository
     private weak var moduleOutput: UserProfileModuleOutput?
     private var bag = Set<AnyCancellable>()
+    private var currentUser: UserProfileUser?
 
     init(
         petRepository: PetRepository,
@@ -36,7 +37,8 @@ final class UserProfileViewModel: UserProfileViewModeling {
         case .onDidLoad, .refresh:
             loadProfile()
         case .editTapped:
-            moduleOutput?.userProfileModuleDidRequestEdit()
+            guard let currentUser else { return }
+            moduleOutput?.userProfileModuleDidRequestEdit(currentUser)
         case .settingsTapped:
             moduleOutput?.userProfileModuleDidRequestSettings()
         case .logoutTapped:
@@ -46,6 +48,7 @@ final class UserProfileViewModel: UserProfileViewModeling {
 
     private func loadProfile() {
         state = .loading
+        currentUser = nil
 
         userProfileRepository.fetchCurrentUser()
             .flatMap { [petRepository] user in
@@ -59,6 +62,7 @@ final class UserProfileViewModel: UserProfileViewModeling {
                     self?.state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] user, pets in
+                self?.currentUser = user
                 self?.state = .content(
                     UserProfileContent(
                         fullName: user.fullName,
