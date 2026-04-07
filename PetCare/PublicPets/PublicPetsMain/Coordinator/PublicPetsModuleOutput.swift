@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol PublicPetsModuleOutput {
+protocol PublicPetsModuleOutput: AnyObject {
     func moduleWantsToOpenPetProfile(_ pet: Pet)
 }

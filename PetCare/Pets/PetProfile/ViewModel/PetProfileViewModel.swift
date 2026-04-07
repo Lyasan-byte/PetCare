@@ -14,35 +14,43 @@ final class PetProfileViewModel: PetProfileViewModeling {
             stateDidChange.send()
         }
     }
+
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
-    
+
     private let petFactsRepository: PetFactsRepository
-    private let moduleOutput: PetProfileModuleOutput?
-    
-    init(pet: Pet, petFactsRepository: PetFactsRepository, moduleOutput: PetProfileModuleOutput) {
+    private weak var moduleOutput: PetProfileModuleOutput?
+
+    init(
+        pet: Pet,
+        petFactsRepository: PetFactsRepository,
+        moduleOutput: PetProfileModuleOutput
+    ) {
         self.state = PetProfileState(pet: pet)
         self.petFactsRepository = petFactsRepository
         self.moduleOutput = moduleOutput
     }
-    
+
     func trigger(_ intent: PetProfileIntent) {
         switch intent {
         case .onEditTap:
             moduleOutput?.moduleWantsToOpenEdit(state.pet)
+
         case .onAnalyticsTap:
             moduleOutput?.moduleWantsToOpenAnalytics(state.pet)
+
         case .onBreedTap:
             getPetInfo(breed: state.pet.breed)
+
         case .onCloseTap:
             moduleOutput?.moduleWantsToClose()
         }
     }
-    
+
     func update(_ pet: Pet) {
         state.pet = pet
     }
-    
+
     private func getPetInfo(breed: String) {
         petFactsRepository.fetcFact(for: breed)
             .receive(on: DispatchQueue.main)

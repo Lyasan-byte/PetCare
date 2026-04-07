@@ -62,7 +62,7 @@ final class PetProfileCoordinator: Coordinator {
     }
     
     private func showEditPet(_ pet: Pet) {
-        let petFormCoordinator = PetFormCoordinator(navigationController: navigationController, petRepository: petRepository, imageLoader: imageLoader)
+        let petFormCoordinator = PetFormCoordinator(navigationController: navigationController, petRepository: petRepository, imageLoader: imageLoader, mode: .edit(pet))
         
         childCoordinators.append(petFormCoordinator)
         
@@ -82,7 +82,7 @@ final class PetProfileCoordinator: Coordinator {
                 self?.removeCoordinator(petFormCoordinator)
             }
         }
-        petFormCoordinator.showEdit(pet: pet)
+        petFormCoordinator.start()
     }
     
     private func showAnalytics(_ pet: Pet) {
