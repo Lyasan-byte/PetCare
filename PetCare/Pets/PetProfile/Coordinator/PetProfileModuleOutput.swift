@@ -10,6 +10,7 @@ import Foundation
 protocol PetProfileModuleOutput: AnyObject {
     func moduleWantsToOpenEdit(_ pet: Pet)
     func moduleWantsToOpenAnalytics(_ pet: Pet)
+    func moduleWantsToOpenAddActivity(_ pet: Pet)
     func moduleWantsToOpenBreedFactSheet(_ petFact: PetFact)
     func moduleWantsToClose()
 }

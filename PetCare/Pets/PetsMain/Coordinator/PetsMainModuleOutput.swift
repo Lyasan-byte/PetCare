@@ -10,5 +10,5 @@ import Foundation
 protocol PetsMainModuleOutput: AnyObject {
     func petsMainModuleDidRequestAddPet()
     func petsMainModuleDidRequestOpenPet(_ pet: Pet)
-    func petsMainModuleDidRequestAddActivity()
+    func petsMainModuleDidRequestAddActivity(_ activity: PetActivityType)
 }

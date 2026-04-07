@@ -35,7 +35,7 @@ final class PetFormView: UIView {
     let petDateOfBirthPicker = DatePickerView(title: L10n.Pets.Form.BirthDate.title)
     let petGenderPicker = SegmentedPickerView(items: Gender.allCases.map(\.title))
     
-    let noteTextView = NoteTextView()
+    let noteTextView = NoteTextView(title: L10n.Pets.Form.Note.title)
     let isPublicProfileSwitch = SwitchOptionView(title: L10n.Pets.Form.PublicProfile.title, subtitle: L10n.Pets.Form.PublicProfile.subtitle, symbolName: "globe.americas.fill", iconColor: Asset.pinkAccent.color, circleColor: Asset.lightPink.color, circleSize: 45, iconSize: 20)
     let saveButton = PrimaryButton(title: L10n.Pets.Form.saveButton, shadowColor: Asset.primaryGreen.color)
     let deleteButton = PrimaryButton(title: L10n.Pets.Form.deleteButton, backgroundColor: Asset.lightRed.color, textColor: Asset.redAccent.color)
