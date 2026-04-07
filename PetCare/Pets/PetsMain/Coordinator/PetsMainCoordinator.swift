@@ -26,14 +26,16 @@ final class PetsMainCoordinator: Coordinator {
         self.imageLoader = imageLoader
     }
     
-    func start() -> UIViewController {
+    func start() {
         let petsMainViewModel = PetsMainViewModel(petRepository: petRepository, tipRepository: tipRepository, moduleOutput: self, ownerId: ownerId)
         self.petsMainViewModel = petsMainViewModel
-        return PetsMainViewController(petsMainviewModel: petsMainViewModel, imageLoader: ImageLoadService())
+        let viewController = PetsMainViewController(petsMainviewModel: petsMainViewModel, imageLoader: ImageLoadService())
+        
+        navigationController.setViewControllers([viewController], animated: true)
     }
     
     private func showAddPetView() {
-        let petFormCoordinator = PetFormCoordinator(navigationController: navigationController, petRepository: petRepository, imageLoader: imageLoader)
+        let petFormCoordinator = PetFormCoordinator(navigationController: navigationController, petRepository: petRepository, imageLoader: imageLoader, mode: .create(ownerId: ownerId))
         
         childCoordinators.append(petFormCoordinator)
         
@@ -49,7 +51,7 @@ final class PetsMainCoordinator: Coordinator {
                 self?.removeChildCoordinator(petFormCoordinator)
             }
         }
-        petFormCoordinator.showCreate(ownerId: ownerId)
+        petFormCoordinator.start()
     }
     
     private func showPet(_ pet: Pet) {

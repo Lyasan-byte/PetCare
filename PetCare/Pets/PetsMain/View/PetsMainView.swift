@@ -115,7 +115,7 @@ final class PetsMainView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         loader.translatesAutoresizingMaskIntoConstraints = false
-        loader.isHidden = true
+        
         loader.style = .medium
         loader.hidesWhenStopped = true
         emptyStateView.isHidden = true

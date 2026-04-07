@@ -23,7 +23,7 @@ struct Pet: Identifiable, Codable, Equatable {
     var iconStatus: PetIconStatus
 
     init(
-        id: String? = nil,
+        id: String?,
         name: String,
         breed: String,
         weight: Double,

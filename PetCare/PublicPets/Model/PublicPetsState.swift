@@ -10,5 +10,7 @@ import Foundation
 struct PublicPetsState {
     var pets: [Pet] = []
     var isLoading: Bool = false
+    var hasMore: Bool = true
+    var isLoadingMore: Bool = false
     var errorMessage: String?
 }

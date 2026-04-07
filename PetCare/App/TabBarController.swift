@@ -28,14 +28,15 @@ final class TabBarController: UITabBarController {
         )
         self.petsMainCoordinator = petsMainCoordinator
         
-        let petsViewController = petsMainCoordinator.start()
-        
-        petsNavigationController.setViewControllers([petsViewController], animated: false)
+        petsMainCoordinator.start()
         petsNavigationController.tabBarItem.image = UIImage(systemName: "pawprint.fill")
         petsNavigationController.tabBarItem.title = nil
 
-        let publicPetsViewController = PublicPetsViewController(publicPetsViewModel: PublicPetsViewModel(moduleOutput: PublicPetsCoordinator()), imageLoader: imageLoader)
-        let navPublicPetsViewController = setupTabBatItem(for: publicPetsViewController, image: "globe.americas.fill")
+        let publicPetsNavigationController = UINavigationController()
+        let publicPetsCoordinator = PublicPetsCoordinator(navigationController: publicPetsNavigationController, petRepository: PublicPetService(), imageLoader: imageLoader)
+        publicPetsCoordinator.start()
+        publicPetsNavigationController.tabBarItem.image = UIImage(systemName: "globe.americas.fill")
+
         
         let gameViewController = UIViewController()
         let navGameViewController = setupTabBatItem(for: gameViewController, image: "gamecontroller.fill")
@@ -43,7 +44,7 @@ final class TabBarController: UITabBarController {
         let userProfileController = UIViewController()
         let navUserProfileViewController = setupTabBatItem(for: userProfileController, image: "person.fill")
         
-        setViewControllers([petsNavigationController, navPublicPetsViewController, navGameViewController, navUserProfileViewController], animated: true)
+        setViewControllers([petsNavigationController, publicPetsNavigationController, navGameViewController, navUserProfileViewController], animated: true)
     }
     
     private func setupTabBatItem(for viewController: UIViewController, image: String) -> UINavigationController {
