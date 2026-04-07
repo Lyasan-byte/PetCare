@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 final class SettingsViewModel: SettingsViewModeling {
     private struct NotificationPreferences {
@@ -173,11 +174,15 @@ final class SettingsViewModel: SettingsViewModeling {
 
     private func deleteAccount() {
         guard !state.isDeletingAccount else { return }
+        guard let presentingViewController = moduleOutput?.provideViewControllerForAccountDeletion() else {
+            state.errorMessage = NSLocalizedString("error.common.try_again", comment: "")
+            return
+        }
 
         state.isDeletingAccount = true
         state.errorMessage = nil
 
-        accountRepository.deleteCurrentAccount()
+        accountRepository.deleteCurrentAccount(presentingViewController: presentingViewController)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
