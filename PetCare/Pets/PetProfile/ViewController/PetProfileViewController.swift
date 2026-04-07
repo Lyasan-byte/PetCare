@@ -36,7 +36,7 @@ final class PetProfileViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
     
@@ -70,6 +70,10 @@ final class PetProfileViewController: UIViewController {
         
         petProfileView.analyticsButton.onTap = { [weak self] in
             self?.petProfileViewModel.trigger(.onAnalyticsTap)
+        }
+        
+        petProfileView.onBreedTap = { [weak self] in
+            self?.petProfileViewModel.trigger(.onBreedTap)
         }
     }
     
