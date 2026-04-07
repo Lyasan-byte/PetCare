@@ -60,8 +60,7 @@ final class TabBarController: UITabBarController {
         )
         self.userProfileCoordinator = userProfileCoordinator
 
-        let userProfileController = userProfileCoordinator.start()
-        userProfileNavigationController.setViewControllers([userProfileController], animated: false)
+        userProfileCoordinator.start()
         userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
         userProfileNavigationController.tabBarItem.title = nil
         

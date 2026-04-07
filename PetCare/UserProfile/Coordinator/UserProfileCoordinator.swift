@@ -47,7 +47,7 @@ final class UserProfileCoordinator: Coordinator {
         childCoordinators.removeAll(where: { $0 === coordinator })
     }
 
-    func start() -> UIViewController {
+    func start() {
         let viewModel = UserProfileViewModel(
             petRepository: petRepository,
             userProfileRepository: userProfileRepository,
@@ -55,10 +55,11 @@ final class UserProfileCoordinator: Coordinator {
         )
         userProfileViewModel = viewModel
 
-        return UserProfileViewController(
+        let viewController = UserProfileViewController(
             viewModel: viewModel,
             imageLoader: imageLoader
         )
+        navigationController.setViewControllers([viewController], animated: false)
     }
 
     private func showPlaceholderScreen(titleText: String) {
