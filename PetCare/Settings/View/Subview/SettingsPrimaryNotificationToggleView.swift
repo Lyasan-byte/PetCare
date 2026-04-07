@@ -25,7 +25,8 @@ final class SettingsPrimaryNotificationToggleView: UIView {
     }
 
     func render(isOn: Bool) {
-        switchControl.setOn(isOn, animated: false)
+        guard switchControl.isOn != isOn else { return }
+        switchControl.setOn(isOn, animated: window != nil)
     }
 
     private func setupHierarchy() {
@@ -39,13 +40,13 @@ final class SettingsPrimaryNotificationToggleView: UIView {
         switchControl.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 80),
+            heightAnchor.constraint(equalToConstant: 72),
 
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: switchControl.leadingAnchor, constant: -12),
 
-            switchControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22),
+            switchControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -18),
             switchControl.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
@@ -56,12 +57,13 @@ final class SettingsPrimaryNotificationToggleView: UIView {
             let alpha: CGFloat = traitCollection.userInterfaceStyle == .dark ? 0.92 : 0.35
             return baseColor.withAlphaComponent(alpha)
         }
-        layer.cornerRadius = 26
+        layer.cornerRadius = 24
 
-        titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLabel.textColor = .label
 
         switchControl.onTintColor = Asset.primaryGreen.color
+        switchControl.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
         switchControl.addAction(
             UIAction { [weak self, weak switchControl] _ in
                 self?.onToggle?(switchControl?.isOn ?? false)

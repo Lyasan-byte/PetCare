@@ -43,6 +43,12 @@ final class SettingsNotificationOptionsView: UIView {
         )
     }
 
+    func refreshLocalizedTexts() {
+        groomingRow.updateTitle(NSLocalizedString("settings.notifications.grooming", comment: ""))
+        veterinarianRow.updateTitle(NSLocalizedString("settings.notifications.veterinarian", comment: ""))
+        generalRemindersRow.updateTitle(NSLocalizedString("settings.notifications.general_reminders", comment: ""))
+    }
+
     private func setupHierarchy() {
         addSubview(detailsStack)
     }

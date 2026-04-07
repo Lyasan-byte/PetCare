@@ -21,7 +21,7 @@ final class UserProfileStatsView: UIView {
         petsCardView.configure(
             value: content.petsCountText,
             title: NSLocalizedString("user.profile.pets.count", comment: ""),
-            backgroundColor: Asset.petPinkAction.color.withAlphaComponent(0.3),
+            backgroundColor: Asset.petPinkAction.color.withAlphaComponent(0.4),
             textColor: Asset.darkPink.color
         )
 

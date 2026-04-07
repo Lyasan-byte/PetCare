@@ -29,7 +29,12 @@ final class UserProfileCoordinator: Coordinator {
     }
     
     private func showSettings() {
-        let settingsCoordinator = SettingsCoordinator(navigationController: navigationController)
+        let settingsCoordinator = SettingsCoordinator(
+            navigationController: navigationController,
+            settingsRepository: UserDefaultsSettingsService(),
+            settingsApplicationController: SettingsApplicationController(),
+            accountRepository: FirebaseSettingsAccountService()
+        )
         childCoordinators.append(settingsCoordinator)
         settingsCoordinator.onFinish = { [weak self, weak settingsCoordinator] in
             guard let settingsCoordinator else { return }

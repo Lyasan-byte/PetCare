@@ -12,11 +12,21 @@ struct SettingsState {
     var isGroomingEnabled: Bool
     var isVeterinarianEnabled: Bool
     var isGeneralRemindersEnabled: Bool
+    var theme: SettingsTheme
+    var language: SettingsLanguage
+    var isDeletingAccount: Bool
+    var errorMessage: String?
+    var isDeleteConfirmationPresented: Bool
 
-    static let initial = SettingsState(
+    static let defaultValue = SettingsState(
         isNotificationsEnabled: true,
         isGroomingEnabled: true,
         isVeterinarianEnabled: true,
-        isGeneralRemindersEnabled: false
+        isGeneralRemindersEnabled: false,
+        theme: .light,
+        language: .defaultValue,
+        isDeletingAccount: false,
+        errorMessage: nil,
+        isDeleteConfirmationPresented: false
     )
 }

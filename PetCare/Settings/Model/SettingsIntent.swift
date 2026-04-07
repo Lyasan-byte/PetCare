@@ -13,4 +13,9 @@ enum SettingsIntent {
     case groomingToggled(Bool)
     case veterinarianToggled(Bool)
     case generalRemindersToggled(Bool)
+    case themeSelected(SettingsTheme)
+    case languageSelected(SettingsLanguage)
+    case deleteAccountTapped
+    case confirmDeleteAccount
+    case dismissAlert
 }
