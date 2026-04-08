@@ -53,15 +53,47 @@ final class PetFactsViewController: UIViewController {
     
     private func buildRows(for petFact: PetFact) {
         generalInfoRows = [
-            makeRow(title: L10n.Pets.Facts.group, value: petFact.group, backgrounColor: Asset.lightGreen.color, valueColor: Asset.primaryGreen.color),
-            makeRow(title: L10n.Pets.Facts.lifespan, value: petFact.lifespan, backgrounColor: Asset.lightPink.color, valueColor: Asset.pinkAccent.color),
-            makeRow(title: L10n.Pets.Facts.diet, value: petFact.diet, backgrounColor: Asset.lightPurple.color, valueColor: Asset.purpleAccent.color),
-            makeRow(title: L10n.Pets.Facts.skinType, value: petFact.skinType, backgrounColor: Asset.lightGreen.color, valueColor: Asset.accentColor.color)
+            makeRow(
+                title: L10n.Pets.Facts.group,
+                value: petFact.group,
+                backgrounColor: Asset.lightGreen.color,
+                valueColor: Asset.primaryGreen.color
+            ),
+            makeRow(
+                title: L10n.Pets.Facts.lifespan,
+                value: petFact.lifespan,
+                backgrounColor: Asset.lightPink.color,
+                valueColor: Asset.pinkAccent.color
+            ),
+            makeRow(
+                title: L10n.Pets.Facts.diet,
+                value: petFact.diet,
+                backgrounColor: Asset.lightPurple.color,
+                valueColor: Asset.purpleAccent.color
+            ),
+            makeRow(
+                title: L10n.Pets.Facts.skinType,
+                value: petFact.skinType,
+                backgrounColor: Asset.lightGreen.color,
+                valueColor: Asset.accentColor.color
+            )
         ].compactMap { $0 }
         
         detailsRows = [
-            makeRow(title: L10n.Pets.Facts.weight, value: petFact.weight, backgrounColor: Asset.lightPink.color, valueColor: Asset.pinkAccent.color),
-            makeRow(title: L10n.Pets.Facts.locations, value: petFact.locations.isEmpty ? nil : petFact.locations.joined(separator: ", "), backgrounColor: Asset.lightPurple.color, valueColor: Asset.purpleAccent.color)
+            makeRow(
+                title: L10n.Pets.Facts.weight,
+                value: petFact.weight,
+                backgrounColor: Asset.lightPink.color,
+                valueColor: Asset.pinkAccent.color
+            ),
+            makeRow(
+                title: L10n.Pets.Facts.locations,
+                value: petFact.locations.isEmpty ? nil : petFact.locations.joined(
+                    separator: ", "
+                ),
+                backgrounColor: Asset.lightPurple.color,
+                valueColor: Asset.purpleAccent.color
+            )
         ].compactMap { $0 }
     }
     

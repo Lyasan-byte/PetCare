@@ -7,7 +7,7 @@
 import UIKit
 
 final class PrimaryButton: UIButton {
-    var onTap: (() -> ())?
+    var onTap: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
