@@ -45,7 +45,7 @@ final class PetProfileViewController: UIViewController {
     }
     
     private func setupAppearance() {
-        title = "Pet Profile"
+        title = L10n.Pets.Profile.Screen.title
         view.backgroundColor = .secondarySystemBackground
     }
     

@@ -176,17 +176,17 @@ final class PetFormViewController: UIViewController {
         guard presentedViewController == nil else { return }
 
         let alert = UIAlertController(
-            title: "Delete",
-            message: "Are you sure you want to delete this pet?",
+            title: L10n.Pets.Form.DeleteConfirmation.title,
+            message: L10n.Pets.Form.DeleteConfirmation.message,
             preferredStyle: .alert
         )
         alert.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel) { [weak self] _ in
+            UIAlertAction(title: L10n.Common.cancel, style: .cancel) { [weak self] _ in
                 self?.petFormViewModel.trigger(.onDismissAlert)
             }
         )
         alert.addAction(
-            UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
+            UIAlertAction(title: L10n.Common.delete, style: .destructive) { [weak self] _ in
                 self?.petFormViewModel.trigger(.onConfirmDelete)
             }
         )
@@ -197,9 +197,13 @@ final class PetFormViewController: UIViewController {
         guard let message else { return }
         guard presentedViewController == nil else { return }
 
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: L10n.Common.error,
+            message: message,
+            preferredStyle: .alert
+        )
         alert.addAction(
-            UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self] _ in
                 self?.petFormViewModel.trigger(.onDismissAlert)
             }
         )

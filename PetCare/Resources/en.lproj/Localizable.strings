@@ -158,7 +158,8 @@
 "pets.public.header.subtitle" = "COMMUNITY FEED";
 "pets.public.header.feed_title" = "Meet the Pack";
 
-//MARK: Pet Activity
+//MARK: - Pet Activity
+
 "pets.grooming.bath" = "Bath";
 "pets.grooming.claws" = "Claws";
 "pets.grooming.haircut" = "Haircut";
@@ -199,3 +200,33 @@
 "pets.facts.skin_type" = "SKIN TYPE";
 "pets.facts.weight" = "WEIGHT";
 "pets.facts.locations" = "LOCATIONS";
+
+"pets.activity.date" = "ACTIVITY DATE";
+"pets.activity.notes" = "ACTIVITY NOTES";
+"pets.activity.reminder.title" = "Set Reminder";
+"pets.activity.reminder.subtitle" = "Get notified for next session.";
+"pets.activity.save_button" = "Save Activity";
+
+"pets.activity.screen.title" = "Create Activity";
+
+
+//MARK: - Pet Form And Profile
+
+"pets.form.delete_confirmation.title" = "Delete";
+"pets.form.delete_confirmation.message" = "Are you sure you want to delete this pet?";
+
+"pets.profile.screen.title" = "Pet Profile";
+
+"pets.age.year.one" = "%d year";
+"pets.age.year.few" = "%d years";
+"pets.age.year.many" = "%d years";
+
+"pets.age.month.one" = "%d month";
+"pets.age.month.few" = "%d months";
+"pets.age.month.many" = "%d months";
+
+"pets.age.day.one" = "%d day";
+"pets.age.day.few" = "%d days";
+"pets.age.day.many" = "%d days";
+
+

@@ -108,6 +108,12 @@ public enum L10n {
   }
   public enum Pets {
     public enum Activity {
+      /// ACTIVITY DATE
+      public static let date = L10n.tr("Localizable", "pets.activity.date", fallback: "ACTIVITY DATE")
+      /// ACTIVITY NOTES
+      public static let notes = L10n.tr("Localizable", "pets.activity.notes", fallback: "ACTIVITY NOTES")
+      /// Save Activity
+      public static let saveButton = L10n.tr("Localizable", "pets.activity.save_button", fallback: "Save Activity")
       /// SELECT PET
       public static let selectPet = L10n.tr("Localizable", "pets.activity.select_pet", fallback: "SELECT PET")
       public enum Grooming {
@@ -125,6 +131,16 @@ public enum L10n {
           /// 30
           public static let placeholder = L10n.tr("Localizable", "pets.activity.grooming.duration.placeholder", fallback: "30")
         }
+      }
+      public enum Reminder {
+        /// Get notified for next session.
+        public static let subtitle = L10n.tr("Localizable", "pets.activity.reminder.subtitle", fallback: "Get notified for next session.")
+        /// Set Reminder
+        public static let title = L10n.tr("Localizable", "pets.activity.reminder.title", fallback: "Set Reminder")
+      }
+      public enum Screen {
+        /// Create Activity
+        public static let title = L10n.tr("Localizable", "pets.activity.screen.title", fallback: "Create Activity")
       }
       public enum Vet {
         /// COST
@@ -148,6 +164,50 @@ public enum L10n {
         public enum KmGoal {
           /// 5.1
           public static let placeholder = L10n.tr("Localizable", "pets.activity.walk.km_goal.placeholder", fallback: "5.1")
+        }
+      }
+    }
+    public enum Age {
+      public enum Day {
+        /// %d days
+        public static func few(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.day.few", p1, fallback: "%d days")
+        }
+        /// %d days
+        public static func many(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.day.many", p1, fallback: "%d days")
+        }
+        /// %d day
+        public static func one(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.day.one", p1, fallback: "%d day")
+        }
+      }
+      public enum Month {
+        /// %d months
+        public static func few(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.month.few", p1, fallback: "%d months")
+        }
+        /// %d months
+        public static func many(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.month.many", p1, fallback: "%d months")
+        }
+        /// %d month
+        public static func one(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.month.one", p1, fallback: "%d month")
+        }
+      }
+      public enum Year {
+        /// %d years
+        public static func few(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.year.few", p1, fallback: "%d years")
+        }
+        /// %d years
+        public static func many(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.year.many", p1, fallback: "%d years")
+        }
+        /// %d year
+        public static func one(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "pets.age.year.one", p1, fallback: "%d year")
         }
       }
     }
@@ -181,6 +241,12 @@ public enum L10n {
         public static let placeholder = L10n.tr("Localizable", "pets.form.breed.placeholder", fallback: "Golden Retriever")
         /// BREED
         public static let title = L10n.tr("Localizable", "pets.form.breed.title", fallback: "BREED")
+      }
+      public enum DeleteConfirmation {
+        /// Are you sure you want to delete this pet?
+        public static let message = L10n.tr("Localizable", "pets.form.delete_confirmation.message", fallback: "Are you sure you want to delete this pet?")
+        /// Delete
+        public static let title = L10n.tr("Localizable", "pets.form.delete_confirmation.title", fallback: "Delete")
       }
       public enum Gender {
         /// GENDER
@@ -300,6 +366,10 @@ public enum L10n {
       public static let weight = L10n.tr("Localizable", "pets.profile.weight", fallback: "Weight")
       /// kg
       public static let weightUnitKg = L10n.tr("Localizable", "pets.profile.weight_unit_kg", fallback: "kg")
+      public enum Screen {
+        /// Pet Profile
+        public static let title = L10n.tr("Localizable", "pets.profile.screen.title", fallback: "Pet Profile")
+      }
     }
     public enum Public {
       public enum Header {

@@ -49,7 +49,7 @@ final class PetActivityCreationViewController: UIViewController {
     }
 
     private func setupAppearance() {
-        title = "Create Activity"
+        title = L10n.Pets.Activity.Screen.title
         view.backgroundColor = .secondarySystemBackground
         view.addSubview(petActivityCreationView)
     }

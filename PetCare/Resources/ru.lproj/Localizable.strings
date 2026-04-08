@@ -89,7 +89,7 @@
 "pets.profile.note_title" = "ОСОБЕННОСТИ / ЗАМЕТКИ";
 
 "pets.profile.create_activity_button" = "Создать активность";
-"pets.profile.edit_button" = "Редактировать профиль";
+"pets.profile.edit_button" = "Редактировать";
 "pets.profile.analytics_button" = "Аналитика";
 
 "pets.main.title" = "Мои питомцы";
@@ -198,4 +198,30 @@
 "pets.facts.skin_type" = "ТИП ШЕРСТИ";
 "pets.facts.weight" = "ВЕС";
 "pets.facts.locations" = "МЕСТА ОБИТАНИЯ";
+
+"pets.activity.date" = "ДАТА АКТИВНОСТИ";
+"pets.activity.notes" = "ЗАМЕТКИ ОБ АКТИВНОСТИ";
+"pets.activity.reminder.title" = "Установить напоминание";
+"pets.activity.reminder.subtitle" = "Получите уведомление о следующей сессии.";
+"pets.activity.save_button" = "Сохранить активность";
+"pets.activity.screen.title" = "Создать активность";
+
+//MARK: - Pet Form And Profile
+
+"pets.form.delete_confirmation.title" = "Удалить";
+"pets.form.delete_confirmation.message" = "Вы уверены, что хотите удалить этого питомца?";
+
+"pets.profile.screen.title" = "Профиль питомца";
+
+"pets.age.year.one" = "%d год";
+"pets.age.year.few" = "%d года";
+"pets.age.year.many" = "%d лет";
+
+"pets.age.month.one" = "%d месяц";
+"pets.age.month.few" = "%d месяца";
+"pets.age.month.many" = "%d месяцев";
+
+"pets.age.day.one" = "%d день";
+"pets.age.day.few" = "%d дня";
+"pets.age.day.many" = "%d дней";
 
