@@ -13,7 +13,7 @@ enum GroomingProcedureType: String, Codable, CaseIterable {
     case haircut = "HAIRCUT"
     case brushing = "BRUSHING"
     case fullService = "FULLSERVICE"
-    
+
     var title: String {
         switch self {
         case .bath:

@@ -7,4 +7,5 @@
 
 import Foundation
 
-protocol UserProfileEditViewModeling: UIKitViewModel where State == UserProfileEditState, Intent == UserProfileEditIntent {}
+protocol UserProfileEditViewModeling: UIKitViewModel
+where State == UserProfileEditState, Intent == UserProfileEditIntent {}

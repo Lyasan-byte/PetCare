@@ -8,12 +8,11 @@
 import UIKit
 
 final class TextLabel: UILabel {
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     convenience init(
         font: UIFont = .systemFont(ofSize: 21, weight: .bold),
         text: String = "",
@@ -26,12 +25,12 @@ final class TextLabel: UILabel {
         self.textColor = textColor
         self.textAlignment = textAlignment
     }
-    
+
     func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         numberOfLines = 0
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

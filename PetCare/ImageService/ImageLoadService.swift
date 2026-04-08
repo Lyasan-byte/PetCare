@@ -26,7 +26,7 @@ final class ImageLoadService: ImageLoader {
         return urlSession.dataTaskPublisher(for: url)
             .tryMap { [weak self] output in
                 guard let response = output.response as? HTTPURLResponse,
-                      (200..<300).contains(response.statusCode) else {
+                    (200..<300).contains(response.statusCode) else {
                     throw ImageLoaderError.invalidResponse
                 }
 

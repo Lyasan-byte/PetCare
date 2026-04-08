@@ -138,13 +138,13 @@ final class UserProfileEditViewController: UIViewController {
 
     private func renderPhoto(_ displayData: UserProfileEditDisplayData) {
         if let data = displayData.selectedPhotoData,
-           let image = UIImage(data: data) {
+            let image = UIImage(data: data) {
             contentView.photoPickerView.setImage(image)
             return
         }
 
         if let urlString = displayData.existingPhotoUrl,
-           !urlString.isEmpty {
+            !urlString.isEmpty {
             contentView.photoPickerView.setRemoteImage(
                 urlString: urlString,
                 imageLoader: imageLoader
@@ -212,7 +212,7 @@ extension UserProfileEditViewController: PHPickerViewControllerDelegate {
         provider.loadDataRepresentation(forTypeIdentifier: "public.image") { [weak self] data, error in
             guard let self, let data, error == nil else { return }
             guard let image = UIImage(data: data),
-                  let compressedData = image.jpegData(compressionQuality: 0.7) else {
+                let compressedData = image.jpegData(compressionQuality: 0.7) else {
                 return
             }
 

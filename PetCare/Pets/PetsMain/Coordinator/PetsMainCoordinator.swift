@@ -13,35 +13,54 @@ final class PetsMainCoordinator: Coordinator {
     private let tipRepository: TipRepository
     private let ownerId: String
     private let imageLoader: ImageLoader
-    
+
     private var petsMainViewModel: PetsMainViewModel?
-    
+
     private var childCoordinators: [Coordinator] = []
-    
-    init(navigationController: UINavigationController, petRepository: PetRepository, tipRepository: TipRepository, ownerId: String, imageLoader: ImageLoader) {
+
+    init(
+        navigationController: UINavigationController,
+        petRepository: PetRepository,
+        tipRepository: TipRepository,
+        ownerId: String,
+        imageLoader: ImageLoader
+    ) {
         self.navigationController = navigationController
         self.petRepository = petRepository
         self.tipRepository = tipRepository
         self.ownerId = ownerId
         self.imageLoader = imageLoader
     }
-    
+
     func start() {
-        let petsMainViewModel = PetsMainViewModel(petRepository: petRepository, tipRepository: tipRepository, moduleOutput: self, ownerId: ownerId)
+        let petsMainViewModel = PetsMainViewModel(
+            petRepository: petRepository,
+            tipRepository: tipRepository,
+            moduleOutput: self,
+            ownerId: ownerId
+        )
         self.petsMainViewModel = petsMainViewModel
-        let viewController = PetsMainViewController(petsMainviewModel: petsMainViewModel, imageLoader: ImageLoadService())
-        
+        let viewController = PetsMainViewController(
+            petsMainviewModel: petsMainViewModel,
+            imageLoader: ImageLoadService()
+        )
+
         navigationController.setViewControllers([viewController], animated: true)
     }
-    
+
     private func showAddPetView() {
-        let petFormCoordinator = PetFormCoordinator(navigationController: navigationController, petRepository: petRepository, imageLoader: imageLoader, mode: .create(ownerId: ownerId))
-        
+        let petFormCoordinator = PetFormCoordinator(
+            navigationController: navigationController,
+            petRepository: petRepository,
+            imageLoader: imageLoader,
+            mode: .create(ownerId: ownerId)
+        )
+
         childCoordinators.append(petFormCoordinator)
-        
+
         petFormCoordinator.onFinish = { [weak self, weak petsMainViewModel, weak petFormCoordinator] result in
             switch result {
-            case .saved(_):
+            case .saved:
                 petsMainViewModel?.trigger(.refreshPets)
             case .deleted:
                 petsMainViewModel?.trigger(.refreshPets)
@@ -53,10 +72,16 @@ final class PetsMainCoordinator: Coordinator {
         }
         petFormCoordinator.start()
     }
-    
+
     private func showPet(_ pet: Pet) {
-        let petProfileCoordinator = PetProfileCoordinator(navigationController: navigationController, ownerId: ownerId, petRepository: petRepository, pet: pet, imageLoader: imageLoader)
-        
+        let petProfileCoordinator = PetProfileCoordinator(
+            navigationController: navigationController,
+            ownerId: ownerId,
+            petRepository: petRepository,
+            pet: pet,
+            imageLoader: imageLoader
+        )
+
         childCoordinators.append(petProfileCoordinator)
         petProfileCoordinator.onFinish = { [weak self, weak petsMainViewModel, weak petProfileCoordinator] result in
             switch result {
@@ -73,7 +98,7 @@ final class PetsMainCoordinator: Coordinator {
         }
         petProfileCoordinator.start()
     }
-    
+
     private func showAddActivity(_ activity: PetActivityType) {
         let petActivityCreationCoordinator = PetActivityCreationCoordinator(
             initialActivity: activity,
@@ -83,33 +108,33 @@ final class PetsMainCoordinator: Coordinator {
             imageLoader: imageLoader,
             navigationController: navigationController
         )
-        
+
         childCoordinators.append(petActivityCreationCoordinator)
-        
+
         petActivityCreationCoordinator.onFinish = { [weak self, weak petActivityCreationCoordinator] in
             if let petActivityCreationCoordinator {
                 self?.removeChildCoordinator(petActivityCreationCoordinator)
             }
         }
-        
+
         petActivityCreationCoordinator.start()
     }
-    
+
     private func removeChildCoordinator(_ coordinator: Coordinator) {
-        childCoordinators.removeAll(where: { $0 === coordinator} )
+        childCoordinators.removeAll { $0 === coordinator }
     }
 }
 
 extension PetsMainCoordinator: PetsMainModuleOutput {
     func petsMainModuleDidRequestAddPet() {
-         showAddPetView()
+        showAddPetView()
     }
-    
+
     func petsMainModuleDidRequestOpenPet(_ pet: Pet) {
-         showPet(pet)
+        showPet(pet)
     }
-    
+
     func petsMainModuleDidRequestAddActivity(_ activity: PetActivityType) {
-         showAddActivity(activity)
+        showAddActivity(activity)
     }
 }

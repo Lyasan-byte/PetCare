@@ -16,9 +16,9 @@ enum PetFormIntent {
     case onChangeNote(String)
     case onChangeIconStatus(PetIconStatus)
     case onChangeIsPublicProfile(Bool)
-    
+
     case onPickPhoto(Data?)
-    
+
     case onSave
     case onDelete
     case onConfirmDelete

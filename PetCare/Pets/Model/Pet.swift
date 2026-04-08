@@ -49,7 +49,7 @@ struct Pet: Identifiable, Codable, Equatable {
         self.gameScore = gameScore
         self.iconStatus = iconStatus
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case name = "name"

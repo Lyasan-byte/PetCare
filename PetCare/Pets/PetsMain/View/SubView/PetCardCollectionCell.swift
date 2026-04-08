@@ -9,9 +9,9 @@ import UIKit
 
 final class PetCardCollectionCell: UICollectionViewCell {
     static let identifier = "PetCardCollectionCell"
-    
+
     private let petCard = PetCardRowView()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .clear
@@ -19,16 +19,16 @@ final class PetCardCollectionCell: UICollectionViewCell {
         setupHierarchy()
         setupLayout()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         petCard.prepareForReuse()
     }
-    
+
     private func setupHierarchy() {
         contentView.addSubview(petCard)
     }
-    
+
     private func setupLayout() {
         NSLayoutConstraint.activate([
             petCard.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -37,11 +37,11 @@ final class PetCardCollectionCell: UICollectionViewCell {
             petCard.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
-    
+
     func setData(pet: Pet, imageLoader: ImageLoader) {
         petCard.setData(pet: pet, imageLoader: imageLoader)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

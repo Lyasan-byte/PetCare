@@ -9,14 +9,14 @@ import UIKit
 
 final class PetActivityCreationCoordinator: Coordinator {
     var onFinish: (() -> Void)?
-    
+
     private let navigationController: UINavigationController
     private let initialActivity: PetActivityType
     private let initialSelectedPet: Pet?
     private let ownerId: String
     private let petRepository: PetRepository
     private let imageLoader: ImageLoader
-    
+
     init(
         initialActivity: PetActivityType,
         initialSelectedPet: Pet?,
@@ -32,7 +32,7 @@ final class PetActivityCreationCoordinator: Coordinator {
         self.imageLoader = imageLoader
         self.navigationController = navigationController
     }
-    
+
     func start() {
         let viewController = PetActivityCreationViewController(
             imageLoader: imageLoader,
@@ -45,7 +45,7 @@ final class PetActivityCreationCoordinator: Coordinator {
                 moduleOutput: self
             )
         )
-        
+
         navigationController.pushViewController(viewController, animated: true)
     }
 }

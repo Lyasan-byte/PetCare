@@ -103,7 +103,6 @@ final class PetProfileCoordinator: Coordinator {
     }
 
     private func showAnalytics(_ pet: Pet) {
-
     }
 
     private func showAddActivity(_ pet: Pet) {
@@ -128,7 +127,7 @@ final class PetProfileCoordinator: Coordinator {
     }
 
     private func removeCoordinator(_ coordinator: Coordinator) {
-        childCoordinators.removeAll(where: { $0 === coordinator })
+        childCoordinators.removeAll { $0 === coordinator }
     }
 }
 

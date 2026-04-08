@@ -12,7 +12,7 @@ final class PetActivityCreationViewController: UIViewController {
     private let petActivityCreationView = PetActivityCreationView()
     private let imageLoader: ImageLoader
     private let petActivityCreationViewModel: any PetActivityCreationViewModeling
-    
+
     private var bag = Set<AnyCancellable>()
     private var content: PetActivityCreationContent? {
         guard case .content(let content) = petActivityCreationViewModel.state else {
@@ -140,7 +140,7 @@ final class PetActivityCreationViewController: UIViewController {
             petActivityCreationView.reloadData()
         }
     }
-    
+
     private func showError(_ message: String) {
         let alert = UIAlertController(title: L10n.Common.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self] _ in
@@ -177,7 +177,10 @@ extension PetActivityCreationViewController: UICollectionViewDataSource {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let section = PetActivityCreationSection(rawValue: indexPath.section) else {
             return UICollectionViewCell()
         }

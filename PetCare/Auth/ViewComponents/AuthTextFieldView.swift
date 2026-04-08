@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 final class AuthTextFieldView: UIView {
-
     private let titleLabel = UILabel()
     let textField = UITextField()
     private let containerView = UIView()

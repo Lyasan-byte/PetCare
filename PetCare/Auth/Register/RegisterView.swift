@@ -9,9 +9,8 @@ import Foundation
 import UIKit
 
 final class RegisterView: UIView {
-
     private let containerView = AuthContainerView(headerBottomSpacing: -24)
-    
+
     let emailFieldView = AuthTextFieldView(
         title: NSLocalizedString("auth.email.title", comment: ""),
         placeholder: NSLocalizedString("auth.email.placeholder", comment: "")
@@ -56,7 +55,11 @@ final class RegisterView: UIView {
     }
 
     func setLoading(_ isLoading: Bool) {
-        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
         registerButton.isEnabled = !isLoading
         googleButton.isEnabled = !isLoading
         switchButton.isEnabled = !isLoading
@@ -65,7 +68,7 @@ final class RegisterView: UIView {
     private func setup() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(containerView)
-        
+
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),

@@ -84,6 +84,11 @@ final class SettingsView: UIView {
         appearanceDividerView.translatesAutoresizingMaskIntoConstraints = false
         loader.translatesAutoresizingMaskIntoConstraints = false
 
+        setupBaseLayout()
+        setupCardLayout()
+    }
+
+    private func setupBaseLayout() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -102,8 +107,12 @@ final class SettingsView: UIView {
             contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
+        ])
+    }
 
+    private func setupCardLayout() {
+        NSLayoutConstraint.activate([
             settingsCard.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             settingsCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             settingsCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
@@ -113,11 +122,20 @@ final class SettingsView: UIView {
             notificationsHeaderView.leadingAnchor.constraint(equalTo: settingsCard.leadingAnchor, constant: 18),
             notificationsHeaderView.trailingAnchor.constraint(equalTo: settingsCard.trailingAnchor, constant: -18),
 
-            primaryNotificationToggleView.topAnchor.constraint(equalTo: notificationsHeaderView.bottomAnchor, constant: 16),
+            primaryNotificationToggleView.topAnchor.constraint(
+                equalTo: notificationsHeaderView.bottomAnchor,
+                constant: 16
+            ),
             primaryNotificationToggleView.leadingAnchor.constraint(equalTo: settingsCard.leadingAnchor, constant: 18),
-            primaryNotificationToggleView.trailingAnchor.constraint(equalTo: settingsCard.trailingAnchor, constant: -18),
+            primaryNotificationToggleView.trailingAnchor.constraint(
+                equalTo: settingsCard.trailingAnchor,
+                constant: -18
+            ),
 
-            notificationOptionsView.topAnchor.constraint(equalTo: primaryNotificationToggleView.bottomAnchor, constant: 12),
+            notificationOptionsView.topAnchor.constraint(
+                equalTo: primaryNotificationToggleView.bottomAnchor,
+                constant: 12
+            ),
             notificationOptionsView.leadingAnchor.constraint(equalTo: settingsCard.leadingAnchor, constant: 28),
             notificationOptionsView.trailingAnchor.constraint(equalTo: settingsCard.trailingAnchor, constant: -18),
 

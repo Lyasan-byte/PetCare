@@ -25,7 +25,7 @@ final class UserProfileRemoteImageView: UIImageView {
         image = Asset.defaultUserProfilePhoto.image
 
         guard let urlString,
-              let url = URL(string: urlString) else {
+            let url = URL(string: urlString) else {
             return
         }
 

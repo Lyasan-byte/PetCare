@@ -40,12 +40,12 @@ final class UserDefaultsSettingsService: SettingsRepository {
         }
 
         if let themeRawValue = userDefaults.string(forKey: Keys.theme),
-           let theme = SettingsTheme(rawValue: themeRawValue) {
+            let theme = SettingsTheme(rawValue: themeRawValue) {
             settings.theme = theme
         }
 
         if let languageRawValue = userDefaults.string(forKey: Keys.language),
-           let language = SettingsLanguage(rawValue: languageRawValue) {
+            let language = SettingsLanguage(rawValue: languageRawValue) {
             settings.language = language
         }
 

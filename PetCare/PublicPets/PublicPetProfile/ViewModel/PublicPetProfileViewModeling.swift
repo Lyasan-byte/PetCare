@@ -7,4 +7,5 @@
 
 import Foundation
 
-protocol PublicPetProfileViewModeling: UIKitViewModel where State == PublicPetProfileState, Intent == PublicPetProfileIntent {}
+protocol PublicPetProfileViewModeling: UIKitViewModel
+where State == PublicPetProfileState, Intent == PublicPetProfileIntent {}

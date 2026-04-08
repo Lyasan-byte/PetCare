@@ -10,7 +10,7 @@ import Foundation
 enum CloudinaryConfigError: Error, LocalizedError {
     case missingCloudName
     case missingUploadPreset
-    
+
     var errorDescription: String? {
         switch self {
         case .missingCloudName:

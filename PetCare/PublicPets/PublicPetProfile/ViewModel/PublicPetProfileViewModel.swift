@@ -14,21 +14,21 @@ final class PublicPetProfileViewModel: PublicPetProfileViewModeling {
             stateDidChange.send()
         }
     }
-    
+
     private var bag = Set<AnyCancellable>()
     private(set) var stateDidChange = ObservableObjectPublisher()
     private(set) var content: PublicPetProfileContent
     private weak var moduleOutput: PublicPetProfileModuleOutput?
-    
+
     private let userRepository: UserRepository
-    
+
     init(pet: Pet, userRepository: UserRepository, moduleOutput: PublicPetProfileModuleOutput) {
         self.content = PublicPetProfileContent(pet: pet)
         self.state = .content(content)
         self.userRepository = userRepository
         self.moduleOutput = moduleOutput
     }
-    
+
     func trigger(_ intent: PublicPetProfileIntent) {
         switch intent {
         case .onDidLoad:
@@ -39,10 +39,10 @@ final class PublicPetProfileViewModel: PublicPetProfileViewModeling {
             state = .content(content)
         }
     }
-    
+
     private func fetchUser() {
         state = .loading
-        
+
         userRepository.fetchUser(for: content.pet.ownerId)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

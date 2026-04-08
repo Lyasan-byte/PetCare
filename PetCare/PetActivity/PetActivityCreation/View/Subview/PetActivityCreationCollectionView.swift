@@ -65,8 +65,10 @@ final class PetActivityCreationCollectionView: UIView {
         ])
     }
 
-    func setupCollection(dataSource: UICollectionViewDataSource,
-                         delegate: UICollectionViewDelegate) {
+    func setupCollection(
+        dataSource: UICollectionViewDataSource,
+        delegate: UICollectionViewDelegate
+    ) {
         collectionView.dataSource = dataSource
         collectionView.delegate = delegate
     }

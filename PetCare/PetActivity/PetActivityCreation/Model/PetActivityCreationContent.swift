@@ -14,7 +14,7 @@ struct PetActivityCreationContent {
     var selectedPet: Pet?
     var activityId: String
     var activity: PetActivityType = .walk
-    var date: Date = Date()
+    var date = Date()
     var note: String = ""
     var isNotificationsOn: Bool = false
 

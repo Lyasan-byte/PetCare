@@ -34,14 +34,14 @@ final class PublicPetGameScoreView: UIView {
         textColor: Asset.pinkAccent.color,
         textAlignment: .left
     )
-    
+
     private let medalImage: ImageView = {
         let imageView = ImageView(tintColor: Asset.pinkAccent.color)
         let config = UIImage.SymbolConfiguration(pointSize: 20)
         imageView.image = UIImage(systemName: "medal", withConfiguration: config)
         return imageView
     }()
-    
+
     private lazy var textStack = VStack(
         spacing: 10,
         arrangedSubviews: [
@@ -59,22 +59,22 @@ final class PublicPetGameScoreView: UIView {
             medalImage
         ]
     )
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
     }
-    
+
     convenience init() {
         self.init(frame: .zero)
     }
-    
+
     private func setupHierarchy() {
         addSubview(background)
         background.addSubview(contentStack)
     }
-    
+
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         spacer.translatesAutoresizingMaskIntoConstraints = false
@@ -83,18 +83,18 @@ final class PublicPetGameScoreView: UIView {
             background.leadingAnchor.constraint(equalTo: leadingAnchor),
             background.trailingAnchor.constraint(equalTo: trailingAnchor),
             background.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
+
             contentStack.topAnchor.constraint(equalTo: background.topAnchor, constant: 16),
             contentStack.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 16),
             contentStack.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -16),
-            contentStack.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -16),
+            contentStack.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -16)
         ])
     }
-    
+
     func setData(gameScore: Int) {
         self.gameScore.text = "\(gameScore) pts"
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

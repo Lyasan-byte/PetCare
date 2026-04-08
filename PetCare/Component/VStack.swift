@@ -12,7 +12,7 @@ final class VStack: UIStackView {
         super.init(frame: frame)
         configure()
     }
-    
+
     convenience init(
         spacing: CGFloat = 5,
         alignment: UIStackView.Alignment = .fill,
@@ -23,7 +23,7 @@ final class VStack: UIStackView {
         self.alignment = alignment
         arrangedSubviews.forEach { addArrangedSubview($0) }
     }
-    
+
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         axis = .vertical

@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 final class AuthDividerView: UIView {
-
     private let leftLine = UIView()
     private let rightLine = UIView()
     private let titleLabel = UILabel()

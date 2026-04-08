@@ -60,14 +60,20 @@ final class SettingsSegmentedControlView: UIView {
             let alpha: CGFloat = traitCollection.userInterfaceStyle == .dark ? 0.7 : 0.35
             return baseColor.withAlphaComponent(alpha)
         }
-        segmentedControl.setTitleTextAttributes([
-            .foregroundColor: Asset.petGray.color,
-            .font: UIFont.systemFont(ofSize: 13, weight: .semibold)
-        ], for: .normal)
-        segmentedControl.setTitleTextAttributes([
-            .foregroundColor: UIColor.label,
-            .font: UIFont.systemFont(ofSize: 13, weight: .semibold)
-        ], for: .selected)
+        segmentedControl.setTitleTextAttributes(
+            [
+                .foregroundColor: Asset.petGray.color,
+                .font: UIFont.systemFont(ofSize: 13, weight: .semibold)
+            ],
+            for: .normal
+        )
+        segmentedControl.setTitleTextAttributes(
+            [
+                .foregroundColor: UIColor.label,
+                .font: UIFont.systemFont(ofSize: 13, weight: .semibold)
+            ],
+            for: .selected
+        )
 
         segmentedControl.addTarget(self, action: #selector(handleSelection), for: .valueChanged)
     }

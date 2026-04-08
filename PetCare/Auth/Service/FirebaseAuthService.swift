@@ -11,7 +11,6 @@ import Combine
 import UIKit
 
 final class FirebaseAuthService: AuthRepository {
-
     private let googleSignInService: GoogleSignInService
 
     init(googleSignInService: GoogleSignInService = GoogleSignInService()) {

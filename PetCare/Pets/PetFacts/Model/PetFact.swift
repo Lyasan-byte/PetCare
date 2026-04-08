@@ -18,11 +18,11 @@ struct PetFact {
     let lifespan: String?
     let temperament: String?
     let weight: String?
-    
+
     var petName: String {
         commonName ?? name
     }
-    
+
     var characteristic: String {
         slogan ?? temperament ?? ""
     }

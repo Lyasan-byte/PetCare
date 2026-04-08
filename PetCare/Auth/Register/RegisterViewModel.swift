@@ -10,7 +10,6 @@ import UIKit
 import Combine
 
 final class RegisterViewModel: RegisterViewModeling {
-
     private(set) var stateDidChange = ObservableObjectPublisher()
     @Published private(set) var state: RegisterState = .loading {
         didSet {
@@ -77,10 +76,10 @@ final class RegisterViewModel: RegisterViewModeling {
 
     private var isValidCredentials: Bool {
         !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        password == confirmPassword &&
-        password.count >= 6
+            !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            !confirmPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            password == confirmPassword &&
+            password.count >= 6
     }
 
     private func register() {
@@ -118,7 +117,7 @@ final class RegisterViewModel: RegisterViewModeling {
     }
 
     private func signInWithGoogle() {
-        guard let vc = moduleOutput?.provideViewControllerForGoogleSignIn() else {
+        guard let presentingViewController = moduleOutput?.provideViewControllerForGoogleSignIn() else {
             state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             updateContent()
             return
@@ -126,7 +125,9 @@ final class RegisterViewModel: RegisterViewModeling {
 
         updateContent(isLoading: true)
 
-        authService.signInWithGoogle(presentingViewController: vc)
+        authService.signInWithGoogle(
+            presentingViewController: presentingViewController
+        )
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {

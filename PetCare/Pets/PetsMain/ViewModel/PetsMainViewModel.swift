@@ -14,21 +14,26 @@ final class PetsMainViewModel: PetsMainViewModeling {
             stateDidChange.send()
         }
     }
-    
+
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
     private weak var moduleOutput: PetsMainModuleOutput?
-    
+
     private let petRepository: PetRepository
     private let tipRepository: TipRepository
-    
-    init(petRepository: PetRepository, tipRepository: TipRepository, moduleOutput: PetsMainModuleOutput, ownerId: String) {
+
+    init(
+        petRepository: PetRepository,
+        tipRepository: TipRepository,
+        moduleOutput: PetsMainModuleOutput,
+        ownerId: String
+    ) {
         self.petRepository = petRepository
         self.tipRepository = tipRepository
         self.moduleOutput = moduleOutput
         self.state = PetsMainState(ownerId: ownerId)
     }
-    
+
     func trigger(_ intent: PetsMainIntent) {
         switch intent {
         case .viewDidLoad:
@@ -48,7 +53,7 @@ final class PetsMainViewModel: PetsMainViewModeling {
             moduleOutput?.petsMainModuleDidRequestAddActivity(activity)
         }
     }
-    
+
     private func getTips() {
         tipRepository.fetchTips()
             .receive(on: DispatchQueue.main)
@@ -63,15 +68,15 @@ final class PetsMainViewModel: PetsMainViewModeling {
             }
             .store(in: &bag)
     }
-    
+
     private func getPets() {
         state.isLoading = true
-        
+
         petRepository.fetchPets(for: state.ownerId)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
-                
+
                 if case .failure(let error) = completion {
                     self.state.errorMessage = error.localizedDescription
                     self.state.isLoading = false

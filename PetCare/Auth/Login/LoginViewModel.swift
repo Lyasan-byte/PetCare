@@ -9,7 +9,6 @@ import UIKit
 import Combine
 
 final class LoginViewModel: LoginViewModeling {
-
     private(set) var stateDidChange = ObservableObjectPublisher()
     @Published private(set) var state: LoginState = .loading {
         didSet {
@@ -71,7 +70,7 @@ final class LoginViewModel: LoginViewModeling {
 
     private var isValidCredentials: Bool {
         !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     private func login() {
@@ -97,7 +96,7 @@ final class LoginViewModel: LoginViewModeling {
     }
 
     private func signInWithGoogle() {
-        guard let vc = moduleOutput?.provideViewControllerForGoogleSignIn() else {
+        guard let presentingViewController = moduleOutput?.provideViewControllerForGoogleSignIn() else {
             state = .error(NSLocalizedString("error.common.try_again", comment: ""))
             updateContent()
             return
@@ -105,7 +104,9 @@ final class LoginViewModel: LoginViewModeling {
 
         updateContent(isLoading: true)
 
-        authService.signInWithGoogle(presentingViewController: vc)
+        authService.signInWithGoogle(
+            presentingViewController: presentingViewController
+        )
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {

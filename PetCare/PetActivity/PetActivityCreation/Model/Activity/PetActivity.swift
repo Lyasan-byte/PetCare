@@ -16,7 +16,7 @@ struct PetActivity: Codable {
     var note: String
     var type: PetActivityType
     var details: PetActivityDetails
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case petId = "pet_id"
@@ -26,7 +26,7 @@ struct PetActivity: Codable {
         case type
         case details
     }
-    
+
     init(
         id: String? = nil,
         petId: String,
@@ -44,7 +44,7 @@ struct PetActivity: Codable {
         self.type = type
         self.details = details
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -107,7 +107,7 @@ struct WalkDetails: Codable {
 struct GroomingDetails: Codable {
     let procedureType: GroomingProcedureType
     let cost: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case procedureType = "procedure_type"
         case cost
@@ -117,7 +117,7 @@ struct GroomingDetails: Codable {
 struct VetDetails: Codable {
     let procedureType: VetProcedureType
     let cost: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case procedureType = "procedure_type"
         case cost

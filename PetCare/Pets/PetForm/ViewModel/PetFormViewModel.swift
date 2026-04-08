@@ -14,17 +14,17 @@ final class PetFormViewModel: PetFormViewModeling {
             stateDidChange.send()
         }
     }
-    
+
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
     private weak var moduleOutput: PetFormModuleOutput?
-    
+
     private let petRepository: PetRepository
-    
+
     init(petRepository: PetRepository, mode: PetFormMode, moduleOutput: PetFormModuleOutput) {
         self.petRepository = petRepository
         self.moduleOutput = moduleOutput
-        
+
         let petId: String
         switch mode {
         case .create:
@@ -35,11 +35,34 @@ final class PetFormViewModel: PetFormViewModeling {
             }
             petId = existingId
         }
-        
+
         self.state = State(mode: mode, petId: petId)
     }
-    
+
     func trigger(_ intent: PetFormIntent) {
+        if handleFormUpdates(intent) {
+            return
+        }
+
+        switch intent {
+        case .onSave:
+            save()
+        case .onDelete:
+            state.isDeleteConfirmationPresented = true
+        case .onConfirmDelete:
+            state.isDeleteConfirmationPresented = false
+            delete()
+        case .onCloseTap:
+            moduleOutput?.petFormModuleDidClose()
+        case .onDismissAlert:
+            state.errorMessage = nil
+            state.isDeleteConfirmationPresented = false
+        default:
+            return
+        }
+    }
+
+    private func handleFormUpdates(_ intent: PetFormIntent) -> Bool {
         switch intent {
         case .onChangeName(let name):
             state.name = name
@@ -59,21 +82,13 @@ final class PetFormViewModel: PetFormViewModeling {
             state.isPublicProfile = isPublic
         case .onPickPhoto(let data):
             state.selectedPhotoData = data
-        case .onSave:
-            save()
-        case .onDelete:
-            state.isDeleteConfirmationPresented = true
-        case .onConfirmDelete:
-            state.isDeleteConfirmationPresented = false
-            delete()
-        case .onCloseTap:
-            moduleOutput?.petFormModuleDidClose()
-        case .onDismissAlert:
-            state.errorMessage = nil
-            state.isDeleteConfirmationPresented = false
+        default:
+            return false
         }
+
+        return true
     }
-    
+
     private func validateForm() -> String? {
         let trimmedName = state.name.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedBreed = state.breed.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -99,26 +114,26 @@ final class PetFormViewModel: PetFormViewModeling {
 
         return nil
     }
-    
+
     private func save() {
         if let validationError = validateForm() {
             state.errorMessage = validationError
             return
         }
-        
+
         guard let pet = makePetFromState() else {
             state.errorMessage = L10n.Pets.Form.Validation.checkFormFields
             return
         }
 
         state.isSaving = true
-        
+
         petRepository.save(pet: pet, petId: state.petId, selectedPhoto: state.selectedPhotoData)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
                 state.isSaving = false
-                
+
                 if case .failure(let error) = completion {
                     state.errorMessage = error.localizedDescription
                 }
@@ -127,16 +142,16 @@ final class PetFormViewModel: PetFormViewModeling {
             }
             .store(in: &bag)
     }
-    
+
     private func delete() {
         state.isSaving = true
-        
+
         petRepository.delete(petId: state.petId)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
                 self.state.isSaving = false
-                
+
                 if case .failure(let error) = completion {
                     state.errorMessage = error.localizedDescription
                 }
@@ -145,14 +160,14 @@ final class PetFormViewModel: PetFormViewModeling {
             }
             .store(in: &bag)
     }
-    
+
     private func makePetFromState() -> Pet? {
         let normalizedWeight = state.weightText
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: ",", with: ".")
-        
+
         guard let weight = Double(normalizedWeight), weight > 0 else { return nil }
-        
+
         switch state.mode {
         case .create(let ownerId):
             return Pet(
@@ -168,7 +183,7 @@ final class PetFormViewModel: PetFormViewModeling {
                 isPublic: state.isPublicProfile,
                 iconStatus: state.iconStatus
             )
-            
+
         case .edit(let pet):
             return Pet(
                 id: state.petId,

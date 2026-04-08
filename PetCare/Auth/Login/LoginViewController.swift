@@ -10,7 +10,6 @@ import UIKit
 import Combine
 
 final class LoginViewController: UIViewController {
-
     private let viewModel: LoginViewModel
     private let contentView = LoginView()
     private var bag = Set<AnyCancellable>()
@@ -45,8 +44,16 @@ final class LoginViewController: UIViewController {
     }
 
     private func setupActions() {
-        contentView.emailFieldView.textField.addTarget(self, action: #selector(emailChanged), for: .editingChanged)
-        contentView.passwordFieldView.textField.addTarget(self, action: #selector(passwordChanged), for: .editingChanged)
+        contentView.emailFieldView.textField.addTarget(
+            self,
+            action: #selector(emailChanged),
+            for: .editingChanged
+        )
+        contentView.passwordFieldView.textField.addTarget(
+            self,
+            action: #selector(passwordChanged),
+            for: .editingChanged
+        )
         contentView.loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
         contentView.googleButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
         contentView.switchButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)

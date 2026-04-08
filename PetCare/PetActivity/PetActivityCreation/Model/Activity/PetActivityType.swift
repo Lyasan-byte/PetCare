@@ -11,7 +11,7 @@ enum PetActivityType: String, Codable, CaseIterable {
     case walk = "WALK"
     case grooming = "GROOMING"
     case vet = "VET"
-    
+
     var name: String {
         switch self {
         case .walk:
@@ -22,7 +22,7 @@ enum PetActivityType: String, Codable, CaseIterable {
             L10n.Pets.Main.QuickActions.vet
         }
     }
-    
+
     var icon: String {
         switch self {
         case .walk:
@@ -33,7 +33,7 @@ enum PetActivityType: String, Codable, CaseIterable {
             "cross.case"
         }
     }
-    
+
     var color: UIColor {
         switch self {
         case .walk:
@@ -44,7 +44,7 @@ enum PetActivityType: String, Codable, CaseIterable {
             Asset.pinkAccent.color
         }
     }
-    
+
     var backgroundColor: UIColor {
         switch self {
         case .walk:

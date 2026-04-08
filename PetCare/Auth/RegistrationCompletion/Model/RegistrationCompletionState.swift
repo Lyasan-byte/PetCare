@@ -29,7 +29,7 @@ struct RegistrationCompletionDisplayData {
 
     var isSaveEnabled: Bool {
         !firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            !lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     static let empty = RegistrationCompletionDisplayData(

@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 final class LoginView: UIView {
-
     private let containerView = AuthContainerView(headerBottomSpacing: -60)
     let emailFieldView = AuthTextFieldView(
         title: NSLocalizedString("auth.email.title", comment: ""),
@@ -50,7 +49,11 @@ final class LoginView: UIView {
     }
 
     func setLoading(_ isLoading: Bool) {
-        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
         loginButton.isEnabled = !isLoading
         googleButton.isEnabled = !isLoading
         switchButton.isEnabled = !isLoading

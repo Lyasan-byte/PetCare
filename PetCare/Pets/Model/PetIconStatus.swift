@@ -22,12 +22,12 @@ extension PetIconStatus {
         case .heart:
             "heart.fill"
         case .sparkles:
-           "sparkles"
+            "sparkles"
         case .star:
             "star.fill"
         }
     }
-    
+
     var iconColor: UIColor {
         switch self {
         case .none:
@@ -40,7 +40,7 @@ extension PetIconStatus {
             Asset.pinkAccentStatus.color
         }
     }
-    
+
     var backgroundColor: UIColor {
         switch self {
         case .none:

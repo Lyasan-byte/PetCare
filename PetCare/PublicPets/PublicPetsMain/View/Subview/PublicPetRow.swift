@@ -23,49 +23,69 @@ final class PublicPetRow: UIView {
         label.lineBreakMode = .byTruncatingTail
         return label
     }()
-    
+
     private let background = BackgroundView(backgroundColor: .tertiarySystemBackground)
-    private let petName = TextLabel(font: .systemFont(ofSize: 18, weight: .medium), textAlignment: .left)
-    private let petGender = TextLabel(font: .systemFont(ofSize: 16, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
-    private let petBreed = TextLabel(font: .systemFont(ofSize: 15, weight: .regular), textColor: Asset.accentColor.color, textAlignment: .left)
-    private let petGameScore = PetCardBadge(backgroundColor: Asset.lightPurple.color, color: Asset.purpleAccent.color, icon: "gamecontroller.fill", height: 30)
-    
+    private let petName = TextLabel(
+        font: .systemFont(ofSize: 18, weight: .medium),
+        textAlignment: .left
+    )
+    private let petGender = TextLabel(
+        font: .systemFont(ofSize: 16, weight: .medium),
+        textColor: Asset.petGray.color,
+        textAlignment: .left
+    )
+    private let petBreed = TextLabel(
+        font: .systemFont(ofSize: 15, weight: .regular),
+        textColor: Asset.accentColor.color,
+        textAlignment: .left
+    )
+    private let petGameScore = PetCardBadge(
+        backgroundColor: Asset.lightPurple.color,
+        color: Asset.purpleAccent.color,
+        icon: "gamecontroller.fill",
+        height: 30
+    )
+
     private lazy var petNameGenderStack = HStack(spacing: 10, arrangedSubviews: [petName, petGender])
-    private lazy var petGameScoreStack = HStack(spacing: 0, distribution: .equalSpacing, arrangedSubviews: [petNameGenderStack, petGameScore])
+    private lazy var petGameScoreStack = HStack(
+        spacing: 0,
+        distribution: .equalSpacing,
+        arrangedSubviews: [petNameGenderStack, petGameScore]
+    )
     private lazy var petInfoStack = VStack(spacing: 0, arrangedSubviews: [petGameScoreStack, petBreed])
     private lazy var contentStack = VStack(
-            spacing: 16,
-            arrangedSubviews: [petInfoStack, petNote]
-        )
+        spacing: 16,
+        arrangedSubviews: [petInfoStack, petNote]
+    )
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
     }
-    
+
     convenience init() {
         self.init(frame: .zero)
     }
-    
+
     func setData(pet: Pet, imageLoader: ImageLoader) {
         petName.text = pet.name
         petGender.text = pet.gender.rawValue
         petBreed.text = pet.breed
         petGameScore.setText(text: "\(pet.gameScore) pts")
-        
+
         petNote.text = pet.note
         petNote.isHidden = pet.note.isEmpty
-        
+
         petImage.setImage(urlString: pet.photoUrl, imageLoader: imageLoader)
     }
-    
+
     private func setupHierarchy() {
         addSubview(background)
         background.addSubview(petImage)
         background.addSubview(contentStack)
     }
-    
+
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -85,7 +105,7 @@ final class PublicPetRow: UIView {
             contentStack.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -16)
         ])
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

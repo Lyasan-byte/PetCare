@@ -10,22 +10,22 @@ import Combine
 import FirebaseFirestore
 
 final class PetActivityService: PetActivityRepository {
-    private let db: Firestore
-    
-    init(db: Firestore = .firestore()) {
-        self.db = db
+    private let firestore: Firestore
+
+    init(firestore: Firestore = .firestore()) {
+        self.firestore = firestore
     }
-    
+
     func makeNewActivityId() -> String {
-        return db.collection("activities").document().documentID
+        return firestore.collection("activities").document().documentID
     }
-    
+
     func save(activity: PetActivity, activityId: String) -> AnyPublisher<Void, any Error> {
         Future { [weak self] promise in
             guard let self else { return }
-            
+
             do {
-                try db.collection("activities")
+                try firestore.collection("activities")
                     .document(activityId)
                     .setData(from: activity) { error in
                         if let error {

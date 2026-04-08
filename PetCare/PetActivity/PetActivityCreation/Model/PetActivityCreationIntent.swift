@@ -28,4 +28,3 @@ enum PetActivityCreationIntent {
     case onSave
     case onClose
 }
-

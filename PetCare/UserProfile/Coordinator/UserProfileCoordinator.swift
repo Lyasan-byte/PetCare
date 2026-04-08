@@ -27,7 +27,7 @@ final class UserProfileCoordinator: Coordinator {
         self.userProfileRepository = userProfileRepository
         self.imageLoader = imageLoader
     }
-    
+
     private func showSettings() {
         let settingsCoordinator = SettingsCoordinator(
             navigationController: navigationController,
@@ -42,9 +42,9 @@ final class UserProfileCoordinator: Coordinator {
         }
         settingsCoordinator.start()
     }
-    
+
     private func removeChildCoordinator(_ coordinator: Coordinator) {
-        childCoordinators.removeAll(where: { $0 === coordinator })
+        childCoordinators.removeAll { $0 === coordinator }
     }
 
     func start() {

@@ -10,20 +10,20 @@ import Combine
 import FirebaseFirestore
 
 final class FirestoreUserService: UserRepository {
-    private let db: Firestore
-    
-    init(db: Firestore = .firestore()) {
-        self.db = db
+    private let firestore: Firestore
+
+    init(firestore: Firestore = .firestore()) {
+        self.firestore = firestore
     }
-    
+
     func fetchUser(for id: String) -> AnyPublisher<UserProfileUser, any Error> {
         Future { [weak self] promise in
             guard let self else { return }
-            db.collection("users").document(id).getDocument { snapshot, error in
+            firestore.collection("users").document(id).getDocument { snapshot, error in
                 if let error {
                     return promise(.failure(error))
                 }
-                
+
                 guard let snapshot, let data = snapshot.data() else {
                     promise(.failure(NSError(
                         domain: "FirestoreUserService",
@@ -32,7 +32,7 @@ final class FirestoreUserService: UserRepository {
                     )))
                     return
                 }
-                
+
                 let user = UserProfileUser(
                     id: snapshot.documentID,
                     firstName: data["first_name"] as? String ?? "User",
@@ -45,6 +45,4 @@ final class FirestoreUserService: UserRepository {
         }
         .eraseToAnyPublisher()
     }
-    
-    
 }

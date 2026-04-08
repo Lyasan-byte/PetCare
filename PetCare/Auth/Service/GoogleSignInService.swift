@@ -31,7 +31,9 @@ final class GoogleSignInService {
                             promise(.failure(NSError(
                                 domain: "GoogleSignInService",
                                 code: -4,
-                                userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("error.common.try_again", comment: "")]
+                                userInfo: [
+                                    NSLocalizedDescriptionKey: NSLocalizedString("error.common.try_again", comment: "")
+                                ]
                             )))
                         }
                     }
@@ -62,7 +64,9 @@ final class GoogleSignInService {
                         promise(.failure(NSError(
                             domain: "GoogleSignInService",
                             code: -3,
-                            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("error.common.try_again", comment: "")]
+                            userInfo: [
+                                NSLocalizedDescriptionKey: NSLocalizedString("error.common.try_again", comment: "")
+                            ]
                         )))
                         return
                     }
@@ -113,7 +117,9 @@ final class GoogleSignInService {
                     promise(.failure(NSError(
                         domain: "GoogleSignInService",
                         code: -2,
-                        userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("error.google.token.missing", comment: "")]
+                        userInfo: [
+                            NSLocalizedDescriptionKey: NSLocalizedString("error.google.token.missing", comment: "")
+                        ]
                     )))
                     return
                 }
