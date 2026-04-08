@@ -11,7 +11,7 @@ struct PetFact {
     let name: String
     let locations: [String]
     let diet: String?
-    let common_name: String?
+    let commonName: String?
     let skinType: String?
     let group: String?
     let slogan: String?
@@ -20,7 +20,7 @@ struct PetFact {
     let weight: String?
     
     var petName: String {
-        common_name ?? name
+        commonName ?? name
     }
     
     var characteristic: String {
