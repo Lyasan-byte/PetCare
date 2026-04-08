@@ -26,7 +26,6 @@ final class PublicPetProfileViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         bindViewModel()
-        bindActions()
         
         render(publicPetProfileViewModel.state)
         publicPetProfileViewModel.trigger(.onDidLoad)
@@ -38,7 +37,7 @@ final class PublicPetProfileViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
     
@@ -65,14 +64,26 @@ final class PublicPetProfileViewController: UIViewController {
             .store(in: &bag)
     }
     
-    private func bindActions() {
-        
-    }
-    
     private func render(_ state: PublicPetProfileState) {
-        publicPetProfileView.setData(pet: state.pet, imageLoader: imageLoader)
+        switch state {
+        case .loading:
+            publicPetProfileView.setLoading(true)
+        case .content(let content):
+            publicPetProfileView.setLoading(false)
+            publicPetProfileView.setData(pet: content.pet, user: content.user, imageLoader: imageLoader)
+        case .error(let error):
+            publicPetProfileView.setLoading(false)
+            showError(error)
+        }
     }
     
+    private func showError(_ message: String) {
+        let alert = UIAlertController(title: L10n.Common.error, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self] _ in
+            self?.publicPetProfileViewModel.trigger(.onDismissAlert)
+        })
+        present(alert, animated: true)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

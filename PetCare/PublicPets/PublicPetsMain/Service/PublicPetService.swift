@@ -10,50 +10,59 @@ import FirebaseFirestore
 import Combine
 
 final class PublicPetService: PublicPetRepository {
-    private let collection = Firestore.firestore().collection("pets")
+    private let db: Firestore
     
-    func fetch(after document: DocumentSnapshot?, pageSize: Int) -> AnyPublisher<PublicPetsPage, any Error> {
-        Future { [weak self] promise in
-            guard let self else {
-                promise(.failure(RepositoryError.deallocated))
-                return
-            }
-            var query = self.baseQuery(pageSize)
-            
-            if let document {
-                query = query.start(afterDocument: document)
-            }
-            
-            query.getDocuments { snapshot, error in
-                if let error {
-                    promise(.failure(error))
-                    return
+    init(db: Firestore = .firestore()) {
+        self.db = db
+    }
+    
+    func fetch(
+        after document: DocumentSnapshot?,
+        pageSize: Int
+    ) -> AnyPublisher<PublicPetsPage, Error> {
+
+        var query = baseQuery(pageSize)
+
+        if let document {
+            query = query.start(afterDocument: document)
+        }
+
+        return query
+            .getDocumentsPublisher()
+            .map { snapshot in
+                let pets = snapshot.documents.compactMap { doc in
+                    try? doc.data(as: Pet.self)
                 }
-                
-                guard let snapshot else {
-                    promise(.success(PublicPetsPage(hasMore: false)))
-                    return
-                }
-                do {
-                    let pets = try snapshot.documents.map { try $0.data(as: Pet.self) }
-                    let lastDocument = snapshot.documents.last
-                    let hasMore = snapshot.documents.count == pageSize
-                    
-                    promise(.success(.init(pets: pets, lastDocument: lastDocument, hasMore: hasMore)))
-                    return
-                } catch {
+                return PublicPetsPage(
+                    pets: pets,
+                    lastDocument: snapshot.documents.last,
+                    hasMore: snapshot.documents.count == pageSize
+                )
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func baseQuery(_ size: Int) -> Query {
+        db.collection("pets")
+            .whereField(Pet.CodingKeys.isPublic.rawValue, isEqualTo: true)
+            .order(by: Pet.CodingKeys.gameScore.rawValue, descending: true)
+            .limit(to: size)
+    }
+}
+
+extension Query {
+    func getDocumentsPublisher() -> AnyPublisher<QuerySnapshot, Error> {
+        Future<QuerySnapshot, Error> { promise in
+            self.getDocuments { snapshot, error in
+                if let error = error {
                     promise(.failure(error))
-                    return
+                } else if let snapshot = snapshot {
+                    promise(.success(snapshot))
+                } else {
+                    promise(.failure(RepositoryError.unknown))
                 }
             }
         }
         .eraseToAnyPublisher()
-    }
-    
-    private func baseQuery(_ size: Int) -> Query {
-        collection
-            .whereField(Pet.CodingKeys.isPublic.rawValue, isEqualTo: true)
-            .order(by: Pet.CodingKeys.gameScore.rawValue, descending: true)
-            .limit(to: size)
     }
 }

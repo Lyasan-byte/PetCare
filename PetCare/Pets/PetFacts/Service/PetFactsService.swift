@@ -55,7 +55,6 @@ final class PetFactsService: PetFactsRepository {
             }
             .decode(type: [PetFactDTO].self, decoder: decoder)
             .map { facts in
-                print(facts.first)
                 return facts.map { $0.toDomain() }.first
             }
             .eraseToAnyPublisher()

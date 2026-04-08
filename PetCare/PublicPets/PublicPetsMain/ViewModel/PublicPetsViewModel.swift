@@ -10,7 +10,7 @@ import FirebaseFirestore
 import Combine
 
 final class PublicPetsViewModel: PublicPetsViewModeling {
-    @Published var state: PublicPetsState {
+    @Published private(set) var state: PublicPetsState {
         didSet {
             stateDidChange.send()
         }
@@ -20,13 +20,15 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
     private var bag = Set<AnyCancellable>()
     private var lastDocument: DocumentSnapshot?
     private var content: PublicPetsContent
-    private weak var moduleOutput: PublicPetsModuleOutput?
+    private var moduleOutput: PublicPetsModuleOutput?
     
+    private let userId: String
     private let pageSize = 10
     private let petRepository: PublicPetRepository
     
     
-    init(petRepository: PublicPetRepository, moduleOutput: PublicPetsModuleOutput) {
+    init(userId: String, petRepository: PublicPetRepository, moduleOutput: PublicPetsModuleOutput) {
+        self.userId = userId
         self.content = PublicPetsContent()
         self.state = .content(content)
         self.petRepository = petRepository
@@ -66,10 +68,11 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
             } receiveValue: { [weak self] result in
                 guard let self else { return }
                 
+                let filteredPets = result.pets.filter { $0.ownerId != self.userId }
                 if firstPage {
-                    self.content.pets = result.pets
+                    self.content.pets = filteredPets
                 } else {
-                    self.content.pets.append(contentsOf: result.pets)
+                    self.content.pets.append(contentsOf: filteredPets)
                 }
                 
                 self.content.hasMore = result.hasMore

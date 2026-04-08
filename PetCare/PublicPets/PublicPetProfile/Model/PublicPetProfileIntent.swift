@@ -9,5 +9,6 @@ import Foundation
 
 enum PublicPetProfileIntent {
     case onDidLoad
+    case onDismissAlert
     case onClose
 }

@@ -31,6 +31,15 @@ final class PetFactsView: UIView {
         collection.showsVerticalScrollIndicator = false
         return collection
     }()
+    private let emptyStateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "По данной породе не найдено информации"
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
+    }()
     
     private let closeButton = PrimaryButton(title: "Close")
     
@@ -72,9 +81,15 @@ final class PetFactsView: UIView {
         collection.reloadData()
     }
     
+    func setEmptyState(_ isEmpty: Bool) {
+        collection.isHidden = isEmpty
+        emptyStateLabel.isHidden = !isEmpty
+    }
+    
     private func setupHierarchy() {
         addSubview(background)
         background.addSubview(collection)
+        background.addSubview(emptyStateLabel)
         background.addSubview(closeButton)
     }
     
@@ -90,6 +105,10 @@ final class PetFactsView: UIView {
             collection.leadingAnchor.constraint(equalTo: background.leadingAnchor),
             collection.trailingAnchor.constraint(equalTo: background.trailingAnchor),
             collection.bottomAnchor.constraint(equalTo: background.bottomAnchor),
+            
+            emptyStateLabel.centerYAnchor.constraint(equalTo: background.centerYAnchor),
+            emptyStateLabel.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 24),
+            emptyStateLabel.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -24),
             
             closeButton.leadingAnchor.constraint(equalTo: collection.leadingAnchor, constant: 16),
             closeButton.trailingAnchor.constraint(equalTo: collection.trailingAnchor, constant: -16),

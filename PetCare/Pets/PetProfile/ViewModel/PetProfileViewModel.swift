@@ -59,8 +59,7 @@ final class PetProfileViewModel: PetProfileViewModeling {
                     print(completion)
                 }
             } receiveValue: { [weak self] result in
-                guard let self,
-                      let result else { return }
+                guard let self else { return }
 
                 self.state.petFact = result
                 self.moduleOutput?.moduleWantsToOpenBreedFactSheet(result)

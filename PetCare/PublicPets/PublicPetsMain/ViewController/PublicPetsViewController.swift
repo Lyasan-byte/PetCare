@@ -69,7 +69,7 @@ final class PublicPetsViewController: UIViewController {
         switch state {
         case .loading:
             publicPetsView.setLoader(true)
-        case .content(let content):
+        case .content(_):
             publicPetsView.setLoader(false)
             publicPetsView.reloadData()
         case .error(let error):
