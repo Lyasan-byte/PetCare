@@ -15,7 +15,7 @@
 		3CA09EDC2F7324DE008800BC /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDB2F7324DE008800BC /* FirebaseFirestoreCombine-Community */; };
 		3CA09EDE2F7324DE008800BC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDD2F7324DE008800BC /* FirebaseStorage */; };
 		3CA09EE02F7324DE008800BC /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDF2F7324DE008800BC /* FirebaseStorageCombine-Community */; };
-		3CBF09E92F7C78B400EB37F6 /* Cloudinary in Frameworks */ = {isa = PBXBuildFile; productRef = 3CBF09E82F7C78B400EB37F6 /* Cloudinary */; };
+		B93436F42F7EBAF7005A44E3 /* Cloudinary in Frameworks */ = {isa = PBXBuildFile; productRef = B93436F32F7EBAF7005A44E3 /* Cloudinary */; };
 		B9388BCF2F7420CA003D1667 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B9388BCE2F7420CA003D1667 /* GoogleSignIn */; };
 		B9388BD12F7420CA003D1667 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9388BD02F7420CA003D1667 /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
@@ -23,6 +23,7 @@
 /* Begin PBXFileReference section */
 		3C1EF8DD2F749502004A9D33 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		B9420F042F72945A00ED997A /* PetCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9F71D422F7ED20200D16D20 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -53,7 +54,7 @@
 			files = (
 				B9388BD12F7420CA003D1667 /* GoogleSignInSwift in Frameworks */,
 				3CA09ED42F7324DE008800BC /* FirebaseAnalytics in Frameworks */,
-				3CBF09E92F7C78B400EB37F6 /* Cloudinary in Frameworks */,
+				B93436F42F7EBAF7005A44E3 /* Cloudinary in Frameworks */,
 				B9388BCF2F7420CA003D1667 /* GoogleSignIn in Frameworks */,
 				3CA09EE02F7324DE008800BC /* FirebaseStorageCombine-Community in Frameworks */,
 				3CA09EDA2F7324DE008800BC /* FirebaseFirestore in Frameworks */,
@@ -70,6 +71,7 @@
 		B9420EFB2F72945A00ED997A = {
 			isa = PBXGroup;
 			children = (
+				B9F71D422F7ED20200D16D20 /* .swiftlint.yml */,
 				3C1EF8DD2F749502004A9D33 /* swiftgen.yml */,
 				B9420F062F72945A00ED997A /* PetCare */,
 				B9420F052F72945A00ED997A /* Products */,
@@ -92,6 +94,7 @@
 			buildConfigurationList = B9420F1A2F72945A00ED997A /* Build configuration list for PBXNativeTarget "PetCare" */;
 			buildPhases = (
 				B9388BCB2F741B2D003D1667 /* ShellScript */,
+				C1A0B0012F80000100A1B2C3 /* SwiftLint */,
 				B9420F002F72945A00ED997A /* Sources */,
 				B9420F012F72945A00ED997A /* Frameworks */,
 				B9420F022F72945A00ED997A /* Resources */,
@@ -114,7 +117,7 @@
 				3CA09EDF2F7324DE008800BC /* FirebaseStorageCombine-Community */,
 				B9388BCE2F7420CA003D1667 /* GoogleSignIn */,
 				B9388BD02F7420CA003D1667 /* GoogleSignInSwift */,
-				3CBF09E82F7C78B400EB37F6 /* Cloudinary */,
+				B93436F32F7EBAF7005A44E3 /* Cloudinary */,
 			);
 			productName = PetCare;
 			productReference = B9420F042F72945A00ED997A /* PetCare.app */;
@@ -149,7 +152,7 @@
 				3CA09ED22F7324DE008800BC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3C1EF8DC2F7494B6004A9D33 /* XCRemoteSwiftPackageReference "SwiftGenPlugin" */,
 				B9388BCD2F7420CA003D1667 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-				3CBF09E72F7C78B300EB37F6 /* XCRemoteSwiftPackageReference "cloudinary_ios" */,
+				B93436F22F7EBAF7005A44E3 /* XCRemoteSwiftPackageReference "cloudinary_ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9420F052F72945A00ED997A /* Products */;
@@ -190,6 +193,26 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftgen >/dev/null; then\n  swiftgen config run --config \"${SRCROOT}/swiftgen.yml\"\nelse\n  echo \"warning: SwiftGen not installed. Install: brew install swiftgen\" >&2\nfi\n";
 		};
+		C1A0B0012F80000100A1B2C3 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.swiftlint.yml",
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export DEVELOPER_DIR=\"/Applications/Xcode.app/Contents/Developer\"\ncd \"${SRCROOT}\" || exit 1\n\nSWIFTLINT_CMD=\"/opt/homebrew/bin/swiftlint\"\nif [ ! -x \"$SWIFTLINT_CMD\" ]; then\n  SWIFTLINT_CMD=\"$(command -v swiftlint)\"\nfi\n\nif [ -x \"$SWIFTLINT_CMD\" ]; then\n  set +e\n  \"$SWIFTLINT_CMD\" lint \"${SRCROOT}/PetCare\" --config \"${SRCROOT}/.swiftlint.yml\" --reporter xcode --force-exclude\n  SWIFTLINT_EXIT=$?\n  set -e\n\n  if [ $SWIFTLINT_EXIT -ne 0 ]; then\n    echo \"warning: SwiftLint found violations but build will continue\" >&2\n  fi\nelse\n  echo \"warning: SwiftLint not installed. Install: brew install swiftlint\" >&2\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -210,7 +233,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YWCK7662S6;
+				DEVELOPMENT_TEAM = 5W2LAKRDL5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetCare/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -242,7 +265,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YWCK7662S6;
+				DEVELOPMENT_TEAM = 5W2LAKRDL5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetCare/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -306,7 +329,7 @@
 				DEVELOPMENT_TEAM = YWCK7662S6;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -372,7 +395,7 @@
 				DEVELOPMENT_TEAM = YWCK7662S6;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -432,7 +455,7 @@
 				minimumVersion = 12.11.0;
 			};
 		};
-		3CBF09E72F7C78B300EB37F6 /* XCRemoteSwiftPackageReference "cloudinary_ios" */ = {
+		B93436F22F7EBAF7005A44E3 /* XCRemoteSwiftPackageReference "cloudinary_ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cloudinary/cloudinary_ios.git";
 			requirement = {
@@ -486,9 +509,9 @@
 			package = 3CA09ED22F7324DE008800BC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
 		};
-		3CBF09E82F7C78B400EB37F6 /* Cloudinary */ = {
+		B93436F32F7EBAF7005A44E3 /* Cloudinary */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3CBF09E72F7C78B300EB37F6 /* XCRemoteSwiftPackageReference "cloudinary_ios" */;
+			package = B93436F22F7EBAF7005A44E3 /* XCRemoteSwiftPackageReference "cloudinary_ios" */;
 			productName = Cloudinary;
 		};
 		B9388BCE2F7420CA003D1667 /* GoogleSignIn */ = {
