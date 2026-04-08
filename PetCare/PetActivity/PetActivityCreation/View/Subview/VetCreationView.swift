@@ -12,13 +12,13 @@ final class VetCreationView: UIView {
     var onCostChange: ((String) -> Void)?
 
     private let procedurePicker = MenuPickerView(
-        title: "PROCEDURE TYPE",
+        title: L10n.Pets.Activity.Vet.procedureType,
         options: VetProcedureType.allCases.map(\.title)
     )
 
     private let cost = TextFieldView(
-        title: "COST",
-        placeholder: "0.0",
+        title: L10n.Pets.Activity.Vet.cost,
+        placeholder: L10n.Pets.Activity.Vet.Cost.placeholder,
         keyboardType: .decimalPad
     )
 

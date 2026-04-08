@@ -17,15 +17,15 @@ enum VetProcedureType: String, Codable, CaseIterable {
     var title: String {
         switch self {
         case .checkUp:
-            "Check Up"
+            L10n.Pets.Vet.checkUp
         case .vaccination:
-            "Vaccination"
+            L10n.Pets.Vet.vaccination
         case .surgery:
-            "Surgery"
+            L10n.Pets.Vet.surgery
         case .dental:
-            "Dental"
+            L10n.Pets.Vet.dental
         case .other:
-            "Other"
+            L10n.Pets.Vet.other
         }
     }
 }

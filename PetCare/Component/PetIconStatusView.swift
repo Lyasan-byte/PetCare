@@ -8,12 +8,32 @@
 import UIKit
 
 extension CircleIconView {
-    convenience init(status: PetIconStatus, circleSize: CGFloat = 50, iconSize: CGFloat = 35, shadowColor: UIColor = .clear, borderColor: UIColor = .clear) {
-        self.init(frame: .zero)
-        configure(status: status, circleSize: circleSize, iconSize: iconSize, shadowColor: shadowColor, borderColor: borderColor)
+    convenience init(
+        status: PetIconStatus,
+        circleSize: CGFloat = 50,
+        iconSize: CGFloat = 35,
+        shadowColor: UIColor = .clear,
+        borderColor: UIColor = .clear
+    ) {
+        self.init(
+            frame: .zero
+        )
+        configure(
+            status: status,
+            circleSize: circleSize,
+            iconSize: iconSize,
+            shadowColor: shadowColor,
+            borderColor: borderColor
+        )
     }
 
-    func configure(status: PetIconStatus, circleSize: CGFloat = 50, iconSize: CGFloat = 35, shadowColor: UIColor = .clear, borderColor: UIColor = .clear) {
+    func configure(
+        status: PetIconStatus,
+        circleSize: CGFloat = 50,
+        iconSize: CGFloat = 35,
+        shadowColor: UIColor = .clear,
+        borderColor: UIColor = .clear
+    ) {
         configure(
             symbolName: status.icon,
             iconColor: status.iconColor,

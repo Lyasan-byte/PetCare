@@ -8,14 +8,27 @@
 import UIKit
 
 final class QuickActionButtonsHeader: UIView {
-    var quickActionsTitle = TextLabel(font: .systemFont(ofSize: 20, weight: .semibold), text: L10n.Pets.Main.QuickActions.title)
-    var quickActionsSubtitle = TextLabel(font: .systemFont(ofSize: 10, weight: .medium), text: L10n.Pets.Main.QuickActions.subtitle, textColor: .systemGray)
+    var quickActionsTitle = TextLabel(
+        text: L10n.Pets.Main.QuickActions.title
+    )
+    var quickActionsSubtitle = TextLabel(
+        font: .systemFont(
+            ofSize: 10,
+            weight: .medium
+        ),
+        text: L10n.Pets.Main.QuickActions.subtitle,
+        textColor: .systemGray
+    )
     
-    lazy var quickActionsTitleStack: UIStackView = {
-        let stack = HStack(spacing: 0, arrangedSubviews: [quickActionsTitle, quickActionsSubtitle])
-        stack.distribution = .equalSpacing
-        return stack
-    }()
+    lazy var quickActionsTitleStack = HStack(
+        spacing: 0,
+        distribution: .equalSpacing,
+        arrangedSubviews: [
+            quickActionsTitle,
+            quickActionsSubtitle
+        ]
+    )
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)

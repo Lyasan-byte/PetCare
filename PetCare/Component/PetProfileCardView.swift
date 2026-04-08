@@ -116,14 +116,14 @@ final class PetProfileCardView: UIView {
 
             petWeightInfo.topAnchor.constraint(equalTo: petInfoStack.bottomAnchor, constant: 10),
             petWeightInfo.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            petWeightInfo.widthAnchor.constraint(equalToConstant: 120),
+            petWeightInfo.widthAnchor.constraint(equalToConstant: 130),
             petWeightInfo.heightAnchor.constraint(equalToConstant: 36),
             petWeightInfo.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
 
-            petAgeInfo.widthAnchor.constraint(equalToConstant: 120),
+            petAgeInfo.widthAnchor.constraint(equalToConstant: 140),
             petAgeInfo.heightAnchor.constraint(equalToConstant: 36),
 
-            petGenderInfo.widthAnchor.constraint(equalToConstant: 120),
+            petGenderInfo.widthAnchor.constraint(equalToConstant: 135),
             petGenderInfo.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
@@ -157,7 +157,7 @@ final class PetProfileCardView: UIView {
 
         petAgeInfo.setData(info: "\(L10n.Pets.Profile.age): \(pet.ageText)")
         petWeightInfo.setData(info: "\(L10n.Pets.Profile.weight): \(pet.weight) \(L10n.Pets.Profile.weightUnitKg)")
-        petGenderInfo.setData(info: "\(L10n.Pets.Profile.gender): \(pet.gender.rawValue.capitalized)")
+        petGenderInfo.setData(info: "\(L10n.Pets.Profile.gender): \(pet.gender.title)")
 
         if !isPublic {
             petStatus.configure(status: pet.iconStatus, circleSize: 35, iconSize: 18)

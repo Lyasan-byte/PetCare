@@ -27,8 +27,15 @@ final class TextFieldView: UIView {
         configure()
     }
     
-    convenience init(title: String, placeholder: String, keyboardType: UIKeyboardType = .default, autocorrectionType: UITextAutocorrectionType = .no) {
-        self.init(frame: .zero)
+    convenience init(
+        title: String,
+        placeholder: String,
+        keyboardType: UIKeyboardType = .default,
+        autocorrectionType: UITextAutocorrectionType = .no
+    ) {
+        self.init(
+            frame: .zero
+        )
         textFieldTitle.text = title
         textField.placeholder = placeholder
         textField.keyboardType = keyboardType

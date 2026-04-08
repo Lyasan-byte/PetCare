@@ -11,7 +11,14 @@ final class DatePickerView: UIView {
     var onDateChange: ((Date) -> Void)?
     private let background = BackgroundView(backgroundColor: Asset.petLightGray.color, cornerRadius: 28)
     
-    private let pickerTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
+    private let pickerTitle = TextLabel(
+        font: .systemFont(
+            ofSize: 11,
+            weight: .medium
+        ),
+        textColor: Asset.petGray.color,
+        textAlignment: .left
+    )
     
     private let dateIcon: UIImageView = {
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
