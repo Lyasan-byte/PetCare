@@ -24,6 +24,8 @@ final class AppCoordinator {
 
             if user == nil {
                 self.showAuthFlow()
+            } else if let user, self.requiresRegistrationCompletion(for: user) {
+                self.showAuthFlow(startingAt: .registrationCompletion)
             } else {
                 self.showMainFlow()
             }
@@ -32,12 +34,7 @@ final class AppCoordinator {
         return window
     }
 
-    func showAuthFlow() {
-        if let handle = stateDidChangeHandle {
-            Auth.auth().removeStateDidChangeListener(handle)
-            stateDidChangeHandle = nil
-        }
-
+    func showAuthFlow(startingAt startDestination: AuthCoordinator.StartDestination = .login) {
         let navigationController = UINavigationController()
         let authCoordinator = AuthCoordinator(
             navigationController: navigationController,
@@ -45,22 +42,22 @@ final class AppCoordinator {
         )
 
         self.authCoordinator = authCoordinator
-        authCoordinator.start()
+        authCoordinator.start(with: startDestination)
 
         window?.rootViewController = authCoordinator.navigationController
         window?.makeKeyAndVisible()
     }
 
     func showMainFlow() {
-        if let handle = stateDidChangeHandle {
-            Auth.auth().removeStateDidChangeListener(handle)
-            stateDidChangeHandle = nil
-        }
-
         authCoordinator = nil
         let nav = TabBarController()
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
+    }
+
+    private func requiresRegistrationCompletion(for user: User) -> Bool {
+        let displayName = user.displayName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return displayName.isEmpty
     }
     
     deinit {
@@ -73,6 +70,15 @@ final class AppCoordinator {
 
 extension AppCoordinator: AuthFlowOutput {
     func authFlowWantsToOpenMainScreen() {
-        showMainFlow()
+        guard let user = Auth.auth().currentUser else {
+            showAuthFlow()
+            return
+        }
+
+        if requiresRegistrationCompletion(for: user) {
+            showAuthFlow(startingAt: .registrationCompletion)
+        } else {
+            showMainFlow()
+        }
     }
 }

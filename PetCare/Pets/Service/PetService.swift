@@ -8,20 +8,6 @@
 import FirebaseFirestore
 import Combine
 
-enum PetRepositoryError: LocalizedError {
-    case repositoryDeallocated
-    case missingPetId
-
-    var errorDescription: String? {
-        switch self {
-        case .repositoryDeallocated:
-            return "Repository was deallocated"
-        case .missingPetId:
-            return "Pet id is missing"
-        }
-    }
-}
-
 final class PetService: PetRepository {
     private let imageService: ImageUploader
     private let petsCollection = Firestore.firestore().collection("pets")
@@ -41,7 +27,7 @@ final class PetService: PetRepository {
             .uploadImage(data: selectedPhoto,
                          resource: UploadImageResource.pet(id: petId))
             .flatMap { [weak self] url -> AnyPublisher<Pet, Error> in
-                guard let self else { return Fail(error: PetRepositoryError.repositoryDeallocated)
+                guard let self else { return Fail(error: RepositoryError.deallocated)
                     .eraseToAnyPublisher() }
                 var updatedPet = pet
                 updatedPet.photoUrl = url.absoluteString
@@ -50,10 +36,10 @@ final class PetService: PetRepository {
             .eraseToAnyPublisher()
     }
     
-    private func savePet(_ pet: Pet, petId: String,) -> AnyPublisher<Pet, Error> {
+    private func savePet(_ pet: Pet, petId: String) -> AnyPublisher<Pet, Error> {
         Future { [weak self] promise in
             guard let self else {
-                return promise(.failure(PetRepositoryError.repositoryDeallocated))
+                return promise(.failure(RepositoryError.deallocated))
             }
             
             do {
@@ -73,7 +59,7 @@ final class PetService: PetRepository {
     
     func delete(petId: String) -> AnyPublisher<Void, Error> {
         Future { [weak self] promise in
-            guard let self else { return promise(.failure(PetRepositoryError.repositoryDeallocated)) }
+            guard let self else { return promise(.failure(RepositoryError.deallocated)) }
             self.petsCollection.document(petId).delete { error in
                 if let error {
                     promise(.failure(error))
@@ -87,8 +73,8 @@ final class PetService: PetRepository {
     
     func fetchPets(for ownerId: String) -> AnyPublisher<[Pet], Error> {
         Future { [weak self] promise in
-            guard let self else { return promise(.failure(PetRepositoryError.repositoryDeallocated)) }
-            petsCollection
+            guard let self else { return promise(.failure(RepositoryError.deallocated)) }
+            self.petsCollection
                 .whereField(Pet.CodingKeys.ownerId.rawValue, isEqualTo: ownerId)
                 .getDocuments { snapshot, error in
                     if let error {

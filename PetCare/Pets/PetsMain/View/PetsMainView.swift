@@ -35,7 +35,7 @@ final class PetsMainView: UIView {
         circleSize: 52,
         iconSize: 18,
         weight: .medium,
-        shadowColor: Asset.accentColor.color
+        shadowColor: Asset.primaryGreen.color
     )
     
     override init(frame: CGRect) {
@@ -115,7 +115,7 @@ final class PetsMainView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         loader.translatesAutoresizingMaskIntoConstraints = false
-        loader.isHidden = true
+        
         loader.style = .medium
         loader.hidesWhenStopped = true
         emptyStateView.isHidden = true

@@ -17,7 +17,8 @@ final class PetsMainViewModel: PetsMainViewModeling {
     
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
-    private let moduleOutput: PetsMainModuleOutput?
+    private weak var moduleOutput: PetsMainModuleOutput?
+    
     private let petRepository: PetRepository
     private let tipRepository: TipRepository
     

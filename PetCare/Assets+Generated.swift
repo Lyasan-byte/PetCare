@@ -25,7 +25,9 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
   public static let accentColor = ColorAsset(name: "AccentColor")
+  public static let authCardViewColor = ColorAsset(name: "authCardViewColor")
   public static let backgroundGray = ColorAsset(name: "backgroundGray")
+  public static let backgroundLightPink = ColorAsset(name: "backgroundLightPink")
   public static let darkPink = ColorAsset(name: "darkPink")
   public static let lightGreen = ColorAsset(name: "lightGreen")
   public static let lightPink = ColorAsset(name: "lightPink")
@@ -45,11 +47,12 @@ public enum Asset {
   public static let purpleAccent = ColorAsset(name: "purpleAccent")
   public static let purpleAccentStatus = ColorAsset(name: "purpleAccentStatus")
   public static let redAccent = ColorAsset(name: "redAccent")
-  public static let authCardViewColor = ColorAsset(name: "authCardViewColor")
+  public static let userAvatarBorder = ColorAsset(name: "userAvatarBorder")
   public static let textGreen = ColorAsset(name: "textGreen")
   public static let defaultProfilePhoto = ImageAsset(name: "defaultProfilePhoto")
   public static let googleIcon = ImageAsset(name: "google_icon")
   public static let googleIcon21 = ImageAsset(name: "google_icon2 1")
+  public static let defaultUserProfilePhoto = ImageAsset(name: "defaultUserProfilePhoto")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

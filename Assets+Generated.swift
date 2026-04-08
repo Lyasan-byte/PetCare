@@ -27,6 +27,7 @@ public enum Asset {
   public static let accentColor = ColorAsset(name: "AccentColor")
   public static let authCardViewColor = ColorAsset(name: "authCardViewColor")
   public static let backgroundGray = ColorAsset(name: "backgroundGray")
+  public static let backgroundLightPink = ColorAsset(name: "backgroundLightPink")
   public static let darkPink = ColorAsset(name: "darkPink")
   public static let lightGreen = ColorAsset(name: "lightGreen")
   public static let lightPink = ColorAsset(name: "lightPink")

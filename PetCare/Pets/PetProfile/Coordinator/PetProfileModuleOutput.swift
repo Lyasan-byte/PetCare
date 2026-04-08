@@ -8,8 +8,9 @@
 import Foundation
 
 protocol PetProfileModuleOutput: AnyObject {
-    func petProfileModuleDidRequestEdit(_ pet: Pet)
-    func petProfileModuleDidRequestAnalytics(_ pet: Pet)
-    func petProfileModuleDidRequestAddActivity(_ pet: Pet)
-    func petProfileModuleDidClose()
+    func moduleWantsToOpenEdit(_ pet: Pet)
+    func moduleWantsToOpenAnalytics(_ pet: Pet)
+    func moduleWantsToOpenAddActivity(_ pet: Pet)
+    func moduleWantsToOpenBreedFactSheet(_ petFact: PetFact)
+    func moduleWantsToClose()
 }
