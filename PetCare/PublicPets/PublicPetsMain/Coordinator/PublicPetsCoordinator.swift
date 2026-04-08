@@ -10,11 +10,14 @@ import UIKit
 final class PublicPetsCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let petRepository: PublicPetRepository
+    private let userId: String
     private let imageLoader: ImageLoader
+    
     
     private var childCoordinators: [Coordinator] = []
     
-    init(navigationController: UINavigationController, petRepository: PublicPetRepository, imageLoader: ImageLoader) {
+    init(navigationController: UINavigationController, userId: String, petRepository: PublicPetRepository, imageLoader: ImageLoader) {
+        self.userId = userId
         self.navigationController = navigationController
         self.petRepository = petRepository
         self.imageLoader = imageLoader
@@ -23,6 +26,7 @@ final class PublicPetsCoordinator: Coordinator {
     func start() {
         let viewController = PublicPetsViewController(
             publicPetsViewModel: PublicPetsViewModel(
+                userId: userId,
                 petRepository: petRepository,
                 moduleOutput: self
             ), imageLoader: imageLoader

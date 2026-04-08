@@ -10,7 +10,7 @@ import FirebaseFirestore
 import Combine
 
 final class PublicPetsViewModel: PublicPetsViewModeling {
-    @Published var state: PublicPetsState {
+    @Published private(set) var state: PublicPetsState {
         didSet {
             stateDidChange.send()
         }
@@ -19,14 +19,18 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
     private var lastDocument: DocumentSnapshot?
-    private weak var moduleOutput: PublicPetsModuleOutput?
+    private var content: PublicPetsContent
+    private var moduleOutput: PublicPetsModuleOutput?
     
+    private let userId: String
     private let pageSize = 10
     private let petRepository: PublicPetRepository
     
     
-    init(petRepository: PublicPetRepository, moduleOutput: PublicPetsModuleOutput) {
-        self.state = PublicPetsState()
+    init(userId: String, petRepository: PublicPetRepository, moduleOutput: PublicPetsModuleOutput) {
+        self.userId = userId
+        self.content = PublicPetsContent()
+        self.state = .content(content)
         self.petRepository = petRepository
         self.moduleOutput = moduleOutput
     }
@@ -41,51 +45,45 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
             guard shouldLoadMore(index) else { return }
             fetchPets()
         case .onDismissAlert:
-            state.errorMessage = nil
+            state = .content(content)
         }
     }
     
     private func fetchPets() {
-        guard state.hasMore,
-              !state.isLoading,
-              !state.isLoadingMore else { return }
-        
+        guard content.hasMore else { return }
         let firstPage = lastDocument == nil
         
         if firstPage {
-            state.isLoading = true
-        } else {
-            state.isLoadingMore = true
+            state = .loading
         }
         
         petRepository.fetch(after: lastDocument, pageSize: pageSize)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
-                
-                state.isLoading = false
-                state.isLoadingMore = false
-                
+
                 if case .failure(let error) = completion {
-                    self.state.errorMessage = error.localizedDescription
+                    state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] result in
                 guard let self else { return }
                 
+                let filteredPets = result.pets.filter { $0.ownerId != self.userId }
                 if firstPage {
-                    self.state.pets = result.pets
+                    self.content.pets = filteredPets
                 } else {
-                    self.state.pets.append(contentsOf: result.pets)
+                    self.content.pets.append(contentsOf: filteredPets)
                 }
                 
-                self.state.hasMore = result.hasMore
+                self.content.hasMore = result.hasMore
                 self.lastDocument = result.lastDocument
+                self.state = .content(self.content)
             }
             .store(in: &bag)
     }
     
     private func shouldLoadMore(_ index: Int) -> Bool {
-        let threshold = max(state.pets.count - 3, 0)
+        let threshold = max(content.pets.count - 3, 0)
         return index >= threshold
     }
 }

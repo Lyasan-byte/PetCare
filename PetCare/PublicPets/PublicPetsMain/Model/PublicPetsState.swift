@@ -7,10 +7,9 @@
 
 import Foundation
 
-struct PublicPetsState {
+typealias PublicPetsState = ViewState<PublicPetsContent>
+
+struct PublicPetsContent {
     var pets: [Pet] = []
-    var isLoading: Bool = false
     var hasMore: Bool = true
-    var isLoadingMore: Bool = false
-    var errorMessage: String?
 }

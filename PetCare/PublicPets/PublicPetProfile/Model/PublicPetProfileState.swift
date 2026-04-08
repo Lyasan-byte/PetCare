@@ -7,8 +7,20 @@
 
 import Foundation
 
-struct PublicPetProfileState {
+typealias PublicPetProfileState = ViewState<PublicPetProfileContent>
+
+struct PublicPetProfileContent {
     var pet: Pet
-    //var user: User
+    var user: UserProfileUser
     
+    init(pet: Pet) {
+        self.pet = pet
+        self.user = UserProfileUser(
+            id: "",
+            firstName: "",
+            lastName: "",
+            email: nil,
+            avatarURLString: nil
+        )
+    }
 }

@@ -55,7 +55,7 @@ final class PetProfileCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
 
-    private func showPetFactSheet(_ petFact: PetFact) {
+    private func showPetFactSheet(_ petFact: PetFact?) {
         let viewController = PetFactsViewController(petFact: petFact)
         let navigationController = UINavigationController(rootViewController: viewController)
 
@@ -145,7 +145,7 @@ extension PetProfileCoordinator: PetProfileModuleOutput {
         showAnalytics(pet)
     }
 
-    func moduleWantsToOpenBreedFactSheet(_ petFact: PetFact) {
+    func moduleWantsToOpenBreedFactSheet(_ petFact: PetFact?) {
         showPetFactSheet(petFact)
     }
 

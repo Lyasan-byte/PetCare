@@ -21,7 +21,7 @@ final class PublicPetProfileCoordinator: Coordinator {
     }
     
     func start() {
-        let viewController = PublicPetProfileViewController(publicPetProfileViewModel: PublicPetProfileViewModel(pet: pet, moduleOutput: self), imageLoader: imageLoader)
+        let viewController = PublicPetProfileViewController(publicPetProfileViewModel: PublicPetProfileViewModel(pet: pet, userRepository: FirestoreUserService(), moduleOutput: self), imageLoader: imageLoader)
         
         navigationController.pushViewController(viewController, animated: true)
     }

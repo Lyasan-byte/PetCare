@@ -82,10 +82,10 @@ final class PublicPetOwnerView: UIView {
         ])
     }
     
-//    func setData(user: User, imageLoader: ImageLoader) {
-//        ownerImage.setImage(urlString: user.photoUrl, imageLoader: imageLoader)
-//        self.ownerName.text = user.name
-//    }
+    func setData(user: UserProfileUser, imageLoader: ImageLoader) {
+        ownerImage.setImage(urlString: user.avatarURLString, imageLoader: imageLoader)
+        self.ownerName.text = user.firstName + " " + user.lastName
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
