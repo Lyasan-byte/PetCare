@@ -123,7 +123,7 @@ extension PetFactsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard petFact != nil,
-              let section = PetFactsSection(rawValue: section) else {
+            let section = PetFactsSection(rawValue: section) else {
             return 0
         }
 
@@ -137,9 +137,12 @@ extension PetFactsViewController: UICollectionViewDataSource {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let petFact,
-              let section = PetFactsSection(rawValue: indexPath.section) else {
+            let section = PetFactsSection(rawValue: indexPath.section) else {
             assertionFailure("cellForItemAt called while petFact is nil")
             return collectionView.dequeueReusableCell(
                 withReuseIdentifier: PetFactCollectionViewCell.identifier,

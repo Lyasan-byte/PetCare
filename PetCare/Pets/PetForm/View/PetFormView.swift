@@ -152,8 +152,7 @@ final class PetFormView: UIView {
         addGestureRecognizer(keyboardDismissTapGesture)
     }
 
-    @objc
-    private func dismissKeyboard() {
+    @objc private func dismissKeyboard() {
         endEditing(true)
     }
 

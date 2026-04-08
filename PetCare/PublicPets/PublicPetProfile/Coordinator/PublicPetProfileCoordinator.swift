@@ -11,18 +11,25 @@ final class PublicPetProfileCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let pet: Pet
     private let imageLoader: ImageLoader
-    
+
     var onFinish: (() -> Void)?
-    
+
     init(navigationController: UINavigationController, pet: Pet, imageLoader: ImageLoader) {
         self.navigationController = navigationController
         self.pet = pet
         self.imageLoader = imageLoader
     }
-    
+
     func start() {
-        let viewController = PublicPetProfileViewController(publicPetProfileViewModel: PublicPetProfileViewModel(pet: pet, userRepository: FirestoreUserService(), moduleOutput: self), imageLoader: imageLoader)
-        
+        let viewController = PublicPetProfileViewController(
+            publicPetProfileViewModel: PublicPetProfileViewModel(
+                pet: pet,
+                userRepository: FirestoreUserService(),
+                moduleOutput: self
+            ),
+            imageLoader: imageLoader
+        )
+
         navigationController.pushViewController(viewController, animated: true)
     }
 }

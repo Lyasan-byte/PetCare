@@ -10,7 +10,6 @@ import UIKit
 import FirebaseAuth
 
 final class AppCoordinator {
-
     private var window: UIWindow?
     private var authCoordinator: AuthCoordinator?
     private var stateDidChangeHandle: AuthStateDidChangeListenerHandle?
@@ -59,7 +58,7 @@ final class AppCoordinator {
         let displayName = user.displayName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         return displayName.isEmpty
     }
-    
+
     deinit {
         if let handle = stateDidChangeHandle {
             Auth.auth().removeStateDidChangeListener(handle)

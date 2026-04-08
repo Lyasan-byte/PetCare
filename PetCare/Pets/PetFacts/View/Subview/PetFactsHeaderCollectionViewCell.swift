@@ -9,7 +9,7 @@ import UIKit
 
 final class PetFactsHeaderCollectionViewCell: UICollectionViewCell {
     static let identifier = "PetFactsHeaderCollectionViewCell"
-    
+
     private let breedTitle = TextLabel(
         font: .systemFont(
             ofSize: 13,
@@ -26,7 +26,7 @@ final class PetFactsHeaderCollectionViewCell: UICollectionViewCell {
         ),
         textColor: Asset.petGray.color
     )
-    
+
     private lazy var contentStack = VStack(
         spacing: 20,
         arrangedSubviews: [
@@ -35,21 +35,21 @@ final class PetFactsHeaderCollectionViewCell: UICollectionViewCell {
             petCharacteristic
         ]
     )
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
     }
-    
+
     convenience init() {
         self.init(frame: .zero)
     }
-    
+
     private func setupHierarchy() {
         contentView.addSubview(contentStack)
     }
-    
+
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -59,13 +59,13 @@ final class PetFactsHeaderCollectionViewCell: UICollectionViewCell {
             contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
+
     func setData(breed: String, petCharacteristic: String) {
         self.petBreed.text = breed
         self.petCharacteristic.text = petCharacteristic
         self.petCharacteristic.isHidden = petCharacteristic.isEmpty
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -39,7 +39,7 @@ struct Characteristic: Codable {
     let lifespan: String?
     let temperament: String?
     let weight: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case diet
         case commonName = "common_name"

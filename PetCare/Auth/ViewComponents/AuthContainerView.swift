@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 final class AuthContainerView: UIView {
-
     private let headerView = AuthHeaderView()
     private let scrollView = UIScrollView()
     private let contentView = UIView()

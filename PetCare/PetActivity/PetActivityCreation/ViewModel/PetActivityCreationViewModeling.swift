@@ -7,4 +7,5 @@
 
 import Foundation
 
-protocol PetActivityCreationViewModeling: UIKitViewModel where State == PetActivityCreationState, Intent == PetActivityCreationIntent {}
+protocol PetActivityCreationViewModeling: UIKitViewModel
+where State == PetActivityCreationState, Intent == PetActivityCreationIntent {}

@@ -19,7 +19,7 @@ final class QuickActionButtonsHeader: UIView {
         text: L10n.Pets.Main.QuickActions.subtitle,
         textColor: .systemGray
     )
-    
+
     lazy var quickActionsTitleStack = HStack(
         spacing: 0,
         distribution: .equalSpacing,
@@ -29,22 +29,21 @@ final class QuickActionButtonsHeader: UIView {
         ]
     )
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
         configure()
     }
-    
+
     convenience init() {
         self.init(frame: .zero)
     }
-    
+
     private func setupHierarchy() {
         addSubview(quickActionsTitleStack)
     }
-    
+
     private func setupLayout() {
         NSLayoutConstraint.activate([
             quickActionsTitleStack.topAnchor.constraint(equalTo: topAnchor),
@@ -53,11 +52,11 @@ final class QuickActionButtonsHeader: UIView {
             quickActionsTitleStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

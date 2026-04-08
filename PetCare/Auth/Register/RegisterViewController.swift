@@ -10,7 +10,6 @@ import UIKit
 import Combine
 
 final class RegisterViewController: UIViewController {
-
     private let viewModel: RegisterViewModel
     private let contentView = RegisterView()
     private var bag = Set<AnyCancellable>()
@@ -45,9 +44,21 @@ final class RegisterViewController: UIViewController {
     }
 
     private func setupActions() {
-        contentView.emailFieldView.textField.addTarget(self, action: #selector(emailChanged), for: .editingChanged)
-        contentView.passwordFieldView.textField.addTarget(self, action: #selector(passwordChanged), for: .editingChanged)
-        contentView.confirmPasswordFieldView.textField.addTarget(self, action: #selector(confirmPasswordChanged), for: .editingChanged)
+        contentView.emailFieldView.textField.addTarget(
+            self,
+            action: #selector(emailChanged),
+            for: .editingChanged
+        )
+        contentView.passwordFieldView.textField.addTarget(
+            self,
+            action: #selector(passwordChanged),
+            for: .editingChanged
+        )
+        contentView.confirmPasswordFieldView.textField.addTarget(
+            self,
+            action: #selector(confirmPasswordChanged),
+            for: .editingChanged
+        )
         contentView.registerButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
         contentView.googleButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
         contentView.switchButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)

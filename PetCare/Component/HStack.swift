@@ -12,7 +12,7 @@ final class HStack: UIStackView {
         super.init(frame: frame)
         configure()
     }
-    
+
     convenience init(
         spacing: CGFloat = 5,
         alignment: Alignment = .fill,
@@ -25,7 +25,7 @@ final class HStack: UIStackView {
         self.distribution = distribution
         arrangedSubviews.forEach { addArrangedSubview($0) }
     }
-    
+
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         axis = .horizontal
@@ -35,4 +35,3 @@ final class HStack: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

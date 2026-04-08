@@ -13,13 +13,13 @@ final class PetProfileViewController: UIViewController {
     private let petProfileViewModel: any PetProfileViewModeling
     private let imageLoader: ImageLoader
     private var bag = Set<AnyCancellable>()
-    
+
     init(petProfileViewModel: any PetProfileViewModeling, imageLoader: ImageLoader) {
         self.petProfileViewModel = petProfileViewModel
         self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearance()
@@ -29,26 +29,26 @@ final class PetProfileViewController: UIViewController {
         bindActions()
         render(petProfileViewModel.state)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-    
+
     private func setupHierarchy() {
         view.addSubview(petProfileView)
     }
-    
+
     private func setupAppearance() {
         title = L10n.Pets.Profile.Screen.title
         view.backgroundColor = .secondarySystemBackground
     }
-    
+
     private func setupLayout() {
         NSLayoutConstraint.activate([
             petProfileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -57,7 +57,7 @@ final class PetProfileViewController: UIViewController {
             petProfileView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    
+
     private func bindViewModel() {
         petProfileViewModel.stateDidChange
             .receive(on: DispatchQueue.main)
@@ -67,7 +67,7 @@ final class PetProfileViewController: UIViewController {
             }
             .store(in: &bag)
     }
-    
+
     private func bindActions() {
         petProfileView.createActivityButton.onTap = { [weak self] in
             self?.petProfileViewModel.trigger(.onCreateActivityTap)
@@ -75,20 +75,20 @@ final class PetProfileViewController: UIViewController {
         petProfileView.editButton.onTap = { [weak self] in
             self?.petProfileViewModel.trigger(.onEditTap)
         }
-        
+
         petProfileView.analyticsButton.onTap = { [weak self] in
             self?.petProfileViewModel.trigger(.onAnalyticsTap)
         }
-        
+
         petProfileView.onBreedTap = { [weak self] in
             self?.petProfileViewModel.trigger(.onBreedTap)
         }
     }
-    
+
     private func render(_ state: PetProfileState) {
         petProfileView.setPetData(state.pet, imageLoader: imageLoader)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

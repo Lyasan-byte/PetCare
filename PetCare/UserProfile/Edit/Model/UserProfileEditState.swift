@@ -23,8 +23,8 @@ struct UserProfileEditDisplayData {
 
     var isSaveEnabled: Bool {
         !isSaving &&
-        !firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            !firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            !lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     init(user: UserProfileUser) {

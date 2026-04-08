@@ -35,18 +35,22 @@ final class UserProfileView: UIView {
 
     func refreshLocalizedTexts() {
         settingsRow.configure(
-            iconName: "gearshape.fill",
-            iconTint: Asset.darkPink.color,
-            iconBackground: Asset.petPinkAction.color.withAlphaComponent(0.3),
+            icon: .init(
+                name: "gearshape.fill",
+                tintColor: Asset.darkPink.color,
+                backgroundColor: Asset.petPinkAction.color.withAlphaComponent(0.3)
+            ),
             title: NSLocalizedString("user.profile.settings.title", comment: ""),
             subtitle: NSLocalizedString("user.profile.settings.subtitle", comment: ""),
             titleColor: .label
         )
 
         logoutRow.configure(
-            iconName: "rectangle.portrait.and.arrow.right",
-            iconTint: Asset.redAccent.color,
-            iconBackground: Asset.lightRed.color,
+            icon: .init(
+                name: "rectangle.portrait.and.arrow.right",
+                tintColor: Asset.redAccent.color,
+                backgroundColor: Asset.lightRed.color
+            ),
             title: NSLocalizedString("user.profile.logout.title", comment: ""),
             subtitle: "",
             titleColor: Asset.redAccent.color

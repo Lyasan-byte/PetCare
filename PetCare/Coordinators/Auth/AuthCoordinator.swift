@@ -123,7 +123,7 @@ extension AuthCoordinator: LoginModuleOutput, RegisterModuleOutput {
     func tapRegister() {
         showRegister()
     }
-    
+
     func tapLogin() {
         showLogin()
     }

@@ -8,6 +8,12 @@
 import UIKit
 
 final class UserProfileActionRowView: UIControl {
+    struct IconConfiguration {
+        let name: String
+        let tintColor: UIColor
+        let backgroundColor: UIColor
+    }
+
     private let iconContainer = UIView()
     private let iconImageView = UIImageView()
     private let textStackView = UIStackView()
@@ -23,16 +29,14 @@ final class UserProfileActionRowView: UIControl {
     }
 
     func configure(
-        iconName: String,
-        iconTint: UIColor,
-        iconBackground: UIColor,
+        icon: IconConfiguration,
         title: String,
         subtitle: String,
         titleColor: UIColor
     ) {
-        iconImageView.image = UIImage(systemName: iconName)
-        iconImageView.tintColor = iconTint
-        iconContainer.backgroundColor = iconBackground
+        iconImageView.image = UIImage(systemName: icon.name)
+        iconImageView.tintColor = icon.tintColor
+        iconContainer.backgroundColor = icon.backgroundColor
         titleLabel.text = title
         titleLabel.textColor = titleColor
         subtitleLabel.text = subtitle

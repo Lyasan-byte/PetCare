@@ -25,7 +25,7 @@ struct UserProfileUser: Codable {
 
     var avatarURL: URL? {
         guard let avatarURLString,
-              let url = URL(string: avatarURLString) else {
+            let url = URL(string: avatarURLString) else {
             return nil
         }
 

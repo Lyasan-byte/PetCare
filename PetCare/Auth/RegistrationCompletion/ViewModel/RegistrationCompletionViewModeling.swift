@@ -7,4 +7,5 @@
 
 import Foundation
 
-protocol RegistrationCompletionViewModeling: UIKitViewModel where State == RegistrationCompletionState, Intent == RegistrationCompletionIntent {}
+protocol RegistrationCompletionViewModeling: UIKitViewModel
+where State == RegistrationCompletionState, Intent == RegistrationCompletionIntent {}

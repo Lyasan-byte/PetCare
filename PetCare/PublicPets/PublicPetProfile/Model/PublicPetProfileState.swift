@@ -12,7 +12,7 @@ typealias PublicPetProfileState = ViewState<PublicPetProfileContent>
 struct PublicPetProfileContent {
     var pet: Pet
     var user: UserProfileUser
-    
+
     init(pet: Pet) {
         self.pet = pet
         self.user = UserProfileUser(

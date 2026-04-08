@@ -13,38 +13,38 @@ final class PublicPetProfileViewController: UIViewController {
     private let publicPetProfileViewModel: any PublicPetProfileViewModeling
     private let imageLoader: ImageLoader
     private var bag = Set<AnyCancellable>()
-    
+
     init(publicPetProfileViewModel: any PublicPetProfileViewModeling, imageLoader: ImageLoader) {
         self.publicPetProfileViewModel = publicPetProfileViewModel
         self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
         setupHierarchy()
         setupLayout()
         bindViewModel()
-        
+
         render(publicPetProfileViewModel.state)
         publicPetProfileViewModel.trigger(.onDidLoad)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-    
+
     private func setupHierarchy() {
         view.addSubview(publicPetProfileView)
     }
-    
+
     private func setupLayout() {
         NSLayoutConstraint.activate([
             publicPetProfileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -53,7 +53,7 @@ final class PublicPetProfileViewController: UIViewController {
             publicPetProfileView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    
+
     private func bindViewModel() {
         publicPetProfileViewModel.stateDidChange
             .receive(on: DispatchQueue.main)
@@ -63,7 +63,7 @@ final class PublicPetProfileViewController: UIViewController {
             }
             .store(in: &bag)
     }
-    
+
     private func render(_ state: PublicPetProfileState) {
         switch state {
         case .loading:
@@ -76,7 +76,7 @@ final class PublicPetProfileViewController: UIViewController {
             showError(error)
         }
     }
-    
+
     private func showError(_ message: String) {
         let alert = UIAlertController(title: L10n.Common.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self] _ in
@@ -84,7 +84,7 @@ final class PublicPetProfileViewController: UIViewController {
         })
         present(alert, animated: true)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -13,7 +13,7 @@ enum VetProcedureType: String, Codable, CaseIterable {
     case surgery = "SURGERY"
     case dental = "DENTAL"
     case other = "OTHER"
-    
+
     var title: String {
         switch self {
         case .checkUp:

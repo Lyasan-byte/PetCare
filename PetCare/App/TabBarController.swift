@@ -18,7 +18,7 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabs()
     }
-    
+
     private func setupTabs() {
         let ownerId = Auth.auth().currentUser?.uid ?? "test_owner_id"
         let imageUploader = ImageUploadService()
@@ -37,7 +37,7 @@ final class TabBarController: UITabBarController {
             imageLoader: imageLoader
         )
         self.petsMainCoordinator = petsMainCoordinator
-        
+
         petsMainCoordinator.start()
         petsNavigationController.tabBarItem.image = UIImage(systemName: "pawprint.fill")
         petsNavigationController.tabBarItem.title = nil
@@ -50,13 +50,13 @@ final class TabBarController: UITabBarController {
             imageLoader: imageLoader
         )
         self.publicPetsCoordinator = publicPetsCoordinator
-        
+
         publicPetsCoordinator.start()
         publicPetsNavigationController.tabBarItem.image = UIImage(systemName: "globe.americas.fill")
-        
+
         let gameViewController = UIViewController()
         let navGameViewController = setupTabBatItem(for: gameViewController, image: "gamecontroller.fill")
-        
+
         let userProfileNavigationController = UINavigationController()
         let userProfileCoordinator = UserProfileCoordinator(
             navigationController: userProfileNavigationController,
@@ -69,7 +69,7 @@ final class TabBarController: UITabBarController {
         userProfileCoordinator.start()
         userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
         userProfileNavigationController.tabBarItem.title = nil
-        
+
         setViewControllers(
             [
                 petsNavigationController,
@@ -80,11 +80,11 @@ final class TabBarController: UITabBarController {
             animated: true
         )
     }
-    
+
     private func setupTabBatItem(for viewController: UIViewController, image: String) -> UINavigationController {
         viewController.tabBarItem.image = UIImage(systemName: image)
         viewController.tabBarItem.title = nil
-        
+
         return UINavigationController(rootViewController: viewController)
     }
 }

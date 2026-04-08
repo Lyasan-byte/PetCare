@@ -5,7 +5,6 @@
 //  Created by Ляйсан on 1/4/26.
 //
 
-
 import UIKit
 import Combine
 
@@ -26,7 +25,7 @@ final class PetRemoteImageView: UIImageView {
         image = UIImage(named: "defaultProfilePhoto")
 
         guard let urlString,
-              let url = URL(string: urlString) else {
+            let url = URL(string: urlString) else {
             return
         }
 

@@ -39,26 +39,26 @@ final class FirebaseSettingsAccountService: SettingsAccountRepository {
         let userId = user.uid
 
         return ensureDeletionAuthorization(
-                for: user,
-                presentingViewController: presentingViewController
-            )
-            .flatMap { [weak self] in
-                self?.fetchPetDocumentReferences(ownerId: userId) ??
-                    Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
-            }
-            .flatMap { [weak self] petReferences in
-                self?.deleteFirestoreData(userId: userId, petReferences: petReferences) ??
-                    Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
-            }
-            .flatMap { [weak self] in
-                self?.deleteAuthUser(user) ??
-                    Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
-            }
-            .flatMap { [weak self] in
-                self?.revokeGoogleAccessIfNeeded(for: user) ??
-                    Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+            for: user,
+            presentingViewController: presentingViewController
+        )
+        .flatMap { [weak self] in
+            self?.fetchPetDocumentReferences(ownerId: userId) ??
+                Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
+        }
+        .flatMap { [weak self] petReferences in
+            self?.deleteFirestoreData(userId: userId, petReferences: petReferences) ??
+                Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
+        }
+        .flatMap { [weak self] in
+            self?.deleteAuthUser(user) ??
+                Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
+        }
+        .flatMap { [weak self] in
+            self?.revokeGoogleAccessIfNeeded(for: user) ??
+                Fail(error: SettingsAccountDeletionError.serviceUnavailable).eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 
     private func ensureDeletionAuthorization(
@@ -180,7 +180,7 @@ final class FirebaseSettingsAccountService: SettingsAccountRepository {
     private static func mapDeletionError(_ error: Error) -> Error {
         let nsError = error as NSError
         if nsError.domain == AuthErrorDomain,
-           AuthErrorCode(rawValue: nsError.code) == .requiresRecentLogin {
+            AuthErrorCode(rawValue: nsError.code) == .requiresRecentLogin {
             return SettingsAccountDeletionError.requiresRecentLogin
         }
 

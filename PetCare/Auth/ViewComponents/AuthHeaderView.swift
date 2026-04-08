@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 final class AuthHeaderView: UIView {
-
     private let logoImageView = UIImageView()
     private let brandLabel = UILabel()
     private let titleLabel = UILabel()
@@ -55,7 +54,7 @@ final class AuthHeaderView: UIView {
         brandStack.spacing = 8
         brandStack.alignment = .center
         brandStack.translatesAutoresizingMaskIntoConstraints = false
-        
+
         let titleStack = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         titleStack.axis = .vertical
         titleStack.spacing = 8
@@ -81,4 +80,3 @@ final class AuthHeaderView: UIView {
         ])
     }
 }
-

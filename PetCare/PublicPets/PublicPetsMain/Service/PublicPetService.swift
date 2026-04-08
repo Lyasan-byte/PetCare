@@ -10,17 +10,16 @@ import FirebaseFirestore
 import Combine
 
 final class PublicPetService: PublicPetRepository {
-    private let db: Firestore
-    
-    init(db: Firestore = .firestore()) {
-        self.db = db
+    private let firestore: Firestore
+
+    init(firestore: Firestore = .firestore()) {
+        self.firestore = firestore
     }
-    
+
     func fetch(
         after document: DocumentSnapshot?,
         pageSize: Int
     ) -> AnyPublisher<PublicPetsPage, Error> {
-
         var query = baseQuery(pageSize)
 
         if let document {
@@ -41,9 +40,9 @@ final class PublicPetService: PublicPetRepository {
             }
             .eraseToAnyPublisher()
     }
-    
+
     private func baseQuery(_ size: Int) -> Query {
-        db.collection("pets")
+        firestore.collection("pets")
             .whereField(Pet.CodingKeys.isPublic.rawValue, isEqualTo: true)
             .order(by: Pet.CodingKeys.gameScore.rawValue, descending: true)
             .limit(to: size)
