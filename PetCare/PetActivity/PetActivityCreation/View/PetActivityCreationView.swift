@@ -48,6 +48,12 @@ final class PetActivityCreationView: UIView {
             saveButton
         ]
     )
+    
+    private lazy var keyboardDismissTapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        gesture.cancelsTouchesInView = false
+        return gesture
+    }()
 
     let petSelectionCollection = PetActivityCreationCollectionView()
     let activityPicker = SegmentedPickerView(
@@ -167,6 +173,7 @@ final class PetActivityCreationView: UIView {
         
         loader.style = .medium
         loader.hidesWhenStopped = true
+        addGestureRecognizer(keyboardDismissTapGesture)
     }
     
     private func bindActions() {
@@ -193,6 +200,10 @@ final class PetActivityCreationView: UIView {
         vetDetails.onCostChange = { [weak self] cost in
             self?.onVetCostChange?(cost)
         }
+    }
+    
+    @objc private func dismissKeyboard() {
+        endEditing(true)
     }
 
     required init?(coder: NSCoder) {
