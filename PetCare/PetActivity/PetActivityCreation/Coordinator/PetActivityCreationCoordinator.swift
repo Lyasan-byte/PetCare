@@ -34,17 +34,23 @@ final class PetActivityCreationCoordinator: Coordinator {
     }
     
     func start() {
-        let viewController = PetActivityCreationViewController(imageLoader: imageLoader, petActivityCreationViewModel: PetActivityCreationViewModel(initialActivity: initialActivity, initialSelectedPet: initialSelectedPet, ownerId: ownerId, petRepository: petRepository, activityRepository: PetActivityService(), moduleOutput: self))
+        let viewController = PetActivityCreationViewController(
+            imageLoader: imageLoader,
+            petActivityCreationViewModel: PetActivityCreationViewModel(
+                initialActivity: initialActivity,
+                initialSelectedPet: initialSelectedPet,
+                ownerId: ownerId,
+                petRepository: petRepository,
+                activityRepository: PetActivityService(),
+                moduleOutput: self
+            )
+        )
         
         navigationController.pushViewController(viewController, animated: true)
     }
 }
 
 extension PetActivityCreationCoordinator: PetActivityCreationModuleOutput {
-    func moduleWantsToSave() {
-        
-    }
-    
     func moduleWantsToClose() {
         onFinish?()
         navigationController.popViewController(animated: true)
