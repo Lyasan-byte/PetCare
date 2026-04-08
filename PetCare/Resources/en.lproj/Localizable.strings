@@ -157,3 +157,45 @@
 "pets.public.header.title" = "Public Profiles";
 "pets.public.header.subtitle" = "COMMUNITY FEED";
 "pets.public.header.feed_title" = "Meet the Pack";
+
+//MARK: Pet Activity
+"pets.grooming.bath" = "Bath";
+"pets.grooming.claws" = "Claws";
+"pets.grooming.haircut" = "Haircut";
+"pets.grooming.brushing" = "Brushing";
+"pets.grooming.full_service" = "Full Service";
+
+"pets.vet.check_up" = "Check Up";
+"pets.vet.vaccination" = "Vaccination";
+"pets.vet.surgery" = "Surgery";
+"pets.vet.dental" = "Dental";
+"pets.vet.other" = "Other";
+
+"pets.activity.grooming.procedure_type" = "PROCEDURE TYPE";
+"pets.activity.grooming.cost" = "COST";
+"pets.activity.grooming.cost.placeholder" = "0.0";
+"pets.activity.grooming.duration" = "DURATION (MIN)";
+"pets.activity.grooming.duration.placeholder" = "30";
+
+"pets.activity.select_pet" = "SELECT PET";
+
+"pets.activity.vet.procedure_type" = "PROCEDURE TYPE";
+"pets.activity.vet.cost" = "COST";
+"pets.activity.vet.cost.placeholder" = "0.0";
+
+"pets.activity.walk.km_goal" = "KM GOAL";
+"pets.activity.walk.km_goal.placeholder" = "5.1";
+"pets.activity.walk.actual" = "ACTUAL";
+"pets.activity.walk.actual.placeholder" = "3.7";
+
+"pets.facts.breed_information" = "BREED INFORMATION";
+
+"pets.form.navigation.create" = "Create Pet";
+"pets.form.navigation.edit" = "Edit Profile";
+
+"pets.facts.group" = "GROUP";
+"pets.facts.lifespan" = "LIFESPAN";
+"pets.facts.diet" = "DIET";
+"pets.facts.skin_type" = "SKIN TYPE";
+"pets.facts.weight" = "WEIGHT";
+"pets.facts.locations" = "LOCATIONS";

@@ -156,3 +156,46 @@
 "pets.public.header.title" = "Публичные профили";
 "pets.public.header.subtitle" = "СООБЩЕСТВО";
 "pets.public.header.feed_title" = "Знакомьтесь с питомцами";
+
+//MARK: Pet Activity
+"pets.grooming.bath" = "Купание";
+"pets.grooming.claws" = "Когти";
+"pets.grooming.haircut" = "Стрижка";
+"pets.grooming.brushing" = "Расчесывание";
+"pets.grooming.full_service" = "Полный уход";
+
+"pets.vet.check_up" = "Осмотр";
+"pets.vet.vaccination" = "Вакцинация";
+"pets.vet.surgery" = "Операция";
+"pets.vet.dental" = "Стоматология";
+"pets.vet.other" = "Другое";
+
+"pets.activity.grooming.procedure_type" = "ТИП ПРОЦЕДУРЫ";
+"pets.activity.grooming.cost" = "СТОИМОСТЬ";
+"pets.activity.grooming.cost.placeholder" = "0.0";
+"pets.activity.grooming.duration" = "ДЛИТЕЛЬНОСТЬ (МИН)";
+"pets.activity.grooming.duration.placeholder" = "30";
+
+"pets.activity.select_pet" = "ВЫБЕРИТЕ ПИТОМЦА";
+
+"pets.activity.vet.procedure_type" = "ТИП ПРОЦЕДУРЫ";
+"pets.activity.vet.cost" = "СТОИМОСТЬ";
+"pets.activity.vet.cost.placeholder" = "0.0";
+
+"pets.activity.walk.km_goal" = "ЦЕЛЬ В КМ";
+"pets.activity.walk.km_goal.placeholder" = "5.1";
+"pets.activity.walk.actual" = "ФАКТ";
+"pets.activity.walk.actual.placeholder" = "3.7";
+
+"pets.facts.breed_information" = "ИНФОРМАЦИЯ О ПОРОДЕ";
+
+"pets.form.navigation.create" = "Создать питомца";
+"pets.form.navigation.edit" = "Редактировать профиль";
+
+"pets.facts.group" = "ГРУППА";
+"pets.facts.lifespan" = "ПРОДОЛЖИТЕЛЬНОСТЬ ЖИЗНИ";
+"pets.facts.diet" = "ПИТАНИЕ";
+"pets.facts.skin_type" = "ТИП ШЕРСТИ";
+"pets.facts.weight" = "ВЕС";
+"pets.facts.locations" = "МЕСТА ОБИТАНИЯ";
+

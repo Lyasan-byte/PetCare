@@ -12,14 +12,14 @@ final class WalkCreationView: UIView {
     var onActualDistanceChange: ((String) -> Void)?
 
     private let distanceGoal = TextFieldView(
-        title: "KM GOAL",
-        placeholder: "5.1",
+        title: L10n.Pets.Activity.Walk.kmGoal,
+        placeholder: L10n.Pets.Activity.Walk.KmGoal.placeholder,
         keyboardType: .decimalPad
     )
 
     private let actualDistance = TextFieldView(
-        title: "ACTUAL",
-        placeholder: "3.7",
+        title: L10n.Pets.Activity.Walk.actual,
+        placeholder: L10n.Pets.Activity.Walk.Actual.placeholder,
         keyboardType: .decimalPad
     )
 

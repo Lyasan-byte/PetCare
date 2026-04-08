@@ -13,7 +13,7 @@ final class PetActivityCreationCollectionView: UIView {
             ofSize: 11,
             weight: .medium
         ),
-        text: "SELECT PET",
+        text: L10n.Pets.Activity.selectPet,
         textColor: Asset.petGray.color,
         textAlignment: .left
     )
@@ -34,29 +34,29 @@ final class PetActivityCreationCollectionView: UIView {
         view.showsHorizontalScrollIndicator = false
         return view
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
     }
-    
+
     convenience init() {
         self.init(frame: .zero)
     }
-    
+
     private func setupHierarchy() {
         addSubview(collectionTitle)
         addSubview(collectionView)
     }
-    
+
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionTitle.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             collectionTitle.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionTitle.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
+
             collectionView.topAnchor.constraint(equalTo: collectionTitle.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -64,24 +64,24 @@ final class PetActivityCreationCollectionView: UIView {
             collectionView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
-    
+
     func setupCollection(dataSource: UICollectionViewDataSource,
                          delegate: UICollectionViewDelegate) {
         collectionView.dataSource = dataSource
         collectionView.delegate = delegate
     }
-    
+
     func registerCell() {
         collectionView.register(
             PetSelectionCollectionViewCell.self,
             forCellWithReuseIdentifier: PetSelectionCollectionViewCell.identifier
         )
     }
-    
+
     func reloadData() {
         collectionView.reloadData()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -95,7 +95,7 @@ extension PetActivityCreationCollectionView {
                 heightDimension: .absolute(95)
             )
         )
-        
+
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: .init(
                 widthDimension: .absolute(65),
@@ -103,7 +103,7 @@ extension PetActivityCreationCollectionView {
             ),
             subitems: [item]
         )
-        
+
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 10, leading: 0, bottom: 0, trailing: 0)
         section.interGroupSpacing = 16

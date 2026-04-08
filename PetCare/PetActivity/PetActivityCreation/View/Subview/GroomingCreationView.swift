@@ -12,19 +12,19 @@ final class GroomingCreationView: UIView {
     var onCostChange: ((String) -> Void)?
 
     private let procedurePicker = MenuPickerView(
-        title: "PROCEDURE TYPE",
+        title: L10n.Pets.Activity.Grooming.procedureType,
         options: GroomingProcedureType.allCases.map(\.title)
     )
 
     private let cost = TextFieldView(
-        title: "COST",
-        placeholder: "0.0",
+        title: L10n.Pets.Activity.Grooming.cost,
+        placeholder: L10n.Pets.Activity.Grooming.Cost.placeholder,
         keyboardType: .decimalPad
     )
 
     private let duration = TextFieldView(
-        title: "DURATION (MIN)",
-        placeholder: "30",
+        title: L10n.Pets.Activity.Grooming.duration,
+        placeholder: L10n.Pets.Activity.Grooming.Duration.placeholder,
         keyboardType: .decimalPad
     )
 

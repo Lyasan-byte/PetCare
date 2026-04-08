@@ -33,9 +33,9 @@ struct PetFormState {
     var title: String {
         switch mode {
         case .create:
-            return "Create Pet"
+            return L10n.Pets.Form.Navigation.create
         case .edit:
-            return "Edit Profile"
+            return L10n.Pets.Form.Navigation.edit
         }
     }
 

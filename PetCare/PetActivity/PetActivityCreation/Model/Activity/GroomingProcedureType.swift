@@ -17,15 +17,15 @@ enum GroomingProcedureType: String, Codable, CaseIterable {
     var title: String {
         switch self {
         case .bath:
-            "Bath"
+            L10n.Pets.Grooming.bath
         case .claws:
-            "Claws"
+            L10n.Pets.Grooming.claws
         case .haircut:
-            "Haircut"
+            L10n.Pets.Grooming.haircut
         case .brushing:
-            "Brushing"
+            L10n.Pets.Grooming.brushing
         case .fullService:
-            "Full Service"
+            L10n.Pets.Grooming.fullService
         }
     }
 }

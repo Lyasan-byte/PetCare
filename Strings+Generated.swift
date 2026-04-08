@@ -63,6 +63,14 @@ public enum L10n {
       /// Register
       public static let title = L10n.tr("Localizable", "auth.register.title", fallback: "Register")
     }
+    public enum RegistrationCompletion {
+      /// Finish Registration
+      public static let button = L10n.tr("Localizable", "auth.registration_completion.button", fallback: "Finish Registration")
+      /// Let's finish setting up your account!
+      public static let subtitle = L10n.tr("Localizable", "auth.registration_completion.subtitle", fallback: "Let's finish setting up your account!")
+      /// Welcome!
+      public static let title = L10n.tr("Localizable", "auth.registration_completion.title", fallback: "Welcome!")
+    }
     public enum Validation {
       /// Please fill in all fields
       public static let fillAllFields = L10n.tr("Localizable", "auth.validation.fill_all_fields", fallback: "Please fill in all fields")
@@ -73,6 +81,10 @@ public enum L10n {
     }
   }
   public enum Common {
+    /// Cancel
+    public static let cancel = L10n.tr("Localizable", "common.cancel", fallback: "Cancel")
+    /// Delete
+    public static let delete = L10n.tr("Localizable", "common.delete", fallback: "Delete")
     /// Error
     public static let error = L10n.tr("Localizable", "common.error", fallback: "Error")
     /// OK
@@ -95,6 +107,66 @@ public enum L10n {
     }
   }
   public enum Pets {
+    public enum Activity {
+      /// SELECT PET
+      public static let selectPet = L10n.tr("Localizable", "pets.activity.select_pet", fallback: "SELECT PET")
+      public enum Grooming {
+        /// COST
+        public static let cost = L10n.tr("Localizable", "pets.activity.grooming.cost", fallback: "COST")
+        /// DURATION (MIN)
+        public static let duration = L10n.tr("Localizable", "pets.activity.grooming.duration", fallback: "DURATION (MIN)")
+        /// PROCEDURE TYPE
+        public static let procedureType = L10n.tr("Localizable", "pets.activity.grooming.procedure_type", fallback: "PROCEDURE TYPE")
+        public enum Cost {
+          /// 0.0
+          public static let placeholder = L10n.tr("Localizable", "pets.activity.grooming.cost.placeholder", fallback: "0.0")
+        }
+        public enum Duration {
+          /// 30
+          public static let placeholder = L10n.tr("Localizable", "pets.activity.grooming.duration.placeholder", fallback: "30")
+        }
+      }
+      public enum Vet {
+        /// COST
+        public static let cost = L10n.tr("Localizable", "pets.activity.vet.cost", fallback: "COST")
+        /// PROCEDURE TYPE
+        public static let procedureType = L10n.tr("Localizable", "pets.activity.vet.procedure_type", fallback: "PROCEDURE TYPE")
+        public enum Cost {
+          /// 0.0
+          public static let placeholder = L10n.tr("Localizable", "pets.activity.vet.cost.placeholder", fallback: "0.0")
+        }
+      }
+      public enum Walk {
+        /// ACTUAL
+        public static let actual = L10n.tr("Localizable", "pets.activity.walk.actual", fallback: "ACTUAL")
+        /// KM GOAL
+        public static let kmGoal = L10n.tr("Localizable", "pets.activity.walk.km_goal", fallback: "KM GOAL")
+        public enum Actual {
+          /// 3.7
+          public static let placeholder = L10n.tr("Localizable", "pets.activity.walk.actual.placeholder", fallback: "3.7")
+        }
+        public enum KmGoal {
+          /// 5.1
+          public static let placeholder = L10n.tr("Localizable", "pets.activity.walk.km_goal.placeholder", fallback: "5.1")
+        }
+      }
+    }
+    public enum Facts {
+      /// BREED INFORMATION
+      public static let breedInformation = L10n.tr("Localizable", "pets.facts.breed_information", fallback: "BREED INFORMATION")
+      /// DIET
+      public static let diet = L10n.tr("Localizable", "pets.facts.diet", fallback: "DIET")
+      /// GROUP
+      public static let group = L10n.tr("Localizable", "pets.facts.group", fallback: "GROUP")
+      /// LIFESPAN
+      public static let lifespan = L10n.tr("Localizable", "pets.facts.lifespan", fallback: "LIFESPAN")
+      /// LOCATIONS
+      public static let locations = L10n.tr("Localizable", "pets.facts.locations", fallback: "LOCATIONS")
+      /// SKIN TYPE
+      public static let skinType = L10n.tr("Localizable", "pets.facts.skin_type", fallback: "SKIN TYPE")
+      /// WEIGHT
+      public static let weight = L10n.tr("Localizable", "pets.facts.weight", fallback: "WEIGHT")
+    }
     public enum Form {
       /// Delete Profile
       public static let deleteButton = L10n.tr("Localizable", "pets.form.delete_button", fallback: "Delete Profile")
@@ -123,6 +195,12 @@ public enum L10n {
         public static let placeholder = L10n.tr("Localizable", "pets.form.name.placeholder", fallback: "Cooper")
         /// PET NAME
         public static let title = L10n.tr("Localizable", "pets.form.name.title", fallback: "PET NAME")
+      }
+      public enum Navigation {
+        /// Create Pet
+        public static let create = L10n.tr("Localizable", "pets.form.navigation.create", fallback: "Create Pet")
+        /// Edit Profile
+        public static let edit = L10n.tr("Localizable", "pets.form.navigation.edit", fallback: "Edit Profile")
       }
       public enum Note {
         /// FEATURES / NOTES
@@ -162,6 +240,18 @@ public enum L10n {
       public static let female = L10n.tr("Localizable", "pets.gender.female", fallback: "Female")
       /// Male
       public static let male = L10n.tr("Localizable", "pets.gender.male", fallback: "Male")
+    }
+    public enum Grooming {
+      /// Bath
+      public static let bath = L10n.tr("Localizable", "pets.grooming.bath", fallback: "Bath")
+      /// Brushing
+      public static let brushing = L10n.tr("Localizable", "pets.grooming.brushing", fallback: "Brushing")
+      /// Claws
+      public static let claws = L10n.tr("Localizable", "pets.grooming.claws", fallback: "Claws")
+      /// Full Service
+      public static let fullService = L10n.tr("Localizable", "pets.grooming.full_service", fallback: "Full Service")
+      /// Haircut
+      public static let haircut = L10n.tr("Localizable", "pets.grooming.haircut", fallback: "Haircut")
     }
     public enum Main {
       /// Your Family
@@ -219,6 +309,144 @@ public enum L10n {
         public static let subtitle = L10n.tr("Localizable", "pets.public.header.subtitle", fallback: "COMMUNITY FEED")
         /// Public Profiles
         public static let title = L10n.tr("Localizable", "pets.public.header.title", fallback: "Public Profiles")
+      }
+    }
+    public enum Vet {
+      /// Check Up
+      public static let checkUp = L10n.tr("Localizable", "pets.vet.check_up", fallback: "Check Up")
+      /// Dental
+      public static let dental = L10n.tr("Localizable", "pets.vet.dental", fallback: "Dental")
+      /// Other
+      public static let other = L10n.tr("Localizable", "pets.vet.other", fallback: "Other")
+      /// Surgery
+      public static let surgery = L10n.tr("Localizable", "pets.vet.surgery", fallback: "Surgery")
+      /// Vaccination
+      public static let vaccination = L10n.tr("Localizable", "pets.vet.vaccination", fallback: "Vaccination")
+    }
+  }
+  public enum Settings {
+    public enum Account {
+      /// Delete Account
+      public static let delete = L10n.tr("Localizable", "settings.account.delete", fallback: "Delete Account")
+      /// Account Management
+      public static let title = L10n.tr("Localizable", "settings.account.title", fallback: "Account Management")
+      public enum Delete {
+        /// Please sign in again before deleting your account.
+        public static let reauth = L10n.tr("Localizable", "settings.account.delete.reauth", fallback: "Please sign in again before deleting your account.")
+        public enum Confirmation {
+          /// Your profile and pets will be removed permanently. This action cannot be undone.
+          public static let message = L10n.tr("Localizable", "settings.account.delete.confirmation.message", fallback: "Your profile and pets will be removed permanently. This action cannot be undone.")
+          /// Delete Account
+          public static let title = L10n.tr("Localizable", "settings.account.delete.confirmation.title", fallback: "Delete Account")
+        }
+      }
+    }
+    public enum Appearance {
+      /// Appearance
+      public static let title = L10n.tr("Localizable", "settings.appearance.title", fallback: "Appearance")
+      public enum Language {
+        /// English
+        public static let english = L10n.tr("Localizable", "settings.appearance.language.english", fallback: "English")
+        /// Russian
+        public static let russian = L10n.tr("Localizable", "settings.appearance.language.russian", fallback: "Russian")
+        /// Preferred app language
+        public static let subtitle = L10n.tr("Localizable", "settings.appearance.language.subtitle", fallback: "Preferred app language")
+        /// Language
+        public static let title = L10n.tr("Localizable", "settings.appearance.language.title", fallback: "Language")
+      }
+      public enum Theme {
+        /// Dark
+        public static let dark = L10n.tr("Localizable", "settings.appearance.theme.dark", fallback: "Dark")
+        /// Light
+        public static let light = L10n.tr("Localizable", "settings.appearance.theme.light", fallback: "Light")
+        /// Switch between light and dark
+        public static let subtitle = L10n.tr("Localizable", "settings.appearance.theme.subtitle", fallback: "Switch between light and dark")
+        /// Theme
+        public static let title = L10n.tr("Localizable", "settings.appearance.theme.title", fallback: "Theme")
+      }
+    }
+    public enum Notifications {
+      /// All Notifications
+      public static let all = L10n.tr("Localizable", "settings.notifications.all", fallback: "All Notifications")
+      /// General Reminders
+      public static let generalReminders = L10n.tr("Localizable", "settings.notifications.general_reminders", fallback: "General Reminders")
+      /// Grooming
+      public static let grooming = L10n.tr("Localizable", "settings.notifications.grooming", fallback: "Grooming")
+      /// Notification Settings
+      public static let title = L10n.tr("Localizable", "settings.notifications.title", fallback: "Notification Settings")
+      /// Veterinarian
+      public static let veterinarian = L10n.tr("Localizable", "settings.notifications.veterinarian", fallback: "Veterinarian")
+    }
+    public enum Screen {
+      /// Settings
+      public static let title = L10n.tr("Localizable", "settings.screen.title", fallback: "Settings")
+    }
+  }
+  public enum User {
+    public enum Profile {
+      public enum Best {
+        /// Best Score
+        public static let score = L10n.tr("Localizable", "user.profile.best.score", fallback: "Best Score")
+      }
+      public enum Edit {
+        /// Save Changes
+        public static let saveButton = L10n.tr("Localizable", "user.profile.edit.save_button", fallback: "Save Changes")
+        public enum FirstName {
+          /// Enter first name
+          public static let placeholder = L10n.tr("Localizable", "user.profile.edit.first_name.placeholder", fallback: "Enter first name")
+          /// First Name
+          public static let title = L10n.tr("Localizable", "user.profile.edit.first_name.title", fallback: "First Name")
+        }
+        public enum LastName {
+          /// Enter last name
+          public static let placeholder = L10n.tr("Localizable", "user.profile.edit.last_name.placeholder", fallback: "Enter last name")
+          /// Last Name
+          public static let title = L10n.tr("Localizable", "user.profile.edit.last_name.title", fallback: "Last Name")
+        }
+        public enum Navigation {
+          /// Edit Profile
+          public static let title = L10n.tr("Localizable", "user.profile.edit.navigation.title", fallback: "Edit Profile")
+        }
+        public enum Photo {
+          /// Tap to update your avatar
+          public static let subtitle = L10n.tr("Localizable", "user.profile.edit.photo.subtitle", fallback: "Tap to update your avatar")
+          /// Change Profile Photo
+          public static let title = L10n.tr("Localizable", "user.profile.edit.photo.title", fallback: "Change Profile Photo")
+        }
+        public enum Validation {
+          /// Enter first name
+          public static let firstName = L10n.tr("Localizable", "user.profile.edit.validation.first_name", fallback: "Enter first name")
+          /// Enter last name
+          public static let lastName = L10n.tr("Localizable", "user.profile.edit.validation.last_name", fallback: "Enter last name")
+        }
+      }
+      public enum Email {
+        /// No email
+        public static let missing = L10n.tr("Localizable", "user.profile.email.missing", fallback: "No email")
+      }
+      public enum Logout {
+        /// Logout
+        public static let title = L10n.tr("Localizable", "user.profile.logout.title", fallback: "Logout")
+      }
+      public enum Name {
+        /// Pet Lover
+        public static let placeholder = L10n.tr("Localizable", "user.profile.name.placeholder", fallback: "Pet Lover")
+      }
+      public enum Pets {
+        /// Number of Pets
+        public static let count = L10n.tr("Localizable", "user.profile.pets.count", fallback: "Number of Pets")
+      }
+      public enum Screen {
+        /// Profile
+        public static let title = L10n.tr("Localizable", "user.profile.screen.title", fallback: "Profile")
+      }
+      public enum Settings {
+        /// Settings screen is coming soon.
+        public static let placeholder = L10n.tr("Localizable", "user.profile.settings.placeholder", fallback: "Settings screen is coming soon.")
+        /// Notifications, Appearance & Account Management
+        public static let subtitle = L10n.tr("Localizable", "user.profile.settings.subtitle", fallback: "Notifications, Appearance & Account Management")
+        /// Settings
+        public static let title = L10n.tr("Localizable", "user.profile.settings.title", fallback: "Settings")
       }
     }
   }
