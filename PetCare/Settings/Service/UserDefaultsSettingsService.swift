@@ -23,8 +23,8 @@ final class UserDefaultsSettingsService: SettingsRepository {
         self.userDefaults = userDefaults
     }
 
-    func loadSettings() -> SettingsState {
-        var settings = SettingsState.defaultValue
+    func loadSettings() -> SettingsDisplayData {
+        var settings = SettingsDisplayData.defaultValue
 
         if userDefaults.object(forKey: Keys.isNotificationsEnabled) != nil {
             settings.isNotificationsEnabled = userDefaults.bool(forKey: Keys.isNotificationsEnabled)
@@ -58,7 +58,7 @@ final class UserDefaultsSettingsService: SettingsRepository {
         return settings
     }
 
-    func save(settings: SettingsState) {
+    func save(settings: SettingsDisplayData) {
         userDefaults.set(settings.isNotificationsEnabled, forKey: Keys.isNotificationsEnabled)
         userDefaults.set(settings.isGroomingEnabled, forKey: Keys.isGroomingEnabled)
         userDefaults.set(settings.isVeterinarianEnabled, forKey: Keys.isVeterinarianEnabled)

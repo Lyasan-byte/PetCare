@@ -122,6 +122,8 @@
 "user.profile.settings.subtitle" = "Notifications, Appearance & Account Management";
 "user.profile.settings.placeholder" = "Settings screen is coming soon.";
 "user.profile.logout.title" = "Logout";
+"user.profile.logout.confirmation.title" = "Logout";
+"user.profile.logout.confirmation.message" = "Are you sure you want to log out of your account?";
 "user.profile.edit.navigation.title" = "Edit Profile";
 
 // MARK: - Settings

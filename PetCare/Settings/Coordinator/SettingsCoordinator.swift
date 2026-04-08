@@ -44,4 +44,8 @@ extension SettingsCoordinator: SettingsModuleOutput {
     func settingsModuleDidClose() {
         onFinish?()
     }
+
+    func provideViewControllerForAccountDeletion() -> UIViewController? {
+        navigationController.topViewController
+    }
 }

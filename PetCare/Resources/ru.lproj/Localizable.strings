@@ -121,6 +121,8 @@
 "user.profile.settings.subtitle" = "Уведомления, внешний вид и управление аккаунтом";
 "user.profile.settings.placeholder" = "Экран настроек появится позже.";
 "user.profile.logout.title" = "Выйти";
+"user.profile.logout.confirmation.title" = "Выйти";
+"user.profile.logout.confirmation.message" = "Вы уверены, что хотите выйти из аккаунта?";
 "user.profile.edit.navigation.title" = "Редактировать профиль";
 
 // MARK: - Settings

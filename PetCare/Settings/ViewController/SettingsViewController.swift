@@ -28,7 +28,7 @@ final class SettingsViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         bindViewModel()
         bindActions()
-        render(state: viewModel.state)
+        render()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,8 +60,7 @@ final class SettingsViewController: UIViewController {
         viewModel.stateDidChange
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                guard let self else { return }
-                self.render(state: self.viewModel.state)
+                self?.render()
             }
             .store(in: &bag)
     }
@@ -90,11 +89,18 @@ final class SettingsViewController: UIViewController {
         }
     }
 
-    private func render(state: SettingsState) {
-        title = NSLocalizedString("settings.screen.title", comment: "")
-        contentView.render(state: state)
-        renderDeleteConfirmationIfNeeded(state.isDeleteConfirmationPresented)
-        renderErrorIfNeeded(state.errorMessage)
+    private func render() {
+        switch viewModel.state {
+        case .loading:
+            title = NSLocalizedString("settings.screen.title", comment: "")
+        case .content(let displayData):
+            title = NSLocalizedString("settings.screen.title", comment: "")
+            contentView.render(displayData: displayData)
+            renderDeleteConfirmationIfNeeded(displayData.isDeleteConfirmationPresented)
+        case .error(let message):
+            title = NSLocalizedString("settings.screen.title", comment: "")
+            renderErrorIfNeeded(message)
+        }
     }
 
     private func renderDeleteConfirmationIfNeeded(_ isPresented: Bool) {
@@ -125,8 +131,7 @@ final class SettingsViewController: UIViewController {
         present(alert, animated: true)
     }
 
-    private func renderErrorIfNeeded(_ message: String?) {
-        guard let message else { return }
+    private func renderErrorIfNeeded(_ message: String) {
         guard presentedViewController == nil else { return }
 
         let alert = UIAlertController(

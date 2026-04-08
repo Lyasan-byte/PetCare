@@ -6,7 +6,8 @@
 //
 
 import Combine
+import UIKit
 
 protocol SettingsAccountRepository {
-    func deleteCurrentAccount() -> AnyPublisher<Void, Error>
+    func deleteCurrentAccount(presentingViewController: UIViewController) -> AnyPublisher<Void, Error>
 }

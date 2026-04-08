@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserProfileEditState {
+struct UserProfileEditDisplayData {
     let userId: String
     let email: String?
 
@@ -15,9 +15,7 @@ struct UserProfileEditState {
     var lastName: String
     var existingPhotoUrl: String?
     var selectedPhotoData: Data?
-
     var isSaving: Bool
-    var errorMessage: String?
 
     var title: String {
         NSLocalizedString("user.profile.edit.navigation.title", comment: "")
@@ -37,6 +35,11 @@ struct UserProfileEditState {
         self.existingPhotoUrl = user.avatarURLString
         self.selectedPhotoData = nil
         self.isSaving = false
-        self.errorMessage = nil
     }
+}
+
+enum UserProfileEditState {
+    case loading
+    case content(UserProfileEditDisplayData)
+    case error(String)
 }

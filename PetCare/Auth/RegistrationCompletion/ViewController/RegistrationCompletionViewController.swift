@@ -30,7 +30,7 @@ final class RegistrationCompletionViewController: UIViewController {
         bindActions()
         bindViewModel()
         setupKeyboardDismiss()
-        render(state: viewModel.state)
+        render()
         viewModel.trigger(.onDidLoad)
     }
 
@@ -70,8 +70,7 @@ final class RegistrationCompletionViewController: UIViewController {
         viewModel.stateDidChange
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                guard let self else { return }
-                self.render(state: self.viewModel.state)
+                self?.render()
             }
             .store(in: &bag)
     }
@@ -82,32 +81,59 @@ final class RegistrationCompletionViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
 
-    private func render(state: RegistrationCompletionState) {
-        contentView.configureTexts(title: state.title, subtitle: state.subtitle)
-
-        if contentView.firstNameTextField.textField.text != state.firstName {
-            contentView.firstNameTextField.textField.text = state.firstName
+    private func render() {
+        switch viewModel.state {
+        case .loading:
+            renderLoading()
+        case .content(let displayData):
+            renderContent(displayData)
+        case .error(let message):
+            renderError(message)
         }
-
-        if contentView.lastNameTextField.textField.text != state.lastName {
-            contentView.lastNameTextField.textField.text = state.lastName
-        }
-
-        contentView.setContinueButtonEnabled(state.isSaveEnabled)
-        contentView.setLoading(state.isLoading)
-
-        renderPhoto(state: state)
-        renderErrorIfNeeded(state.errorMessage)
     }
 
-    private func renderPhoto(state: RegistrationCompletionState) {
-        if let data = state.selectedPhotoData,
+    private func renderLoading() {
+        contentView.configureTexts(
+            title: NSLocalizedString("auth.registration_completion.title", comment: ""),
+            subtitle: NSLocalizedString("auth.registration_completion.subtitle", comment: "")
+        )
+        contentView.setContinueButtonEnabled(false)
+        contentView.setLoading(true)
+    }
+
+    private func renderContent(_ displayData: RegistrationCompletionDisplayData) {
+        contentView.configureTexts(title: displayData.title, subtitle: displayData.subtitle)
+
+        if contentView.firstNameTextField.textField.text != displayData.firstName {
+            contentView.firstNameTextField.textField.text = displayData.firstName
+        }
+
+        if contentView.lastNameTextField.textField.text != displayData.lastName {
+            contentView.lastNameTextField.textField.text = displayData.lastName
+        }
+
+        contentView.setContinueButtonEnabled(displayData.isSaveEnabled)
+        contentView.setLoading(false)
+        renderPhoto(displayData)
+    }
+
+    private func renderError(_ message: String) {
+        contentView.configureTexts(
+            title: NSLocalizedString("auth.registration_completion.title", comment: ""),
+            subtitle: NSLocalizedString("auth.registration_completion.subtitle", comment: "")
+        )
+        contentView.setLoading(false)
+        renderErrorIfNeeded(message)
+    }
+
+    private func renderPhoto(_ displayData: RegistrationCompletionDisplayData) {
+        if let data = displayData.selectedPhotoData,
            let image = UIImage(data: data) {
             contentView.photoPickerView.setImage(image)
             return
         }
 
-        if let urlString = state.existingPhotoUrl,
+        if let urlString = displayData.existingPhotoUrl,
            !urlString.isEmpty {
             contentView.photoPickerView.setRemoteImage(
                 urlString: urlString,
@@ -119,8 +145,7 @@ final class RegistrationCompletionViewController: UIViewController {
         contentView.photoPickerView.resetImage()
     }
 
-    private func renderErrorIfNeeded(_ message: String?) {
-        guard let message else { return }
+    private func renderErrorIfNeeded(_ message: String) {
         guard presentedViewController == nil else { return }
 
         let alert = UIAlertController(

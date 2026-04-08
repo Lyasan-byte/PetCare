@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import UIKit
 
 protocol SettingsModuleOutput: AnyObject {
     func settingsModuleDidClose()
+    func provideViewControllerForAccountDeletion() -> UIViewController?
 }
