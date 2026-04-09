@@ -15,7 +15,7 @@ final class PetFactsHeaderCollectionViewCell: UICollectionViewCell {
             ofSize: 13,
             weight: .medium
         ),
-        text: "BREED INFORMATION",
+        text: L10n.Pets.Facts.breedInformation,
         textColor: Asset.accentColor.color
     )
     private let petBreed = TextLabel(font: .systemFont(ofSize: 22, weight: .bold), textColor: .label)

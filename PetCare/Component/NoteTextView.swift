@@ -11,7 +11,7 @@ final class NoteTextView: UIView {
     var onNoteChange: ((String) -> Void)?
     
     private let background = BackgroundView(backgroundColor: Asset.petLightGray.color, cornerRadius: 28)
-    private let noteTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), text: L10n.Pets.Form.Note.title, textColor: Asset.petGray.color, textAlignment: .left)
+    private let noteTitle = TextLabel(font: .systemFont(ofSize: 11, weight: .medium), textColor: Asset.petGray.color, textAlignment: .left)
     
     let noteTextView: UITextView = {
         let textView = UITextView()
@@ -30,8 +30,9 @@ final class NoteTextView: UIView {
         configure()
     }
     
-    convenience init() {
+    convenience init(title: String) {
         self.init(frame: .zero)
+        self.noteTitle.text = title
     }
     
     private func setupHierarchy() {
@@ -55,7 +56,7 @@ final class NoteTextView: UIView {
             noteTextView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 16),
             noteTextView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -16),
             noteTextView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -16),
-            noteTextView.heightAnchor.constraint(equalToConstant: 120)
+            noteTextView.heightAnchor.constraint(equalToConstant: 110)
         ])
     }
     

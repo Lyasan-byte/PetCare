@@ -124,8 +124,8 @@ extension PetsMainViewController: UICollectionViewDataSource {
                     onTipTap: { [weak self] in
                         self?.petsMainViewModel.trigger(.onTipTap)
                     },
-                    onQuickActionTap: { action in
-                        print(action)
+                    onQuickActionTap: { [weak self] activity in
+                        self?.petsMainViewModel.trigger(.onAddActivity(activity))
                     })
                 return cell
             }

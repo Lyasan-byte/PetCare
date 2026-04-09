@@ -8,7 +8,7 @@
 import UIKit
 
 final class QuickActionButtonsCollectionView: UIView {
-    var onTapAction: ((QuickActionCellType) -> Void)?
+    var onTapAction: ((PetActivityType) -> Void)?
     
     lazy var quickActionCollection: UICollectionView = { collection in
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +35,7 @@ final class QuickActionButtonsCollectionView: UIView {
         setupLayout()
     }
     
-    convenience init(onTapAction: ((QuickActionCellType) -> Void)?) {
+    convenience init(onTapAction: ((PetActivityType) -> Void)?) {
         self.init(frame: .zero)
         self.onTapAction = onTapAction
     }
@@ -63,12 +63,12 @@ extension QuickActionButtonsCollectionView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        QuickActionCellType.allCases.count
+        PetActivityType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuickActionCell.indentifier, for: indexPath) as? QuickActionCell {
-            cell.configure(cellData: QuickActionCellType.allCases[indexPath.item])
+            cell.configure(cellData: PetActivityType.allCases[indexPath.item])
             return cell
         }
         return UICollectionViewCell()
@@ -77,7 +77,7 @@ extension QuickActionButtonsCollectionView: UICollectionViewDataSource {
 
 extension QuickActionButtonsCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let buttonType = QuickActionCellType.allCases[indexPath.item]
+        let buttonType = PetActivityType.allCases[indexPath.item]
         
         onTapAction?(buttonType)
     }

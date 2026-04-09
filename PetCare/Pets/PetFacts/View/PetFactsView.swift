@@ -124,7 +124,13 @@ final class PetFactsView: UIView {
 extension PetFactsView {
     private static func createHeaderSection() -> NSCollectionLayoutSection {
         let item: NSCollectionLayoutItem = .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(210)))
-        let group: NSCollectionLayoutGroup = .vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(210)), subitems: [item])
+        let group: NSCollectionLayoutGroup = .vertical(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(210)
+            ),
+            subitems: [item]
+        )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
         return section
@@ -133,7 +139,14 @@ extension PetFactsView {
     private static func createGeneralInfoSection() -> NSCollectionLayoutSection {
         let item: NSCollectionLayoutItem = .init(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(100)))
         item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 16)
-        let group: NSCollectionLayoutGroup = .horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)), repeatingSubitem: item, count: 2)
+        let group: NSCollectionLayoutGroup = .horizontal(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(100)
+            ),
+            repeatingSubitem: item,
+            count: 2
+        )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 40, leading: 16, bottom: 0, trailing: 0)
         section.interGroupSpacing = 16
@@ -142,7 +155,13 @@ extension PetFactsView {
     
     private static func createDetailsSection() -> NSCollectionLayoutSection {
         let item: NSCollectionLayoutItem = .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200)))
-        let group: NSCollectionLayoutGroup = .vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200)), subitems: [item])
+        let group: NSCollectionLayoutGroup = .vertical(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated( 200)
+            ),
+            subitems: [item]
+        )
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 16, leading: 16, bottom: 0, trailing: 16)
         section.interGroupSpacing = 16

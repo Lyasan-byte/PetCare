@@ -5,8 +5,8 @@
 //  Created by Ляйсан on 25/3/26.
 //
 
-import UIKit
 import FirebaseFirestore
+import UIKit
 
 struct Pet: Identifiable, Codable, Equatable {
     @DocumentID var id: String?
@@ -69,13 +69,51 @@ struct Pet: Identifiable, Codable, Equatable {
 extension Pet {
     var ageText: String {
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: dateOfBirth, to: Date())
+        let components = calendar.dateComponents([.year, .month, .day], from: dateOfBirth, to: Date())
 
         if let years = components.year, years > 0 {
-            return years == 1 ? "1 year" : "\(years) years"
+            return localizedPlural(
+                value: years,
+                one: L10n.Pets.Age.Year.one(years),
+                few: L10n.Pets.Age.Year.few(years),
+                many: L10n.Pets.Age.Year.many(years)
+            )
         }
 
-        let months = max(components.month ?? 0, 0)
-        return months == 1 ? "1 month" : "\(months) months"
+        if let months = components.month, months > 0 {
+            return localizedPlural(
+                value: months,
+                one: L10n.Pets.Age.Month.one(months),
+                few: L10n.Pets.Age.Month.few(months),
+                many: L10n.Pets.Age.Month.many(months)
+            )
+        }
+
+        let days = max(components.day ?? 0, 0)
+        return localizedPlural(
+            value: days,
+            one: L10n.Pets.Age.Day.one(days),
+            few: L10n.Pets.Age.Day.few(days),
+            many: L10n.Pets.Age.Day.many(days)
+        )
+    }
+
+    private func localizedPlural(value: Int, one: String, few: String, many: String) -> String {
+        let preferredLanguage = Locale.preferredLanguages.first ?? ""
+
+        guard preferredLanguage.hasPrefix("ru") else {
+            return value == 1 ? one : many
+        }
+
+        let mod10 = value % 10
+        let mod100 = value % 100
+
+        if mod10 == 1 && mod100 != 11 {
+            return one
+        } else if (2...4).contains(mod10) && !(12...14).contains(mod100) {
+            return few
+        } else {
+            return many
+        }
     }
 }

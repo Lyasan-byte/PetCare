@@ -13,7 +13,10 @@ final class PetFormView: UIView {
     private let scrollView = ScrollView()
     private let scrollContentView = UIView()
     private let genderPickerTitle = TextLabel(
-        font: .systemFont(ofSize: 11, weight: .medium),
+        font: .systemFont(
+            ofSize: 11,
+            weight: .medium
+        ),
         text: L10n.Pets.Form.Gender.title,
         textColor: Asset.petGray.color,
         textAlignment: .left
@@ -36,6 +39,11 @@ final class PetFormView: UIView {
             deleteButton
         ]
     )
+    private lazy var keyboardDismissTapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        gesture.cancelsTouchesInView = false
+        return gesture
+    }()
 
     let photoPickerView = PetImagePickerView()
     let petIconStatusPicker = PetIconStatusPicker()
@@ -51,10 +59,15 @@ final class PetFormView: UIView {
         placeholder: L10n.Pets.Form.Weight.placeholder,
         keyboardType: .decimalPad
     )
-    let petDateOfBirthPicker = DatePickerView(title: L10n.Pets.Form.BirthDate.title)
-    let petGenderPicker = SegmentedPickerView(items: Gender.allCases.map(\.title))
-
-    let noteTextView = NoteTextView()
+    let petDateOfBirthPicker = DatePickerView(
+        title: L10n.Pets.Form.BirthDate.title
+    )
+    let petGenderPicker = SegmentedPickerView(
+        items: Gender.allCases.map(\.title)
+    )
+    let noteTextView = NoteTextView(
+        title: L10n.Pets.Form.Note.title
+    )
     let isPublicProfileSwitch = SwitchOptionView(
         title: L10n.Pets.Form.PublicProfile.title,
         subtitle: L10n.Pets.Form.PublicProfile.subtitle,
@@ -64,7 +77,10 @@ final class PetFormView: UIView {
         circleSize: 45,
         iconSize: 20
     )
-    let saveButton = PrimaryButton(title: L10n.Pets.Form.saveButton, shadowColor: Asset.primaryGreen.color)
+    let saveButton = PrimaryButton(
+        title: L10n.Pets.Form.saveButton,
+        shadowColor: Asset.primaryGreen.color
+    )
     let deleteButton = PrimaryButton(
         title: L10n.Pets.Form.deleteButton,
         backgroundColor: Asset.lightRed.color,
@@ -133,6 +149,12 @@ final class PetFormView: UIView {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         scrollContentView.translatesAutoresizingMaskIntoConstraints = false
+        addGestureRecognizer(keyboardDismissTapGesture)
+    }
+
+    @objc
+    private func dismissKeyboard() {
+        endEditing(true)
     }
 
     required init?(coder: NSCoder) {

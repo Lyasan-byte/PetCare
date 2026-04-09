@@ -44,6 +44,9 @@ final class PetProfileViewModel: PetProfileViewModeling {
 
         case .onCloseTap:
             moduleOutput?.moduleWantsToClose()
+
+        case .onCreateActivityTap:
+            moduleOutput?.moduleWantsToOpenAddActivity(state.pet)
         }
     }
 

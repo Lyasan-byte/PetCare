@@ -11,28 +11,6 @@ struct PetFactDTO: Codable {
     let name: String
     let locations: [String]
     let characteristics: Characteristic
-    
-    struct Characteristic: Codable {
-        let diet: String?
-        let commonName: String?
-        let skinType: String?
-        let group: String?
-        let slogan: String?
-        let lifespan: String?
-        let temperament: String?
-        let weight: String?
-        
-        enum CodingKeys: String, CodingKey {
-            case diet
-            case commonName = "common_name"
-            case skinType = "skin_type"
-            case group
-            case slogan
-            case lifespan
-            case temperament
-            case weight
-        }
-    }
 }
 
 extension PetFactDTO {
@@ -41,7 +19,7 @@ extension PetFactDTO {
             name: name,
             locations: locations,
             diet: characteristics.diet,
-            common_name: characteristics.commonName,
+            commonName: characteristics.commonName,
             skinType: characteristics.skinType,
             group: characteristics.group,
             slogan: characteristics.slogan,
@@ -49,5 +27,27 @@ extension PetFactDTO {
             temperament: characteristics.temperament,
             weight: characteristics.weight
         )
+    }
+}
+
+struct Characteristic: Codable {
+    let diet: String?
+    let commonName: String?
+    let skinType: String?
+    let group: String?
+    let slogan: String?
+    let lifespan: String?
+    let temperament: String?
+    let weight: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case diet
+        case commonName = "common_name"
+        case skinType = "skin_type"
+        case group
+        case slogan
+        case lifespan
+        case temperament
+        case weight
     }
 }
