@@ -101,7 +101,7 @@ final class UserProfileHeaderView: UIView {
 
     private func configureAppearance() {
         titleLabel.text = NSLocalizedString("user.profile.screen.title", comment: "")
-        titleLabel.font = .systemFont(ofSize: 24, weight: .medium)
+        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
         titleLabel.textColor = Asset.accentColor.color
 
         let editConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)

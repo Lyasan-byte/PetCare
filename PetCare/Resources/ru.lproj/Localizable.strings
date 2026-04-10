@@ -195,7 +195,7 @@
 "pets.form.navigation.edit" = "Редактировать профиль";
 
 "pets.facts.group" = "ГРУППА";
-"pets.facts.lifespan" = "ПРОДОЛЖИТЕЛЬНОСТЬ ЖИЗНИ";
+"pets.facts.lifespan" = "СРОК ЖИЗНИ";
 "pets.facts.diet" = "ПИТАНИЕ";
 "pets.facts.skin_type" = "ТИП ШЕРСТИ";
 "pets.facts.weight" = "ВЕС";
@@ -226,4 +226,22 @@
 "pets.age.day.one" = "%d день";
 "pets.age.day.few" = "%d дня";
 "pets.age.day.many" = "%d дней";
+
+//MARK: - Pet Facts
+
+"pets.facts.empty_state" = "По данной породе не найдено информации";
+"pets.facts.close_button" = "Закрыть";
+
+//MARK: - Public Pet Profile
+
+"pets.public.owner.title" = "Владелец";
+"pets.public.game_score.title" = "Лучший результат в мини-игре";
+"pets.public.game_score.points.one" = "%d очко";
+"pets.public.game_score.points.few" = "%d очка";
+"pets.public.game_score.points.many" = "%d очков";
+
+//MARK: - Error
+
+"repository.error.deallocated" = "Репозиторий был освобожден из памяти";
+"repository.error.unknown" = "Неизвестная ошибка";
 

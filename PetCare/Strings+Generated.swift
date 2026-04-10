@@ -214,8 +214,12 @@ public enum L10n {
     public enum Facts {
       /// BREED INFORMATION
       public static let breedInformation = L10n.tr("Localizable", "pets.facts.breed_information", fallback: "BREED INFORMATION")
+      /// Close
+      public static let closeButton = L10n.tr("Localizable", "pets.facts.close_button", fallback: "Close")
       /// DIET
       public static let diet = L10n.tr("Localizable", "pets.facts.diet", fallback: "DIET")
+      /// No information was found for this breed
+      public static let emptyState = L10n.tr("Localizable", "pets.facts.empty_state", fallback: "No information was found for this breed")
       /// GROUP
       public static let group = L10n.tr("Localizable", "pets.facts.group", fallback: "GROUP")
       /// LIFESPAN
@@ -372,6 +376,24 @@ public enum L10n {
       }
     }
     public enum Public {
+      public enum GameScore {
+        /// Best mini game score
+        public static let title = L10n.tr("Localizable", "pets.public.game_score.title", fallback: "Best mini game score")
+        public enum Points {
+          /// %d pts
+          public static func few(_ p1: Int) -> String {
+            return L10n.tr("Localizable", "pets.public.game_score.points.few", p1, fallback: "%d pts")
+          }
+          /// %d pts
+          public static func many(_ p1: Int) -> String {
+            return L10n.tr("Localizable", "pets.public.game_score.points.many", p1, fallback: "%d pts")
+          }
+          /// %d pts
+          public static func one(_ p1: Int) -> String {
+            return L10n.tr("Localizable", "pets.public.game_score.points.one", p1, fallback: "%d pts")
+          }
+        }
+      }
       public enum Header {
         /// Meet the Pack
         public static let feedTitle = L10n.tr("Localizable", "pets.public.header.feed_title", fallback: "Meet the Pack")
@@ -379,6 +401,10 @@ public enum L10n {
         public static let subtitle = L10n.tr("Localizable", "pets.public.header.subtitle", fallback: "COMMUNITY FEED")
         /// Public Profiles
         public static let title = L10n.tr("Localizable", "pets.public.header.title", fallback: "Public Profiles")
+      }
+      public enum Owner {
+        /// Owned by
+        public static let title = L10n.tr("Localizable", "pets.public.owner.title", fallback: "Owned by")
       }
     }
     public enum Vet {
@@ -392,6 +418,14 @@ public enum L10n {
       public static let surgery = L10n.tr("Localizable", "pets.vet.surgery", fallback: "Surgery")
       /// Vaccination
       public static let vaccination = L10n.tr("Localizable", "pets.vet.vaccination", fallback: "Vaccination")
+    }
+  }
+  public enum Repository {
+    public enum Error {
+      /// Repository was deallocated
+      public static let deallocated = L10n.tr("Localizable", "repository.error.deallocated", fallback: "Repository was deallocated")
+      /// Unknown error
+      public static let unknown = L10n.tr("Localizable", "repository.error.unknown", fallback: "Unknown error")
     }
   }
   public enum Settings {
@@ -497,6 +531,12 @@ public enum L10n {
       public enum Logout {
         /// Logout
         public static let title = L10n.tr("Localizable", "user.profile.logout.title", fallback: "Logout")
+        public enum Confirmation {
+          /// Are you sure you want to log out of your account?
+          public static let message = L10n.tr("Localizable", "user.profile.logout.confirmation.message", fallback: "Are you sure you want to log out of your account?")
+          /// Logout
+          public static let title = L10n.tr("Localizable", "user.profile.logout.confirmation.title", fallback: "Logout")
+        }
       }
       public enum Name {
         /// Pet Lover
