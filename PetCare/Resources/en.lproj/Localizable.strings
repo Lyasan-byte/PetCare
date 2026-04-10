@@ -110,6 +110,21 @@
 
 "pets.main.tip.title" = "Pet Health Tip";
 
+//MARK: - Mini game
+"mini.game.screen.title" = "Pet Runner";
+"mini.game.runner.select" = "SELECT YOUR RUNNER";
+"mini.game.empty.title" = "No pets for runner selection";
+"mini.game.empty.subtitle" = "Add a pet in My Pets to use it as a runner.";
+"mini.game.field.tap_to_jump" = "TAP TO JUMP";
+"mini.game.field.start_hint" = "Tap the field to start";
+"mini.game.field.preview_hint" = "Gameplay will be connected here next.";
+"mini.game.field.running" = "Run preview in progress";
+"mini.game.field.game_over" = "Game Over";
+"mini.game.field.restart" = "Restart";
+"mini.game.field.last_score" = "Score";
+"mini.game.field.best_score" = "Best";
+"mini.game.field.no_pet" = "Choose a pet to start";
+
 
 // MARK: - User Profile
 
@@ -230,5 +245,4 @@
 "pets.age.day.one" = "%d day";
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
-
 
