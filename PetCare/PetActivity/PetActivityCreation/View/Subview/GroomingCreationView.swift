@@ -10,6 +10,7 @@ import UIKit
 final class GroomingCreationView: UIView {
     var onChangeProcedure: ((Int) -> Void)?
     var onCostChange: ((String) -> Void)?
+    var onDurationChange: ((String) -> Void)?
 
     private let procedurePicker = MenuPickerView(
         title: L10n.Pets.Activity.Grooming.procedureType,
@@ -78,6 +79,10 @@ final class GroomingCreationView: UIView {
 
         cost.onTextChanged = { [weak self] costString in
             self?.onCostChange?(costString)
+        }
+        
+        duration.onTextChanged = { [weak self] durationString in
+            self?.onDurationChange?(durationString)
         }
     }
 
