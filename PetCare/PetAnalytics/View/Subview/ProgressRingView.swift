@@ -102,7 +102,7 @@ final class ProgressRingView: UIView {
         progressLayer.frame = bounds
     }
     
-    func configure(goal: String, actualValue: String, progress: CGFloat) {
+    func configure(goal: Int, actualValue: Int, progress: CGFloat) {
         valueTitle.text = "\(actualValue)/\(goal)"
         self.progress = progress
     }

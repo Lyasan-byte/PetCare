@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BarChartItem: Hashable {
+struct BarChartItem: Hashable, Sendable {
     let title: String
     let value: Double
 }

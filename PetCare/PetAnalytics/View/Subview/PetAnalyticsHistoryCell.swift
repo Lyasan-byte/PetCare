@@ -83,16 +83,19 @@ final class PetAnalyticsHistoryCell: UICollectionViewCell {
         ])
     }
     
-    func setData(activity: PetActivity) {
+    func setData(history: PetAnalyticsHistoryData) {
+        let activityType = history.activityType
         icon = CircleIconView(
-            symbolName: activity.type.icon,
-            iconColor: activity.type.color,
-            circleColor: activity.type.activityBackgroundColor,
+            symbolName: activityType.icon,
+            iconColor: activityType.color,
+            circleColor: activityType.activityBackgroundColor,
             circleSize: 45,
             iconSize: 20
         )
-        activityName.text = activity.type.name
-        // add data
+        activityName.text = activityType.name
+        
+        activityDate.text = history.date
+        activityDescription.text = history.activityDetail
     }
     
     required init?(coder: NSCoder) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PetAnalyticsSection: Int, Hashable, CaseIterable {
+enum PetAnalyticsSection: Int, Hashable, Sendable, CaseIterable {
     case header
     case walkChart
     case goal

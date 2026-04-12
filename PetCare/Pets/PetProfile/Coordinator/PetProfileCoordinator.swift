@@ -112,7 +112,7 @@ final class PetProfileCoordinator: Coordinator {
                 ),
                 petAnalyticsRepository: PetAnalyticsService(),
                 contentBuilder: PetAnalyticsBuilder()
-            )
+            ), imageLoader: imageLoader
         )
         
         navigationController.pushViewController(analyticsViewController, animated: true)

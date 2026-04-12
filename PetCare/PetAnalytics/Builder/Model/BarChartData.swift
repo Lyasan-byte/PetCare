@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct BarChartData: Hashable {
+struct BarChartData: Hashable, Sendable {
     let title: String
+    let subtitle: String
     let items: [BarChartItem]
 }

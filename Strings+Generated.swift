@@ -497,6 +497,12 @@ public enum L10n {
       public enum Logout {
         /// Logout
         public static let title = L10n.tr("Localizable", "user.profile.logout.title", fallback: "Logout")
+        public enum Confirmation {
+          /// Are you sure you want to log out of your account?
+          public static let message = L10n.tr("Localizable", "user.profile.logout.confirmation.message", fallback: "Are you sure you want to log out of your account?")
+          /// Logout
+          public static let title = L10n.tr("Localizable", "user.profile.logout.confirmation.title", fallback: "Logout")
+        }
       }
       public enum Name {
         /// Pet Lover

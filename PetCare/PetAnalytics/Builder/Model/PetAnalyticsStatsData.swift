@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct PetAnalyticsStatsData: Hashable {
+struct PetAnalyticsStatsData: Hashable, Sendable {
     let title: String
     let value: String
-    let icon: String
+    let style: PetAnalyticsStatsStyle
 }
