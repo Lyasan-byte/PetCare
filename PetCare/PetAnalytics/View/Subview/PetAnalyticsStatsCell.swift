@@ -74,15 +74,38 @@ final class PetAnalyticsStatsCell: UICollectionViewCell {
         ])
     }
     
-    func setData(activity: PetActivity) {
+    func setData(stats: PetAnalyticsStatsData) {
         icon = CircleIconView(
-            symbolName: activity.type.icon,
-            iconColor: activity.type.color,
-            circleColor: activity.type.backgroundColor,
+            symbolName: stats.style.icon,
+            iconColor: iconColor(for: stats.style),
+            circleColor: backgroundColor(for: stats.style),
             circleSize: 45,
             iconSize: 20
         )
-        // add data
+        self.statsTitle.text = stats.title
+        self.statsValue.text = stats.value
+    }
+    
+    private func iconColor(for style: PetAnalyticsStatsStyle) -> UIColor {
+        switch style {
+        case .walks:
+            Asset.primaryGreen.color
+        case .averageDistance:
+            Asset.purpleAccentStatus.color
+        case .spendings:
+            Asset.petYellow.color
+        }
+    }
+    
+    private func backgroundColor(for style: PetAnalyticsStatsStyle) -> UIColor {
+        switch style {
+        case .walks:
+            Asset.petGreenAction.color
+        case .averageDistance:
+            Asset.petPurpleAction.color
+        case .spendings:
+            Asset.yellowAccent.color
+        }
     }
     
     required init?(coder: NSCoder) {

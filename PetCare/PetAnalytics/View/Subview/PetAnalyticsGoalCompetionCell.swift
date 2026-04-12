@@ -67,11 +67,15 @@ final class PetAnalyticsGoalCompetionCell: UICollectionViewCell {
         ])
     }
     
-    func setData(petName: String) {
-        goalDescription.text = "\(petName.capitalized) is 60% through his fitness targets."
-        // add data
+    func setData(goalCompletion: GoalCompletionData) {
+        goalDescription.text = goalCompletion.description
+        progressRing
+            .configure(
+                goal: goalCompletion.goalsCount,
+                actualValue: goalCompletion.actualGoalsCompletion,
+                progress: goalCompletion.progress
+            )
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -7,14 +7,9 @@
 
 import Foundation
 
-typealias PetAnalyticsState = ViewState<PetAnalyticsContent>
-
-struct PetAnalyticsContent {
-    let pet: Pet
-    var selectedPeriod: PetAnalyticsPeriod = .week
-    var walkChartItems: BarChartData?
-    var spendingsChartItems: BarChartData?
-    var goalCompletion: GoalCompletionData?
-    var statsData: [PetAnalyticsStatsData] = []
-    var historyData: [PetAnalyticsHistoryData] = []
+enum PetAnalyticsState {
+    case loading
+    case error(String)
+    case empty
+    case content(PetAnalyticsContent)
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 final class PetAnalyticsView: UIView {
+    private let loader = UIActivityIndicatorView()
     private let emptyStateView = EmptyStateView(title: "No Activities", subtitle: "", image: "text.page.slash")
     let collection: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
@@ -36,6 +37,7 @@ final class PetAnalyticsView: UIView {
     private func setupHierarchy() {
         addSubview(collection)
         addSubview(emptyStateView)
+        addSubview(loader)
     }
     
     private func setupLayout() {
@@ -46,7 +48,10 @@ final class PetAnalyticsView: UIView {
             collection.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             emptyStateView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            emptyStateView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            emptyStateView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            loader.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
@@ -55,6 +60,8 @@ final class PetAnalyticsView: UIView {
         collection.translatesAutoresizingMaskIntoConstraints = false
         
         emptyStateView.isHidden = true
+        loader.hidesWhenStopped = true
+        loader.style = .medium
     }
     
     func registerCells() {
@@ -93,6 +100,17 @@ final class PetAnalyticsView: UIView {
     
     func showEmptyState(_ isEmpty: Bool) {
         emptyStateView.isHidden = !isEmpty
+    }
+    
+    func setLoading(_ isLoading: Bool) {
+        if isLoading {
+            loader.startAnimating()
+        } else {
+            loader.stopAnimating()
+        }
+        loader.isHidden = !isLoading
+        collection.isHidden = isLoading
+        emptyStateView.isHidden = isLoading
     }
     
     required init?(coder: NSCoder) {

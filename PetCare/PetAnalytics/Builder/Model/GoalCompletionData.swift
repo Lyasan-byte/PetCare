@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import CoreGraphics
 
-struct GoalCompletionData: Hashable {
+struct GoalCompletionData: Hashable, Sendable {
     let goalsCount: Int
     let actualGoalsCompletion: Int
     let description: String

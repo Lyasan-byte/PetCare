@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PetAnalyticsHistoryData: Hashable {
+struct PetAnalyticsHistoryData: Hashable, Sendable {
     let activityType: PetActivityType
     let date: String
     let activityDetail: String

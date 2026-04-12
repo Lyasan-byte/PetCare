@@ -88,10 +88,10 @@ final class PetAnalyticsHeaderCell: UICollectionViewCell {
         }
     }
     
-    func setData(pet: Pet, imageLoader: ImageLoader) {
-        petName.text = pet.name
-        petBreedAndAge.text = "\(pet.breed) • \(pet.ageText)"
-        petImage.setImage(urlString: pet.photoUrl, imageLoader: imageLoader)
+    func setData(header: PetAnalyticsHeaderData, imageLoader: ImageLoader) {
+        petName.text = header.petName
+        petBreedAndAge.text = header.petBreedAndAge
+        petImage.setImage(urlString: header.photoUrl, imageLoader: imageLoader)
     }
     
     required init?(coder: NSCoder) {
