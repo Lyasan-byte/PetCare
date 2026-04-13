@@ -10,6 +10,8 @@ import UIKit
 final class MiniGameView: UIView {
     var onGameFieldTap: (() -> Void)?
     var onRestartTap: (() -> Void)?
+    var onGameScoreChanged: ((Int) -> Void)?
+    var onGameEnded: ((Int) -> Void)?
 
     private let loader = UIActivityIndicatorView(style: .medium)
     private let scrollView = ScrollView()
@@ -101,10 +103,22 @@ final class MiniGameView: UIView {
         loader.isHidden = !isLoading
     }
 
-    func setData(content: MiniGameContent, imageLoader: ImageLoader) {
+    func setData(content: MiniGameContent) {
         emptyStateView.isHidden = !content.isEmpty
         collectionView.isHidden = content.isEmpty
-        fieldView.setData(content: content, imageLoader: imageLoader)
+        fieldView.setData(content: content)
+    }
+
+    func startGame(with pet: Pet, imageLoader: ImageLoader) {
+        fieldView.startGame(with: pet, imageLoader: imageLoader)
+    }
+
+    func stopGame() {
+        fieldView.stopGame()
+    }
+
+    func jump() {
+        fieldView.jump()
     }
 
     private func setupHierarchy() {
@@ -136,7 +150,7 @@ final class MiniGameView: UIView {
             contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
 
             collectionView.heightAnchor.constraint(equalToConstant: 126),
-            fieldView.heightAnchor.constraint(equalToConstant: 470),
+            fieldView.heightAnchor.constraint(equalToConstant: 490),
 
             loader.centerXAnchor.constraint(equalTo: centerXAnchor),
             loader.centerYAnchor.constraint(equalTo: centerYAnchor)
@@ -161,6 +175,14 @@ final class MiniGameView: UIView {
 
         fieldView.onRestartTap = { [weak self] in
             self?.onRestartTap?()
+        }
+
+        fieldView.onScoreChanged = { [weak self] score in
+            self?.onGameScoreChanged?(score)
+        }
+
+        fieldView.onGameEnded = { [weak self] score in
+            self?.onGameEnded?(score)
         }
     }
 

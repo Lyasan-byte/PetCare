@@ -24,7 +24,6 @@ final class MiniGameViewModel: MiniGameViewModeling {
 
     private var bag = Set<AnyCancellable>()
     private var content = MiniGameContent()
-    private var previewFinishTask: Task<Void, Never>?
 
     init(
         petRepository: PetRepository,
@@ -45,16 +44,11 @@ final class MiniGameViewModel: MiniGameViewModeling {
         case .onPetSelected(let pet):
             selectPet(pet)
         case .onGameFieldTap:
-            guard !content.isEmpty, content.selectedPet != nil else { return }
-
-            switch content.stage {
-            case .idle, .finished:
-                startPreview()
-            case .started:
-                break
-            }
-        case .onPreviewFinished:
-            finishPreview()
+            startGame()
+        case .onGameScoreUpdated(let score):
+            updateCurrentScore(score)
+        case .onGameEnded(let score):
+            finishGame(with: score)
         case .onRestartTap:
             resetToIdle()
         case .onDismissAlert:
@@ -76,7 +70,6 @@ final class MiniGameViewModel: MiniGameViewModeling {
             } receiveValue: { [weak self] pets in
                 guard let self else { return }
 
-                cancelPreviewFinish()
                 content.pets = pets
                 content.currentScore = 0
                 content.lastRunScore = 0
@@ -98,7 +91,6 @@ final class MiniGameViewModel: MiniGameViewModeling {
     private func selectPet(_ pet: Pet) {
         guard content.selectedPet?.miniGameRunnerKey != pet.miniGameRunnerKey else { return }
 
-        cancelPreviewFinish()
         content.selectedPetKey = pet.miniGameRunnerKey
         content.currentScore = 0
         content.lastRunScore = 0
@@ -107,19 +99,26 @@ final class MiniGameViewModel: MiniGameViewModeling {
         state = .content(content)
     }
 
-    private func startPreview() {
-        cancelPreviewFinish()
+    private func startGame() {
+        guard !content.isEmpty, content.selectedPet != nil else { return }
+
         content.currentScore = 0
         content.lastRunScore = 0
         content.stage = .started
         state = .content(content)
-        schedulePreviewFinish()
     }
 
-    private func finishPreview() {
+    private func updateCurrentScore(_ score: Int) {
+        guard content.stage == .started else { return }
+        guard content.currentScore != score else { return }
+
+        content.currentScore = score
+        state = .content(content)
+    }
+
+    private func finishGame(with score: Int) {
         guard content.stage == .started else { return }
 
-        let score = 0
         content.currentScore = score
         content.lastRunScore = score
 
@@ -127,6 +126,11 @@ final class MiniGameViewModel: MiniGameViewModeling {
             let newBestScore = max(bestScoreRepository.bestScore(for: selectedPet), score)
             content.bestScore = newBestScore
             bestScoreRepository.saveBestScore(newBestScore, for: selectedPet)
+            saveBestScoreIfNeeded(
+                newBestScore,
+                currentRemoteScore: selectedPet.gameScore,
+                petId: selectedPet.id
+            )
         } else {
             content.bestScore = 0
         }
@@ -136,7 +140,6 @@ final class MiniGameViewModel: MiniGameViewModeling {
     }
 
     private func resetToIdle() {
-        cancelPreviewFinish()
         content.currentScore = 0
         content.lastRunScore = 0
         content.stage = .idle
@@ -153,16 +156,19 @@ final class MiniGameViewModel: MiniGameViewModeling {
         content.bestScore = bestScoreRepository.bestScore(for: selectedPet)
     }
 
-    private func schedulePreviewFinish() {
-        previewFinishTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: .seconds(1.2))
-            guard !Task.isCancelled else { return }
-            self?.trigger(.onPreviewFinished)
-        }
-    }
+    private func saveBestScoreIfNeeded(_ bestScore: Int, currentRemoteScore: Int, petId: String?) {
+        guard bestScore > currentRemoteScore, let petId else { return }
 
-    private func cancelPreviewFinish() {
-        previewFinishTask?.cancel()
-        previewFinishTask = nil
+        petRepository.updateGameScore(bestScore, for: petId)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                guard let self else { return }
+
+                if case .failure(let error) = completion {
+                    state = .error(error.localizedDescription)
+                }
+            } receiveValue: { _ in
+            }
+            .store(in: &bag)
     }
 }

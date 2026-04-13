@@ -41,7 +41,7 @@ final class UserProfileEditView: UIView {
     )
     let saveButton = PrimaryButton(
         title: NSLocalizedString("user.profile.edit.save_button", comment: ""),
-        backgroundColor: Asset.accentColor.color,
+        backgroundColor: Asset.primaryGreen.color,
         textColor: .white
     )
 
