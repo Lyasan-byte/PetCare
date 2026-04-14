@@ -135,7 +135,8 @@ final class PetActivityCreationViewController: UIViewController {
             petActivityCreationView.setLoading(false)
             petActivityCreationView.setData(
                 selectedPet: content.selectedPet,
-                selectedActivity: content.activity
+                selectedActivity: content.activity,
+                isNotificationsOn: content.isNotificationsOn
             )
             petActivityCreationView.reloadData()
         }

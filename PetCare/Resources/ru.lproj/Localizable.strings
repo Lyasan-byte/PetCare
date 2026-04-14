@@ -129,9 +129,9 @@
 "settings.screen.title" = "Настройки";
 "settings.notifications.title" = "Настройки уведомлений";
 "settings.notifications.all" = "Все уведомления";
+"settings.notifications.walk" = "Прогулки";
 "settings.notifications.grooming" = "Груминг";
 "settings.notifications.veterinarian" = "Ветеринар";
-"settings.notifications.general_reminders" = "Общие напоминания";
 "settings.appearance.title" = "Оформление";
 "settings.appearance.theme.title" = "Тема";
 "settings.appearance.theme.subtitle" = "Переключение между светлой и темной темой";
@@ -205,8 +205,17 @@
 "pets.activity.notes" = "ЗАМЕТКИ ОБ АКТИВНОСТИ";
 "pets.activity.reminder.title" = "Установить напоминание";
 "pets.activity.reminder.subtitle" = "Получите уведомление о следующей сессии.";
+"pets.activity.reminder.daily.subtitle" = "Получайте напоминание каждый день в 9:00.";
+"pets.activity.reminder.monthly.subtitle" = "Получайте напоминание каждый месяц в 9:00.";
 "pets.activity.save_button" = "Сохранить активность";
 "pets.activity.screen.title" = "Создать активность";
+
+"notifications.walk.title" = "Напоминание о прогулке";
+"notifications.walk.body" = "Пора идти на прогулку с %1$@.";
+"notifications.grooming.title" = "Напоминание о груминге";
+"notifications.grooming.body" = "Пора запланировать груминг для %1$@.";
+"notifications.vet.title" = "Напоминание о визите к ветеринару";
+"notifications.vet.body" = "Пора запланировать визит к ветеринару для %1$@.";
 
 //MARK: - Pet Form And Profile
 
@@ -226,4 +235,3 @@
 "pets.age.day.one" = "%d день";
 "pets.age.day.few" = "%d дня";
 "pets.age.day.many" = "%d дней";
-

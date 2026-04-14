@@ -11,12 +11,12 @@ import UIKit
 
 final class SettingsViewModel: SettingsViewModeling {
     private struct NotificationPreferences {
+        let walk: Bool
         let grooming: Bool
         let veterinarian: Bool
-        let generalReminders: Bool
 
         var hasEnabledNotifications: Bool {
-            grooming || veterinarian || generalReminders
+            walk || grooming || veterinarian
         }
     }
 
@@ -30,24 +30,27 @@ final class SettingsViewModel: SettingsViewModeling {
     private let settingsRepository: SettingsRepository
     private let settingsApplicationController: SettingsApplicationControlling
     private let accountRepository: SettingsAccountRepository
+    private let reminderController: PetActivityReminderControlling
     private weak var moduleOutput: SettingsModuleOutput?
     private var bag = Set<AnyCancellable>()
     private var displayData: SettingsDisplayData
     private var savedPreferences = NotificationPreferences(
+        walk: true,
         grooming: true,
-        veterinarian: true,
-        generalReminders: false
+        veterinarian: true
     )
 
     init(
         settingsRepository: SettingsRepository,
         settingsApplicationController: SettingsApplicationControlling,
         accountRepository: SettingsAccountRepository,
+        reminderController: PetActivityReminderControlling,
         moduleOutput: SettingsModuleOutput?
     ) {
         self.settingsRepository = settingsRepository
         self.settingsApplicationController = settingsApplicationController
         self.accountRepository = accountRepository
+        self.reminderController = reminderController
         self.moduleOutput = moduleOutput
         let storedDisplayData = settingsRepository.loadSettings()
         self.displayData = storedDisplayData
@@ -55,9 +58,9 @@ final class SettingsViewModel: SettingsViewModeling {
 
         if storedDisplayData.isNotificationsEnabled {
             savedPreferences = NotificationPreferences(
+                walk: storedDisplayData.isWalkEnabled,
                 grooming: storedDisplayData.isGroomingEnabled,
-                veterinarian: storedDisplayData.isVeterinarianEnabled,
-                generalReminders: storedDisplayData.isGeneralRemindersEnabled
+                veterinarian: storedDisplayData.isVeterinarianEnabled
             )
         }
     }
@@ -68,23 +71,23 @@ final class SettingsViewModel: SettingsViewModeling {
             moduleOutput?.settingsModuleDidClose()
         case .allNotificationsToggled(let isEnabled):
             updateAllNotifications(isEnabled)
+        case .walkToggled(let isEnabled):
+            updateNotificationPreferences(
+                walk: isEnabled,
+                grooming: displayData.isGroomingEnabled,
+                veterinarian: displayData.isVeterinarianEnabled
+            )
         case .groomingToggled(let isEnabled):
             updateNotificationPreferences(
+                walk: displayData.isWalkEnabled,
                 grooming: isEnabled,
-                veterinarian: displayData.isVeterinarianEnabled,
-                generalReminders: displayData.isGeneralRemindersEnabled
+                veterinarian: displayData.isVeterinarianEnabled
             )
         case .veterinarianToggled(let isEnabled):
             updateNotificationPreferences(
+                walk: displayData.isWalkEnabled,
                 grooming: displayData.isGroomingEnabled,
-                veterinarian: isEnabled,
-                generalReminders: displayData.isGeneralRemindersEnabled
-            )
-        case .generalRemindersToggled(let isEnabled):
-            updateNotificationPreferences(
-                grooming: displayData.isGroomingEnabled,
-                veterinarian: displayData.isVeterinarianEnabled,
-                generalReminders: isEnabled
+                veterinarian: isEnabled
             )
         case .themeSelected(let theme):
             updateTheme(theme)
@@ -107,33 +110,33 @@ final class SettingsViewModel: SettingsViewModeling {
         if isEnabled {
             let preferences = savedPreferences.hasEnabledNotifications
                 ? savedPreferences
-                : NotificationPreferences(grooming: true, veterinarian: true, generalReminders: false)
+                : NotificationPreferences(walk: true, grooming: true, veterinarian: true)
             apply(preferences)
         } else {
             savedPreferences = NotificationPreferences(
+                walk: displayData.isWalkEnabled,
                 grooming: displayData.isGroomingEnabled,
-                veterinarian: displayData.isVeterinarianEnabled,
-                generalReminders: displayData.isGeneralRemindersEnabled
+                veterinarian: displayData.isVeterinarianEnabled
             )
             apply(
                 NotificationPreferences(
+                    walk: false,
                     grooming: false,
-                    veterinarian: false,
-                    generalReminders: false
+                    veterinarian: false
                 )
             )
         }
     }
 
     private func updateNotificationPreferences(
+        walk: Bool,
         grooming: Bool,
-        veterinarian: Bool,
-        generalReminders: Bool
+        veterinarian: Bool
     ) {
         let preferences = NotificationPreferences(
+            walk: walk,
             grooming: grooming,
-            veterinarian: veterinarian,
-            generalReminders: generalReminders
+            veterinarian: veterinarian
         )
 
         if preferences.hasEnabledNotifications {
@@ -145,11 +148,14 @@ final class SettingsViewModel: SettingsViewModeling {
 
     private func apply(_ preferences: NotificationPreferences) {
         displayData.isNotificationsEnabled = preferences.hasEnabledNotifications
+        displayData.isWalkEnabled = preferences.walk
         displayData.isGroomingEnabled = preferences.grooming
         displayData.isVeterinarianEnabled = preferences.veterinarian
-        displayData.isGeneralRemindersEnabled = preferences.generalReminders
         state = .content(displayData)
         persistSettings()
+        reminderController.syncReminders(
+            requestAuthorizationIfNeeded: displayData.isNotificationsEnabled
+        )
     }
 
     private func updateTheme(_ theme: SettingsTheme) {
@@ -192,6 +198,7 @@ final class SettingsViewModel: SettingsViewModeling {
                     self.state = .error(error.localizedDescription)
                 }
             } receiveValue: { _ in
+                self.reminderController.removeAllReminders()
             }
             .store(in: &bag)
     }

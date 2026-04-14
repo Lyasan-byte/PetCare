@@ -130,9 +130,9 @@
 "settings.screen.title" = "Settings";
 "settings.notifications.title" = "Notification Settings";
 "settings.notifications.all" = "All Notifications";
+"settings.notifications.walk" = "Walks";
 "settings.notifications.grooming" = "Grooming";
 "settings.notifications.veterinarian" = "Veterinarian";
-"settings.notifications.general_reminders" = "General Reminders";
 "settings.appearance.title" = "Appearance";
 "settings.appearance.theme.title" = "Theme";
 "settings.appearance.theme.subtitle" = "Switch between light and dark";
@@ -207,9 +207,18 @@
 "pets.activity.notes" = "ACTIVITY NOTES";
 "pets.activity.reminder.title" = "Set Reminder";
 "pets.activity.reminder.subtitle" = "Get notified for next session.";
+"pets.activity.reminder.daily.subtitle" = "Receive a reminder every day at 9:00.";
+"pets.activity.reminder.monthly.subtitle" = "Receive a reminder every month at 9:00.";
 "pets.activity.save_button" = "Save Activity";
 
 "pets.activity.screen.title" = "Create Activity";
+
+"notifications.walk.title" = "Walk Reminder";
+"notifications.walk.body" = "It's time for %1$@'s walk.";
+"notifications.grooming.title" = "Grooming Reminder";
+"notifications.grooming.body" = "It's time to plan %1$@'s grooming.";
+"notifications.vet.title" = "Vet Reminder";
+"notifications.vet.body" = "It's time to plan %1$@'s vet visit.";
 
 
 //MARK: - Pet Form And Profile
@@ -230,5 +239,4 @@
 "pets.age.day.one" = "%d day";
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
-
 

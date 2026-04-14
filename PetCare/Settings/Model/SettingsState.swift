@@ -9,9 +9,9 @@ import Foundation
 
 struct SettingsDisplayData {
     var isNotificationsEnabled: Bool
+    var isWalkEnabled: Bool
     var isGroomingEnabled: Bool
     var isVeterinarianEnabled: Bool
-    var isGeneralRemindersEnabled: Bool
     var theme: SettingsTheme
     var language: SettingsLanguage
     var isDeletingAccount: Bool
@@ -19,9 +19,9 @@ struct SettingsDisplayData {
 
     static let defaultValue = SettingsDisplayData(
         isNotificationsEnabled: true,
+        isWalkEnabled: true,
         isGroomingEnabled: true,
         isVeterinarianEnabled: true,
-        isGeneralRemindersEnabled: false,
         theme: .light,
         language: .defaultValue,
         isDeletingAccount: false,

@@ -13,6 +13,8 @@ final class TabBarController: UITabBarController {
     private var userProfileCoordinator: UserProfileCoordinator?
     private var publicPetsCoordinator: PublicPetsCoordinator?
     private let imageLoader: ImageLoader = ImageLoadService()
+    private let settingsRepository: SettingsRepository = UserDefaultsSettingsService()
+    private let settingsApplicationController: SettingsApplicationControlling = SettingsApplicationController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,14 @@ final class TabBarController: UITabBarController {
         )
         let imageLoader = ImageLoadService()
         let userProfileRepository = FirebaseUserProfileService(imageService: imageUploader)
+        let reminderController = PetActivityReminderController(
+            ownerId: ownerId,
+            settingsRepository: settingsRepository,
+            localNotificationsRepository: UserNotificationCenterService(),
+            reminderStoreRepository: UserDefaultsPetActivityReminderStore()
+        )
+
+        reminderController.syncReminders(requestAuthorizationIfNeeded: false)
 
         let petsNavigationController = UINavigationController()
         let petsMainCoordinator = PetsMainCoordinator(
@@ -34,6 +44,7 @@ final class TabBarController: UITabBarController {
             petRepository: petRepository,
             tipRepository: TipService(),
             ownerId: ownerId,
+            reminderController: reminderController,
             imageLoader: imageLoader
         )
         self.petsMainCoordinator = petsMainCoordinator
@@ -62,6 +73,9 @@ final class TabBarController: UITabBarController {
             navigationController: userProfileNavigationController,
             petRepository: petRepository,
             userProfileRepository: userProfileRepository,
+            settingsRepository: settingsRepository,
+            settingsApplicationController: settingsApplicationController,
+            reminderController: reminderController,
             imageLoader: imageLoader
         )
         self.userProfileCoordinator = userProfileCoordinator

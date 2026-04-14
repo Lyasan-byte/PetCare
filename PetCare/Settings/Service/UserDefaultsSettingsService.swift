@@ -10,9 +10,10 @@ import Foundation
 final class UserDefaultsSettingsService: SettingsRepository {
     private enum Keys {
         static let isNotificationsEnabled = "settings.notifications.enabled"
+        static let isWalkEnabled = "settings.notifications.walk"
         static let isGroomingEnabled = "settings.notifications.grooming"
         static let isVeterinarianEnabled = "settings.notifications.veterinarian"
-        static let isGeneralRemindersEnabled = "settings.notifications.generalReminders"
+        static let isGeneralRemindersEnabledLegacy = "settings.notifications.generalReminders"
         static let theme = "settings.appearance.theme"
         static let language = "settings.appearance.language"
     }
@@ -29,14 +30,16 @@ final class UserDefaultsSettingsService: SettingsRepository {
         if userDefaults.object(forKey: Keys.isNotificationsEnabled) != nil {
             settings.isNotificationsEnabled = userDefaults.bool(forKey: Keys.isNotificationsEnabled)
         }
+        if userDefaults.object(forKey: Keys.isWalkEnabled) != nil {
+            settings.isWalkEnabled = userDefaults.bool(forKey: Keys.isWalkEnabled)
+        } else if userDefaults.object(forKey: Keys.isGeneralRemindersEnabledLegacy) != nil {
+            settings.isWalkEnabled = userDefaults.bool(forKey: Keys.isGeneralRemindersEnabledLegacy)
+        }
         if userDefaults.object(forKey: Keys.isGroomingEnabled) != nil {
             settings.isGroomingEnabled = userDefaults.bool(forKey: Keys.isGroomingEnabled)
         }
         if userDefaults.object(forKey: Keys.isVeterinarianEnabled) != nil {
             settings.isVeterinarianEnabled = userDefaults.bool(forKey: Keys.isVeterinarianEnabled)
-        }
-        if userDefaults.object(forKey: Keys.isGeneralRemindersEnabled) != nil {
-            settings.isGeneralRemindersEnabled = userDefaults.bool(forKey: Keys.isGeneralRemindersEnabled)
         }
 
         if let themeRawValue = userDefaults.string(forKey: Keys.theme),
@@ -50,9 +53,9 @@ final class UserDefaultsSettingsService: SettingsRepository {
         }
 
         if !settings.isNotificationsEnabled {
+            settings.isWalkEnabled = false
             settings.isGroomingEnabled = false
             settings.isVeterinarianEnabled = false
-            settings.isGeneralRemindersEnabled = false
         }
 
         return settings
@@ -60,9 +63,9 @@ final class UserDefaultsSettingsService: SettingsRepository {
 
     func save(settings: SettingsDisplayData) {
         userDefaults.set(settings.isNotificationsEnabled, forKey: Keys.isNotificationsEnabled)
+        userDefaults.set(settings.isWalkEnabled, forKey: Keys.isWalkEnabled)
         userDefaults.set(settings.isGroomingEnabled, forKey: Keys.isGroomingEnabled)
         userDefaults.set(settings.isVeterinarianEnabled, forKey: Keys.isVeterinarianEnabled)
-        userDefaults.set(settings.isGeneralRemindersEnabled, forKey: Keys.isGeneralRemindersEnabled)
         userDefaults.set(settings.theme.rawValue, forKey: Keys.theme)
         userDefaults.set(settings.language.rawValue, forKey: Keys.language)
     }

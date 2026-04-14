@@ -8,17 +8,17 @@
 import UIKit
 
 final class SettingsNotificationOptionsView: UIView {
+    var onWalkToggle: ((Bool) -> Void)?
     var onGroomingToggle: ((Bool) -> Void)?
     var onVeterinarianToggle: ((Bool) -> Void)?
-    var onGeneralRemindersToggle: ((Bool) -> Void)?
 
+    private let walkRow = SettingsNotificationRowView()
     private let groomingRow = SettingsNotificationRowView()
     private let veterinarianRow = SettingsNotificationRowView()
-    private let generalRemindersRow = SettingsNotificationRowView()
 
     private lazy var detailsStack = VStack(
         spacing: 10,
-        arrangedSubviews: [groomingRow, veterinarianRow, generalRemindersRow]
+        arrangedSubviews: [walkRow, groomingRow, veterinarianRow]
     )
 
     override init(frame: CGRect) {
@@ -29,6 +29,10 @@ final class SettingsNotificationOptionsView: UIView {
     }
 
     func render(displayData: SettingsDisplayData) {
+        walkRow.render(
+            isOn: displayData.isWalkEnabled,
+            isEnabled: displayData.isNotificationsEnabled
+        )
         groomingRow.render(
             isOn: displayData.isGroomingEnabled,
             isEnabled: displayData.isNotificationsEnabled
@@ -37,16 +41,12 @@ final class SettingsNotificationOptionsView: UIView {
             isOn: displayData.isVeterinarianEnabled,
             isEnabled: displayData.isNotificationsEnabled
         )
-        generalRemindersRow.render(
-            isOn: displayData.isGeneralRemindersEnabled,
-            isEnabled: displayData.isNotificationsEnabled
-        )
     }
 
     func refreshLocalizedTexts() {
+        walkRow.updateTitle(NSLocalizedString("settings.notifications.walk", comment: ""))
         groomingRow.updateTitle(NSLocalizedString("settings.notifications.grooming", comment: ""))
         veterinarianRow.updateTitle(NSLocalizedString("settings.notifications.veterinarian", comment: ""))
-        generalRemindersRow.updateTitle(NSLocalizedString("settings.notifications.general_reminders", comment: ""))
     }
 
     private func setupHierarchy() {
@@ -65,6 +65,11 @@ final class SettingsNotificationOptionsView: UIView {
     }
 
     private func configure() {
+        walkRow.configure(
+            symbolName: "figure.walk",
+            title: NSLocalizedString("settings.notifications.walk", comment: ""),
+            onTintColor: Asset.petGreen.color
+        )
         groomingRow.configure(
             symbolName: "scissors",
             title: NSLocalizedString("settings.notifications.grooming", comment: ""),
@@ -75,20 +80,15 @@ final class SettingsNotificationOptionsView: UIView {
             title: NSLocalizedString("settings.notifications.veterinarian", comment: ""),
             onTintColor: Asset.petGreen.color
         )
-        generalRemindersRow.configure(
-            symbolName: "calendar",
-            title: NSLocalizedString("settings.notifications.general_reminders", comment: ""),
-            onTintColor: Asset.petGreen.color
-        )
 
+        walkRow.onToggle = { [weak self] isEnabled in
+            self?.onWalkToggle?(isEnabled)
+        }
         groomingRow.onToggle = { [weak self] isEnabled in
             self?.onGroomingToggle?(isEnabled)
         }
         veterinarianRow.onToggle = { [weak self] isEnabled in
             self?.onVeterinarianToggle?(isEnabled)
-        }
-        generalRemindersRow.onToggle = { [weak self] isEnabled in
-            self?.onGeneralRemindersToggle?(isEnabled)
         }
     }
 

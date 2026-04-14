@@ -13,6 +13,7 @@ final class SettingsCoordinator: Coordinator {
     private let settingsRepository: SettingsRepository
     private let settingsApplicationController: SettingsApplicationControlling
     private let accountRepository: SettingsAccountRepository
+    private let reminderController: PetActivityReminderControlling
 
     var onFinish: (() -> Void)?
 
@@ -20,12 +21,14 @@ final class SettingsCoordinator: Coordinator {
         navigationController: UINavigationController,
         settingsRepository: SettingsRepository,
         settingsApplicationController: SettingsApplicationControlling,
-        accountRepository: SettingsAccountRepository
+        accountRepository: SettingsAccountRepository,
+        reminderController: PetActivityReminderControlling
     ) {
         self.navigationController = navigationController
         self.settingsRepository = settingsRepository
         self.settingsApplicationController = settingsApplicationController
         self.accountRepository = accountRepository
+        self.reminderController = reminderController
     }
 
     func start() {
@@ -33,6 +36,7 @@ final class SettingsCoordinator: Coordinator {
             settingsRepository: settingsRepository,
             settingsApplicationController: settingsApplicationController,
             accountRepository: accountRepository,
+            reminderController: reminderController,
             moduleOutput: self
         )
         let viewController = SettingsViewController(viewModel: viewModel)

@@ -23,6 +23,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
     private let ownerId: String
     private let petRepository: PetRepository
     private let activityRepository: PetActivityRepository
+    private let reminderController: PetActivityReminderControlling
     private let moduleOutput: PetActivityCreationModuleOutput?
 
     init(
@@ -31,6 +32,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         ownerId: String,
         petRepository: PetRepository,
         activityRepository: PetActivityRepository,
+        reminderController: PetActivityReminderControlling,
         moduleOutput: PetActivityCreationModuleOutput?
     ) {
         let content = PetActivityCreationContent(
@@ -46,6 +48,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         self.ownerId = ownerId
         self.petRepository = petRepository
         self.activityRepository = activityRepository
+        self.reminderController = reminderController
         self.moduleOutput = moduleOutput
     }
 
@@ -159,7 +162,13 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
                     self.state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] _ in
-                self?.moduleOutput?.moduleWantsToClose()
+                guard let self,
+                    let selectedPet = self.content.selectedPet else {
+                    return
+                }
+
+                self.reminderController.registerReminder(for: activity, petName: selectedPet.name)
+                self.moduleOutput?.moduleWantsToClose()
             }
             .store(in: &bag)
     }

@@ -11,6 +11,9 @@ final class UserProfileCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let petRepository: PetRepository
     private let userProfileRepository: UserProfileRepository
+    private let settingsRepository: SettingsRepository
+    private let settingsApplicationController: SettingsApplicationControlling
+    private let reminderController: PetActivityReminderControlling
     private let imageLoader: ImageLoader
 
     private var userProfileViewModel: UserProfileViewModel?
@@ -20,20 +23,27 @@ final class UserProfileCoordinator: Coordinator {
         navigationController: UINavigationController,
         petRepository: PetRepository,
         userProfileRepository: UserProfileRepository,
+        settingsRepository: SettingsRepository,
+        settingsApplicationController: SettingsApplicationControlling,
+        reminderController: PetActivityReminderControlling,
         imageLoader: ImageLoader
     ) {
         self.navigationController = navigationController
         self.petRepository = petRepository
         self.userProfileRepository = userProfileRepository
+        self.settingsRepository = settingsRepository
+        self.settingsApplicationController = settingsApplicationController
+        self.reminderController = reminderController
         self.imageLoader = imageLoader
     }
 
     private func showSettings() {
         let settingsCoordinator = SettingsCoordinator(
             navigationController: navigationController,
-            settingsRepository: UserDefaultsSettingsService(),
-            settingsApplicationController: SettingsApplicationController(),
-            accountRepository: FirebaseSettingsAccountService()
+            settingsRepository: settingsRepository,
+            settingsApplicationController: settingsApplicationController,
+            accountRepository: FirebaseSettingsAccountService(),
+            reminderController: reminderController
         )
         childCoordinators.append(settingsCoordinator)
         settingsCoordinator.onFinish = { [weak self, weak settingsCoordinator] in
