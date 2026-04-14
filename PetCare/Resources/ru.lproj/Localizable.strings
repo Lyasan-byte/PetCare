@@ -262,3 +262,7 @@
 "petAnalytics.pet.breedAndAge" = "%@ • %@";
 
 "petAnalytics.history.walkDistance" = "%.1f км";
+
+// MARK: - Activities History
+
+"activitiesHistory.title" = "История";

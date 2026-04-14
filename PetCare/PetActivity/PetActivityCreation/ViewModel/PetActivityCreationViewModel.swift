@@ -189,17 +189,21 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         guard walkGoal > 0 else {
             return "Goal distance should be greater than 0"
         }
+        
+        guard walkGoal <= 40 else {
+            return "Goal distance should be less than 30"
+        }
 
         guard let walkActual = content.walkActual else {
             return "Please enter actual distance"
         }
 
+        guard walkActual <= 40 else {
+            return "Goal distance should be less than 40"
+        }
+        
         guard walkActual > 0 else {
             return "Actual distance should be greater than 0"
-        }
-
-        guard walkActual <= walkGoal else {
-            return "Actual distance cannot be greater than goal distance"
         }
 
         return nil

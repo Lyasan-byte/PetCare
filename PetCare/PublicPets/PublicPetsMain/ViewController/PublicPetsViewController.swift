@@ -164,7 +164,7 @@ extension PublicPetsViewController: UICollectionViewDelegate {
         case .header:
             break
         case .pets:
-            publicPetsViewModel.trigger(.onReachedItem(index: indexPath.row))
+            publicPetsViewModel.trigger(.onReachedItem(index: indexPath.item))
         }
     }
 }

@@ -18,6 +18,7 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
     private let petInput: PetAnalyticsInput
     private let petAnalyticsRepository: PetAnalyticsRepository
     private let contentBuilder: PetAnalyticsBuilding
+    private let moduleOutput: PetAnalyticsModuleOutput?
     
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
@@ -27,13 +28,15 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
     init(
         petInput: PetAnalyticsInput,
         petAnalyticsRepository: PetAnalyticsRepository,
-        contentBuilder: PetAnalyticsBuilding
+        contentBuilder: PetAnalyticsBuilding,
+        moduleOutput: PetAnalyticsModuleOutput
     ) {
         self.petInput = petInput
         self.state = .loading
         self.petAnalyticsRepository = petAnalyticsRepository
         self.contentBuilder = contentBuilder
         self.content = PetAnalyticsContent(pet: petInput.pet)
+        self.moduleOutput = moduleOutput
     }
     
     func trigger(_ intent: PetAnalyticsIntent) {
@@ -43,6 +46,8 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
         case .onChangePeriod(let petAnalyticsPeriod):
             content.selectedPeriod = petAnalyticsPeriod
             fetchActivities()
+        case .onHistoryButtonTap:
+            moduleOutput?.moduleWantsToOpenHistory(petInput.petId)
         }
     }
     
