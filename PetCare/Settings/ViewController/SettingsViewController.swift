@@ -69,14 +69,14 @@ final class SettingsViewController: UIViewController {
         contentView.onAllNotificationsToggle = { [weak self] isEnabled in
             self?.viewModel.trigger(.allNotificationsToggled(isEnabled))
         }
+        contentView.onWalkToggle = { [weak self] isEnabled in
+            self?.viewModel.trigger(.walkToggled(isEnabled))
+        }
         contentView.onGroomingToggle = { [weak self] isEnabled in
             self?.viewModel.trigger(.groomingToggled(isEnabled))
         }
         contentView.onVeterinarianToggle = { [weak self] isEnabled in
             self?.viewModel.trigger(.veterinarianToggled(isEnabled))
-        }
-        contentView.onGeneralRemindersToggle = { [weak self] isEnabled in
-            self?.viewModel.trigger(.generalRemindersToggled(isEnabled))
         }
         contentView.onThemeSelected = { [weak self] theme in
             self?.viewModel.trigger(.themeSelected(theme))

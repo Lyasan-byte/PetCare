@@ -55,6 +55,37 @@ enum PetActivityType: String, Codable, CaseIterable, Hashable, Sendable {
             Asset.petPinkAction.color
         }
     }
+
+    var reminderSubtitle: String {
+        switch self {
+        case .walk:
+            NSLocalizedString("pets.activity.reminder.daily.subtitle", comment: "")
+        case .grooming, .vet:
+            NSLocalizedString("pets.activity.reminder.monthly.subtitle", comment: "")
+        }
+    }
+
+    var notificationTitle: String {
+        switch self {
+        case .walk:
+            NSLocalizedString("notifications.walk.title", comment: "")
+        case .grooming:
+            NSLocalizedString("notifications.grooming.title", comment: "")
+        case .vet:
+            NSLocalizedString("notifications.vet.title", comment: "")
+        }
+    }
+
+    var notificationBodyFormat: String {
+        switch self {
+        case .walk:
+            NSLocalizedString("notifications.walk.body", comment: "")
+        case .grooming:
+            NSLocalizedString("notifications.grooming.body", comment: "")
+        case .vet:
+            NSLocalizedString("notifications.vet.body", comment: "")
+        }
+    }
 }
 
 extension PetActivityType {

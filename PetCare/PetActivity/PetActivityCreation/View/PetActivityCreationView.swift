@@ -158,7 +158,8 @@ final class PetActivityCreationView: UIView {
 
     func setData(
         selectedPet: Pet?,
-        selectedActivity: PetActivityType = .walk
+        selectedActivity: PetActivityType = .walk,
+        isNotificationsOn: Bool
     ) {
         let index = PetActivityType.allCases.firstIndex(of: selectedActivity) ?? 0
         activityPicker.setSelectedIndex(index)
@@ -166,6 +167,8 @@ final class PetActivityCreationView: UIView {
         walkDetails.isHidden = selectedActivity != .walk
         groomingDetails.isHidden = selectedActivity != .grooming
         vetDetails.isHidden = selectedActivity != .vet
+        notificationsSwitch.subtitleLabel.text = selectedActivity.reminderSubtitle
+        notificationsSwitch.switchControl.setOn(isNotificationsOn, animated: window != nil)
     }
 
     func configure() {
