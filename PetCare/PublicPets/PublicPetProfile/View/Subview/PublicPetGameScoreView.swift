@@ -22,7 +22,7 @@ final class PublicPetGameScoreView: UIView {
             ofSize: 14,
             weight: .regular
         ),
-        text: "Best mini game score",
+        text: L10n.Pets.Public.GameScore.title,
         textColor: Asset.pinkAccent.color,
         textAlignment: .left
     )
@@ -92,7 +92,7 @@ final class PublicPetGameScoreView: UIView {
     }
 
     func setData(gameScore: Int) {
-        self.gameScore.text = "\(gameScore) pts"
+        self.gameScore.text = PetScoreFormatter.string(for: gameScore)
     }
 
     required init?(coder: NSCoder) {

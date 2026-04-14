@@ -25,6 +25,7 @@ final class PublicPetProfileCoordinator: Coordinator {
             publicPetProfileViewModel: PublicPetProfileViewModel(
                 pet: pet,
                 userRepository: FirestoreUserService(),
+                petFactsRepository: PetFactsService(),
                 moduleOutput: self
             ),
             imageLoader: imageLoader
@@ -32,9 +33,26 @@ final class PublicPetProfileCoordinator: Coordinator {
 
         navigationController.pushViewController(viewController, animated: true)
     }
+    
+    private func showPetFactsSheet(petFact: PetFact?) {
+        let viewController = PetFactsViewController(petFact: petFact)
+        let petFactsNavigationController = UINavigationController(rootViewController: viewController)
+        
+        viewController.onClose = { [weak petFactsNavigationController] in
+            petFactsNavigationController?.dismiss(animated: true)
+        }
+        
+        petFactsNavigationController.modalPresentationStyle = .pageSheet
+        
+        self.navigationController.present(petFactsNavigationController, animated: true)
+    }
 }
 
 extension PublicPetProfileCoordinator: PublicPetProfileModuleOutput {
+    func moduleWantsToOpenFactsSheet(petFact: PetFact?) {
+        showPetFactsSheet(petFact: petFact)
+    }
+    
     func moduleOutputWantsToClose() {
         onFinish?()
         navigationController.popViewController(animated: true)

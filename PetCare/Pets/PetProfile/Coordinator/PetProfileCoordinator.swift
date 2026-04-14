@@ -103,6 +103,19 @@ final class PetProfileCoordinator: Coordinator {
     }
 
     private func showAnalytics(_ pet: Pet) {
+        guard let petId = pet.id else { return }
+        let analyticsViewController = PetAnalyticsViewController(
+            petAnalyticsViewModel: PetAnalyticsViewModel(
+                petInput: PetAnalyticsInput(
+                    petId: petId,
+                    pet: pet
+                ),
+                petAnalyticsRepository: PetAnalyticsService(),
+                contentBuilder: PetAnalyticsBuilder()
+            )
+        )
+        
+        navigationController.pushViewController(analyticsViewController, animated: true)
     }
 
     private func showAddActivity(_ pet: Pet) {

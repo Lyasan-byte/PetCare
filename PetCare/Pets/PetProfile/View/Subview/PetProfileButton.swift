@@ -25,14 +25,17 @@ final class PetProfileButton: UIView {
     convenience init(text: String, image: String, textColor: UIColor, backgroundColor: UIColor) {
         self.init(frame: .zero)
 
-        button.backgroundColor = backgroundColor
-
+        var configuration = UIButton.Configuration.plain()
         let config = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
-        let symbolImage = UIImage(systemName: image, withConfiguration: config)
-        button.setImage(symbolImage, for: .normal)
-        button.tintColor = textColor
 
-        button.setTitle(text, for: .normal)
+        configuration.image = UIImage(systemName: image, withConfiguration: config)
+        configuration.title = text
+        configuration.imagePadding = 5
+        configuration.baseForegroundColor = textColor
+        configuration.contentInsets = .zero
+
+        button.configuration = configuration
+        button.backgroundColor = backgroundColor
     }
 
     private func setupHierarchy() {

@@ -8,5 +8,6 @@
 import Foundation
 
 protocol PublicPetProfileModuleOutput: AnyObject {
+    func moduleWantsToOpenFactsSheet(petFact: PetFact?)
     func moduleOutputWantsToClose()
 }
