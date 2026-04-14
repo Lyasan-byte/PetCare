@@ -20,6 +20,7 @@ enum PetActivityCreationIntent {
 
     case onChangeGroomingProcedureType(GroomingProcedureType)
     case onChangeGroomingCost(String)
+    case onChangeGroomingDuration(String)
 
     case onChangeVetProcedureType(VetProcedureType)
     case onChangeVetCost(String)

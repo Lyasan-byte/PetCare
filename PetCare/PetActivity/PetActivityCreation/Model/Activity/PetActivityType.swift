@@ -56,3 +56,16 @@ enum PetActivityType: String, Codable, CaseIterable {
         }
     }
 }
+
+extension PetActivityType {
+    var activityBackgroundColor: UIColor {
+        switch self {
+        case .walk:
+            Asset.lightGreen.color
+        case .grooming:
+            Asset.lightPink.color
+        case .vet:
+            Asset.lightPurple.color
+        }
+    }
+}
