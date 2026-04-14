@@ -10,7 +10,13 @@ import UIKit
 final class EmptyStateView: UIView {
     private let imageView = ImageView(tintColor: Asset.accentColor.color)
     private let title = TextLabel(font: .systemFont(ofSize: 16, weight: .semibold))
-    private let subtitle = TextLabel(font: .systemFont(ofSize: 14, weight: .regular))
+    private let subtitle = TextLabel(
+        font: .systemFont(
+            ofSize: 14,
+            weight: .regular
+        ),
+        textColor: Asset.petGray.color
+    )
 
     private lazy var stack = VStack(spacing: 10, arrangedSubviews: [imageView, title, subtitle])
 
@@ -18,7 +24,6 @@ final class EmptyStateView: UIView {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
-        configure()
     }
 
     convenience init(title: String, subtitle: String, image: String) {
@@ -33,6 +38,7 @@ final class EmptyStateView: UIView {
     }
 
     private func setupLayout() {
+        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: topAnchor),
             stack.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -42,10 +48,6 @@ final class EmptyStateView: UIView {
             imageView.heightAnchor.constraint(equalToConstant: 30),
             imageView.widthAnchor.constraint(equalToConstant: 30)
         ])
-    }
-
-    private func configure() {
-        translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {

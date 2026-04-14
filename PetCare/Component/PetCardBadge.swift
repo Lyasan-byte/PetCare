@@ -59,6 +59,16 @@ final class PetCardBadge: UIView {
     func setText(text: String) {
         badgeText.text = text
     }
+    
+    func configure(activity: PetActivity) {
+        setData(
+            backgroundColor: activity.type.activityBackgroundColor,
+            color: activity.type.color,
+            icon: activity.type.icon,
+            text: "",
+            font: .systemFont(ofSize: 11, weight: .medium)
+        )
+    }
 
     private func setupHierarchy() {
         addSubview(background)

@@ -13,7 +13,7 @@ final class PetAnalyticsStatsCell: UICollectionViewCell {
     private let background = BackgroundView(backgroundColor: .tertiarySystemBackground)
     private let statsTitle = TextLabel(
         font: .systemFont(
-            ofSize: 13,
+            ofSize: 12,
             weight: .semibold
         ),
         textColor: Asset.petGray.color,
@@ -60,7 +60,6 @@ final class PetAnalyticsStatsCell: UICollectionViewCell {
     }
     
     private func setupLayout() {
-        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: contentView.topAnchor),
             background.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -75,7 +74,7 @@ final class PetAnalyticsStatsCell: UICollectionViewCell {
     }
     
     func setData(stats: PetAnalyticsStatsData) {
-        icon = CircleIconView(
+        icon.configure(
             symbolName: stats.style.icon,
             iconColor: iconColor(for: stats.style),
             circleColor: backgroundColor(for: stats.style),
@@ -100,9 +99,9 @@ final class PetAnalyticsStatsCell: UICollectionViewCell {
     private func backgroundColor(for style: PetAnalyticsStatsStyle) -> UIColor {
         switch style {
         case .walks:
-            Asset.petGreenAction.color
+            Asset.petGreen.color
         case .averageDistance:
-            Asset.petPurpleAction.color
+            Asset.petPurple.color
         case .spendings:
             Asset.yellowAccent.color
         }

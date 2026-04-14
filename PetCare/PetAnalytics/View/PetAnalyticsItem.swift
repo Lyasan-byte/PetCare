@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PetAnalyticsItem: Hashable, Sendable {    
+enum PetAnalyticsItem: Sendable {
     case header(PetAnalyticsHeaderData)
     case walkChart(BarChartData)
     case goal(GoalCompletionData)
@@ -16,3 +16,5 @@ enum PetAnalyticsItem: Hashable, Sendable {
     case historyHeader
     case history(PetAnalyticsHistoryData)
 }
+
+extension PetAnalyticsItem: @preconcurrency Hashable {}

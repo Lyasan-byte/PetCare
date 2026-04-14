@@ -11,6 +11,7 @@ final class PetAnalyticsHistoryCell: UICollectionViewCell {
     static let identifier = "PetAnalyticsHistoryCell"
     
     private let background = BackgroundView(backgroundColor: .tertiarySystemBackground)
+    private let spacer = UIView()
     private let activityName = TextLabel(
         font: .systemFont(
             ofSize: 16,
@@ -29,26 +30,28 @@ final class PetAnalyticsHistoryCell: UICollectionViewCell {
     private let activityDescription = TextLabel(
         font: .systemFont(
             ofSize: 15,
-            weight: .semibold
+            weight: .medium
         ),
-        textAlignment: .left
+        textAlignment: .right
     )
     
     private var icon = CircleIconView()
     
     private lazy var activityInfoStack = VStack(
-        spacing: 10,
+        spacing: 5,
         arrangedSubviews: [
             activityName,
             activityDate
         ]
     )
+    
     private lazy var contentStack = HStack(
         spacing: 16,
-        distribution: .fillEqually,
+        alignment: .center,
         arrangedSubviews: [
             icon,
             activityInfoStack,
+            spacer,
             activityDescription
         ]
     )
@@ -69,7 +72,7 @@ final class PetAnalyticsHistoryCell: UICollectionViewCell {
     }
     
     private func setupLayout() {
-        translatesAutoresizingMaskIntoConstraints = false
+        spacer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: contentView.topAnchor),
             background.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -85,12 +88,12 @@ final class PetAnalyticsHistoryCell: UICollectionViewCell {
     
     func setData(history: PetAnalyticsHistoryData) {
         let activityType = history.activityType
-        icon = CircleIconView(
+        icon.configure(
             symbolName: activityType.icon,
             iconColor: activityType.color,
             circleColor: activityType.activityBackgroundColor,
             circleSize: 45,
-            iconSize: 20
+            iconSize: 18
         )
         activityName.text = activityType.name
         

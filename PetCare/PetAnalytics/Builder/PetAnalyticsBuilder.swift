@@ -12,6 +12,7 @@ final class PetAnalyticsBuilder: PetAnalyticsBuilding {
     private let dateFormatter: DateFormatter
     private let shortWeekdayFormatter: DateFormatter
     private let monthFormatter: DateFormatter
+    private let shortMonthLetterFormatter: DateFormatter
 
     init(calendar: Calendar = .current) {
         self.calendar = calendar
@@ -31,6 +32,11 @@ final class PetAnalyticsBuilder: PetAnalyticsBuilding {
         monthFormatter.locale = .current
         monthFormatter.dateFormat = "MMM"
         self.monthFormatter = monthFormatter
+        
+        let shortMonthLetterFormatter = DateFormatter()
+        shortMonthLetterFormatter.locale = .current
+        shortMonthLetterFormatter.dateFormat = "MMMMM"
+        self.shortMonthLetterFormatter = shortMonthLetterFormatter
     }
 
     func buildContent(
@@ -48,7 +54,7 @@ final class PetAnalyticsBuilder: PetAnalyticsBuilding {
         return PetAnalyticsContent(
             pet: pet,
             selectedPeriod: period,
-            analyticsHeaderData: makeHeaderData(from: pet),
+            analyticsHeaderData: makeHeaderData(from: pet, period: period),
             walkChartData: makeWalkChartData(from: walkActivities, period: period),
             spendingsChartData: makeSpendingsChartData(from: spendingActivities, period: period),
             goalCompletionData: makeGoalCompletionData(from: walkActivities, petName: pet.name),
@@ -65,11 +71,12 @@ private extension PetAnalyticsBuilder {
         let end: Date
     }
     
-    func makeHeaderData(from pet: Pet) -> PetAnalyticsHeaderData {
+    func makeHeaderData(from pet: Pet, period: PetAnalyticsPeriod) -> PetAnalyticsHeaderData {
         PetAnalyticsHeaderData(
             petName: pet.name,
-            petBreedAndAge: "\(pet.breed) • \(pet.ageText)",
-            photoUrl: pet.photoUrl
+            petBreedAndAge: L10n.PetAnalytics.Pet.breedAndAge(pet.breed, pet.ageText),
+            photoUrl: pet.photoUrl,
+            selectedPeriod: period
         )
     }
 
@@ -93,7 +100,7 @@ private extension PetAnalyticsBuilder {
             BarChartItem(title: $0.title, value: $1)
         }
         return BarChartData(
-            title: "Km Count",
+            title: L10n.PetAnalytics.WalkChart.title,
             subtitle: period.chartSubtitle,
             items: items
         )
@@ -125,7 +132,7 @@ private extension PetAnalyticsBuilder {
             BarChartItem(title: $0.title, value: $1)
         }
         return BarChartData(
-            title: "Spendings",
+            title: L10n.PetAnalytics.SpendingsChart.title,
             subtitle: period.chartSubtitle,
             items: items
         )
@@ -152,7 +159,7 @@ private extension PetAnalyticsBuilder {
         return GoalCompletionData(
             goalsCount: goalsCount,
             actualGoalsCompletion: actualGoalsCompletion,
-            description: "\(petName.capitalized) is \(progressPercent)% through fitness targets.",
+            description: L10n.PetAnalytics.GoalCompletion.description(petName.capitalized, progressPercent),
             progress: progress
         )
     }
@@ -180,25 +187,25 @@ private extension PetAnalyticsBuilder {
 
         return [
             PetAnalyticsStatsData(
-                title: "TOTAL WALKS",
+                title: L10n.PetAnalytics.Stats.totalWalks,
                 value: "\(totalWalks)",
                 style: .walks
             ),
             PetAnalyticsStatsData(
-                title: "AVG. KM",
+                title: L10n.PetAnalytics.Stats.averageKm,
                 value: String(format: "%.1f", averageDistance),
                 style: .averageDistance
             ),
             PetAnalyticsStatsData(
-                title: "TOTAL SPENDINGS",
-                value: String(format: "$%.0f", totalSpendings),
+                title: L10n.PetAnalytics.Stats.totalSpendings,
+                value: String(format: "%.0f", totalSpendings),
                 style: .spendings
             )
         ]
     }
 
     func makeHistoryData(from activities: [PetActivity]) -> [PetAnalyticsHistoryData] {
-        let recentActivities = Array(activities.prefix(5))
+        let recentActivities = Array(activities.prefix(3))
 
         return recentActivities.map { activity in
             PetAnalyticsHistoryData(
@@ -212,7 +219,7 @@ private extension PetAnalyticsBuilder {
     func makeHistoryDetail(for activity: PetActivity) -> String {
         switch activity.details {
         case .walk(let details):
-            return String(format: "%.1f km", details.actual)
+            return L10n.PetAnalytics.History.walkDistance(Float(details.actual))
 
         case .grooming(let details):
             return groomingTitle(for: details)
@@ -223,11 +230,11 @@ private extension PetAnalyticsBuilder {
     }
 
     func groomingTitle(for details: GroomingDetails) -> String {
-        String(describing: details.procedureType)
+        String(describing: details.procedureType.title)
     }
 
     func vetTitle(for details: VetDetails) -> String {
-        String(describing: details.procedureType)
+        String(describing: details.procedureType.title)
     }
 }
 
@@ -243,10 +250,10 @@ private extension PetAnalyticsBuilder {
             return makeWeekBuckets(from: range.start, to: range.end)
 
         case .threeMonths:
-            return makeMonthBuckets(count: 3, endingAt: range.end)
+            return makeMonthBuckets(count: 3, endingAt: range.end, formatter: monthFormatter)
 
         case .year:
-            return makeMonthBuckets(count: 12, endingAt: range.end)
+            return makeMonthBuckets(count: 12, endingAt: range.end, formatter: shortMonthLetterFormatter)
         }
     }
 
@@ -298,7 +305,7 @@ private extension PetAnalyticsBuilder {
         return buckets
     }
 
-    func makeMonthBuckets(count: Int, endingAt end: Date) -> [ChartBucket] {
+    func makeMonthBuckets(count: Int, endingAt end: Date, formatter: DateFormatter) -> [ChartBucket] {
         var buckets: [ChartBucket] = []
 
         for offset in stride(from: count - 1, through: 0, by: -1) {
@@ -310,7 +317,7 @@ private extension PetAnalyticsBuilder {
             }
             buckets.append(
                 ChartBucket(
-                    title: monthFormatter.string(from: interval.start).uppercased(),
+                    title: formatter.string(from: interval.start).uppercased(),
                     start: interval.start,
                     end: interval.end
                 )

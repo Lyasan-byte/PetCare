@@ -13,7 +13,7 @@ final class ProgressRingView: UIView {
         shape.fillColor = UIColor.clear.cgColor
         shape.strokeColor = Asset.lightGreen.color.cgColor
         shape.lineCap = .round
-        shape.lineWidth = 10
+        shape.lineWidth = 12
         return shape
     }()
     
@@ -22,14 +22,14 @@ final class ProgressRingView: UIView {
         shape.fillColor = UIColor.clear.cgColor
         shape.strokeColor = Asset.accentColor.color.cgColor
         shape.lineCap = .round
-        shape.lineWidth = 10
+        shape.lineWidth = 12
         shape.strokeEnd = 0
         return shape
     }()
     
     private let valueTitle = TextLabel(
         font: .systemFont(
-            ofSize: 18,
+            ofSize: 22,
             weight: .semibold
         ),
         textAlignment: .left
@@ -37,13 +37,14 @@ final class ProgressRingView: UIView {
     
     private let valueSubtitle = TextLabel(
         font: .systemFont(
-            ofSize: 18,
+            ofSize: 11,
             weight: .semibold
         ),
+        textColor: Asset.petGray.color,
         textAlignment: .left
     )
     
-    private lazy var infoStack = VStack(arrangedSubviews: [valueTitle, valueSubtitle])
+    private lazy var infoStack = VStack(alignment: .center, arrangedSubviews: [valueTitle, valueSubtitle])
     
     private var progress: CGFloat = 0 {
         didSet {
@@ -59,12 +60,20 @@ final class ProgressRingView: UIView {
     
     convenience init(subtitle: String = "") {
         self.init(frame: .zero)
-        self.valueTitle.text = subtitle
+        self.valueSubtitle.text = subtitle
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         updatePath()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard traitCollection
+            .hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
+        updateColors()
     }
     
     private func setupHierarchy() {
@@ -79,6 +88,11 @@ final class ProgressRingView: UIView {
             infoStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             infoStack.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+    
+    private func updateColors() {
+        ringBackgroundLayer.strokeColor = Asset.lightGreen.color.cgColor
+        progressLayer.strokeColor = Asset.accentColor.color.cgColor
     }
     
     private func updatePath() {

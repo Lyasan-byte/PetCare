@@ -15,20 +15,20 @@ final class PetAnalyticsHistoryHeaderCell: UICollectionViewCell {
             ofSize: 18,
             weight: .semibold
         ),
-        text: "Activity History",
+        text: L10n.PetAnalytics.History.title,
         textAlignment: .left
     )
     
     private let viewMoreButton: UIButton = {
         let button = UIButton()
-        button.setTitle("View All", for: .normal)
+        button.setTitle(L10n.PetAnalytics.History.viewAll, for: .normal)
         button.setTitleColor(Asset.accentColor.color, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         return button
     }()
     
     private lazy var headerStack = HStack(
-        distribution: .fillEqually,
+        distribution: .equalSpacing,
         arrangedSubviews: [
             historyTitle,
             viewMoreButton
@@ -46,7 +46,6 @@ final class PetAnalyticsHistoryHeaderCell: UICollectionViewCell {
     }
     
     private func setupLayout() {
-        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             headerStack.topAnchor.constraint(equalTo: contentView.topAnchor),
             headerStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

@@ -14,14 +14,14 @@ final class PetAnalyticsHeaderCell: UICollectionViewCell {
 
     private let petName = TextLabel(
         font: .systemFont(
-            ofSize: 20,
+            ofSize: 26,
             weight: .bold
         ),
         textAlignment: .left
     )
     private let petBreedAndAge = TextLabel(
         font: .systemFont(
-            ofSize: 16,
+            ofSize: 13,
             weight: .medium
         ),
         textColor: Asset.petGray.color,
@@ -29,19 +29,20 @@ final class PetAnalyticsHeaderCell: UICollectionViewCell {
     )
     private let petImage: PetRemoteImageView = {
         let imageView = PetRemoteImageView()
-        imageView.layer.cornerRadius = 45
+        imageView.layer.cornerRadius = 37.5
         return imageView
     }()
     
     private lazy var petInfoStack = VStack(
-        spacing: 10,
+        spacing: 5,
         arrangedSubviews: [
             petName,
             petBreedAndAge
         ]
     )
     private lazy var petProfileStack = HStack(
-        distribution: .fillEqually,
+        alignment: .center,
+        distribution: .equalSpacing,
         arrangedSubviews: [
             petInfoStack,
             petImage
@@ -69,16 +70,18 @@ final class PetAnalyticsHeaderCell: UICollectionViewCell {
     }
     
     private func setupLayout() {
-        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             petProfileStack.topAnchor.constraint(equalTo: contentView.topAnchor),
             petProfileStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             petProfileStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            periodPicker.topAnchor.constraint(equalTo: petProfileStack.topAnchor, constant: 16),
+            periodPicker.topAnchor.constraint(equalTo: petProfileStack.bottomAnchor, constant: 16),
             periodPicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             periodPicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            periodPicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            periodPicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            petImage.widthAnchor.constraint(equalToConstant: 75),
+            petImage.heightAnchor.constraint(equalToConstant: 75)
         ])
     }
     
@@ -92,6 +95,7 @@ final class PetAnalyticsHeaderCell: UICollectionViewCell {
         petName.text = header.petName
         petBreedAndAge.text = header.petBreedAndAge
         petImage.setImage(urlString: header.photoUrl, imageLoader: imageLoader)
+        periodPicker.setSelectedIndex(PetAnalyticsPeriod.allCases.firstIndex(of: header.selectedPeriod) ?? 0)
     }
     
     required init?(coder: NSCoder) {

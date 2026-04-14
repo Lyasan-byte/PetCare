@@ -16,7 +16,7 @@ final class BarChartColumnView: UIView {
     }()
     private let columnTitle = TextLabel(
         font: .systemFont(
-            ofSize: 12,
+            ofSize: 11,
             weight: .regular
         ),
         textColor: Asset.petGray.color

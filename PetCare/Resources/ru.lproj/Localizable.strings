@@ -260,3 +260,38 @@
 "repository.error.deallocated" = "Репозиторий был освобожден из памяти";
 "repository.error.unknown" = "Неизвестная ошибка";
 
+// MARK: - Pet Analytics
+
+"petAnalytics.period.week" = "Неделя";
+"petAnalytics.period.month" = "Месяц";
+"petAnalytics.period.threeMonths" = "3 месяца";
+"petAnalytics.period.year" = "Год";
+
+"petAnalytics.chartSubtitle.week" = "Последние 7 дней";
+"petAnalytics.chartSubtitle.month" = "Последние 30 дней";
+"petAnalytics.chartSubtitle.threeMonths" = "Последние 3 месяца";
+"petAnalytics.chartSubtitle.year" = "Последние 12 месяцев";
+
+"petAnalytics.goalCompletion.title" = "Выполнение целей";
+"petAnalytics.goalCompletion.progressRing.subtitle" = "ЦЕЛИ";
+
+"petAnalytics.history.title" = "История активности";
+"petAnalytics.history.viewAll" = "Смотреть все";
+
+"petAnalytics.emptyState.title" = "Нет активностей";
+"petAnalytics.emptyState.subtitle" = "Добавьте первую активность, чтобы начать отслеживать прогресс вашего питомца.";
+
+"petAnalytics.title" = "Аналитика";
+
+"petAnalytics.walkChart.title" = "Пройдено, км";
+"petAnalytics.spendingsChart.title" = "Расходы";
+
+"petAnalytics.goalCompletion.description" = "%@ выполнил %d%% тренировочных целей.";
+
+"petAnalytics.stats.totalWalks" = "ВСЕГО ПРОГУЛОК";
+"petAnalytics.stats.averageKm" = "СРЕДНЕЕ, КМ";
+"petAnalytics.stats.totalSpendings" = "ВСЕГО РАСХОДОВ";
+
+"petAnalytics.pet.breedAndAge" = "%@ • %@";
+
+"petAnalytics.history.walkDistance" = "%.1f км";

@@ -21,8 +21,8 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
     
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
-    private var selectedPeriod: PetAnalyticsPeriod = .week
     private var allActivities: [PetActivity] = []
+    private var content: PetAnalyticsContent
     
     init(
         petInput: PetAnalyticsInput,
@@ -33,6 +33,7 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
         self.state = .loading
         self.petAnalyticsRepository = petAnalyticsRepository
         self.contentBuilder = contentBuilder
+        self.content = PetAnalyticsContent(pet: petInput.pet)
     }
     
     func trigger(_ intent: PetAnalyticsIntent) {
@@ -40,15 +41,15 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
         case .onDidLoad:
             fetchActivities()
         case .onChangePeriod(let petAnalyticsPeriod):
-            selectedPeriod = petAnalyticsPeriod
-            //
+            content.selectedPeriod = petAnalyticsPeriod
+            fetchActivities()
         }
     }
     
     private func fetchActivities() {
         state = .loading
         
-        let range = selectedPeriod.dateRange()
+        let range = content.selectedPeriod.dateRange()
         petAnalyticsRepository
             .fetchActivities(
                 for: petInput.petId,
@@ -63,18 +64,23 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
             } receiveValue: { [weak self] activities in
                 guard let self else { return }
                 self.allActivities = activities
-                self.rebuildContent()
+                
+                if self.allActivities.isEmpty {
+                    self.state = .empty
+                } else {
+                    self.rebuildContent()
+                }
             }
             .store(in: &bag)
     }
     
     private func rebuildContent() {
-        let content = contentBuilder.buildContent(
+        let newContent = contentBuilder.buildContent(
             petId: petInput.petId,
             pet: petInput.pet,
             petActivities: allActivities,
-            period: selectedPeriod
+            period: self.content.selectedPeriod
         )
-        self.state = .content(content)
+        self.state = .content(newContent)
     }
 }

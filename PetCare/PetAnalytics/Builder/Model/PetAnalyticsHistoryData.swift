@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct PetAnalyticsHistoryData: Hashable, Sendable {
+struct PetAnalyticsHistoryData: Identifiable, Hashable, Sendable {
+    let id = UUID().uuidString
     let activityType: PetActivityType
     let date: String
     let activityDetail: String
