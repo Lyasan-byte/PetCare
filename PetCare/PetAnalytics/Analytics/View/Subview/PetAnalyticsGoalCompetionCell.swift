@@ -20,7 +20,7 @@ final class PetAnalyticsGoalCompetionCell: UICollectionViewCell {
         textAlignment: .left
     )
     private let progressRing = ProgressRingView(
-        subtitle:  L10n.PetAnalytics.GoalCompletion.ProgressRing.subtitle
+        subtitle: L10n.PetAnalytics.GoalCompletion.ProgressRing.subtitle
     )
     private let goalDescription = TextLabel(
         font: .systemFont(

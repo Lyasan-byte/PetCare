@@ -61,8 +61,7 @@ final class PetAnalyticsViewController: UIViewController {
     private func setupCollectionLayout() {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             guard let self,
-                  let dataSource = self.dataSource
-            else { return nil }
+                  let dataSource = self.dataSource else { return nil }
 
             let sections = dataSource.snapshot().sectionIdentifiers
             guard sectionIndex < sections.count else {
@@ -170,10 +169,14 @@ final class PetAnalyticsViewController: UIViewController {
                     return cell
                 }
             case .historyHeader:
-                return collectionView.dequeueReusableCell(
+                if let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: PetAnalyticsHistoryHeaderCell.identifier,
-                    for: indexPath
-                )
+                    for: indexPath) as? PetAnalyticsHistoryHeaderCell {
+                    cell.onTapButton = { [weak self] in
+                        self?.petAnalyticsViewModel.trigger(.onHistoryButtonTap)
+                    }
+                    return cell
+                }
             case .history(let historyData):
                 if let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: PetAnalyticsHistoryCell.identifier,

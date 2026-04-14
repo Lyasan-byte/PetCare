@@ -50,11 +50,11 @@ final class PetService: PetRepository {
                 try self.firestore.collection(petCollection)
                     .document(petId)
                     .setData(from: pet, merge: true) { error in
-                    if let error {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(pet))
-                    }
+                        if let error {
+                            promise(.failure(error))
+                        } else {
+                            promise(.success(pet))
+                        }
                 }
             } catch {
                 promise(.failure(error))

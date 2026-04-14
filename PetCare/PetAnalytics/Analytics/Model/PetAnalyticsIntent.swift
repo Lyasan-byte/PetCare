@@ -10,4 +10,5 @@ import Foundation
 enum PetAnalyticsIntent {
     case onDidLoad
     case onChangePeriod(PetAnalyticsPeriod)
+    case onHistoryButtonTap
 }

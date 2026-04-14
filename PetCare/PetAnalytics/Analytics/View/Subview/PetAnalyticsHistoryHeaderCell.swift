@@ -8,6 +8,8 @@
 import UIKit
 
 final class PetAnalyticsHistoryHeaderCell: UICollectionViewCell {
+    var onTapButton: (() -> Void)?
+    
     static let identifier = "PetAnalyticsHistoryHeaderCell"
     
     private let historyTitle = TextLabel(
@@ -39,6 +41,7 @@ final class PetAnalyticsHistoryHeaderCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(headerStack)
         setupLayout()
+        addAction()
     }
     
     convenience init() {
@@ -52,6 +55,14 @@ final class PetAnalyticsHistoryHeaderCell: UICollectionViewCell {
             headerStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             headerStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+    
+    private func addAction() {
+        viewMoreButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    }
+    
+    @objc private func didTapButton() {
+        onTapButton?()
     }
     
     required init?(coder: NSCoder) {
