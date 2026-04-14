@@ -11,6 +11,7 @@ typealias PublicPetProfileState = ViewState<PublicPetProfileContent>
 
 struct PublicPetProfileContent {
     var pet: Pet
+    var petFact: PetFact?
     var user: UserProfileUser
 
     init(pet: Pet) {

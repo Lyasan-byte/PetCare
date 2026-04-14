@@ -21,7 +21,7 @@ final class UserProfileEditPhotoPickerView: UIView {
     private let editBadge = CircleIconView(
         symbolName: "pencil",
         iconColor: .white,
-        circleColor: Asset.accentColor.color,
+        circleColor: Asset.primaryGreen.color,
         circleSize: 30,
         iconSize: 14,
         weight: .bold,

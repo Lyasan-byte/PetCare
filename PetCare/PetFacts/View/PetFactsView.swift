@@ -34,14 +34,14 @@ final class PetFactsView: UIView {
     private let emptyStateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "По данной породе не найдено информации"
+        label.text = L10n.Pets.Facts.emptyState
         label.textAlignment = .center
         label.numberOfLines = 0
         label.isHidden = true
         return label
     }()
 
-    private let closeButton = PrimaryButton(title: "Close")
+    private let closeButton = PrimaryButton(title: L10n.Pets.Facts.closeButton)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -173,7 +173,7 @@ extension PetFactsView {
         let group: NSCollectionLayoutGroup = .vertical(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated( 200)
+                heightDimension: .estimated(200)
             ),
             subitems: [item]
         )

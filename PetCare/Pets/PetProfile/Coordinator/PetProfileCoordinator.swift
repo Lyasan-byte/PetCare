@@ -8,6 +8,7 @@
 import UIKit
 
 enum PetProfileCoordinatorResult {
+    case createdActivity
     case updated
     case deleted
     case closed
@@ -106,6 +107,16 @@ final class PetProfileCoordinator: Coordinator {
     }
 
     private func showAnalytics(_ pet: Pet) {
+        guard let petId = pet.id else { return }
+        
+        let analyticsCoordinator = PetAnalyticsCoordinator(
+            navigationController: navigationController,
+            petId: petId,
+            pet: pet,
+            imageLoader: imageLoader
+        )
+        
+        analyticsCoordinator.start()
     }
 
     private func showAddActivity(_ pet: Pet) {
@@ -122,6 +133,7 @@ final class PetProfileCoordinator: Coordinator {
         childCoordinators.append(petActivityCoordinator)
 
         petActivityCoordinator.onFinish = { [weak self, weak petActivityCoordinator] in
+            self?.onFinish?(.createdActivity)
             if let petActivityCoordinator {
                 self?.removeCoordinator(petActivityCoordinator)
             }

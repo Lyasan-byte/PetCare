@@ -21,6 +21,8 @@ struct Pet: Identifiable, Codable, Equatable {
     var isPublic: Bool
     var gameScore: Int
     var iconStatus: PetIconStatus
+    
+    var lastActivity: PetLastActivity?
 
     init(
         id: String?,
@@ -63,6 +65,7 @@ struct Pet: Identifiable, Codable, Equatable {
         case isPublic = "is_public"
         case gameScore = "game_score"
         case iconStatus = "icon_status"
+        case lastActivity = "last_activity"
     }
 }
 

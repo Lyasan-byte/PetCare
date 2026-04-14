@@ -95,6 +95,8 @@ final class PetsMainCoordinator: Coordinator {
                 petsMainViewModel?.trigger(.refreshPets)
             case .closed:
                 break
+            case .createdActivity:
+                petsMainViewModel?.trigger(.refreshPets)
             }
             if let petProfileCoordinator {
                 self?.removeChildCoordinator(petProfileCoordinator)
@@ -117,6 +119,7 @@ final class PetsMainCoordinator: Coordinator {
         childCoordinators.append(petActivityCreationCoordinator)
 
         petActivityCreationCoordinator.onFinish = { [weak self, weak petActivityCreationCoordinator] in
+            self?.petsMainViewModel?.trigger(.refreshPets)
             if let petActivityCreationCoordinator {
                 self?.removeChildCoordinator(petActivityCreationCoordinator)
             }

@@ -70,9 +70,9 @@ final class PublicPetRow: UIView {
 
     func setData(pet: Pet, imageLoader: ImageLoader) {
         petName.text = pet.name
-        petGender.text = pet.gender.rawValue
+        petGender.text = pet.gender.title
         petBreed.text = pet.breed
-        petGameScore.setText(text: "\(pet.gameScore) pts")
+        petGameScore.setText(text: PetScoreFormatter.string(for: pet.gameScore))
 
         petNote.text = pet.note
         petNote.isHidden = pet.note.isEmpty

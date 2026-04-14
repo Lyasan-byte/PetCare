@@ -13,6 +13,7 @@ final class PetActivityCreationView: UIView {
 
     var onGroomingProcedureChange: ((Int) -> Void)?
     var onGroomingCostChange: ((String) -> Void)?
+    var onGroomingDurationChange: ((String) -> Void)?
 
     var onVetProcedureChange: ((Int) -> Void)?
     var onVetCostChange: ((String) -> Void)?
@@ -194,6 +195,10 @@ final class PetActivityCreationView: UIView {
 
         groomingDetails.onCostChange = { [weak self] cost in
             self?.onGroomingCostChange?(cost)
+        }
+        
+        groomingDetails.onDurationChange = { [weak self] duration in
+            self?.onGroomingDurationChange?(duration)
         }
 
         vetDetails.onChangeProcedure = { [weak self] index in

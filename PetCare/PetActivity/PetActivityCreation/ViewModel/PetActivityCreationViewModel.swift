@@ -102,6 +102,8 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
             content.groomingProcedureType = procedureType
         case .onChangeGroomingCost(let costString):
             content.groomingCost = makeDouble(from: costString)
+        case .onChangeGroomingDuration(let durationString):
+            content.groomingDuration = makeDouble(from: durationString)
         case .onChangeVetProcedureType(let procedureType):
             content.vetProcedureType = procedureType
         case .onChangeVetCost(let costString):
@@ -196,17 +198,21 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         guard walkGoal > 0 else {
             return "Goal distance should be greater than 0"
         }
+        
+        guard walkGoal <= 40 else {
+            return "Goal distance should be less than 30"
+        }
 
         guard let walkActual = content.walkActual else {
             return "Please enter actual distance"
         }
 
+        guard walkActual <= 40 else {
+            return "Goal distance should be less than 40"
+        }
+        
         guard walkActual > 0 else {
             return "Actual distance should be greater than 0"
-        }
-
-        guard walkActual <= walkGoal else {
-            return "Actual distance cannot be greater than goal distance"
         }
 
         return nil
@@ -260,14 +266,16 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
 
         case .grooming:
             guard let procedureType = content.groomingProcedureType,
-                let groomingCost = content.groomingCost else {
+                let groomingCost = content.groomingCost,
+                let duration = content.groomingDuration else {
                 return nil
             }
 
             details = .grooming(
                 GroomingDetails(
                     procedureType: procedureType,
-                    cost: groomingCost
+                    cost: groomingCost,
+                    duration: duration
                 )
             )
 

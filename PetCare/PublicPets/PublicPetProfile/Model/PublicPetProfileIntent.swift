@@ -9,6 +9,7 @@ import Foundation
 
 enum PublicPetProfileIntent {
     case onDidLoad
+    case onBreedTap
     case onDismissAlert
     case onClose
 }

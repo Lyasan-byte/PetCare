@@ -110,6 +110,21 @@
 
 "pets.main.tip.title" = "Pet Health Tip";
 
+//MARK: - Mini game
+"mini.game.screen.title" = "Pet Runner";
+"mini.game.runner.select" = "SELECT YOUR RUNNER";
+"mini.game.empty.title" = "No pets for runner selection";
+"mini.game.empty.subtitle" = "Add a pet in My Pets to use it as a runner.";
+"mini.game.field.tap_to_jump" = "TAP TO JUMP";
+"mini.game.field.start_hint" = "Tap the field to start";
+"mini.game.field.preview_hint" = "Gameplay will be connected here next.";
+"mini.game.field.running" = "Run preview in progress";
+"mini.game.field.game_over" = "Game Over";
+"mini.game.field.restart" = "Restart";
+"mini.game.field.last_score" = "Score";
+"mini.game.field.best_score" = "Best";
+"mini.game.field.no_pet" = "Choose a pet to start";
+
 
 // MARK: - User Profile
 
@@ -240,3 +255,61 @@
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
 
+//MARK: - Pet Facts
+
+"pets.facts.empty_state" = "No information was found for this breed";
+"pets.facts.close_button" = "Close";
+
+//MARK: - Public Pet Profile
+
+"pets.public.owner.title" = "Owned by";
+"pets.public.game_score.title" = "Best mini game score";
+
+"pets.public.game_score.points.one" = "%d pts";
+"pets.public.game_score.points.few" = "%d pts";
+"pets.public.game_score.points.many" = "%d pts";
+
+//MARK: - Error
+
+"repository.error.deallocated" = "Repository was deallocated";
+"repository.error.unknown" = "Unknown error";
+
+// MARK: - Pet Analytics
+
+"petAnalytics.period.week" = "Week";
+"petAnalytics.period.month" = "Month";
+"petAnalytics.period.threeMonths" = "3 Months";
+"petAnalytics.period.year" = "Year";
+
+"petAnalytics.chartSubtitle.week" = "Last 7 days";
+"petAnalytics.chartSubtitle.month" = "Last 30 days";
+"petAnalytics.chartSubtitle.threeMonths" = "Last 3 months";
+"petAnalytics.chartSubtitle.year" = "Last 12 months";
+
+"petAnalytics.goalCompletion.title" = "Goal Completion";
+"petAnalytics.goalCompletion.progressRing.subtitle" = "GOALS";
+
+"petAnalytics.history.title" = "Activity History";
+"petAnalytics.history.viewAll" = "View All";
+
+"petAnalytics.emptyState.title" = "No Activities";
+"petAnalytics.emptyState.subtitle" = "Add your first activity to begin tracking your pet’s progress.";
+
+"petAnalytics.title" = "Analytics";
+
+"petAnalytics.walkChart.title" = "Km Count";
+"petAnalytics.spendingsChart.title" = "Spendings";
+
+"petAnalytics.goalCompletion.description" = "%@ is %d%% through fitness targets.";
+
+"petAnalytics.stats.totalWalks" = "TOTAL WALKS";
+"petAnalytics.stats.averageKm" = "AVG. KM";
+"petAnalytics.stats.totalSpendings" = "TOTAL SPENDINGS";
+
+"petAnalytics.pet.breedAndAge" = "%@ • %@";
+
+"petAnalytics.history.walkDistance" = "%.1f km";
+
+// MARK: - Activities History
+
+"activitiesHistory.title" = "History";

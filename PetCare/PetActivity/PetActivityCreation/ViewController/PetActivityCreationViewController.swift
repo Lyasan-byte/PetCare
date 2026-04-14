@@ -107,6 +107,10 @@ final class PetActivityCreationViewController: UIViewController {
         petActivityCreationView.onGroomingCostChange = { [weak self] costString in
             self?.petActivityCreationViewModel.trigger(.onChangeGroomingCost(costString))
         }
+        
+        petActivityCreationView.onGroomingDurationChange = { [weak self] durationString in
+            self?.petActivityCreationViewModel.trigger(.onChangeGroomingDuration(durationString))
+        }
 
         petActivityCreationView.onVetProcedureChange = { [weak self] index in
             guard VetProcedureType.allCases.indices.contains(index) else { return }

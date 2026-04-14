@@ -10,14 +10,17 @@ import Combine
 
 final class PetService: PetRepository {
     private let imageService: ImageUploader
-    private let petsCollection = Firestore.firestore().collection("pets")
+    private let firestore: Firestore
+    private let petCollection = "pets"
+    private let activitiesCollection = "activities"
 
-    init(imageService: ImageUploader) {
+    init(firestore: Firestore = .firestore(), imageService: ImageUploader) {
+        self.firestore = firestore
         self.imageService = imageService
     }
 
     func makeNewPetId() -> String {
-        petsCollection.document().documentID
+        firestore.collection(petCollection).document().documentID
     }
 
     func save(pet: Pet, petId: String, selectedPhoto: Data?) -> AnyPublisher<Pet, Error> {
@@ -44,12 +47,14 @@ final class PetService: PetRepository {
             }
 
             do {
-                try self.petsCollection.document(petId).setData(from: pet, merge: true) { error in
-                    if let error {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(pet))
-                    }
+                try self.firestore.collection(petCollection)
+                    .document(petId)
+                    .setData(from: pet, merge: true) { error in
+                        if let error {
+                            promise(.failure(error))
+                        } else {
+                            promise(.success(pet))
+                        }
                 }
             } catch {
                 promise(.failure(error))
@@ -61,7 +66,9 @@ final class PetService: PetRepository {
     func delete(petId: String) -> AnyPublisher<Void, Error> {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(RepositoryError.deallocated)) }
-            self.petsCollection.document(petId).delete { error in
+            self.firestore
+                .collection(petCollection)
+                .document(petId).delete { error in
                 if let error {
                     promise(.failure(error))
                 } else {
@@ -75,7 +82,8 @@ final class PetService: PetRepository {
     func fetchPets(for ownerId: String) -> AnyPublisher<[Pet], Error> {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(RepositoryError.deallocated)) }
-            self.petsCollection
+            self.firestore
+                .collection(petCollection)
                 .whereField(Pet.CodingKeys.ownerId.rawValue, isEqualTo: ownerId)
                 .getDocuments { snapshot, error in
                     if let error {
@@ -95,6 +103,23 @@ final class PetService: PetRepository {
                         promise(.failure(error))
                     }
                 }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func updateGameScore(_ gameScore: Int, for petId: String) -> AnyPublisher<Void, Error> {
+        Future { [weak self] promise in
+            guard let self else { return promise(.failure(RepositoryError.deallocated)) }
+
+            self.petsCollection.document(petId).updateData([
+                Pet.CodingKeys.gameScore.rawValue: gameScore
+            ]) { error in
+                if let error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
         }
         .eraseToAnyPublisher()
     }

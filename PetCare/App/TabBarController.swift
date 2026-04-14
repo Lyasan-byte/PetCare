@@ -15,6 +15,7 @@ final class TabBarController: UITabBarController {
     private let imageLoader: ImageLoader = ImageLoadService()
     private let settingsRepository: SettingsRepository = UserDefaultsSettingsService()
     private let settingsApplicationController: SettingsApplicationControlling = SettingsApplicationController()
+    private var miniGameCoordinator: MiniGameCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +66,19 @@ final class TabBarController: UITabBarController {
         publicPetsCoordinator.start()
         publicPetsNavigationController.tabBarItem.image = UIImage(systemName: "globe.americas.fill")
 
-        let gameViewController = UIViewController()
-        let navGameViewController = setupTabBatItem(for: gameViewController, image: "gamecontroller.fill")
+        let miniGameNavigationController = UINavigationController()
+        let miniGameCoordinator = MiniGameCoordinator(
+            navigationController: miniGameNavigationController,
+            petRepository: petRepository,
+            ownerId: ownerId,
+            imageLoader: imageLoader,
+            bestScoreRepository: UserDefaultsMiniGameBestScoreService()
+        )
+        self.miniGameCoordinator = miniGameCoordinator
+
+        miniGameCoordinator.start()
+        miniGameNavigationController.tabBarItem.image = UIImage(systemName: "gamecontroller.fill")
+        miniGameNavigationController.tabBarItem.title = nil
 
         let userProfileNavigationController = UINavigationController()
         let userProfileCoordinator = UserProfileCoordinator(
@@ -88,17 +100,10 @@ final class TabBarController: UITabBarController {
             [
                 petsNavigationController,
                 publicPetsNavigationController,
-                navGameViewController,
+                miniGameNavigationController,
                 userProfileNavigationController
             ],
             animated: true
         )
-    }
-
-    private func setupTabBatItem(for viewController: UIViewController, image: String) -> UINavigationController {
-        viewController.tabBarItem.image = UIImage(systemName: image)
-        viewController.tabBarItem.title = nil
-
-        return UINavigationController(rootViewController: viewController)
     }
 }
