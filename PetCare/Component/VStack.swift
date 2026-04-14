@@ -16,11 +16,13 @@ final class VStack: UIStackView {
     convenience init(
         spacing: CGFloat = 5,
         alignment: UIStackView.Alignment = .fill,
+        distribution: UIStackView.Distribution = .fill,
         arrangedSubviews: [UIView] = []
     ) {
         self.init(frame: .zero)
         self.spacing = spacing
         self.alignment = alignment
+        self.distribution = distribution
         arrangedSubviews.forEach { addArrangedSubview($0) }
     }
 

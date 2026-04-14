@@ -231,4 +231,38 @@
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
 
+// MARK: - Pet Analytics
 
+"petAnalytics.period.week" = "Week";
+"petAnalytics.period.month" = "Month";
+"petAnalytics.period.threeMonths" = "3 Months";
+"petAnalytics.period.year" = "Year";
+
+"petAnalytics.chartSubtitle.week" = "Last 7 days";
+"petAnalytics.chartSubtitle.month" = "Last 30 days";
+"petAnalytics.chartSubtitle.threeMonths" = "Last 3 months";
+"petAnalytics.chartSubtitle.year" = "Last 12 months";
+
+"petAnalytics.goalCompletion.title" = "Goal Completion";
+"petAnalytics.goalCompletion.progressRing.subtitle" = "GOALS";
+
+"petAnalytics.history.title" = "Activity History";
+"petAnalytics.history.viewAll" = "View All";
+
+"petAnalytics.emptyState.title" = "No Activities";
+"petAnalytics.emptyState.subtitle" = "Add your first activity to begin tracking your pet’s progress.";
+
+"petAnalytics.title" = "Analytics";
+
+"petAnalytics.walkChart.title" = "Km Count";
+"petAnalytics.spendingsChart.title" = "Spendings";
+
+"petAnalytics.goalCompletion.description" = "%@ is %d%% through fitness targets.";
+
+"petAnalytics.stats.totalWalks" = "TOTAL WALKS";
+"petAnalytics.stats.averageKm" = "AVG. KM";
+"petAnalytics.stats.totalSpendings" = "TOTAL SPENDINGS";
+
+"petAnalytics.pet.breedAndAge" = "%@ • %@";
+
+"petAnalytics.history.walkDistance" = "%.1f km";

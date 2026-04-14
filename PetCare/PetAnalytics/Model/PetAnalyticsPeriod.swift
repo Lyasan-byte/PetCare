@@ -16,50 +16,50 @@ enum PetAnalyticsPeriod: Int, CaseIterable {
     var title: String {
         switch self {
         case .week:
-            "Week"
+            return L10n.PetAnalytics.Period.week
         case .month:
-            "Month"
+            return L10n.PetAnalytics.Period.month
         case .threeMonths:
-            "3 Months"
+            return L10n.PetAnalytics.Period.threeMonths
         case .year:
-            "Year"
+            return L10n.PetAnalytics.Period.year
         }
     }
     
     var chartSubtitle: String {
         switch self {
         case .week:
-            "Last 7 days"
+            return L10n.PetAnalytics.ChartSubtitle.week
         case .month:
-            "Last 30 days"
+            return L10n.PetAnalytics.ChartSubtitle.month
         case .threeMonths:
-            "Last 3 months"
+            return L10n.PetAnalytics.ChartSubtitle.threeMonths
         case .year:
-            "Last 12 months"
+            return L10n.PetAnalytics.ChartSubtitle.year
         }
     }
 }
 
 extension PetAnalyticsPeriod {
     func dateRange(relativeTo date: Date = Date(), calendar: Calendar = .current) -> (start: Date, end: Date) {
-        let end = date
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: date)) ?? date
 
         switch self {
         case .week:
-            let start = calendar.date(byAdding: .day, value: -7, to: end) ?? end
-            return (start, end)
+            let start = calendar.date(byAdding: .day, value: -7, to: endOfDay) ?? endOfDay
+            return (start, endOfDay)
 
         case .month:
-            let start = calendar.date(byAdding: .month, value: -1, to: end) ?? end
-            return (start, end)
+            let start = calendar.date(byAdding: .day, value: -30, to: endOfDay) ?? endOfDay
+            return (start, endOfDay)
 
         case .threeMonths:
-            let start = calendar.date(byAdding: .month, value: -3, to: end) ?? end
-            return (start, end)
+            let start = calendar.date(byAdding: .month, value: -3, to: endOfDay) ?? endOfDay
+            return (start, endOfDay)
 
         case .year:
-            let start = calendar.date(byAdding: .year, value: -1, to: end) ?? end
-            return (start, end)
+            let start = calendar.date(byAdding: .year, value: -1, to: endOfDay) ?? endOfDay
+            return (start, endOfDay)
         }
     }
 }

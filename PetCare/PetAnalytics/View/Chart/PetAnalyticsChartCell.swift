@@ -65,10 +65,10 @@ final class PetAnalyticsChartCell: UICollectionViewCell {
         ])
     }
     
-    func setData(items: [BarChartItem], color: UIColor, chartTitle: String, subtitle: String) {
-        barChart.configure(items: items, color: color)
-        self.chartTitle.text = chartTitle
-        self.chartSubtitle.text = subtitle
+    func setData(barChartData: BarChartData, color: UIColor = Asset.accentColor.color) {
+        barChart.configure(items: barChartData.items, color: color)
+        self.chartTitle.text = barChartData.title
+        self.chartSubtitle.text = barChartData.subtitle
     }
     
     required init?(coder: NSCoder) {

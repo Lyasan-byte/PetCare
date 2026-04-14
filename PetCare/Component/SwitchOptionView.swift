@@ -33,7 +33,7 @@ final class SwitchOptionView: UIView {
     let switchControl: UISwitch = {
         let switchControl = UISwitch()
         switchControl.translatesAutoresizingMaskIntoConstraints = false
-        switchControl.onTintColor = Asset.accentColor.color
+        switchControl.onTintColor = Asset.primaryGreen.color
         switchControl.isOn = false
         return switchControl
     }()

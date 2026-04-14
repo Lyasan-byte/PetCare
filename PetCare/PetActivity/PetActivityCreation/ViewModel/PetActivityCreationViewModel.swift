@@ -254,7 +254,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         case .grooming:
             guard let procedureType = content.groomingProcedureType,
                 let groomingCost = content.groomingCost,
-                  let duration = content.groomingDuration else {
+                let duration = content.groomingDuration else {
                 return nil
             }
 

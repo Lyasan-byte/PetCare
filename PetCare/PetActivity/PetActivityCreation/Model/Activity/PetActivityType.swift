@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum PetActivityType: String, Codable, CaseIterable {
+enum PetActivityType: String, Codable, CaseIterable, Hashable, Sendable {
     case walk = "WALK"
     case grooming = "GROOMING"
     case vet = "VET"
@@ -63,9 +63,9 @@ extension PetActivityType {
         case .walk:
             Asset.lightGreen.color
         case .grooming:
-            Asset.lightPink.color
-        case .vet:
             Asset.lightPurple.color
+        case .vet:
+            Asset.lightPink.color
         }
     }
 }

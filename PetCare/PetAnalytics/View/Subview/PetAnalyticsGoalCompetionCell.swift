@@ -13,17 +13,19 @@ final class PetAnalyticsGoalCompetionCell: UICollectionViewCell {
     private let background = BackgroundView(backgroundColor: .tertiarySystemBackground)
     private let goalTitle = TextLabel(
         font: .systemFont(
-            ofSize: 16,
+            ofSize: 18,
             weight: .semibold
         ),
-        text: "Goal Completion",
+        text: L10n.PetAnalytics.GoalCompletion.title,
         textAlignment: .left
     )
-    private let progressRing = ProgressRingView(subtitle: "GOALS")
+    private let progressRing = ProgressRingView(
+        subtitle:  L10n.PetAnalytics.GoalCompletion.ProgressRing.subtitle
+    )
     private let goalDescription = TextLabel(
         font: .systemFont(
-            ofSize: 14,
-            weight: .semibold
+            ofSize: 13,
+            weight: .medium
         ),
         textColor: Asset.petGray.color
     )
@@ -41,11 +43,11 @@ final class PetAnalyticsGoalCompetionCell: UICollectionViewCell {
     private func setupHierarchy() {
         contentView.addSubview(background)
         background.addSubview(goalTitle)
+        background.addSubview(progressRing)
         background.addSubview(goalDescription)
     }
     
     private func setupLayout() {
-        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: contentView.topAnchor),
             background.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -57,6 +59,7 @@ final class PetAnalyticsGoalCompetionCell: UICollectionViewCell {
             goalTitle.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -16),
             
             progressRing.topAnchor.constraint(equalTo: goalTitle.bottomAnchor, constant: 16),
+            progressRing.centerXAnchor.constraint(equalTo: background.centerXAnchor),
             progressRing.heightAnchor.constraint(equalToConstant: 140),
             progressRing.widthAnchor.constraint(equalToConstant: 140),
             

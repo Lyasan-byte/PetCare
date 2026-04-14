@@ -10,7 +10,7 @@ import Foundation
 struct PetAnalyticsContent {
     let pet: Pet
     var selectedPeriod: PetAnalyticsPeriod = .week
-    var analyticsHeaderData: PetAnalyticsHeaderData
+    var analyticsHeaderData: PetAnalyticsHeaderData?
     var walkChartData: BarChartData?
     var spendingsChartData: BarChartData?
     var goalCompletionData: GoalCompletionData?

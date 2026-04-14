@@ -106,6 +106,80 @@ public enum L10n {
       }
     }
   }
+  public enum PetAnalytics {
+    /// Analytics
+    public static let title = L10n.tr("Localizable", "petAnalytics.title", fallback: "Analytics")
+    public enum ChartSubtitle {
+      /// Last 30 days
+      public static let month = L10n.tr("Localizable", "petAnalytics.chartSubtitle.month", fallback: "Last 30 days")
+      /// Last 3 months
+      public static let threeMonths = L10n.tr("Localizable", "petAnalytics.chartSubtitle.threeMonths", fallback: "Last 3 months")
+      /// Last 7 days
+      public static let week = L10n.tr("Localizable", "petAnalytics.chartSubtitle.week", fallback: "Last 7 days")
+      /// Last 12 months
+      public static let year = L10n.tr("Localizable", "petAnalytics.chartSubtitle.year", fallback: "Last 12 months")
+    }
+    public enum EmptyState {
+      /// Add your first activity to begin tracking your pet’s progress.
+      public static let subtitle = L10n.tr("Localizable", "petAnalytics.emptyState.subtitle", fallback: "Add your first activity to begin tracking your pet’s progress.")
+      /// No Activities
+      public static let title = L10n.tr("Localizable", "petAnalytics.emptyState.title", fallback: "No Activities")
+    }
+    public enum GoalCompletion {
+      /// %@ is %d%% through fitness targets.
+      public static func description(_ p1: Any, _ p2: Int) -> String {
+        return L10n.tr("Localizable", "petAnalytics.goalCompletion.description", String(describing: p1), p2, fallback: "%@ is %d%% through fitness targets.")
+      }
+      /// Goal Completion
+      public static let title = L10n.tr("Localizable", "petAnalytics.goalCompletion.title", fallback: "Goal Completion")
+      public enum ProgressRing {
+        /// GOALS
+        public static let subtitle = L10n.tr("Localizable", "petAnalytics.goalCompletion.progressRing.subtitle", fallback: "GOALS")
+      }
+    }
+    public enum History {
+      /// Activity History
+      public static let title = L10n.tr("Localizable", "petAnalytics.history.title", fallback: "Activity History")
+      /// View All
+      public static let viewAll = L10n.tr("Localizable", "petAnalytics.history.viewAll", fallback: "View All")
+      /// %.1f km
+      public static func walkDistance(_ p1: Float) -> String {
+        return L10n.tr("Localizable", "petAnalytics.history.walkDistance", p1, fallback: "%.1f km")
+      }
+    }
+    public enum Period {
+      /// Month
+      public static let month = L10n.tr("Localizable", "petAnalytics.period.month", fallback: "Month")
+      /// 3 Months
+      public static let threeMonths = L10n.tr("Localizable", "petAnalytics.period.threeMonths", fallback: "3 Months")
+      /// Week
+      public static let week = L10n.tr("Localizable", "petAnalytics.period.week", fallback: "Week")
+      /// Year
+      public static let year = L10n.tr("Localizable", "petAnalytics.period.year", fallback: "Year")
+    }
+    public enum Pet {
+      /// %@ • %@
+      public static func breedAndAge(_ p1: Any, _ p2: Any) -> String {
+        return L10n.tr("Localizable", "petAnalytics.pet.breedAndAge", String(describing: p1), String(describing: p2), fallback: "%@ • %@")
+      }
+    }
+    public enum SpendingsChart {
+      /// Spendings
+      public static let title = L10n.tr("Localizable", "petAnalytics.spendingsChart.title", fallback: "Spendings")
+    }
+    public enum Stats {
+      /// AVG. KM
+      public static let averageKm = L10n.tr("Localizable", "petAnalytics.stats.averageKm", fallback: "AVG. KM")
+      /// TOTAL SPENDINGS
+      public static let totalSpendings = L10n.tr("Localizable", "petAnalytics.stats.totalSpendings", fallback: "TOTAL SPENDINGS")
+      /// TOTAL WALKS
+      public static let totalWalks = L10n.tr("Localizable", "petAnalytics.stats.totalWalks", fallback: "TOTAL WALKS")
+    }
+    public enum WalkChart {
+      /// Km Count
+      public static let title = L10n.tr("Localizable", "petAnalytics.walkChart.title", fallback: "Km Count")
+    }
+  }
   public enum Pets {
     public enum Activity {
       /// ACTIVITY DATE
@@ -497,6 +571,12 @@ public enum L10n {
       public enum Logout {
         /// Logout
         public static let title = L10n.tr("Localizable", "user.profile.logout.title", fallback: "Logout")
+        public enum Confirmation {
+          /// Are you sure you want to log out of your account?
+          public static let message = L10n.tr("Localizable", "user.profile.logout.confirmation.message", fallback: "Are you sure you want to log out of your account?")
+          /// Logout
+          public static let title = L10n.tr("Localizable", "user.profile.logout.confirmation.title", fallback: "Logout")
+        }
       }
       public enum Name {
         /// Pet Lover

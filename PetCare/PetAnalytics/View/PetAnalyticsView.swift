@@ -9,15 +9,16 @@ import UIKit
 
 final class PetAnalyticsView: UIView {
     private let loader = UIActivityIndicatorView()
-    private let emptyStateView = EmptyStateView(title: "No Activities", subtitle: "", image: "text.page.slash")
+    private let emptyStateView = EmptyStateView(
+        title: L10n.PetAnalytics.EmptyState.title,
+        subtitle: L10n.PetAnalytics.EmptyState.subtitle,
+        image: {
+            if #available(iOS 17.0, *) { return "dog.fill" }
+            return "figure.walk"
+        }()
+    )
     let collection: UICollectionView = {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            guard let section = PetAnalyticsSection(rawValue: sectionIndex) else {
-                return nil
-            }
-            return createSection(section)
-        }
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         view.backgroundColor = .clear
         view.showsVerticalScrollIndicator = false
         return view
@@ -47,7 +48,8 @@ final class PetAnalyticsView: UIView {
             collection.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             collection.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            emptyStateView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            emptyStateView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            emptyStateView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             emptyStateView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             loader.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -58,10 +60,15 @@ final class PetAnalyticsView: UIView {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         collection.translatesAutoresizingMaskIntoConstraints = false
+        loader.translatesAutoresizingMaskIntoConstraints = false
         
         emptyStateView.isHidden = true
         loader.hidesWhenStopped = true
         loader.style = .medium
+    }
+    
+    func setCollectionViewLayout(_ layout: UICollectionViewLayout, animated: Bool = false) {
+        collection.setCollectionViewLayout(layout, animated: animated)
     }
     
     func registerCells() {
@@ -100,6 +107,7 @@ final class PetAnalyticsView: UIView {
     
     func showEmptyState(_ isEmpty: Bool) {
         emptyStateView.isHidden = !isEmpty
+        collection.isHidden = isEmpty
     }
     
     func setLoading(_ isLoading: Bool) {
@@ -119,7 +127,7 @@ final class PetAnalyticsView: UIView {
 }
 
 extension PetAnalyticsView {
-    private static func createSection(_ section: PetAnalyticsSection) -> NSCollectionLayoutSection {
+    static func createSection(_ section: PetAnalyticsSection) -> NSCollectionLayoutSection {
         switch section {
         case .header:
             return createHeaderSection()
@@ -154,6 +162,7 @@ extension PetAnalyticsView {
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 5, leading: 0, bottom: 0, trailing: 0)
         return section
     }
     
@@ -161,18 +170,19 @@ extension PetAnalyticsView {
         let item: NSCollectionLayoutItem = .init(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(200)
+                heightDimension: .absolute(240)
             )
         )
         let group: NSCollectionLayoutGroup = .vertical(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(200)
+                heightDimension: .absolute(240)
             ),
             repeatingSubitem: item,
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 20, leading: 0, bottom: 0, trailing: 0)
         return section
     }
     
@@ -180,18 +190,19 @@ extension PetAnalyticsView {
         let item: NSCollectionLayoutItem = .init(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(200)
+                heightDimension: .absolute(250)
             )
         )
         let group: NSCollectionLayoutGroup = .vertical(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(200)
+                heightDimension: .absolute(250)
             ),
             repeatingSubitem: item,
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
         return section
     }
     
@@ -199,18 +210,19 @@ extension PetAnalyticsView {
         let item: NSCollectionLayoutItem = .init(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(120)
+                heightDimension: .absolute(240)
             )
         )
         let group: NSCollectionLayoutGroup = .vertical(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(120)
+                heightDimension: .absolute(240)
             ),
             repeatingSubitem: item,
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
         return section
     }
     
@@ -218,18 +230,20 @@ extension PetAnalyticsView {
         let item: NSCollectionLayoutItem = .init(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(70)
+                heightDimension: .absolute(76)
             )
         )
         let group: NSCollectionLayoutGroup = .vertical(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(70)
+                heightDimension: .absolute(76)
             ),
             repeatingSubitem: item,
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
+        section.interGroupSpacing = 16
         return section
     }
     
@@ -249,6 +263,7 @@ extension PetAnalyticsView {
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
         return section
     }
     
@@ -256,18 +271,20 @@ extension PetAnalyticsView {
         let item: NSCollectionLayoutItem = .init(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(70)
+                heightDimension: .absolute(76)
             )
         )
         let group: NSCollectionLayoutGroup = .vertical(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(70)
+                heightDimension: .absolute(76)
             ),
             repeatingSubitem: item,
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
+        section.interGroupSpacing = 16
         return section
     }
 }
