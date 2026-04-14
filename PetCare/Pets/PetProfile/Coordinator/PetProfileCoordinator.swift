@@ -8,6 +8,7 @@
 import UIKit
 
 enum PetProfileCoordinatorResult {
+    case createdActivity
     case updated
     case deleted
     case closed
@@ -128,6 +129,7 @@ final class PetProfileCoordinator: Coordinator {
         childCoordinators.append(petActivityCoordinator)
 
         petActivityCoordinator.onFinish = { [weak self, weak petActivityCoordinator] in
+            self?.onFinish?(.createdActivity)
             if let petActivityCoordinator {
                 self?.removeCoordinator(petActivityCoordinator)
             }

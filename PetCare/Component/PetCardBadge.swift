@@ -12,7 +12,7 @@ final class PetCardBadge: UIView {
     private let icon = ImageView()
     private let badgeText = TextLabel(font: .systemFont(ofSize: 16, weight: .medium))
     private lazy var contentStack = HStack(
-        spacing: 5,
+        spacing: 2,
         alignment: .center,
         arrangedSubviews: [icon, badgeText]
     )
@@ -60,14 +60,16 @@ final class PetCardBadge: UIView {
         badgeText.text = text
     }
     
-    func configure(activity: PetActivity) {
+    func configure(activity: PetLastActivity, height: CGFloat) {
         setData(
             backgroundColor: activity.type.activityBackgroundColor,
             color: activity.type.color,
-            icon: activity.type.icon,
-            text: "",
-            font: .systemFont(ofSize: 11, weight: .medium)
+            icon: activity.type.badgeIcon,
+            text: "\(activity.type.name.uppercased()) \(formatDate(activity.date))",
+            font: .systemFont(ofSize: 10, weight: .medium)
         )
+        setHeight(height)
+        setCornerRadius(height: height)
     }
 
     private func setupHierarchy() {
@@ -94,6 +96,13 @@ final class PetCardBadge: UIView {
             contentStack.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -10),
             contentStack.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -7)
         ])
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "EEEE, d MMM"
+        return dateFormatter.string(from: date).uppercased()
     }
 
     required init?(coder: NSCoder) {

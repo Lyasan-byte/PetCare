@@ -68,4 +68,15 @@ extension PetActivityType {
             Asset.lightPink.color
         }
     }
+    
+    var badgeIcon: String {
+        switch self {
+        case .walk:
+            "arrow.trianglehead.counterclockwise"
+        case .grooming:
+            "scissors"
+        case .vet:
+            "cross.case"
+        }
+    }
 }

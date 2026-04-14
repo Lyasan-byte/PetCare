@@ -24,6 +24,7 @@ final class PetCardRowView: UIView {
     )
     private lazy var petInfoStack = VStack(
         spacing: 10,
+        alignment: .leading,
         arrangedSubviews: [
             petNameLabel,
             petBreedLabel,
@@ -101,6 +102,12 @@ final class PetCardRowView: UIView {
         petBreedLabel.text = "\(pet.breed) • \(pet.ageText)"
         petStatusView.configure(status: pet.iconStatus, circleSize: 22, iconSize: 10)
         petStatusView.isHidden = pet.iconStatus == .none
+        
+        if let activity = pet.lastActivity {
+            activityBadge.configure(activity: activity, height: 25)
+            hstack.alignment = .center
+        }
+        activityBadge.isHidden = pet.lastActivity == nil
     }
 
     required init?(coder: NSCoder) {
