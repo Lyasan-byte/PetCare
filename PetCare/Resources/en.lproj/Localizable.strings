@@ -246,6 +246,10 @@
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
 
+<<<<<<< HEAD
+// MARK: - Pet Analytics
+
+=======
 //MARK: - Pet Facts
 
 "pets.facts.empty_state" = "No information was found for this breed";
@@ -267,6 +271,7 @@
 
 // MARK: - Pet Analytics
 
+>>>>>>> main
 "petAnalytics.period.week" = "Week";
 "petAnalytics.period.month" = "Month";
 "petAnalytics.period.threeMonths" = "3 Months";

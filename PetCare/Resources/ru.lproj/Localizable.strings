@@ -242,6 +242,8 @@
 "pets.age.day.few" = "%d дня";
 "pets.age.day.many" = "%d дней";
 
+<<<<<<< HEAD
+=======
 //MARK: - Pet Facts
 
 "pets.facts.empty_state" = "По данной породе не найдено информации";
@@ -260,6 +262,7 @@
 "repository.error.deallocated" = "Репозиторий был освобожден из памяти";
 "repository.error.unknown" = "Неизвестная ошибка";
 
+>>>>>>> main
 // MARK: - Pet Analytics
 
 "petAnalytics.period.week" = "Неделя";

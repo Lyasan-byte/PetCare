@@ -61,6 +61,7 @@ public enum Asset {
   public static let miniGamePlantSmall = ImageAsset(name: "miniGamePlantSmall")
 }
 
+
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
