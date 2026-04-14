@@ -107,7 +107,7 @@ final class UserProfileHeaderView: UIView {
         let editConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)
         editButton.setImage(UIImage(systemName: "pencil", withConfiguration: editConfig), for: .normal)
         editButton.tintColor = .white
-        editButton.backgroundColor = Asset.accentColor.color
+        editButton.backgroundColor = Asset.primaryGreen.color
         editButton.layer.cornerRadius = 17.5
         editButton.layer.shadowColor = UIColor.black.withAlphaComponent(0.15).cgColor
         editButton.layer.shadowOpacity = 1

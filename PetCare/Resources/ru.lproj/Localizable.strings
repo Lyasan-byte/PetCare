@@ -109,6 +109,21 @@
 
 "pets.main.tip.title" = "Совет по здоровью питомца";
 
+//MARK: - Mini game
+"mini.game.screen.title" = "Pet Runner";
+"mini.game.runner.select" = "ВЫБЕРИТЕ БЕГУНА";
+"mini.game.empty.title" = "Нет питомцев для выбора раннера";
+"mini.game.empty.subtitle" = "Добавьте питомца во вкладке Мои питомцы, чтобы выбрать его для мини-игры.";
+"mini.game.field.tap_to_jump" = "ТАПНИТЕ ДЛЯ ПРЫЖКА";
+"mini.game.field.start_hint" = "Тапните по полю, чтобы начать";
+"mini.game.field.preview_hint" = "Игровая механика и препятствия будут подключены следующим этапом.";
+"mini.game.field.running" = "Превью забега запущено";
+"mini.game.field.game_over" = "Игра окончена";
+"mini.game.field.restart" = "Начать заново";
+"mini.game.field.last_score" = "Счет";
+"mini.game.field.best_score" = "Лучший";
+"mini.game.field.no_pet" = "Выберите питомца для старта";
+
 
 // MARK: - User Profile
 
