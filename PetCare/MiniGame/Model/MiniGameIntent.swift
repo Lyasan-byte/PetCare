@@ -11,7 +11,8 @@ enum MiniGameIntent {
     case onDidLoad
     case onPetSelected(Pet)
     case onGameFieldTap
-    case onPreviewFinished
+    case onGameScoreUpdated(Int)
+    case onGameEnded(Int)
     case onRestartTap
     case onDismissAlert
 }

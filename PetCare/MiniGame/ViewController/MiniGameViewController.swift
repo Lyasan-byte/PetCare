@@ -14,6 +14,8 @@ final class MiniGameViewController: UIViewController {
     private let imageLoader: ImageLoader
 
     private var bag = Set<AnyCancellable>()
+    private var lastRenderedRunnerKeys: [String] = []
+    private var lastRenderedSelectedPetKey: String?
     private var content: MiniGameContent? {
         guard case .content(let content) = miniGameViewModel.state else { return nil }
         return content
@@ -58,11 +60,29 @@ final class MiniGameViewController: UIViewController {
 
     private func bindActions() {
         miniGameView.onGameFieldTap = { [weak self] in
-            self?.miniGameViewModel.trigger(.onGameFieldTap)
+            guard let self else { return }
+            guard let content = self.content else { return }
+
+            switch content.stage {
+            case .idle:
+                self.miniGameViewModel.trigger(.onGameFieldTap)
+            case .finished:
+                return
+            case .started:
+                self.miniGameView.jump()
+            }
         }
 
         miniGameView.onRestartTap = { [weak self] in
             self?.miniGameViewModel.trigger(.onRestartTap)
+        }
+
+        miniGameView.onGameScoreChanged = { [weak self] score in
+            self?.miniGameViewModel.trigger(.onGameScoreUpdated(score))
+        }
+
+        miniGameView.onGameEnded = { [weak self] score in
+            self?.miniGameViewModel.trigger(.onGameEnded(score))
         }
     }
 
@@ -82,12 +102,34 @@ final class MiniGameViewController: UIViewController {
             miniGameView.setLoading(true)
         case .content(let content):
             miniGameView.setLoading(false)
-            miniGameView.setData(content: content, imageLoader: imageLoader)
-            miniGameView.reloadData()
+            miniGameView.setData(content: content)
+            reloadRunnerSelectionIfNeeded(content)
+
+            switch content.stage {
+            case .idle:
+                miniGameView.stopGame()
+            case .started:
+                if let selectedPet = content.selectedPet {
+                    miniGameView.startGame(with: selectedPet, imageLoader: imageLoader)
+                }
+            case .finished:
+                break
+            }
         case .error(let error):
             miniGameView.setLoading(false)
             showError(error)
         }
+    }
+
+    private func reloadRunnerSelectionIfNeeded(_ content: MiniGameContent) {
+        let runnerKeys = content.pets.map(\.miniGameRunnerKey)
+        guard runnerKeys != lastRenderedRunnerKeys || content.selectedPetKey != lastRenderedSelectedPetKey else {
+            return
+        }
+
+        lastRenderedRunnerKeys = runnerKeys
+        lastRenderedSelectedPetKey = content.selectedPetKey
+        miniGameView.reloadData()
     }
 
     private func showError(_ message: String) {
