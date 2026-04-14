@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum PetActivityType: String, Codable, CaseIterable {
+enum PetActivityType: String, Codable, CaseIterable, Hashable, Sendable {
     case walk = "WALK"
     case grooming = "GROOMING"
     case vet = "VET"
@@ -53,6 +53,30 @@ enum PetActivityType: String, Codable, CaseIterable {
             Asset.petPurpleAction.color
         case .vet:
             Asset.petPinkAction.color
+        }
+    }
+}
+
+extension PetActivityType {
+    var activityBackgroundColor: UIColor {
+        switch self {
+        case .walk:
+            Asset.lightGreen.color
+        case .grooming:
+            Asset.lightPurple.color
+        case .vet:
+            Asset.lightPink.color
+        }
+    }
+    
+    var badgeIcon: String {
+        switch self {
+        case .walk:
+            "arrow.trianglehead.counterclockwise"
+        case .grooming:
+            "scissors"
+        case .vet:
+            "cross.case"
         }
     }
 }

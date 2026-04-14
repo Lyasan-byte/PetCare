@@ -9,20 +9,28 @@ import UIKit
 import Combine
 
 final class PetCardRowView: UIView {
-    private var petImageView: PetRemoteImageView = {
+    private let petImageView: PetRemoteImageView = {
         let imageView = PetRemoteImageView()
         imageView.layer.cornerRadius = 35
         return imageView
     }()
 
-    private var background = BackgroundView(backgroundColor: .tertiarySystemBackground)
+    private let background = BackgroundView(backgroundColor: .tertiarySystemBackground)
 
     private lazy var hstack = HStack(
         spacing: 20,
         alignment: .top,
         arrangedSubviews: [petImageContainer, petInfoStack]
     )
-    private lazy var petInfoStack = VStack(spacing: 10, arrangedSubviews: [petNameLabel, petBreedLabel])
+    private lazy var petInfoStack = VStack(
+        spacing: 10,
+        alignment: .leading,
+        arrangedSubviews: [
+            petNameLabel,
+            petBreedLabel,
+            activityBadge
+        ]
+    )
 
     private var petStatusView = CircleIconView()
     private var petImageContainer = BackgroundView(backgroundColor: .clear, cornerRadius: 0)
@@ -32,6 +40,8 @@ final class PetCardRowView: UIView {
         textColor: Asset.petGray.color,
         textAlignment: .left
     )
+    
+    private let activityBadge = PetCardBadge()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -92,6 +102,12 @@ final class PetCardRowView: UIView {
         petBreedLabel.text = "\(pet.breed) • \(pet.ageText)"
         petStatusView.configure(status: pet.iconStatus, circleSize: 22, iconSize: 10)
         petStatusView.isHidden = pet.iconStatus == .none
+        
+        if let activity = pet.lastActivity {
+            activityBadge.configure(activity: activity, height: 25)
+            hstack.alignment = .center
+        }
+        activityBadge.isHidden = pet.lastActivity == nil
     }
 
     required init?(coder: NSCoder) {
