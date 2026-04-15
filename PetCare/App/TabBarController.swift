@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import SwiftData
 
 final class TabBarController: UITabBarController {
     private var petsMainCoordinator: PetsMainCoordinator?
@@ -25,7 +26,16 @@ final class TabBarController: UITabBarController {
     private func setupTabs() {
         let ownerId = Auth.auth().currentUser?.uid ?? "test_owner_id"
         let imageUploader = ImageUploadService()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            assertionFailure("Failed to get AppDelegate")
+            return
+        }
+
+        let petCache = PetCacheService(modelContext: appDelegate.modelContainer.mainContext)
+
         let petRepository = PetService(
+            cache: petCache,
             imageService: imageUploader
         )
         let imageLoader = ImageLoadService()
@@ -46,6 +56,7 @@ final class TabBarController: UITabBarController {
             tipRepository: TipService(),
             ownerId: ownerId,
             reminderController: reminderController,
+            cache: petCache,
             imageLoader: imageLoader
         )
         self.petsMainCoordinator = petsMainCoordinator
