@@ -106,4 +106,21 @@ final class PetService: PetRepository {
         }
         .eraseToAnyPublisher()
     }
+
+    func updateGameScore(_ gameScore: Int, for petId: String) -> AnyPublisher<Void, Error> {
+        Future { [weak self] promise in
+            guard let self else { return promise(.failure(RepositoryError.deallocated)) }
+
+            self.petsCollection.document(petId).updateData([
+                Pet.CodingKeys.gameScore.rawValue: gameScore
+            ]) { error in
+                if let error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 }

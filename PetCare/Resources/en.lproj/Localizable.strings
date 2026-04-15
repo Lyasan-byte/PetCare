@@ -110,6 +110,21 @@
 
 "pets.main.tip.title" = "Pet Health Tip";
 
+//MARK: - Mini game
+"mini.game.screen.title" = "Pet Runner";
+"mini.game.runner.select" = "SELECT YOUR RUNNER";
+"mini.game.empty.title" = "No pets for runner selection";
+"mini.game.empty.subtitle" = "Add a pet in My Pets to use it as a runner.";
+"mini.game.field.tap_to_jump" = "TAP TO JUMP";
+"mini.game.field.start_hint" = "Tap the field to start";
+"mini.game.field.preview_hint" = "Gameplay will be connected here next.";
+"mini.game.field.running" = "Run preview in progress";
+"mini.game.field.game_over" = "Game Over";
+"mini.game.field.restart" = "Restart";
+"mini.game.field.last_score" = "Score";
+"mini.game.field.best_score" = "Best";
+"mini.game.field.no_pet" = "Choose a pet to start";
+
 
 // MARK: - User Profile
 
@@ -231,8 +246,32 @@
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
 
+<<<<<<< HEAD
 // MARK: - Pet Analytics
 
+=======
+//MARK: - Pet Facts
+
+"pets.facts.empty_state" = "No information was found for this breed";
+"pets.facts.close_button" = "Close";
+
+//MARK: - Public Pet Profile
+
+"pets.public.owner.title" = "Owned by";
+"pets.public.game_score.title" = "Best mini game score";
+
+"pets.public.game_score.points.one" = "%d pts";
+"pets.public.game_score.points.few" = "%d pts";
+"pets.public.game_score.points.many" = "%d pts";
+
+//MARK: - Error
+
+"repository.error.deallocated" = "Repository was deallocated";
+"repository.error.unknown" = "Unknown error";
+
+// MARK: - Pet Analytics
+
+>>>>>>> main
 "petAnalytics.period.week" = "Week";
 "petAnalytics.period.month" = "Month";
 "petAnalytics.period.threeMonths" = "3 Months";

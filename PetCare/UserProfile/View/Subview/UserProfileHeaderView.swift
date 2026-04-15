@@ -101,13 +101,13 @@ final class UserProfileHeaderView: UIView {
 
     private func configureAppearance() {
         titleLabel.text = NSLocalizedString("user.profile.screen.title", comment: "")
-        titleLabel.font = .systemFont(ofSize: 24, weight: .medium)
+        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
         titleLabel.textColor = Asset.accentColor.color
 
         let editConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)
         editButton.setImage(UIImage(systemName: "pencil", withConfiguration: editConfig), for: .normal)
         editButton.tintColor = .white
-        editButton.backgroundColor = Asset.accentColor.color
+        editButton.backgroundColor = Asset.primaryGreen.color
         editButton.layer.cornerRadius = 17.5
         editButton.layer.shadowColor = UIColor.black.withAlphaComponent(0.15).cgColor
         editButton.layer.shadowOpacity = 1

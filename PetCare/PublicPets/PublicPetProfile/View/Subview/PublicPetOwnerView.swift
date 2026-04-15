@@ -20,7 +20,7 @@ final class PublicPetOwnerView: UIView {
             ofSize: 14,
             weight: .regular
         ),
-        text: "Owned by",
+        text: L10n.Pets.Public.Owner.title,
         textColor: Asset.purpleAccent.color,
         textAlignment: .left
     )
@@ -84,7 +84,7 @@ final class PublicPetOwnerView: UIView {
 
     func setData(user: UserProfileUser, imageLoader: ImageLoader) {
         ownerImage.setImage(urlString: user.avatarURLString, imageLoader: imageLoader)
-        self.ownerName.text = user.firstName + " " + user.lastName
+        ownerName.text = user.firstName + " " + user.lastName
     }
 
     required init?(coder: NSCoder) {

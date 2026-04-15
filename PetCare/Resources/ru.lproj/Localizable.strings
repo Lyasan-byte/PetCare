@@ -109,6 +109,21 @@
 
 "pets.main.tip.title" = "Совет по здоровью питомца";
 
+//MARK: - Mini game
+"mini.game.screen.title" = "Pet Runner";
+"mini.game.runner.select" = "ВЫБЕРИТЕ БЕГУНА";
+"mini.game.empty.title" = "Нет питомцев для выбора раннера";
+"mini.game.empty.subtitle" = "Добавьте питомца во вкладке Мои питомцы, чтобы выбрать его для мини-игры.";
+"mini.game.field.tap_to_jump" = "ТАПНИТЕ ДЛЯ ПРЫЖКА";
+"mini.game.field.start_hint" = "Тапните по полю, чтобы начать";
+"mini.game.field.preview_hint" = "Игровая механика и препятствия будут подключены следующим этапом.";
+"mini.game.field.running" = "Превью забега запущено";
+"mini.game.field.game_over" = "Игра окончена";
+"mini.game.field.restart" = "Начать заново";
+"mini.game.field.last_score" = "Счет";
+"mini.game.field.best_score" = "Лучший";
+"mini.game.field.no_pet" = "Выберите питомца для старта";
+
 
 // MARK: - User Profile
 
@@ -195,7 +210,7 @@
 "pets.form.navigation.edit" = "Редактировать профиль";
 
 "pets.facts.group" = "ГРУППА";
-"pets.facts.lifespan" = "ПРОДОЛЖИТЕЛЬНОСТЬ ЖИЗНИ";
+"pets.facts.lifespan" = "СРОК ЖИЗНИ";
 "pets.facts.diet" = "ПИТАНИЕ";
 "pets.facts.skin_type" = "ТИП ШЕРСТИ";
 "pets.facts.weight" = "ВЕС";
@@ -227,6 +242,27 @@
 "pets.age.day.few" = "%d дня";
 "pets.age.day.many" = "%d дней";
 
+<<<<<<< HEAD
+=======
+//MARK: - Pet Facts
+
+"pets.facts.empty_state" = "По данной породе не найдено информации";
+"pets.facts.close_button" = "Закрыть";
+
+//MARK: - Public Pet Profile
+
+"pets.public.owner.title" = "Владелец";
+"pets.public.game_score.title" = "Лучший результат в мини-игре";
+"pets.public.game_score.points.one" = "%d очко";
+"pets.public.game_score.points.few" = "%d очка";
+"pets.public.game_score.points.many" = "%d очков";
+
+//MARK: - Error
+
+"repository.error.deallocated" = "Репозиторий был освобожден из памяти";
+"repository.error.unknown" = "Неизвестная ошибка";
+
+>>>>>>> main
 // MARK: - Pet Analytics
 
 "petAnalytics.period.week" = "Неделя";
