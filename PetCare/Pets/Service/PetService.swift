@@ -111,7 +111,7 @@ final class PetService: PetRepository {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(RepositoryError.deallocated)) }
 
-            self.petsCollection.document(petId).updateData([
+            self.firestore.collection(petCollection).document(petId).updateData([
                 Pet.CodingKeys.gameScore.rawValue: gameScore
             ]) { error in
                 if let error {
