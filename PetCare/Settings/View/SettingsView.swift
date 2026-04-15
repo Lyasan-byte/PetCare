@@ -9,9 +9,9 @@ import UIKit
 
 final class SettingsView: UIView {
     var onAllNotificationsToggle: ((Bool) -> Void)?
+    var onWalkToggle: ((Bool) -> Void)?
     var onGroomingToggle: ((Bool) -> Void)?
     var onVeterinarianToggle: ((Bool) -> Void)?
-    var onGeneralRemindersToggle: ((Bool) -> Void)?
     var onThemeSelected: ((SettingsTheme) -> Void)?
     var onLanguageSelected: ((SettingsLanguage) -> Void)?
     var onDeleteAccountTap: (() -> Void)?
@@ -182,14 +182,14 @@ final class SettingsView: UIView {
             self?.onAllNotificationsToggle?(isEnabled)
         }
 
+        notificationOptionsView.onWalkToggle = { [weak self] isEnabled in
+            self?.onWalkToggle?(isEnabled)
+        }
         notificationOptionsView.onGroomingToggle = { [weak self] isEnabled in
             self?.onGroomingToggle?(isEnabled)
         }
         notificationOptionsView.onVeterinarianToggle = { [weak self] isEnabled in
             self?.onVeterinarianToggle?(isEnabled)
-        }
-        notificationOptionsView.onGeneralRemindersToggle = { [weak self] isEnabled in
-            self?.onGeneralRemindersToggle?(isEnabled)
         }
 
         appearanceOptionsView.onThemeSelected = { [weak self] theme in

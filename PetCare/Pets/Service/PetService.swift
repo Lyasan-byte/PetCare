@@ -13,22 +13,22 @@ final class PetService: PetRepository {
     private let firestore: Firestore
     private let petCollection = "pets"
     private let activitiesCollection = "activities"
-
+    
     init(firestore: Firestore = .firestore(), imageService: ImageUploader) {
         self.firestore = firestore
         self.imageService = imageService
     }
-
+    
     func makeNewPetId() -> String {
         firestore.collection(petCollection).document().documentID
     }
-
+    
     func save(pet: Pet, petId: String, selectedPhoto: Data?) -> AnyPublisher<Pet, Error> {
         guard let selectedPhoto else { return savePet(pet, petId: petId) }
-
+        
         return imageService
             .uploadImage(data: selectedPhoto,
-                resource: UploadImageResource.pet(id: petId)
+                         resource: UploadImageResource.pet(id: petId)
             )
             .flatMap { [weak self] url -> AnyPublisher<Pet, Error> in
                 guard let self else { return Fail(error: RepositoryError.deallocated)
@@ -39,13 +39,13 @@ final class PetService: PetRepository {
             }
             .eraseToAnyPublisher()
     }
-
+    
     private func savePet(_ pet: Pet, petId: String) -> AnyPublisher<Pet, Error> {
         Future { [weak self] promise in
             guard let self else {
                 return promise(.failure(RepositoryError.deallocated))
             }
-
+            
             do {
                 try self.firestore.collection(petCollection)
                     .document(petId)
@@ -55,30 +55,30 @@ final class PetService: PetRepository {
                         } else {
                             promise(.success(pet))
                         }
-                }
+                    }
             } catch {
                 promise(.failure(error))
             }
         }
         .eraseToAnyPublisher()
     }
-
+    
     func delete(petId: String) -> AnyPublisher<Void, Error> {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(RepositoryError.deallocated)) }
             self.firestore
                 .collection(petCollection)
                 .document(petId).delete { error in
-                if let error {
-                    promise(.failure(error))
-                } else {
-                    promise(.success(()))
+                    if let error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
                 }
-            }
         }
         .eraseToAnyPublisher()
     }
-
+    
     func fetchPets(for ownerId: String) -> AnyPublisher<[Pet], Error> {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(RepositoryError.deallocated)) }
@@ -90,12 +90,12 @@ final class PetService: PetRepository {
                         promise(.failure(error))
                         return
                     }
-
+                    
                     guard let snapshot else {
                         promise(.success([]))
                         return
                     }
-
+                    
                     do {
                         let pets = try snapshot.documents.map { try $0.data(as: Pet.self) }
                         promise(.success(pets))
@@ -106,7 +106,7 @@ final class PetService: PetRepository {
         }
         .eraseToAnyPublisher()
     }
-
+    
     func updateGameScore(_ gameScore: Int, for petId: String) -> AnyPublisher<Void, Error> {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(RepositoryError.deallocated)) }
