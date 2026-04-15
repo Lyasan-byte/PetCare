@@ -8,6 +8,8 @@
 import UIKit
 
 final class PublicPetProfileView: UIView {
+    var onBreedTap: (() -> Void)?
+    
     private let loader: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .medium)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -35,6 +37,7 @@ final class PublicPetProfileView: UIView {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
+        bindActions()
     }
 
     convenience init() {
@@ -65,6 +68,12 @@ final class PublicPetProfileView: UIView {
             loader.centerXAnchor.constraint(equalTo: centerXAnchor),
             loader.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+    
+    private func bindActions() {
+        petProfileCard.onBreedTap = { [weak self] in
+            self?.onBreedTap?()
+        }
     }
 
     func setLoading(_ isLoading: Bool) {

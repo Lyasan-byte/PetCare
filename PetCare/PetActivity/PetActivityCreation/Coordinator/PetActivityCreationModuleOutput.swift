@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol PetActivityCreationModuleOutput {
+protocol PetActivityCreationModuleOutput: AnyObject {
     func moduleWantsToClose()
 }

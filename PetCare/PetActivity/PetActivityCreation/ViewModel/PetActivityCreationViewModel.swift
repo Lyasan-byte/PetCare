@@ -99,6 +99,8 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
             content.groomingProcedureType = procedureType
         case .onChangeGroomingCost(let costString):
             content.groomingCost = makeDouble(from: costString)
+        case .onChangeGroomingDuration(let durationString):
+            content.groomingDuration = makeDouble(from: durationString)
         case .onChangeVetProcedureType(let procedureType):
             content.vetProcedureType = procedureType
         case .onChangeVetCost(let costString):
@@ -251,14 +253,16 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
 
         case .grooming:
             guard let procedureType = content.groomingProcedureType,
-                let groomingCost = content.groomingCost else {
+                let groomingCost = content.groomingCost,
+                let duration = content.groomingDuration else {
                 return nil
             }
 
             details = .grooming(
                 GroomingDetails(
                     procedureType: procedureType,
-                    cost: groomingCost
+                    cost: groomingCost,
+                    duration: duration
                 )
             )
 

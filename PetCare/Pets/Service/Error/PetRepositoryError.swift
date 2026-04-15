@@ -14,9 +14,9 @@ enum RepositoryError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .deallocated:
-            return "Repository was deallocated"
+            return L10n.Repository.Error.deallocated
         case .unknown:
-            return "Unknown error"
+            return L10n.Repository.Error.unknown
         }
     }
 }

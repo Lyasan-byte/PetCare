@@ -23,6 +23,7 @@ struct PetActivityCreationContent {
 
     var groomingProcedureType: GroomingProcedureType?
     var groomingCost: Double?
+    var groomingDuration: Double?
 
     var vetProcedureType: VetProcedureType?
     var vetCost: Double?

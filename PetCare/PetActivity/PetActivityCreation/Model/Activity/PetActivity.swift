@@ -107,10 +107,12 @@ struct WalkDetails: Codable {
 struct GroomingDetails: Codable {
     let procedureType: GroomingProcedureType
     let cost: Double
+    let duration: Double
 
     enum CodingKeys: String, CodingKey {
         case procedureType = "procedure_type"
         case cost
+        case duration
     }
 }
 

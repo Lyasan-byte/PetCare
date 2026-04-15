@@ -26,6 +26,7 @@ final class PublicPetProfileViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         bindViewModel()
+        bindAction()
 
         render(publicPetProfileViewModel.state)
         publicPetProfileViewModel.trigger(.onDidLoad)
@@ -62,6 +63,12 @@ final class PublicPetProfileViewController: UIViewController {
                 self.render(self.publicPetProfileViewModel.state)
             }
             .store(in: &bag)
+    }
+    
+    private func bindAction() {
+        publicPetProfileView.onBreedTap = { [weak self] in
+            self?.publicPetProfileViewModel.trigger(.onBreedTap)
+        }
     }
 
     private func render(_ state: PublicPetProfileState) {
