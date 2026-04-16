@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 final class MiniGameViewController: UIViewController {
-    private let miniGameView = MiniGameView()
+    private var miniGameView = MiniGameView()
     private let miniGameViewModel: any MiniGameViewModeling
     private let imageLoader: ImageLoader
 
@@ -29,14 +29,19 @@ final class MiniGameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
+        bindLanguageChanges()
+        installMiniGameView()
+
+        render(miniGameViewModel.state)
+        miniGameViewModel.trigger(.onDidLoad)
+    }
+
+    private func installMiniGameView() {
         setupAppearance()
         setupLayout()
         setupCollection()
         bindActions()
-        bindViewModel()
-
-        render(miniGameViewModel.state)
-        miniGameViewModel.trigger(.onDidLoad)
     }
 
     private func setupAppearance() {
@@ -93,6 +98,26 @@ final class MiniGameViewController: UIViewController {
                 self.render(self.miniGameViewModel.state)
             }
             .store(in: &bag)
+    }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadLocalizedView()
+            }
+            .store(in: &bag)
+    }
+
+    private func reloadLocalizedView() {
+        guard isViewLoaded else { return }
+
+        miniGameView.removeFromSuperview()
+        miniGameView = MiniGameView()
+        lastRenderedRunnerKeys = []
+        lastRenderedSelectedPetKey = nil
+        installMiniGameView()
+        render(miniGameViewModel.state)
     }
 
     private func render(_ state: MiniGameState) {

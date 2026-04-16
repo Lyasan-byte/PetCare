@@ -34,6 +34,10 @@ final class UserProfileHeaderView: UIView {
         editButton.addTarget(target, action: action, for: .touchUpInside)
     }
 
+    func refreshLocalizedTexts() {
+        titleLabel.text = NSLocalizedString("user.profile.screen.title", comment: "")
+    }
+
     private func setupHierarchy() {
         [
             titleLabel,
@@ -100,7 +104,7 @@ final class UserProfileHeaderView: UIView {
     }
 
     private func configureAppearance() {
-        titleLabel.text = NSLocalizedString("user.profile.screen.title", comment: "")
+        refreshLocalizedTexts()
         titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
         titleLabel.textColor = Asset.accentColor.color
 

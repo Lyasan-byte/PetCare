@@ -68,7 +68,7 @@ final class UserProfileViewModel: UserProfileViewModeling {
                         fullName: user.fullName,
                         email: user.email ?? NSLocalizedString("user.profile.email.missing", comment: ""),
                         petsCountText: String(format: "%02d", pets.count),
-                        bestScoreText: "159",
+                        bestScoreText: String(pets.map(\.gameScore).max() ?? 0),
                         avatarURLString: user.avatarURLString
                     )
                 )

@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 final class PublicPetsViewController: UIViewController {
-    private let publicPetsView = PublicPetsView()
+    private var publicPetsView = PublicPetsView()
     private let publicPetsViewModel: any PublicPetsViewModeling
     private let imageLoader: ImageLoader
 
@@ -27,13 +27,18 @@ final class PublicPetsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupAppearance()
-        setupLayout()
-        setupCollection()
         bindViewModel()
+        bindLanguageChanges()
+        installPublicPetsView()
 
         render(publicPetsViewModel.state)
         publicPetsViewModel.trigger(.onDidLoad)
+    }
+
+    private func installPublicPetsView() {
+        setupAppearance()
+        setupLayout()
+        setupCollection()
     }
 
     private func setupCollection() {
@@ -63,6 +68,24 @@ final class PublicPetsViewController: UIViewController {
                 self.render(self.publicPetsViewModel.state)
             }
             .store(in: &bag)
+    }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadLocalizedView()
+            }
+            .store(in: &bag)
+    }
+
+    private func reloadLocalizedView() {
+        guard isViewLoaded else { return }
+
+        publicPetsView.removeFromSuperview()
+        publicPetsView = PublicPetsView()
+        installPublicPetsView()
+        render(publicPetsViewModel.state)
     }
 
     private func render(_ state: PublicPetsState) {

@@ -34,6 +34,8 @@ final class UserProfileView: UIView {
     }
 
     func refreshLocalizedTexts() {
+        headerView.refreshLocalizedTexts()
+
         settingsRow.configure(
             icon: .init(
                 name: "gearshape.fill",
