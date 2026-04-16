@@ -14,6 +14,7 @@ final class UserProfileCoordinator: Coordinator {
     private let settingsRepository: SettingsRepository
     private let settingsApplicationController: SettingsApplicationControlling
     private let reminderController: PetActivityReminderControlling
+    private let bestScoreRepository: MiniGameBestScoreRepository
     private let imageLoader: ImageLoader
 
     private var userProfileViewModel: UserProfileViewModel?
@@ -26,6 +27,7 @@ final class UserProfileCoordinator: Coordinator {
         settingsRepository: SettingsRepository,
         settingsApplicationController: SettingsApplicationControlling,
         reminderController: PetActivityReminderControlling,
+        bestScoreRepository: MiniGameBestScoreRepository,
         imageLoader: ImageLoader
     ) {
         self.navigationController = navigationController
@@ -34,6 +36,7 @@ final class UserProfileCoordinator: Coordinator {
         self.settingsRepository = settingsRepository
         self.settingsApplicationController = settingsApplicationController
         self.reminderController = reminderController
+        self.bestScoreRepository = bestScoreRepository
         self.imageLoader = imageLoader
     }
 
@@ -60,6 +63,7 @@ final class UserProfileCoordinator: Coordinator {
     func start() {
         let viewModel = UserProfileViewModel(
             petRepository: petRepository,
+            bestScoreRepository: bestScoreRepository,
             userProfileRepository: userProfileRepository,
             moduleOutput: self
         )

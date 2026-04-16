@@ -188,6 +188,7 @@ final class TabBarController: UITabBarController {
             settingsRepository: settingsRepository,
             settingsApplicationController: settingsApplicationController,
             reminderController: reminderController,
+            bestScoreRepository: UserDefaultsMiniGameBestScoreService(),
             imageLoader: imageLoader
         )
         self.userProfileCoordinator = userProfileCoordinator
