@@ -42,8 +42,8 @@ final class MiniGameScoreboardView: UIView {
     }
 
     func setData(score: Int, bestScore: Int) {
-        scoreLabel.text = "Score: \(formatted(score))"
-        highScoreLabel.text = "HIGH: \(bestScore)"
+        scoreLabel.text = "\(NSLocalizedString("mini.game.scoreboard.score", comment: "")): \(formatted(score))"
+        highScoreLabel.text = "\(NSLocalizedString("mini.game.scoreboard.high", comment: "")): \(bestScore)"
 
         animateScoreIfNeeded(score: score)
         animateBestScoreIfNeeded(bestScore: bestScore)

@@ -105,9 +105,9 @@ final class PetActivityReminderController: PetActivityReminderControlling {
                 self.scheduleAuthorizedReminders(reminders)
             case .notDetermined:
                 guard requestAuthorizationIfNeeded else { return }
-                self.localNotificationsRepository.requestAuthorization { [weak self] isGranted in
+                self.localNotificationsRepository.requestAuthorization { isGranted in
                     guard isGranted else { return }
-                    self?.scheduleAuthorizedReminders(reminders)
+                    self.scheduleAuthorizedReminders(reminders)
                 }
             case .denied:
                 return
