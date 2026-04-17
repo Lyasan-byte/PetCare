@@ -63,12 +63,7 @@ final class BarChartColumnView: UIView {
         columnTitle.text = title
         barColumn.backgroundColor = color
         
-        let ratio: CGFloat
-        if maxValue <= 0 {
-            ratio = 0
-        } else {
-            ratio = CGFloat(value / maxValue)
-        }
+        let ratio = maxValue <= 0 ? 0 : CGFloat(value / maxValue)
         
         let minHeight: CGFloat = ratio > 0 ? 8 : 0
         let maxHeight: CGFloat = 120

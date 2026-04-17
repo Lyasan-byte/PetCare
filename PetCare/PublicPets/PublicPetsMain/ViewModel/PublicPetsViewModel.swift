@@ -20,7 +20,7 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
     private var bag = Set<AnyCancellable>()
     private var lastDocument: DocumentSnapshot?
     private var content: PublicPetsContent
-    private var moduleOutput: PublicPetsModuleOutput?
+    private weak var moduleOutput: PublicPetsModuleOutput?
 
     private let userId: String
     private let pageSize = 10
