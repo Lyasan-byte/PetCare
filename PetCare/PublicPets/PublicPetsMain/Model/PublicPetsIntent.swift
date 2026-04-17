@@ -11,5 +11,6 @@ enum PublicPetsIntent {
     case onDidLoad
     case onPetCardTap(Pet)
     case onReachedItem(index: Int)
+    case onSortingMethodChange(PublicPetsSort)
     case onDismissAlert
 }
