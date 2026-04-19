@@ -91,6 +91,8 @@ public enum L10n {
     public static let delete = L10n.tr("Localizable", "common.delete", fallback: "Delete")
     /// Error
     public static let error = L10n.tr("Localizable", "common.error", fallback: "Error")
+    /// Help
+    public static let help = L10n.tr("Localizable", "common.help", fallback: "Help")
     /// OK
     public static let ok = L10n.tr("Localizable", "common.ok", fallback: "OK")
   }
@@ -172,6 +174,58 @@ public enum L10n {
       }
       /// Walk Reminder
       public static let title = L10n.tr("Localizable", "notifications.walk.title", fallback: "Walk Reminder")
+    }
+  }
+  public enum OnboardingCare {
+    /// Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.
+    public static let description = L10n.tr("Localizable", "onboardingCare.description", fallback: "Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.")
+    public enum Card {
+      public enum Analytics {
+        /// Smart Stats
+        public static let title = L10n.tr("Localizable", "onboardingCare.card.analytics.title", fallback: "Smart Stats")
+      }
+      public enum Grooming {
+        /// Grooming Plans
+        public static let title = L10n.tr("Localizable", "onboardingCare.card.grooming.title", fallback: "Grooming Plans")
+      }
+      public enum Vet {
+        /// Vet Visits
+        public static let title = L10n.tr("Localizable", "onboardingCare.card.vet.title", fallback: "Vet Visits")
+      }
+      public enum Walks {
+        /// Daily Walks
+        public static let title = L10n.tr("Localizable", "onboardingCare.card.walks.title", fallback: "Daily Walks")
+      }
+    }
+    public enum NextButton {
+      /// Next →
+      public static let title = L10n.tr("Localizable", "onboardingCare.nextButton.title", fallback: "Next →")
+    }
+    public enum Title {
+      /// Track Daily
+      public static let first = L10n.tr("Localizable", "onboardingCare.title.first", fallback: "Track Daily")
+      /// Care
+      public static let second = L10n.tr("Localizable", "onboardingCare.title.second", fallback: "Care")
+    }
+  }
+  public enum OnboardingCommunity {
+    /// Explore public pet profiles, share the journey, and jump into Pet Runner with your own companion.
+    public static let description = L10n.tr("Localizable", "onboardingCommunity.description", fallback: "Explore public pet profiles, share the journey, and jump into Pet Runner with your own companion.")
+    public enum Card {
+      public enum PublicPets {
+        /// Public Pets
+        public static let title = L10n.tr("Localizable", "onboardingCommunity.card.publicPets.title", fallback: "Public Pets")
+      }
+    }
+    public enum NextButton {
+      /// Get Started →
+      public static let title = L10n.tr("Localizable", "onboardingCommunity.nextButton.title", fallback: "Get Started →")
+    }
+    public enum Title {
+      /// Play &
+      public static let first = L10n.tr("Localizable", "onboardingCommunity.title.first", fallback: "Play &")
+      /// Connect
+      public static let second = L10n.tr("Localizable", "onboardingCommunity.title.second", fallback: "Connect")
     }
   }
   public enum PetAnalytics {

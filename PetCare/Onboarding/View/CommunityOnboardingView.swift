@@ -1,13 +1,13 @@
 //
-//  WelcomeOnboardingView.swift
+//  CommunityOnboardingView.swift
 //  PetCare
 //
-//  Created by Ляйсан on 19/4/26.
+//  Created by Artur Bagautdinov on 19/4/26.
 //
 
 import UIKit
 
-final class WelcomeOnboardingView: UIView, OnboardingPageView {
+final class CommunityOnboardingView: UIView, OnboardingPageView {
     var onSkipTap: (() -> Void)? {
         get { templateView.onSkipTap }
         set { templateView.onSkipTap = newValue }
@@ -20,25 +20,21 @@ final class WelcomeOnboardingView: UIView, OnboardingPageView {
 
     private let templateView = OnboardingTemplateView(
         content: OnboardingPageContent(
-            firstTitle: L10n.WelcomeOnboarding.Title.first,
-            secondTitle: L10n.WelcomeOnboarding.Title.second,
-            description: L10n.WelcomeOnboarding.description,
-            buttonTitle: L10n.WelcomeOnboarding.NextButton.title,
-            currentPage: 0,
+            firstTitle: L10n.OnboardingCommunity.Title.first,
+            secondTitle: L10n.OnboardingCommunity.Title.second,
+            description: L10n.OnboardingCommunity.description,
+            buttonTitle: L10n.OnboardingCommunity.NextButton.title,
+            currentPage: 2,
             totalPages: 3,
-            heroHeight: 260
+            heroHeight: 300
         ),
-        heroView: WelcomeOnboardingHeroView()
+        heroView: CommunityOnboardingHeroView()
     )
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
-    }
-
-    convenience init() {
-        self.init(frame: .zero)
     }
 
     private func setupHierarchy() {

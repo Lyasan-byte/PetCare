@@ -20,6 +20,8 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     private let authRepository: AuthRepository
     private let userProfileRepository: UserProfileRepository
     private let imageLoader: ImageLoader
+    private let onboardingStateRepository: OnboardingStateRepository
+    private var onboardingCoordinator: OnboardingCoordinator?
 
     init(
         navigationController: UINavigationController,
@@ -28,13 +30,15 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         userProfileRepository: UserProfileRepository = FirebaseUserProfileService(
             imageService: ImageUploadService()
         ),
-        imageLoader: ImageLoader = ImageLoadService()
+        imageLoader: ImageLoader = ImageLoadService(),
+        onboardingStateRepository: OnboardingStateRepository = UserDefaultsOnboardingStateService()
     ) {
         self.navigationController = navigationController
         self.output = output
         self.authRepository = authRepository
         self.userProfileRepository = userProfileRepository
         self.imageLoader = imageLoader
+        self.onboardingStateRepository = onboardingStateRepository
     }
 
     func start() {
@@ -103,6 +107,21 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
     private func finishAuthFlow() {
         output?.authFlowWantsToOpenMainScreen()
     }
+
+    private func showOnboardingHelp() {
+        let onboardingNavigationController = UINavigationController()
+        let onboardingCoordinator = OnboardingCoordinator(
+            navigationController: onboardingNavigationController,
+            onboardingStateRepository: onboardingStateRepository,
+            marksAsSeenOnFinish: false,
+            dismissOnFinish: true,
+            moduleOutput: self
+        )
+
+        self.onboardingCoordinator = onboardingCoordinator
+        onboardingCoordinator.start()
+        navigationController.present(onboardingNavigationController, animated: true)
+    }
 }
 
 extension AuthCoordinator: AuthFlowInput {}
@@ -127,10 +146,20 @@ extension AuthCoordinator: LoginModuleOutput, RegisterModuleOutput {
     func tapLogin() {
         showLogin()
     }
+
+    func moduleWantsToOpenOnboardingHelp() {
+        showOnboardingHelp()
+    }
 }
 
 extension AuthCoordinator: RegistrationCompletionModuleOutput {
     func registrationCompletionModuleDidFinish() {
         finishAuthFlow()
+    }
+}
+
+extension AuthCoordinator: OnboardingModuleOutput {
+    func onboardingModuleDidFinish() {
+        onboardingCoordinator = nil
     }
 }
