@@ -308,3 +308,13 @@
 // MARK: - Activities History
 
 "activitiesHistory.title" = "История";
+
+// MARK: - Welcome Onboarding
+
+"welcomeOnboarding.header.text" = "Pet Care";
+"welcomeOnboarding.skipButton.title" = "Пропустить";
+"welcomeOnboarding.title.first" = "Добро пожаловать в";
+"welcomeOnboarding.title.second" = "Pet Care";
+"welcomeOnboarding.description" = "Идеальное место для ваших пушистых друзей. Следите за уходом, здоровьем и не только.";
+"welcomeOnboarding.nextButton.title" = "Далее →";
+"welcomeOnboarding.imageBadge.text" = "ЛУЧШИЙ ДРУГ";

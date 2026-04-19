@@ -12,7 +12,7 @@ final class PetCardBadge: UIView {
     private let icon = ImageView()
     private let badgeText = TextLabel(font: .systemFont(ofSize: 16, weight: .medium))
     private lazy var contentStack = HStack(
-        spacing: 2,
+        spacing: 5,
         alignment: .center,
         arrangedSubviews: [icon, badgeText]
     )
@@ -29,22 +29,58 @@ final class PetCardBadge: UIView {
         icon: String,
         text: String = "",
         font: UIFont = .systemFont(ofSize: 12, weight: .medium),
-        height: CGFloat
+        border: UIColor = .clear,
+        height: CGFloat,
+        iconSize: CGFloat = 18
     ) {
         self.init(frame: .zero)
-        setData(backgroundColor: backgroundColor, color: color, icon: icon, text: text, font: font)
+        setData(
+            backgroundColor: backgroundColor,
+            color: color,
+            icon: icon,
+            text: text,
+            font: font,
+            border: border,
+            iconSize: iconSize
+        )
         setHeight(height)
         setCornerRadius(height: height)
     }
 
-    private func setData(backgroundColor: UIColor, color: UIColor, icon: String, text: String, font: UIFont) {
+    private func setData(
+        backgroundColor: UIColor,
+        color: UIColor,
+        icon: String,
+        text: String,
+        font: UIFont,
+        border: UIColor,
+        iconSize: CGFloat
+    ) {
         background.backgroundColor = backgroundColor
-        self.icon.image = UIImage(systemName: icon)
+        background.layer.borderColor = border.cgColor
+        background.layer.borderWidth = 2
+
+        self.icon.setSymbol(icon, pointSize: iconSize, weight: .medium)
         self.icon.tintColor = color
+
         badgeText.text = text
         badgeText.font = font
         badgeText.textColor = color
         badgeText.lineBreakMode = .byTruncatingTail
+    }
+
+    func configure(activity: PetLastActivity, height: CGFloat, iconSize: CGFloat = 18) {
+        setData(
+            backgroundColor: activity.type.activityBackgroundColor,
+            color: activity.type.color,
+            icon: activity.type.badgeIcon,
+            text: "\(activity.type.name.uppercased()) \(formatDate(activity.date))",
+            font: .systemFont(ofSize: 10, weight: .medium),
+            border: .clear,
+            iconSize: iconSize
+        )
+        setHeight(height)
+        setCornerRadius(height: height)
     }
 
     private func setHeight(_ height: CGFloat) {
@@ -60,16 +96,12 @@ final class PetCardBadge: UIView {
         badgeText.text = text
     }
     
-    func configure(activity: PetLastActivity, height: CGFloat) {
-        setData(
-            backgroundColor: activity.type.activityBackgroundColor,
-            color: activity.type.color,
-            icon: activity.type.badgeIcon,
-            text: "\(activity.type.name.uppercased()) \(formatDate(activity.date))",
-            font: .systemFont(ofSize: 10, weight: .medium)
-        )
-        setHeight(height)
-        setCornerRadius(height: height)
+    func setShadow(color: UIColor = .label) {
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowOffset = CGSize(width: 0, height: 5)
+        layer.shadowRadius = 12
+        layer.masksToBounds = false
     }
 
     private func setupHierarchy() {
@@ -82,7 +114,6 @@ final class PetCardBadge: UIView {
 
         icon.setContentHuggingPriority(.required, for: .horizontal)
         icon.setContentCompressionResistancePriority(.required, for: .horizontal)
-
         badgeText.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         NSLayoutConstraint.activate([
@@ -92,12 +123,12 @@ final class PetCardBadge: UIView {
             background.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             contentStack.topAnchor.constraint(equalTo: background.topAnchor, constant: 7),
-            contentStack.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 10),
-            contentStack.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -10),
+            contentStack.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 12),
+            contentStack.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -12),
             contentStack.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -7)
         ])
     }
-    
+
     private func formatDate(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current

@@ -104,7 +104,7 @@ final class PetCardRowView: UIView {
         petStatusView.isHidden = pet.iconStatus == .none
         
         if let activity = pet.lastActivity {
-            activityBadge.configure(activity: activity, height: 25)
+            activityBadge.configure(activity: activity, height: 25, iconSize: 16)
             hstack.alignment = .center
         }
         activityBadge.isHidden = pet.lastActivity == nil

@@ -110,6 +110,70 @@ public enum L10n {
       }
     }
   }
+  public enum Mini {
+    public enum Game {
+      public enum Empty {
+        /// Add a pet in My Pets to use it as a runner.
+        public static let subtitle = L10n.tr("Localizable", "mini.game.empty.subtitle", fallback: "Add a pet in My Pets to use it as a runner.")
+        /// No pets for runner selection
+        public static let title = L10n.tr("Localizable", "mini.game.empty.title", fallback: "No pets for runner selection")
+      }
+      public enum Field {
+        /// Best
+        public static let bestScore = L10n.tr("Localizable", "mini.game.field.best_score", fallback: "Best")
+        /// Game Over
+        public static let gameOver = L10n.tr("Localizable", "mini.game.field.game_over", fallback: "Game Over")
+        /// Score
+        public static let lastScore = L10n.tr("Localizable", "mini.game.field.last_score", fallback: "Score")
+        /// Choose a pet to start
+        public static let noPet = L10n.tr("Localizable", "mini.game.field.no_pet", fallback: "Choose a pet to start")
+        /// Gameplay will be connected here next.
+        public static let previewHint = L10n.tr("Localizable", "mini.game.field.preview_hint", fallback: "Gameplay will be connected here next.")
+        /// Restart
+        public static let restart = L10n.tr("Localizable", "mini.game.field.restart", fallback: "Restart")
+        /// Run preview in progress
+        public static let running = L10n.tr("Localizable", "mini.game.field.running", fallback: "Run preview in progress")
+        /// Tap the field to start
+        public static let startHint = L10n.tr("Localizable", "mini.game.field.start_hint", fallback: "Tap the field to start")
+        /// TAP TO JUMP
+        public static let tapToJump = L10n.tr("Localizable", "mini.game.field.tap_to_jump", fallback: "TAP TO JUMP")
+      }
+      public enum Runner {
+        /// SELECT YOUR RUNNER
+        public static let select = L10n.tr("Localizable", "mini.game.runner.select", fallback: "SELECT YOUR RUNNER")
+      }
+      public enum Screen {
+        /// Pet Runner
+        public static let title = L10n.tr("Localizable", "mini.game.screen.title", fallback: "Pet Runner")
+      }
+    }
+  }
+  public enum Notifications {
+    public enum Grooming {
+      /// It's time to plan %1$@'s grooming.
+      public static func body(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "notifications.grooming.body", String(describing: p1), fallback: "It's time to plan %1$@'s grooming.")
+      }
+      /// Grooming Reminder
+      public static let title = L10n.tr("Localizable", "notifications.grooming.title", fallback: "Grooming Reminder")
+    }
+    public enum Vet {
+      /// It's time to plan %1$@'s vet visit.
+      public static func body(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "notifications.vet.body", String(describing: p1), fallback: "It's time to plan %1$@'s vet visit.")
+      }
+      /// Vet Reminder
+      public static let title = L10n.tr("Localizable", "notifications.vet.title", fallback: "Vet Reminder")
+    }
+    public enum Walk {
+      /// It's time for %1$@'s walk.
+      public static func body(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "notifications.walk.body", String(describing: p1), fallback: "It's time for %1$@'s walk.")
+      }
+      /// Walk Reminder
+      public static let title = L10n.tr("Localizable", "notifications.walk.title", fallback: "Walk Reminder")
+    }
+  }
   public enum PetAnalytics {
     /// Analytics
     public static let title = L10n.tr("Localizable", "petAnalytics.title", fallback: "Analytics")
@@ -215,6 +279,14 @@ public enum L10n {
         public static let subtitle = L10n.tr("Localizable", "pets.activity.reminder.subtitle", fallback: "Get notified for next session.")
         /// Set Reminder
         public static let title = L10n.tr("Localizable", "pets.activity.reminder.title", fallback: "Set Reminder")
+        public enum Daily {
+          /// Receive a reminder every day at 9:00.
+          public static let subtitle = L10n.tr("Localizable", "pets.activity.reminder.daily.subtitle", fallback: "Receive a reminder every day at 9:00.")
+        }
+        public enum Monthly {
+          /// Receive a reminder every month at 9:00.
+          public static let subtitle = L10n.tr("Localizable", "pets.activity.reminder.monthly.subtitle", fallback: "Receive a reminder every month at 9:00.")
+        }
       }
       public enum Screen {
         /// Create Activity
@@ -550,14 +622,14 @@ public enum L10n {
     public enum Notifications {
       /// All Notifications
       public static let all = L10n.tr("Localizable", "settings.notifications.all", fallback: "All Notifications")
-      /// General Reminders
-      public static let generalReminders = L10n.tr("Localizable", "settings.notifications.general_reminders", fallback: "General Reminders")
       /// Grooming
       public static let grooming = L10n.tr("Localizable", "settings.notifications.grooming", fallback: "Grooming")
       /// Notification Settings
       public static let title = L10n.tr("Localizable", "settings.notifications.title", fallback: "Notification Settings")
       /// Veterinarian
       public static let veterinarian = L10n.tr("Localizable", "settings.notifications.veterinarian", fallback: "Veterinarian")
+      /// Walks
+      public static let walk = L10n.tr("Localizable", "settings.notifications.walk", fallback: "Walks")
     }
     public enum Screen {
       /// Settings
@@ -636,6 +708,32 @@ public enum L10n {
         /// Settings
         public static let title = L10n.tr("Localizable", "user.profile.settings.title", fallback: "Settings")
       }
+    }
+  }
+  public enum WelcomeOnboarding {
+    /// The ultimate sanctuary for your furry friends. Track care, health and more.
+    public static let description = L10n.tr("Localizable", "welcomeOnboarding.description", fallback: "The ultimate sanctuary for your furry friends. Track care, health and more.")
+    public enum Header {
+      /// Pet Care
+      public static let text = L10n.tr("Localizable", "welcomeOnboarding.header.text", fallback: "Pet Care")
+    }
+    public enum ImageBadge {
+      /// KINDRED SPIRIT
+      public static let text = L10n.tr("Localizable", "welcomeOnboarding.imageBadge.text", fallback: "KINDRED SPIRIT")
+    }
+    public enum NextButton {
+      /// Next →
+      public static let title = L10n.tr("Localizable", "welcomeOnboarding.nextButton.title", fallback: "Next →")
+    }
+    public enum SkipButton {
+      /// Skip
+      public static let title = L10n.tr("Localizable", "welcomeOnboarding.skipButton.title", fallback: "Skip")
+    }
+    public enum Title {
+      /// Welcome to
+      public static let first = L10n.tr("Localizable", "welcomeOnboarding.title.first", fallback: "Welcome to")
+      /// Pet Care
+      public static let second = L10n.tr("Localizable", "welcomeOnboarding.title.second", fallback: "Pet Care")
     }
   }
 }

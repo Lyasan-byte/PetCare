@@ -313,3 +313,13 @@
 // MARK: - Activities History
 
 "activitiesHistory.title" = "History";
+
+// MARK: - Welcome Onboarding
+
+"welcomeOnboarding.header.text" = "Pet Care";
+"welcomeOnboarding.skipButton.title" = "Skip";
+"welcomeOnboarding.title.first" = "Welcome to";
+"welcomeOnboarding.title.second" = "Pet Care";
+"welcomeOnboarding.description" = "The ultimate sanctuary for your furry friends. Track care, health and more.";
+"welcomeOnboarding.nextButton.title" = "Next →";
+"welcomeOnboarding.imageBadge.text" = "KINDRED SPIRIT";
