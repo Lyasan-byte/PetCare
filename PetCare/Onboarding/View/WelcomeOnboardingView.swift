@@ -13,10 +13,15 @@ final class WelcomeOnboardingView: UIView {
     
     private let gradientBackground = GradientView()
     
-    private let header = Header(icon: "pawprint.fill", text: L10n.WelcomeOnboarding.Header.text)
+    private let header = Header(
+        icon: "pawprint.fill",
+        text: L10n.WelcomeOnboarding.Header.text
+    )
     private let skipButton = SkipButton()
     
-    private let imageBackground = BackgroundView(backgroundColor: .tertiarySystemBackground)
+    private let imageBackground = BackgroundView(
+        backgroundColor: .tertiarySystemBackground
+    )
     private let imageBadge = PetCardBadge(
         backgroundColor: Asset.petPurple.color,
         color: Asset.purpleAccentStatus.color,

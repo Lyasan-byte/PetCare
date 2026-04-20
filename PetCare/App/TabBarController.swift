@@ -95,20 +95,13 @@ final class TabBarController: UITabBarController {
         userProfileCoordinator.start()
         userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
         userProfileNavigationController.tabBarItem.title = nil
-
-        //
-        let vc = WelcomeOnboardingViewController()
-        let navVC = UINavigationController(rootViewController: vc)
-        navVC.tabBarItem.title = "Test"
-        //
         
         setViewControllers(
             [
                 petsNavigationController,
                 publicPetsNavigationController,
                 miniGameNavigationController,
-                userProfileNavigationController,
-                navVC
+                userProfileNavigationController
             ],
             animated: true
         )

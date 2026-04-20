@@ -10,14 +10,17 @@ import Foundation
 import FirebaseFirestore
 
 final class ActivitiesHistoryService: ActivitiesHistoryRepository {
-    
     private var firestore: Firestore
     
     init(firestore: Firestore = .firestore()) {
         self.firestore = firestore
     }
     
-    func fetchActivities(for petId: String, after document: DocumentSnapshot?, pageSize: Int) -> AnyPublisher<ActivitiesHistoryPage, Error> {
+    func fetchActivities(
+        for petId: String,
+        after document: DocumentSnapshot?,
+        pageSize: Int
+    ) -> AnyPublisher<ActivitiesHistoryPage, Error> {
         var query = baseQuery(for: petId, pageSize: pageSize)
         
         if let document {
