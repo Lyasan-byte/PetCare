@@ -21,6 +21,7 @@ final class PetProfileCoordinator: Coordinator {
     private var petProfileViewModel: PetProfileViewModel?
     private let pet: Pet
     private let reminderController: PetActivityReminderControlling
+    private let cache: PetCacheRepository
     private let imageLoader: ImageLoader
 
     private var childCoordinators: [Coordinator] = []
@@ -33,6 +34,7 @@ final class PetProfileCoordinator: Coordinator {
         petRepository: PetRepository,
         pet: Pet,
         reminderController: PetActivityReminderControlling,
+        cache: PetCacheRepository,
         imageLoader: ImageLoader
     ) {
         self.navigationController = navigationController
@@ -40,6 +42,7 @@ final class PetProfileCoordinator: Coordinator {
         self.petRepository = petRepository
         self.pet = pet
         self.reminderController = reminderController
+        self.cache = cache
         self.imageLoader = imageLoader
     }
 
@@ -126,6 +129,7 @@ final class PetProfileCoordinator: Coordinator {
             ownerId: ownerId,
             petRepository: petRepository,
             reminderController: reminderController,
+            cache: cache,
             imageLoader: imageLoader,
             navigationController: navigationController
         )
