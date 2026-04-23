@@ -56,9 +56,8 @@ The app supports reminders for grooming and vet visits. Users can enable notific
 ### iOS
 - UIKit
 - Firebase
-- CoreData
+- SwiftData
 - UserNotifications
-- Charts
 - SwiftLint
 - SwiftGen
 - SPM
