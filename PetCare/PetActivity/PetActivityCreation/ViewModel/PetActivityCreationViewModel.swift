@@ -24,7 +24,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
     private let petRepository: PetRepository
     private let activityRepository: PetActivityRepository
     private let reminderController: PetActivityReminderControlling
-    private let moduleOutput: PetActivityCreationModuleOutput?
+    private weak var moduleOutput: PetActivityCreationModuleOutput?
 
     init(
         initialActivity: PetActivityType,

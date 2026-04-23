@@ -21,7 +21,7 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
     private var lastDocument: DocumentSnapshot?
     private var sortingMethod: PublicPetsSort = .gameScore
     private var content: PublicPetsContent
-    private var moduleOutput: PublicPetsModuleOutput?
+    private weak var moduleOutput: PublicPetsModuleOutput?
 
     private let userId: String
     private let pageSize = 10
