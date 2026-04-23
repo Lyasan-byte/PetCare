@@ -266,6 +266,9 @@
 "pets.public.game_score.points.few" = "%d очка";
 "pets.public.game_score.points.many" = "%d очков";
 
+"publicPets.sort.gameScore" = "По счету";
+"publicPets.sort.name" = "По имени";
+
 //MARK: - Error
 
 "repository.error.deallocated" = "Репозиторий был освобожден из памяти";
@@ -310,3 +313,20 @@
 // MARK: - Activities History
 
 "activitiesHistory.title" = "История";
+
+// MARK: - Pet Activity Creation Validation
+
+"petActivityCreation.validation.selectPet" = "Пожалуйста, выберите питомца";
+"petActivityCreation.validation.walk.goalDistance" = "Пожалуйста, укажите целевую дистанцию";
+"petActivityCreation.validation.walk.goalGreaterThanZero" = "Целевая дистанция должна быть больше 0";
+"petActivityCreation.validation.walk.goalMaxLimit" = "Целевая дистанция должна быть меньше 30";
+"petActivityCreation.validation.walk.actualDistance" = "Пожалуйста, укажите пройденную дистанцию";
+"petActivityCreation.validation.walk.actualMaxLimit" = "Пройденная дистанция должна быть меньше 40";
+"petActivityCreation.validation.walk.actualGreaterThanZero" = "Пройденная дистанция должна быть больше 0";
+"petActivityCreation.validation.grooming.cost" = "Пожалуйста, укажите стоимость груминга";
+"petActivityCreation.validation.grooming.duration" = "Пожалуйста, укажите продолжительность груминга";
+"petActivityCreation.validation.grooming.costGreaterThanZero" = "Стоимость груминга должна быть больше 0";
+"petActivityCreation.validation.grooming.durationGreaterThanZero" = "Продолжительность груминга должна быть больше 0";
+"petActivityCreation.validation.vet.cost" = "Пожалуйста, укажите стоимость визита к ветеринару";
+"petActivityCreation.validation.vet.costGreaterThanZero" = "Стоимость визита к ветеринару должна быть больше 0";
+"petActivityCreation.validation.fillFieldsCorrectly" = "Пожалуйста, заполните все поля корректно";

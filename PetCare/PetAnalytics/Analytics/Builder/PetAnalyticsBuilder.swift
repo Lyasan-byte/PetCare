@@ -90,8 +90,8 @@ private extension PetAnalyticsBuilder {
         var values = Array(repeating: 0.0, count: buckets.count)
 
         for activity in activities {
-            guard let bucketIndex = bucketIndex(for: activity.date, in: buckets) else { continue }
-            guard case let .walk(details) = activity.details else { continue }
+            guard let bucketIndex = bucketIndex(for: activity.date, in: buckets),
+                  case let .walk(details) = activity.details else { continue }
 
             values[bucketIndex] += details.actual
         }

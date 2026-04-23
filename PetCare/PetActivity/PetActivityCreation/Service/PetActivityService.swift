@@ -11,12 +11,17 @@ import FirebaseFirestore
 
 final class PetActivityService: PetActivityRepository {
     private let firestore: Firestore
-    
+    private let cache: PetCacheRepository
+
     private let activities = "activities"
     private let pets = "pets"
 
-    init(firestore: Firestore = .firestore()) {
+    init(
+        firestore: Firestore = .firestore(),
+        cache: PetCacheRepository
+    ) {
         self.firestore = firestore
+        self.cache = cache
     }
 
     func makeNewActivityId() -> String {
@@ -54,10 +59,10 @@ final class PetActivityService: PetActivityRepository {
                             return promise(.success(()))
                         }
                         
-                        let activityToUpdate: [String:Any] = [
-                            PetLastActivity.CodingKeys.id.rawValue : activityId,
-                            PetLastActivity.CodingKeys.type.rawValue : activity.type.rawValue,
-                            PetLastActivity.CodingKeys.date.rawValue : activity.date
+                        let activityToUpdate: [String: Any] = [
+                            PetLastActivity.CodingKeys.id.rawValue: activityId,
+                            PetLastActivity.CodingKeys.type.rawValue: activity.type.rawValue,
+                            PetLastActivity.CodingKeys.date.rawValue: activity.date
                         ]
                         
                         pets.setData([
@@ -65,9 +70,21 @@ final class PetActivityService: PetActivityRepository {
                         ], merge: true) { error in
                             if let error {
                                 promise(.failure(error))
-                            } else {
-                                promise(.success(()))
                             }
+                            do {
+                                try self.cache.updateLastActivity(
+                                    PetLastActivity(
+                                        id: activityId,
+                                        type: activity.type,
+                                        date: activity.date
+                                    ),
+                                    for: activity.petId
+                                )
+                            } catch {
+                                print("Failed to update cached last activity: \(error.localizedDescription)")
+                            }
+
+                            promise(.success(()))
                         }
                     }
                 }

@@ -36,6 +36,16 @@ final class PetAnalyticsViewController: UIViewController {
         petAnalyticsViewModel.trigger(.onDidLoad)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     private func setupAppearance() {
         title = L10n.PetAnalytics.title
         view.backgroundColor = .secondarySystemBackground
