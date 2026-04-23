@@ -11,8 +11,6 @@ final class PetProfileButton: UIView {
     var onTap: (() -> Void)?
 
     var background = BackgroundView(cornerRadius: 20)
-    var buttonText = TextLabel(font: .systemFont(ofSize: 16, weight: .semibold))
-
     var button = UIButton(type: .system)
 
     override init(frame: CGRect) {
@@ -29,10 +27,13 @@ final class PetProfileButton: UIView {
         let config = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
 
         configuration.image = UIImage(systemName: image, withConfiguration: config)
-        configuration.title = text
         configuration.imagePadding = 5
         configuration.baseForegroundColor = textColor
         configuration.contentInsets = .zero
+        
+        var titleAttributes = AttributeContainer()
+        titleAttributes.font = .systemFont(ofSize: 16, weight: .semibold)
+        configuration.attributedTitle = AttributedString(text, attributes: titleAttributes)
 
         button.configuration = configuration
         button.backgroundColor = backgroundColor

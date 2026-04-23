@@ -19,6 +19,7 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
     private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
     private var lastDocument: DocumentSnapshot?
+    private var sortingMethod: PublicPetsSort = .gameScore
     private var content: PublicPetsContent
     private var moduleOutput: PublicPetsModuleOutput?
 
@@ -45,7 +46,19 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
             fetchPets()
         case .onDismissAlert:
             state = .content(content)
+        case .onSortingMethodChange(let sortOption):
+            guard sortingMethod != sortOption else { return }
+            self.sortingMethod = sortOption
+            resetAndFetchPets()
         }
+    }
+    
+    private func resetAndFetchPets() {
+        bag.removeAll()
+        lastDocument = nil
+        content.pets = []
+        content.hasMore = true
+        fetchPets()
     }
 
     private func fetchPets() {
@@ -55,8 +68,8 @@ final class PublicPetsViewModel: PublicPetsViewModeling {
         if firstPage {
             state = .loading
         }
-
-        petRepository.fetch(after: lastDocument, pageSize: pageSize)
+        
+        petRepository.fetch(after: lastDocument, pageSize: pageSize, sort: sortingMethod)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }

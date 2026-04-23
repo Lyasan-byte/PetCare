@@ -18,9 +18,10 @@ final class PublicPetService: PublicPetRepository {
 
     func fetch(
         after document: DocumentSnapshot?,
-        pageSize: Int
+        pageSize: Int,
+        sort: PublicPetsSort
     ) -> AnyPublisher<PublicPetsPage, Error> {
-        var query = baseQuery(pageSize)
+        var query = baseQuery(pageSize, sort: sort)
 
         if let document {
             query = query.start(afterDocument: document)
@@ -41,11 +42,19 @@ final class PublicPetService: PublicPetRepository {
             .eraseToAnyPublisher()
     }
 
-    private func baseQuery(_ size: Int) -> Query {
-        firestore.collection("pets")
-            .whereField(Pet.CodingKeys.isPublic.rawValue, isEqualTo: true)
-            .order(by: Pet.CodingKeys.gameScore.rawValue, descending: true)
-            .limit(to: size)
+    private func baseQuery(_ size: Int, sort: PublicPetsSort) -> Query {
+         let query = firestore.collection("pets")
+                        .whereField(Pet.CodingKeys.isPublic.rawValue, isEqualTo: true)                        
+        switch sort {
+        case .gameScore:
+            return query
+                .order(by: Pet.CodingKeys.gameScore.rawValue, descending: true)
+                .limit(to: size)
+        case .name:
+            return query
+                .order(by: Pet.CodingKeys.name.rawValue, descending: false)
+                .limit(to: size)
+        }
     }
 }
 

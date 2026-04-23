@@ -8,8 +8,6 @@
 import UIKit
 
 enum PetProfileCoordinatorResult {
-    case createdActivity
-    case updated
     case deleted
     case closed
 }
@@ -27,6 +25,7 @@ final class PetProfileCoordinator: Coordinator {
     private var childCoordinators: [Coordinator] = []
 
     var onFinish: ((PetProfileCoordinatorResult) -> Void)?
+    var onChange: (() -> Void)?
 
     init(
         navigationController: UINavigationController,
@@ -95,7 +94,7 @@ final class PetProfileCoordinator: Coordinator {
                 break
             case .saved(let pet):
                 self?.petProfileViewModel?.update(pet)
-                self?.onFinish?(.updated)
+                self?.onChange?()
             case .deleted:
                 self?.navigationController.popViewController(animated: true)
                 self?.onFinish?(.deleted)
@@ -135,9 +134,9 @@ final class PetProfileCoordinator: Coordinator {
         )
 
         childCoordinators.append(petActivityCoordinator)
-
+        
         petActivityCoordinator.onFinish = { [weak self, weak petActivityCoordinator] in
-            self?.onFinish?(.createdActivity)
+            self?.onChange?()
             if let petActivityCoordinator {
                 self?.removeCoordinator(petActivityCoordinator)
             }

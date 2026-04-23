@@ -10,6 +10,7 @@ import UIKit
 final class BarChartView: UIView {
     private let stack = UIStackView()
     private var columnViews: [BarChartColumnView] = []
+    private let scale = BarChartScaleView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,14 +24,20 @@ final class BarChartView: UIView {
     }
     
     private func setupHierarchy() {
+        addSubview(scale)
         addSubview(stack)
     }
     
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            scale.topAnchor.constraint(equalTo: stack.topAnchor, constant: 6),
+            scale.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scale.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scale.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
+            
             stack.topAnchor.constraint(equalTo: topAnchor),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),
             stack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
@@ -40,6 +47,10 @@ final class BarChartView: UIView {
         rebuildColumnsIfNeeded(count: items.count)
         
         let maxValue = items.map(\.value).max() ?? 0
+        let mid1 = maxValue / 3
+        let mid2 = 2 * maxValue / 3
+        
+        scale.configure(values: [maxValue, mid2, mid1, 0])
         
         for (index, item) in items.enumerated() {
             columnViews[index]
