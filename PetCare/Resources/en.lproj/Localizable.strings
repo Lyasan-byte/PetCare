@@ -124,6 +124,8 @@
 "mini.game.field.last_score" = "Score";
 "mini.game.field.best_score" = "Best";
 "mini.game.field.no_pet" = "Choose a pet to start";
+"mini.game.scoreboard.score" = "Score";
+"mini.game.scoreboard.high" = "HIGH";
 
 
 // MARK: - User Profile

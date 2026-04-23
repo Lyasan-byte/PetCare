@@ -123,6 +123,8 @@
 "mini.game.field.last_score" = "Счет";
 "mini.game.field.best_score" = "Лучший";
 "mini.game.field.no_pet" = "Выберите питомца для старта";
+"mini.game.scoreboard.score" = "Счет";
+"mini.game.scoreboard.high" = "ЛУЧШИЙ";
 
 
 // MARK: - User Profile

@@ -53,11 +53,20 @@ final class UserDefaultsPetActivityReminderStore: PetActivityReminderStoreReposi
             return []
         }
 
-        return (try? decoder.decode([PetActivityReminder].self, from: data)) ?? []
+        do {
+            return try decoder.decode([PetActivityReminder].self, from: data)
+        } catch {
+            print(error)
+            return []
+        }
     }
 
     private func persist(_ reminders: [PetActivityReminder]) {
-        let data = try? encoder.encode(reminders)
-        userDefaults.set(data, forKey: Keys.reminders)
+        do {
+            let data = try encoder.encode(reminders)
+            userDefaults.set(data, forKey: Keys.reminders)
+        } catch {
+            print(error)
+        }
     }
 }
