@@ -2,9 +2,12 @@
 
 <p align="center">
   <img src="Screenshots/onboarding1.jpg" width="220" />
+  &nbsp;&nbsp;&nbsp;
   <img src="Screenshots/onboarding2.jpg" width="220" />
+  &nbsp;&nbsp;&nbsp;
   <img src="Screenshots/onboarding3.jpg" width="220" />
 </p>
+
 
 ## About
 
