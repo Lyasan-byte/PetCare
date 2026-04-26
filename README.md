@@ -81,7 +81,7 @@ Users can manage their personal profile and adjust app preferences from dedicate
 
 <p align="center">
   <img src="Screenshots/profile-light.png" width="220" />
-  <img src="Screenshots/settings.png" width="220" />
+  <img src="Screenshots/settings.mov" width="220" />
 </p>
 
 ## Analytics
