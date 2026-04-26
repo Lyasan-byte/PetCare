@@ -54,7 +54,8 @@ Pet Care allows users to record daily care activities such as walks, grooming se
 The analytics screen helps users understand their pet’s activity and care routine through statistics, progress tracking, latest care events, and time-based filters.
 
 <p align="center">
-  <img src="Screenshots/analytics.mov" width="240" />
+  <img src="Screenshots/analytics-light" width="240" />
+  <img src="Screenshots/analytics-dark" width="240" />
 </p>
 
 ### Public Profiles
@@ -63,8 +64,8 @@ Users can explore public pet profiles and view shared pet information in a clean
 
 <p align="center">
   <img src="Screenshots/public-pets-light.png" width="220" />
-  <img src="Screenshots/public-pets-profile-light.png" width="220" />
-  <img src="Screenshots/public-pets-profile-dark.png" width="220" />
+  <img src="Screenshots/public-pet-profile-light.png" width="220" />
+  <img src="Screenshots/public-pet-profile-dark.png" width="220" />
 </p>
 
 ### Mini-Game
@@ -80,7 +81,7 @@ The app includes a simple mini-game where the user’s pet becomes the main char
 Users can manage their personal profile and adjust app preferences from dedicated profile and settings screens.
 
 <p align="center">
-  <img src="Screenshots/settings.gif" width="220" />
+  <img src="Screenshots/settings.mov" width="220" />
 </p>
 
 ## Analytics
