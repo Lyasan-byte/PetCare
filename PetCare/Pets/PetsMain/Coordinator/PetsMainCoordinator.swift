@@ -11,6 +11,7 @@ final class PetsMainCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let petRepository: PetRepository
     private let tipRepository: TipRepository
+    private let petFactsRepository: PetFactsRepository
     private let ownerId: String
     private let imageLoader: ImageLoader
     private let reminderController: PetActivityReminderControlling
@@ -23,6 +24,7 @@ final class PetsMainCoordinator: Coordinator {
         navigationController: UINavigationController,
         petRepository: PetRepository,
         tipRepository: TipRepository,
+        petFactsRepository: PetFactsRepository,
         ownerId: String,
         reminderController: PetActivityReminderControlling,
         imageLoader: ImageLoader
@@ -30,6 +32,7 @@ final class PetsMainCoordinator: Coordinator {
         self.navigationController = navigationController
         self.petRepository = petRepository
         self.tipRepository = tipRepository
+        self.petFactsRepository = petFactsRepository
         self.ownerId = ownerId
         self.reminderController = reminderController
         self.imageLoader = imageLoader
@@ -81,6 +84,7 @@ final class PetsMainCoordinator: Coordinator {
             navigationController: navigationController,
             ownerId: ownerId,
             petRepository: petRepository,
+            petFactsRepository: petFactsRepository,
             pet: pet,
             reminderController: reminderController,
             imageLoader: imageLoader

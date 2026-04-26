@@ -10,13 +10,20 @@ import UIKit
 final class PublicPetProfileCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let pet: Pet
+    private let petFactsRepository: PetFactsRepository
     private let imageLoader: ImageLoader
 
     var onFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController, pet: Pet, imageLoader: ImageLoader) {
+    init(
+        navigationController: UINavigationController,
+        pet: Pet,
+        petFactsRepository: PetFactsRepository,
+        imageLoader: ImageLoader
+    ) {
         self.navigationController = navigationController
         self.pet = pet
+        self.petFactsRepository = petFactsRepository
         self.imageLoader = imageLoader
     }
 
@@ -25,7 +32,7 @@ final class PublicPetProfileCoordinator: Coordinator {
             publicPetProfileViewModel: PublicPetProfileViewModel(
                 pet: pet,
                 userRepository: FirestoreUserService(),
-                petFactsRepository: PetFactsService(),
+                petFactsRepository: petFactsRepository,
                 moduleOutput: self
             ),
             imageLoader: imageLoader
