@@ -63,9 +63,9 @@ The analytics screen helps users understand their pet’s activity and care rout
 Users can explore public pet profiles and view shared pet information in a clean, social-style interface.
 
 <p align="center">
-  <img src="Screenshots/public-pets-light.png" width="220" />
-  <img src="Screenshots/public-pet-profile-light.png" width="220" />
-  <img src="Screenshots/public-pets-dark.png" width="220" />
+  <img src="Screenshots/public-pets-light.png" width="220" /> &nbsp;
+  <img src="Screenshots/public-pet-profile-light.png" width="220" /><br>
+  <img src="Screenshots/public-pets-dark.png" width="220" /> &nbsp;
   <img src="Screenshots/publi-pet-profile-dark.png" width="220" />
 </p>
 
