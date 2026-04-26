@@ -80,7 +80,7 @@ The app includes a simple mini-game where the user’s pet becomes the main char
 Users can manage their personal profile and adjust app preferences from dedicated profile and settings screens.
 
 <p align="center">
-  <img src="Screenshots/settings.mov" width="220" />
+  <img src="Screenshots/settings.gif" width="220" />
 </p>
 
 ## Analytics
