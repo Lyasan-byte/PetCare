@@ -65,6 +65,7 @@ Users can explore public pet profiles and view shared pet information in a clean
 <p align="center">
   <img src="Screenshots/public-pets-light.png" width="220" />
   <img src="Screenshots/public-pet-profile-light.png" width="220" />
+  <img src="Screenshots/public-pets-dark.png" width="220" />
   <img src="Screenshots/publi-pet-profile-dark.png" width="220" />
 </p>
 
