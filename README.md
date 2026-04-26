@@ -54,8 +54,7 @@ Pet Care allows users to record daily care activities such as walks, grooming se
 The analytics screen helps users understand their pet’s activity and care routine through statistics, progress tracking, latest care events, and time-based filters.
 
 <p align="center">
-  <img src="Screenshots/analytics-light" width="240" />
-  <img src="Screenshots/analytics-dark" width="240" />
+  <img src="Screenshots/analytics.mov" width="240" />
 </p>
 
 ### Public Profiles
