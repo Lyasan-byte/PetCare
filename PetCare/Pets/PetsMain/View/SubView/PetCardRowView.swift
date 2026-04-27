@@ -34,7 +34,10 @@ final class PetCardRowView: UIView {
     )
 
     private var petStatusView = CircleIconView()
-    private var petImageContainer = BackgroundView(backgroundColor: .clear, cornerRadius: 0)
+    private var petImageContainer = BackgroundView(
+        backgroundColor: .clear,
+        cornerRadius: 0
+    )
     private var petNameLabel = TextLabel(
         font: .systemFont(ofSize: 16, weight: .bold),
         textAlignment: .left
@@ -55,16 +58,6 @@ final class PetCardRowView: UIView {
         borderColor: Asset.petYellow.color.withAlphaComponent(0.6),
         shadowColor: Asset.petYellow.color
     )
-    
-//    private let birthdayBadge = CircleIconView(
-//        symbolName: "birthday.cake.fill",
-//        iconColor: Asset.midPurple.color,
-//        circleColor: Asset.yellowBackground.color,
-//        circleSize: 45,
-//        iconSize: 22,
-//        borderColor: Asset.petYellow.color.withAlphaComponent(0.6),
-//        shadowColor: Asset.petYellow.color
-//    )
 
     override init(frame: CGRect) {
         super.init(frame: frame)

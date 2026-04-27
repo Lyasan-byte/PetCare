@@ -9,25 +9,16 @@ import UIKit
 
 final class PetProfileView: UIView {
     var onBreedTap: (() -> Void)?
-
+    
     private let birthdayBadge = PetCardBadge(
-        backgroundColor: Asset.yellowBackground.color,
-        color: Asset.midPurple.color,
+        backgroundColor: Asset.backgroundLightPink.color,
+        color: Asset.pinkAccent.color,
         icon: "birthday.cake.fill",
-        text: "Happy birthday!",
+        text: L10n.PetProfile.BirthdayBadge.text,
         font: .systemFont(ofSize: 14, weight: .medium),
+        shadow: Asset.yellowBackground.color,
         height: 38
     )
-    
-//    private let birthdayBadge = PetCardBadge(
-//        backgroundColor: Asset.backgroundLightPink.color,
-//        color: Asset.pinkAccent.color,
-//        icon: "birthday.cake.fill",
-//        text: L10n.PetProfile.BirthdayBadge.text,
-//        font: .systemFont(ofSize: 14, weight: .medium),
-//        shadow: Asset.yellowBackground.color,
-//        height: 38
-//    )
     
     private let profileCardContainer = UIView()
     
