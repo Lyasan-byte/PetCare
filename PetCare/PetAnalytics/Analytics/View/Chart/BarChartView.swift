@@ -43,14 +43,14 @@ final class BarChartView: UIView {
         ])
     }
     
-    func configure(items: [BarChartItem], color: UIColor = Asset.accentColor.color) {
+    func configure(items: [BarChartItem], color: UIColor = Asset.accentColor.color, style: BarChartValueStyle) {
         rebuildColumnsIfNeeded(count: items.count)
         
         let maxValue = items.map(\.value).max() ?? 0
         let mid1 = maxValue / 3
         let mid2 = 2 * maxValue / 3
         
-        scale.configure(values: [maxValue, mid2, mid1, 0])
+        scale.configure(values: [maxValue, mid2, mid1, 0], style: style)
         
         for (index, item) in items.enumerated() {
             columnViews[index]

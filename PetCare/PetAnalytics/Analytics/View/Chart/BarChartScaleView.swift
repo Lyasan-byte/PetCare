@@ -50,6 +50,7 @@ final class BarChartScaleView: UIView {
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         scaleLine.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             contentStack.topAnchor.constraint(equalTo: topAnchor),
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -61,7 +62,7 @@ final class BarChartScaleView: UIView {
         ])
     }
     
-    func configure(values: [Double]) {
+    func configure(values: [Double], style: BarChartValueStyle) {
         valuesStack.arrangedSubviews.forEach {
             valuesStack.removeArrangedSubview($0)
             $0.removeFromSuperview()
@@ -70,7 +71,7 @@ final class BarChartScaleView: UIView {
         values.forEach { value in
             let label = TextLabel(
                 font: .systemFont(ofSize: 10, weight: .regular),
-                text: formatValue(value),
+                text: formatValue(value, valueStyle: style),
                 textColor: Asset.petGray.color.withAlphaComponent(0.7),
                 textAlignment: .left
             )
@@ -78,11 +79,37 @@ final class BarChartScaleView: UIView {
         }
     }
     
-    private func formatValue(_ value: Double) -> String {
+    private func formatValue(_ value: Double, valueStyle: BarChartValueStyle) -> String {
+        switch valueStyle {
+        case .distance:
+            let formatter = NumberFormatter()
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = 1
+            formatter.decimalSeparator = Locale.current.decimalSeparator
+            return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+
+        case .money:
+            return formatCompact(value)
+        }
+    }
+
+    private func formatCompact(_ value: Double) -> String {
+        let absValue = abs(value)
+
+        if absValue >= 1_000_000 {
+            return formatted(value / 1_000_000) + "M"
+        } else if absValue >= 1_000 {
+            return formatted(value / 1_000) + "K"
+        } else {
+            return formatted(value)
+        }
+    }
+
+    private func formatted(_ value: Double) -> String {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 1
-        formatter.decimalSeparator = ","
+        formatter.maximumFractionDigits = value.truncatingRemainder(dividingBy: 1) == 0 ? 0 : 1
+        formatter.decimalSeparator = Locale.current.decimalSeparator
         return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
     }
 }
