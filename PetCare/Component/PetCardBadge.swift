@@ -29,15 +29,30 @@ final class PetCardBadge: UIView {
         icon: String,
         text: String = "",
         font: UIFont = .systemFont(ofSize: 12, weight: .medium),
+        shadow: UIColor = .clear,
         height: CGFloat
     ) {
         self.init(frame: .zero)
-        setData(backgroundColor: backgroundColor, color: color, icon: icon, text: text, font: font)
+        setData(
+            backgroundColor: backgroundColor,
+            color: color,
+            icon: icon,
+            text: text,
+            font: font,
+            shadow: shadow
+        )
         setHeight(height)
         setCornerRadius(height: height)
     }
 
-    private func setData(backgroundColor: UIColor, color: UIColor, icon: String, text: String, font: UIFont) {
+    private func setData(
+        backgroundColor: UIColor,
+        color: UIColor,
+        icon: String,
+        text: String,
+        font: UIFont,
+        shadow: UIColor
+    ) {
         background.backgroundColor = backgroundColor
         self.icon.image = UIImage(systemName: icon)
         self.icon.tintColor = color
@@ -45,6 +60,11 @@ final class PetCardBadge: UIView {
         badgeText.font = font
         badgeText.textColor = color
         badgeText.lineBreakMode = .byTruncatingTail
+        
+        layer.shadowColor = shadow.cgColor
+        layer.shadowRadius = 10
+        layer.shadowOpacity = 0.3
+        layer.shadowOffset = CGSize(width: 0, height: 5)
     }
 
     private func setHeight(_ height: CGFloat) {
@@ -66,7 +86,8 @@ final class PetCardBadge: UIView {
             color: activity.type.color,
             icon: activity.type.badgeIcon,
             text: "\(activity.type.name.uppercased()) \(formatDate(activity.date))",
-            font: .systemFont(ofSize: 10, weight: .medium)
+            font: .systemFont(ofSize: 10, weight: .medium),
+            shadow: .clear
         )
         setHeight(height)
         setCornerRadius(height: height)

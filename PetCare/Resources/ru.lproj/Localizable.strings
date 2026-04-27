@@ -251,6 +251,8 @@
 "pets.age.day.few" = "%d дня";
 "pets.age.day.many" = "%d дней";
 
+"petProfile.birthdayBadge.text" = "С днём рождения!";
+
 //MARK: - Pet Facts
 
 "pets.facts.empty_state" = "По данной породе не найдено информации";

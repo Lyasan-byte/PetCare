@@ -255,6 +255,8 @@
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
 
+"petProfile.birthdayBadge.text" = "Happy birthday!";
+
 //MARK: - Pet Facts
 
 "pets.facts.empty_state" = "No information was found for this breed";
