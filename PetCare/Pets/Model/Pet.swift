@@ -72,6 +72,15 @@ struct Pet: Identifiable, Codable, Equatable {
 }
 
 extension Pet {
+    var hasBirthday: Bool {
+        let calendar = Calendar.current
+
+        let birthComponents = calendar.dateComponents([.day, .month], from: dateOfBirth)
+        let todayComponents = calendar.dateComponents([.day, .month], from: Date())
+        
+        return birthComponents == todayComponents
+    }
+    
     var ageText: String {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: dateOfBirth, to: Date())

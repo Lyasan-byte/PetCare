@@ -268,6 +268,7 @@ public enum L10n {
     }
 
   }
+
   public enum PetAnalytics {
     /// Analytics
     public static let title = L10n.tr("Localizable", "petAnalytics.title", fallback: "Analytics")
@@ -340,6 +341,12 @@ public enum L10n {
     public enum WalkChart {
       /// Km Count
       public static let title = L10n.tr("Localizable", "petAnalytics.walkChart.title", fallback: "Km Count")
+    }
+  }
+  public enum PetProfile {
+    public enum BirthdayBadge {
+      /// Happy birthday!
+      public static let text = L10n.tr("Localizable", "petProfile.birthdayBadge.text", fallback: "Happy birthday!")
     }
   }
   public enum Pets {

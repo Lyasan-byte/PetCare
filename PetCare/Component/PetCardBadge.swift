@@ -29,6 +29,7 @@ final class PetCardBadge: UIView {
         icon: String,
         text: String = "",
         font: UIFont = .systemFont(ofSize: 12, weight: .medium),
+        shadow: UIColor = .clear,
         border: UIColor = .clear,
         height: CGFloat,
         iconSize: CGFloat = 18
@@ -40,6 +41,7 @@ final class PetCardBadge: UIView {
             icon: icon,
             text: text,
             font: font,
+            shadow: shadow,
             border: border,
             iconSize: iconSize
         )
@@ -53,6 +55,7 @@ final class PetCardBadge: UIView {
         icon: String,
         text: String,
         font: UIFont,
+        shadow: UIColor,
         border: UIColor,
         iconSize: CGFloat
     ) {
@@ -67,6 +70,11 @@ final class PetCardBadge: UIView {
         badgeText.font = font
         badgeText.textColor = color
         badgeText.lineBreakMode = .byTruncatingTail
+
+        layer.shadowColor = shadow.cgColor
+        layer.shadowRadius = 10
+        layer.shadowOpacity = 0.3
+        layer.shadowOffset = CGSize(width: 0, height: 5)
     }
 
     func configure(activity: PetLastActivity, height: CGFloat, iconSize: CGFloat = 18) {
@@ -76,6 +84,7 @@ final class PetCardBadge: UIView {
             icon: activity.type.badgeIcon,
             text: "\(activity.type.name.uppercased()) \(formatDate(activity.date))",
             font: .systemFont(ofSize: 10, weight: .medium),
+            shadow: .clear,
             border: .clear,
             iconSize: iconSize
         )
@@ -95,7 +104,7 @@ final class PetCardBadge: UIView {
     func setText(text: String) {
         badgeText.text = text
     }
-    
+
     func setShadow(color: UIColor = .label) {
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = 0.15

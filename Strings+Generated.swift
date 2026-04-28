@@ -266,8 +266,8 @@ public enum L10n {
         public static let goalMaxLimit = L10n.tr("Localizable", "petActivityCreation.validation.walk.goalMaxLimit", fallback: "Goal distance should be less than 30")
       }
     }
-
   }
+
   public enum PetAnalytics {
     /// Analytics
     public static let title = L10n.tr("Localizable", "petAnalytics.title", fallback: "Analytics")
@@ -340,6 +340,12 @@ public enum L10n {
     public enum WalkChart {
       /// Km Count
       public static let title = L10n.tr("Localizable", "petAnalytics.walkChart.title", fallback: "Km Count")
+    }
+  }
+  public enum PetProfile {
+    public enum BirthdayBadge {
+      /// Happy birthday!
+      public static let text = L10n.tr("Localizable", "petProfile.birthdayBadge.text", fallback: "Happy birthday!")
     }
   }
   public enum Pets {
