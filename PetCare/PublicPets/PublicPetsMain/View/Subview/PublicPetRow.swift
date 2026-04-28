@@ -43,7 +43,8 @@ final class PublicPetRow: UIView {
         backgroundColor: Asset.lightPurple.color,
         color: Asset.purpleAccent.color,
         icon: "gamecontroller.fill",
-        height: 30
+        height: 30,
+        iconSize: 16
     )
 
     private lazy var petNameGenderStack = HStack(spacing: 10, arrangedSubviews: [petName, petGender])

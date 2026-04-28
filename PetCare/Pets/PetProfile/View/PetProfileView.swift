@@ -9,7 +9,19 @@ import UIKit
 
 final class PetProfileView: UIView {
     var onBreedTap: (() -> Void)?
-
+    
+    private let birthdayBadge = PetCardBadge(
+        backgroundColor: Asset.backgroundLightPink.color,
+        color: Asset.pinkAccent.color,
+        icon: "birthday.cake.fill",
+        text: L10n.PetProfile.BirthdayBadge.text,
+        font: .systemFont(ofSize: 14, weight: .medium),
+        shadow: Asset.yellowBackground.color,
+        height: 38
+    )
+    
+    private let profileCardContainer = UIView()
+    
     let createActivityButton = PrimaryButton(
         title: L10n.Pets.Profile.createActivityButton,
         shadowColor: Asset.primaryGreen.color
@@ -54,7 +66,7 @@ final class PetProfileView: UIView {
     private lazy var scrollContent = VStack(
         spacing: 30,
         arrangedSubviews: [
-            petCardView,
+            profileCardContainer,
             petNoteView
         ]
     )
@@ -80,6 +92,8 @@ final class PetProfileView: UIView {
         addSubview(scrollView)
         addSubview(buttonsContainer)
         scrollView.addSubview(scrollContent)
+        profileCardContainer.addSubview(petCardView)
+        profileCardContainer.addSubview(birthdayBadge)
     }
 
     private func setupLayout() {
@@ -99,7 +113,15 @@ final class PetProfileView: UIView {
             scrollContent.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             scrollContent.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             scrollContent.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            scrollContent.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
+            scrollContent.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            
+            petCardView.topAnchor.constraint(equalTo: profileCardContainer.topAnchor),
+            petCardView.leadingAnchor.constraint(equalTo: profileCardContainer.leadingAnchor),
+            petCardView.trailingAnchor.constraint(equalTo: profileCardContainer.trailingAnchor),
+            petCardView.bottomAnchor.constraint(equalTo: profileCardContainer.bottomAnchor),
+            
+            birthdayBadge.topAnchor.constraint(equalTo: profileCardContainer.topAnchor, constant: -8),
+            birthdayBadge.trailingAnchor.constraint(equalTo: profileCardContainer.trailingAnchor)
         ])
     }
 
@@ -108,6 +130,7 @@ final class PetProfileView: UIView {
         petNoteView.noteText.text = pet.note
 
         petNoteView.isHidden = pet.note.isEmpty
+        birthdayBadge.isHidden = !pet.hasBirthday
     }
 
     required init?(coder: NSCoder) {

@@ -9,11 +9,14 @@ import Foundation
 import UIKit
 
 final class AuthContainerView: UIView {
+    var onHelpTap: (() -> Void)?
+
     private let headerView = AuthHeaderView()
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let cardView = UIView()
     private let headerBottomSpacing: CGFloat
+    private let helpButton = UIButton(type: .system)
 
     init(headerBottomSpacing: CGFloat) {
         self.headerBottomSpacing = headerBottomSpacing
@@ -47,8 +50,10 @@ final class AuthContainerView: UIView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         cardView.translatesAutoresizingMaskIntoConstraints = false
         headerView.translatesAutoresizingMaskIntoConstraints = false
+        helpButton.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(scrollView)
+        addSubview(helpButton)
         scrollView.addSubview(contentView)
         contentView.addSubview(headerView)
         contentView.addSubview(cardView)
@@ -58,6 +63,11 @@ final class AuthContainerView: UIView {
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            helpButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 8),
+            helpButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            helpButton.widthAnchor.constraint(equalToConstant: 36),
+            helpButton.heightAnchor.constraint(equalToConstant: 36),
 
             contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 24),
             contentView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
@@ -82,5 +92,21 @@ final class AuthContainerView: UIView {
         cardView.layer.shadowOpacity = 0.06
         cardView.layer.shadowRadius = 20
         cardView.layer.shadowOffset = CGSize(width: 0, height: 10)
+
+        let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .bold)
+        helpButton.setImage(UIImage(systemName: "questionmark", withConfiguration: config), for: .normal)
+        helpButton.tintColor = Asset.accentColor.color
+        helpButton.backgroundColor = Asset.authCardViewColor.color
+        helpButton.layer.cornerRadius = 18
+        helpButton.layer.shadowColor = UIColor.black.cgColor
+        helpButton.layer.shadowOpacity = 0.08
+        helpButton.layer.shadowRadius = 10
+        helpButton.layer.shadowOffset = CGSize(width: 0, height: 6)
+        helpButton.accessibilityLabel = L10n.Common.help
+        helpButton.addTarget(self, action: #selector(didTapHelp), for: .touchUpInside)
+    }
+
+    @objc private func didTapHelp() {
+        onHelpTap?()
     }
 }

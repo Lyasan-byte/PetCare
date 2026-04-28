@@ -10,5 +10,9 @@ import Foundation
 import FirebaseFirestore
 
 protocol ActivitiesHistoryRepository {
-    func fetchActivities(for petId: String, after documet: DocumentSnapshot?, pageSize: Int) -> AnyPublisher<ActivitiesHistoryPage, Error>
+    func fetchActivities(
+        for petId: String,
+        after documet: DocumentSnapshot?,
+        pageSize: Int
+    ) -> AnyPublisher<ActivitiesHistoryPage, Error>
 }
