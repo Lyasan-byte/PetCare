@@ -30,6 +30,22 @@ final class TabBarController: UITabBarController {
         setViewControllers(makeTabViewControllers(), animated: true)
     }
 
+    private func makePetCache() -> PetCacheRepository? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            assertionFailure("Failed to get AppDelegate")
+            return nil
+        }
+
+        return PetCacheService(modelContext: appDelegate.modelContainer.mainContext)
+    }
+
+    private func makeFallbackNavigationController(systemImageName: String) -> UINavigationController {
+        let navigationController = UINavigationController()
+        navigationController.tabBarItem.image = UIImage(systemName: systemImageName)
+        navigationController.tabBarItem.title = nil
+        return navigationController
+    }
+
     private func bindLanguageChanges() {
         NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
             .receive(on: DispatchQueue.main)
@@ -41,7 +57,7 @@ final class TabBarController: UITabBarController {
 
     private func reloadInactiveTabsForCurrentLanguage() {
         guard let currentViewControllers = viewControllers,
-              currentViewControllers.indices.contains(selectedIndex) else {
+            currentViewControllers.indices.contains(selectedIndex) else {
             setupTabs()
             return
         }
@@ -79,13 +95,9 @@ final class TabBarController: UITabBarController {
         }
 
         let imageUploader = ImageUploadService()
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            assertionFailure("Failed to get AppDelegate")
-            return
+        guard let petCache = makePetCache() else {
+            return makeFallbackNavigationController(systemImageName: "pawprint.fill")
         }
-
-        let petCache = PetCacheService(modelContext: appDelegate.modelContainer.mainContext)
 
         let petRepository = PetService(
             cache: petCache,
@@ -139,6 +151,7 @@ final class TabBarController: UITabBarController {
 
         publicPetsCoordinator.start()
         publicPetsNavigationController.tabBarItem.image = UIImage(systemName: "globe.americas.fill")
+        publicPetsNavigationController.tabBarItem.title = nil
         return publicPetsNavigationController
     }
 
@@ -152,7 +165,12 @@ final class TabBarController: UITabBarController {
         }
 
         let imageUploader = ImageUploadService()
+        guard let petCache = makePetCache() else {
+            return makeFallbackNavigationController(systemImageName: "gamecontroller.fill")
+        }
+
         let petRepository = PetService(
+            cache: petCache,
             imageService: imageUploader
         )
         let miniGameNavigationController = UINavigationController()
@@ -181,7 +199,12 @@ final class TabBarController: UITabBarController {
         }
 
         let imageUploader = ImageUploadService()
+        guard let petCache = makePetCache() else {
+            return makeFallbackNavigationController(systemImageName: "person.fill")
+        }
+
         let petRepository = PetService(
+            cache: petCache,
             imageService: imageUploader
         )
         let userProfileRepository = FirebaseUserProfileService(imageService: imageUploader)
@@ -208,16 +231,5 @@ final class TabBarController: UITabBarController {
         userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
         userProfileNavigationController.tabBarItem.title = nil
         return userProfileNavigationController
-        
-        setViewControllers(
-            [
-                petsNavigationController,
-                publicPetsNavigationController,
-                miniGameNavigationController,
-                userProfileNavigationController
-            ],
-            animated: true
-        )
-       return userProfileNavigationController
     }
 }
