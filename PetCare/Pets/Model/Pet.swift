@@ -36,7 +36,8 @@ struct Pet: Identifiable, Codable, Equatable {
         ownerId: String,
         isPublic: Bool = false,
         gameScore: Int = 0,
-        iconStatus: PetIconStatus = .heart
+        iconStatus: PetIconStatus = .heart,
+        lastActivity: PetLastActivity? = nil
     ) {
         self.id = id
         self.name = name
@@ -50,6 +51,7 @@ struct Pet: Identifiable, Codable, Equatable {
         self.isPublic = isPublic
         self.gameScore = gameScore
         self.iconStatus = iconStatus
+        self.lastActivity = lastActivity
     }
 
     enum CodingKeys: String, CodingKey {
@@ -70,6 +72,15 @@ struct Pet: Identifiable, Codable, Equatable {
 }
 
 extension Pet {
+    var hasBirthday: Bool {
+        let calendar = Calendar.current
+
+        let birthComponents = calendar.dateComponents([.day, .month], from: dateOfBirth)
+        let todayComponents = calendar.dateComponents([.day, .month], from: Date())
+        
+        return birthComponents == todayComponents
+    }
+    
     var ageText: String {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: dateOfBirth, to: Date())

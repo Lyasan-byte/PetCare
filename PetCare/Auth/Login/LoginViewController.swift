@@ -54,6 +54,9 @@ final class LoginViewController: UIViewController {
             action: #selector(passwordChanged),
             for: .editingChanged
         )
+        contentView.onHelpTap = { [weak self] in
+            self?.viewModel.trigger(.helpTapped)
+        }
         contentView.loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
         contentView.googleButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
         contentView.switchButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)

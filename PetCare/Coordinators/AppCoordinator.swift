@@ -12,7 +12,9 @@ import FirebaseAuth
 final class AppCoordinator {
     private var window: UIWindow?
     private var authCoordinator: AuthCoordinator?
+    private var onboardingCoordinator: OnboardingCoordinator?
     private var stateDidChangeHandle: AuthStateDidChangeListenerHandle?
+    private let onboardingStateRepository: OnboardingStateRepository = UserDefaultsOnboardingStateService()
 
     func start(_ scene: UIWindowScene) -> UIWindow {
         let window = UIWindow(windowScene: scene)
@@ -22,7 +24,11 @@ final class AppCoordinator {
             guard let self else { return }
 
             if user == nil {
-                self.showAuthFlow()
+                if self.onboardingStateRepository.hasSeenOnboarding() {
+                    self.showAuthFlow()
+                } else {
+                    self.showOnboardingFlow()
+                }
             } else if let user, self.requiresRegistrationCompletion(for: user) {
                 self.showAuthFlow(startingAt: .registrationCompletion)
             } else {
@@ -34,6 +40,7 @@ final class AppCoordinator {
     }
 
     func showAuthFlow(startingAt startDestination: AuthCoordinator.StartDestination = .login) {
+        onboardingCoordinator = nil
         let navigationController = UINavigationController()
         let authCoordinator = AuthCoordinator(
             navigationController: navigationController,
@@ -47,8 +54,26 @@ final class AppCoordinator {
         window?.makeKeyAndVisible()
     }
 
+    func showOnboardingFlow() {
+        let navigationController = UINavigationController()
+        let onboardingCoordinator = OnboardingCoordinator(
+            navigationController: navigationController,
+            onboardingStateRepository: onboardingStateRepository,
+            marksAsSeenOnFinish: true,
+            dismissOnFinish: false,
+            moduleOutput: self
+        )
+
+        self.onboardingCoordinator = onboardingCoordinator
+        onboardingCoordinator.start()
+
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+    }
+
     func showMainFlow() {
         authCoordinator = nil
+        onboardingCoordinator = nil
         let nav = TabBarController()
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
@@ -79,5 +104,12 @@ extension AppCoordinator: AuthFlowOutput {
         } else {
             showMainFlow()
         }
+    }
+}
+
+extension AppCoordinator: OnboardingModuleOutput {
+    func onboardingModuleDidFinish() {
+        onboardingCoordinator = nil
+        showAuthFlow()
     }
 }

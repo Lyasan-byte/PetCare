@@ -24,7 +24,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
     private let petRepository: PetRepository
     private let activityRepository: PetActivityRepository
     private let reminderController: PetActivityReminderControlling
-    private let moduleOutput: PetActivityCreationModuleOutput?
+    private weak var moduleOutput: PetActivityCreationModuleOutput?
 
     init(
         initialActivity: PetActivityType,
@@ -149,7 +149,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         }
 
         guard let activity = makeActivity() else {
-            state = .error("Please fill all the fields correctly")
+            state = .error(L10n.PetActivityCreation.Validation.fillFieldsCorrectly)
             return
         }
 
@@ -177,7 +177,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
 
     private func validate() -> String? {
         guard content.selectedPet != nil else {
-            return "Please select a pet"
+            return L10n.PetActivityCreation.Validation.selectPet
         }
 
         switch content.activity {
@@ -192,51 +192,70 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
 
     private func validateWalk() -> String? {
         guard let walkGoal = content.walkGoal else {
-            return "Please enter goal distance"
+            return L10n.PetActivityCreation.Validation.Walk.goalDistance
         }
 
         guard walkGoal > 0 else {
-            return "Goal distance should be greater than 0"
+            return L10n.PetActivityCreation.Validation.Walk.goalGreaterThanZero
         }
         
-        guard walkGoal <= 40 else {
-            return "Goal distance should be less than 30"
+        guard walkGoal <= ValidationLimits.maxWalkDistance else {
+            return L10n.PetActivityCreation.Validation.Walk.goalMaxLimit
         }
 
         guard let walkActual = content.walkActual else {
-            return "Please enter actual distance"
+            return L10n.PetActivityCreation.Validation.Walk.actualDistance
         }
 
-        guard walkActual <= 40 else {
-            return "Goal distance should be less than 40"
+        guard walkActual > 0 else {
+            return L10n.PetActivityCreation.Validation.Walk.actualGreaterThanZero
         }
         
-        guard walkActual > 0 else {
-            return "Actual distance should be greater than 0"
+        guard walkActual <= ValidationLimits.maxWalkDistance else {
+            return L10n.PetActivityCreation.Validation.Walk.actualMaxLimit
         }
-
+    
         return nil
     }
 
     private func validateGrooming() -> String? {
         guard let groomingCost = content.groomingCost else {
-            return "Please enter grooming cost"
+            return L10n.PetActivityCreation.Validation.Grooming.cost
         }
 
-        guard groomingCost >= 0 else {
-            return "Grooming cost cannot be negative"
+        guard groomingCost > 0 else {
+            return L10n.PetActivityCreation.Validation.Grooming.costGreaterThanZero
         }
 
+        guard groomingCost < ValidationLimits.maxProcedureCost else {
+            return L10n.PetActivityCreation.Validation.Grooming.costMaxLimit
+        }
+        
+        guard let groomingDuration = content.groomingDuration else {
+            return L10n.PetActivityCreation.Validation.Grooming.duration
+        }
+        
+        guard groomingDuration > 0 else {
+            return L10n.PetActivityCreation.Validation.Grooming.durationGreaterThanZero
+        }
+        
+        guard groomingDuration <= ValidationLimits.maxGroomingDurationMinutes else {
+            return L10n.PetActivityCreation.Validation.Grooming.durationMaxLimit
+        }
         return nil
     }
 
     private func validateVet() -> String? {
         guard let vetCost = content.vetCost else {
-            return "Please enter vet cost"
+            return L10n.PetActivityCreation.Validation.Vet.cost
         }
 
-        guard vetCost >= 0 else {
-            return "Vet cost cannot be negative"
+        guard vetCost > 0 else {
+            return L10n.PetActivityCreation.Validation.Vet.costGreaterThanZero
+        }
+        
+        guard vetCost < ValidationLimits.maxProcedureCost else {
+            return L10n.PetActivityCreation.Validation.Vet.costMaxLimit
         }
 
         return nil
@@ -292,7 +311,6 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
                 )
             )
         }
-
         return PetActivity(
             id: content.activityId,
             petId: petId,
@@ -314,5 +332,11 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         }
 
         return Double(normalizedString)
+    }
+    
+    private enum ValidationLimits {
+        static let maxWalkDistance = 40.0
+        static let maxProcedureCost = 1000000.0
+        static let maxGroomingDurationMinutes = 300.0
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import Combine
+import SwiftData
 
 final class TabBarController: UITabBarController {
     private var petsMainCoordinator: PetsMainCoordinator?
@@ -89,7 +90,16 @@ final class TabBarController: UITabBarController {
         }
 
         let imageUploader = ImageUploadService()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            assertionFailure("Failed to get AppDelegate")
+            return
+        }
+
+        let petCache = PetCacheService(modelContext: appDelegate.modelContainer.mainContext)
+
         let petRepository = PetService(
+            cache: petCache,
             imageService: imageUploader
         )
         let imageLoader = ImageLoadService()
@@ -110,6 +120,7 @@ final class TabBarController: UITabBarController {
             petFactsRepository: petFactsRepository,
             ownerId: ownerId,
             reminderController: reminderController,
+            cache: petCache,
             imageLoader: imageLoader
         )
         self.petsMainCoordinator = petsMainCoordinator
@@ -210,5 +221,16 @@ final class TabBarController: UITabBarController {
         userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
         userProfileNavigationController.tabBarItem.title = nil
         return userProfileNavigationController
+        
+        setViewControllers(
+            [
+                petsNavigationController,
+                publicPetsNavigationController,
+                miniGameNavigationController,
+                userProfileNavigationController
+            ],
+            animated: true
+        )
+       return userProfileNavigationController
     }
 }

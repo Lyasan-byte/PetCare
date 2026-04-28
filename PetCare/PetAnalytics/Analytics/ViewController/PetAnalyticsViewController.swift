@@ -36,6 +36,16 @@ final class PetAnalyticsViewController: UIViewController {
         petAnalyticsViewModel.trigger(.onDidLoad)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     private func setupAppearance() {
         title = L10n.PetAnalytics.title
         view.backgroundColor = .secondarySystemBackground
@@ -141,7 +151,7 @@ final class PetAnalyticsViewController: UIViewController {
                     withReuseIdentifier: PetAnalyticsChartCell.identifier,
                     for: indexPath
                 ) as? PetAnalyticsChartCell {
-                    cell.setData(barChartData: walkChartData)
+                    cell.setData(barChartData: walkChartData, style: .distance)
                     return cell
                 }
             case .goal(let goalData):
@@ -157,7 +167,7 @@ final class PetAnalyticsViewController: UIViewController {
                     withReuseIdentifier: PetAnalyticsChartCell.identifier,
                     for: indexPath
                 ) as? PetAnalyticsChartCell {
-                    cell.setData(barChartData: costData, color: Asset.petYellow.color)
+                    cell.setData(barChartData: costData, color: Asset.petYellow.color, style: .money)
                     return cell
                 }
             case .stats(let statsData):

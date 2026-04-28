@@ -38,6 +38,7 @@
 "auth.registration_completion.button" = "Завершить регистрацию";
 
 "common.error" = "Ошибка";
+"common.help" = "Помощь";
 "common.ok" = "ОК";
 "common.cancel" = "Отмена";
 "common.delete" = "Удалить";
@@ -75,10 +76,10 @@
 "pets.form.save_button" = "Сохранить изменения";
 "pets.form.delete_button" = "Удалить профиль";
 
-"pets.form.validation.enter_pet_name" = "Введите имя питомца";
-"pets.form.validation.enter_breed" = "Введите породу";
-"pets.form.validation.enter_weight" = "Введите вес";
-"pets.form.validation.weight_greater_than_zero" = "Вес должен быть больше 0";
+"pets.form.validation.enter_pet_name" = "Пожалуйста, введите имя питомца";
+"pets.form.validation.enter_breed" = "Пожалуйста, введите породу";
+"pets.form.validation.enter_weight" = "Пожалуйста, введите вес";
+"pets.form.validation.weight_greater_than_zero" = "Вес питомца должен быть больше 0";
 "pets.form.validation.check_form_fields" = "Пожалуйста, проверьте поля формы.";
 
 "pets.profile.age" = "Возраст";
@@ -166,12 +167,12 @@
 "user.profile.edit.photo.title" = "Изменить фото профиля";
 "user.profile.edit.photo.subtitle" = "Нажмите, чтобы обновить аватар";
 "user.profile.edit.first_name.title" = "Имя";
-"user.profile.edit.first_name.placeholder" = "Введите имя";
+"user.profile.edit.first_name.placeholder" = "Пожалуйста, введите имя";
 "user.profile.edit.last_name.title" = "Фамилия";
-"user.profile.edit.last_name.placeholder" = "Введите фамилию";
+"user.profile.edit.last_name.placeholder" = "Пожалуйста, введите фамилию";
 "user.profile.edit.save_button" = "Сохранить изменения";
-"user.profile.edit.validation.first_name" = "Введите имя";
-"user.profile.edit.validation.last_name" = "Введите фамилию";
+"user.profile.edit.validation.first_name" = "Пожалуйста, введите имя";
+"user.profile.edit.validation.last_name" = "Пожалуйста, введите фамилию";
 "pets.public.header.title" = "Публичные профили";
 "pets.public.header.subtitle" = "СООБЩЕСТВО";
 "pets.public.header.feed_title" = "Знакомьтесь с питомцами";
@@ -253,6 +254,8 @@
 "pets.age.day.few" = "%d дня";
 "pets.age.day.many" = "%d дней";
 
+"petProfile.birthdayBadge.text" = "С днём рождения!";
+
 //MARK: - Pet Facts
 
 "pets.facts.empty_state" = "По данной породе не найдено информации";
@@ -265,6 +268,9 @@
 "pets.public.game_score.points.one" = "%d очко";
 "pets.public.game_score.points.few" = "%d очка";
 "pets.public.game_score.points.many" = "%d очков";
+
+"publicPets.sort.gameScore" = "По счету";
+"publicPets.sort.name" = "По имени";
 
 //MARK: - Error
 
@@ -310,3 +316,49 @@
 // MARK: - Activities History
 
 "activitiesHistory.title" = "История";
+
+// MARK: - Welcome Onboarding
+
+"onboardingCare.title.first" = "Следите за";
+"onboardingCare.title.second" = "уходом";
+"onboardingCare.description" = "Фиксируйте прогулки, груминг и визиты к ветеринару. Держите напоминания под рукой и отслеживайте прогресс питомца в аналитике.";
+"onboardingCare.nextButton.title" = "Далее →";
+"onboardingCare.card.walks.title" = "Ежедневные прогулки";
+"onboardingCare.card.grooming.title" = "Планы груминга";
+"onboardingCare.card.vet.title" = "Вет визиты";
+"onboardingCare.card.analytics.title" = "Умная статистика";
+
+"onboardingCommunity.title.first" = "Играйте и";
+"onboardingCommunity.title.second" = "общайтесь";
+"onboardingCommunity.description" = "Изучайте публичные профили питомцев, делитесь историей и запускайте Pet Runner со своим любимцем.";
+"onboardingCommunity.nextButton.title" = "Начать →";
+"onboardingCommunity.card.publicPets.title" = "Питомцы сообщества";
+
+"welcomeOnboarding.header.text" = "Pet Care";
+"welcomeOnboarding.skipButton.title" = "Пропустить";
+"welcomeOnboarding.title.first" = "Добро пожаловать в";
+"welcomeOnboarding.title.second" = "Pet Care";
+"welcomeOnboarding.description" = "Идеальное место для ваших пушистых друзей. Следите за уходом, здоровьем и не только.";
+"welcomeOnboarding.nextButton.title" = "Далее →";
+"welcomeOnboarding.imageBadge.text" = "ЛУЧШИЙ ДРУГ";
+
+// MARK: - Pet Activity Creation Validation
+
+"petActivityCreation.validation.selectPet" = "Пожалуйста, выберите питомца";
+"petActivityCreation.validation.walk.goalDistance" = "Пожалуйста, укажите целевую дистанцию";
+"petActivityCreation.validation.walk.goalGreaterThanZero" = "Целевая дистанция должна быть больше 0";
+"petActivityCreation.validation.walk.goalMaxLimit" = "Целевая дистанция должна быть меньше 30";
+"petActivityCreation.validation.walk.actualDistance" = "Пожалуйста, укажите пройденную дистанцию";
+"petActivityCreation.validation.walk.actualMaxLimit" = "Пройденная дистанция должна быть меньше 40";
+"petActivityCreation.validation.walk.actualGreaterThanZero" = "Пройденная дистанция должна быть больше 0";
+"petActivityCreation.validation.grooming.cost" = "Пожалуйста, укажите стоимость груминга";
+"petActivityCreation.validation.grooming.duration" = "Пожалуйста, укажите продолжительность груминга";
+"petActivityCreation.validation.grooming.costGreaterThanZero" = "Стоимость груминга должна быть больше 0";
+"petActivityCreation.validation.grooming.durationGreaterThanZero" = "Продолжительность груминга должна быть больше 0";
+"petActivityCreation.validation.vet.cost" = "Пожалуйста, укажите стоимость визита к ветеринару";
+"petActivityCreation.validation.vet.costGreaterThanZero" = "Стоимость визита к ветеринару должна быть больше 0";
+"petActivityCreation.validation.fillFieldsCorrectly" = "Пожалуйста, заполните все поля корректно";
+"petActivityCreation.validation.grooming.durationGreaterThanZero" = "Длительность груминга должна быть больше 0";
+"petActivityCreation.validation.grooming.durationMaxLimit" = "Длительность груминга не должна превышать 5 часов";
+"petActivityCreation.validation.grooming.costMaxLimit" = "Стоимость груминга должна быть меньше 1 миллиона";
+"petActivityCreation.validation.vet.costMaxLimit" = "Стоимость визита к ветеринару должна быть меньше 1 миллиона";
