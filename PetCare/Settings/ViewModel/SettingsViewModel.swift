@@ -197,8 +197,8 @@ final class SettingsViewModel: SettingsViewModeling {
                 if case .failure(let error) = completion {
                     self.state = .error(error.localizedDescription)
                 }
-            } receiveValue: { _ in
-                self.reminderController.removeAllReminders()
+            } receiveValue: { [weak self] _ in
+                self?.reminderController.removeAllReminders()
             }
             .store(in: &bag)
     }

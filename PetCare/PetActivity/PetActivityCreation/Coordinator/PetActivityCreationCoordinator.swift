@@ -15,6 +15,7 @@ final class PetActivityCreationCoordinator: Coordinator {
     private let initialSelectedPet: Pet?
     private let ownerId: String
     private let petRepository: PetRepository
+    private let cache: PetCacheRepository
     private let imageLoader: ImageLoader
     private let reminderController: PetActivityReminderControlling
 
@@ -24,6 +25,7 @@ final class PetActivityCreationCoordinator: Coordinator {
         ownerId: String,
         petRepository: PetRepository,
         reminderController: PetActivityReminderControlling,
+        cache: PetCacheRepository,
         imageLoader: ImageLoader,
         navigationController: UINavigationController
     ) {
@@ -32,6 +34,7 @@ final class PetActivityCreationCoordinator: Coordinator {
         self.ownerId = ownerId
         self.petRepository = petRepository
         self.reminderController = reminderController
+        self.cache = cache
         self.imageLoader = imageLoader
         self.navigationController = navigationController
     }
@@ -44,7 +47,7 @@ final class PetActivityCreationCoordinator: Coordinator {
                 initialSelectedPet: initialSelectedPet,
                 ownerId: ownerId,
                 petRepository: petRepository,
-                activityRepository: PetActivityService(),
+                activityRepository: PetActivityService(cache: cache),
                 reminderController: reminderController,
                 moduleOutput: self
             )

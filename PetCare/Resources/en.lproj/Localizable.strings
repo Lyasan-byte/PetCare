@@ -39,6 +39,7 @@
 "auth.registration_completion.button" = "Finish Registration";
 
 "common.error" = "Error";
+"common.help" = "Help";
 "common.ok" = "OK";
 "common.cancel" = "Cancel";
 "common.delete" = "Delete";
@@ -124,6 +125,8 @@
 "mini.game.field.last_score" = "Score";
 "mini.game.field.best_score" = "Best";
 "mini.game.field.no_pet" = "Choose a pet to start";
+"mini.game.scoreboard.score" = "Score";
+"mini.game.scoreboard.high" = "HIGH";
 
 
 // MARK: - User Profile
@@ -271,6 +274,9 @@
 "pets.public.game_score.points.few" = "%d pts";
 "pets.public.game_score.points.many" = "%d pts";
 
+"publicPets.sort.gameScore" = "Game Score";
+"publicPets.sort.name" = "Name";
+
 //MARK: - Error
 
 "repository.error.deallocated" = "Repository was deallocated";
@@ -315,3 +321,46 @@
 // MARK: - Activities History
 
 "activitiesHistory.title" = "History";
+
+// MARK: - Welcome Onboarding
+
+"onboardingCare.title.first" = "Track Daily";
+"onboardingCare.title.second" = "Care";
+"onboardingCare.description" = "Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.";
+"onboardingCare.nextButton.title" = "Next →";
+"onboardingCare.card.walks.title" = "Daily Walks";
+"onboardingCare.card.grooming.title" = "Grooming Plans";
+"onboardingCare.card.vet.title" = "Vet Visits";
+"onboardingCare.card.analytics.title" = "Smart Stats";
+
+"onboardingCommunity.title.first" = "Play &";
+"onboardingCommunity.title.second" = "Connect";
+"onboardingCommunity.description" = "Explore public pet profiles, share the journey, and jump into Pet Runner with your own companion.";
+"onboardingCommunity.nextButton.title" = "Get Started →";
+"onboardingCommunity.card.publicPets.title" = "Public Pets";
+
+"welcomeOnboarding.header.text" = "Pet Care";
+"welcomeOnboarding.skipButton.title" = "Skip";
+"welcomeOnboarding.title.first" = "Welcome to";
+"welcomeOnboarding.title.second" = "Pet Care";
+"welcomeOnboarding.description" = "The ultimate sanctuary for your furry friends. Track care, health and more.";
+"welcomeOnboarding.nextButton.title" = "Next →";
+"welcomeOnboarding.imageBadge.text" = "KINDRED SPIRIT";
+
+// MARK: - Pet Activity Creation Validation
+
+"petActivityCreation.validation.selectPet" = "Please select a pet";
+"petActivityCreation.validation.walk.goalDistance" = "Please enter goal distance";
+"petActivityCreation.validation.walk.goalGreaterThanZero" = "Goal distance should be greater than 0";
+"petActivityCreation.validation.walk.goalMaxLimit" = "Goal distance should be less than 30";
+"petActivityCreation.validation.walk.actualDistance" = "Please enter actual distance";
+"petActivityCreation.validation.walk.actualMaxLimit" = "Actual distance should be less than 40";
+"petActivityCreation.validation.walk.actualGreaterThanZero" = "Actual distance should be greater than 0";
+"petActivityCreation.validation.grooming.cost" = "Please enter grooming cost";
+"petActivityCreation.validation.grooming.duration" = "Please enter grooming duration";
+"petActivityCreation.validation.grooming.costGreaterThanZero" = "Grooming cost should be greater than 0";
+"petActivityCreation.validation.grooming.durationGreaterThanZero" = "Grooming duration should be greater than 0";
+"petActivityCreation.validation.vet.cost" = "Please enter vet cost";
+"petActivityCreation.validation.vet.costGreaterThanZero" = "Vet cost should be greater than 0";
+"petActivityCreation.validation.fillFieldsCorrectly" = "Please fill all the fields correctly";
+

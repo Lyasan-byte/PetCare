@@ -36,7 +36,8 @@ struct Pet: Identifiable, Codable, Equatable {
         ownerId: String,
         isPublic: Bool = false,
         gameScore: Int = 0,
-        iconStatus: PetIconStatus = .heart
+        iconStatus: PetIconStatus = .heart,
+        lastActivity: PetLastActivity? = nil
     ) {
         self.id = id
         self.name = name
@@ -50,6 +51,7 @@ struct Pet: Identifiable, Codable, Equatable {
         self.isPublic = isPublic
         self.gameScore = gameScore
         self.iconStatus = iconStatus
+        self.lastActivity = lastActivity
     }
 
     enum CodingKeys: String, CodingKey {

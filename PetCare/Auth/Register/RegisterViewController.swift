@@ -59,6 +59,9 @@ final class RegisterViewController: UIViewController {
             action: #selector(confirmPasswordChanged),
             for: .editingChanged
         )
+        contentView.onHelpTap = { [weak self] in
+            self?.viewModel.trigger(.helpTapped)
+        }
         contentView.registerButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
         contentView.googleButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
         contentView.switchButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)

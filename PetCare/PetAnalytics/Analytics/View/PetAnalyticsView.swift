@@ -130,161 +130,42 @@ extension PetAnalyticsView {
     static func createSection(_ section: PetAnalyticsSection) -> NSCollectionLayoutSection {
         switch section {
         case .header:
-            return createHeaderSection()
+            return makeSection(height: 120, topInset: 5)
         case .walkChart:
-            return createWalkChartSection()
+            return makeSection(height: 240, topInset: 20)
         case .goal:
-            return createGoalSection()
+            return makeSection(height: 250, topInset: 16)
         case .costChart:
-            return createCostChartSection()
+            return makeSection(height: 240, topInset: 16)
         case .stats:
-            return createStatsSection()
+            return makeSection(height: 76, topInset: 16, interGroupSpacing: 16)
         case .historyHeader:
-            return createHistoryHeaderSection()
+            return makeSection(height: 30, topInset: 16)
         case .history:
-            return createActivityHistorySection()
+            return makeSection(height: 76, topInset: 16, interGroupSpacing: 16)
         }
     }
-    
-    private static func createHeaderSection() -> NSCollectionLayoutSection {
-        let item: NSCollectionLayoutItem = .init(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(120)
-            )
+
+    private static func makeSection(
+        height: CGFloat,
+        topInset: CGFloat,
+        interGroupSpacing: CGFloat = 0
+    ) -> NSCollectionLayoutSection {
+        let size = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(height)
         )
-        let group: NSCollectionLayoutGroup = .vertical(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(120)
-            ),
+
+        let item = NSCollectionLayoutItem(layoutSize: size)
+        let group = NSCollectionLayoutGroup.vertical(
+            layoutSize: size,
             repeatingSubitem: item,
             count: 1
         )
+
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 5, leading: 0, bottom: 0, trailing: 0)
-        return section
-    }
-    
-    private static func createWalkChartSection() -> NSCollectionLayoutSection {
-        let item: NSCollectionLayoutItem = .init(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(240)
-            )
-        )
-        let group: NSCollectionLayoutGroup = .vertical(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(240)
-            ),
-            repeatingSubitem: item,
-            count: 1
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 20, leading: 0, bottom: 0, trailing: 0)
-        return section
-    }
-    
-    private static func createGoalSection() -> NSCollectionLayoutSection {
-        let item: NSCollectionLayoutItem = .init(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(250)
-            )
-        )
-        let group: NSCollectionLayoutGroup = .vertical(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(250)
-            ),
-            repeatingSubitem: item,
-            count: 1
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
-        return section
-    }
-    
-    private static func createCostChartSection() -> NSCollectionLayoutSection {
-        let item: NSCollectionLayoutItem = .init(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(240)
-            )
-        )
-        let group: NSCollectionLayoutGroup = .vertical(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(240)
-            ),
-            repeatingSubitem: item,
-            count: 1
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
-        return section
-    }
-    
-    private static func createStatsSection() -> NSCollectionLayoutSection {
-        let item: NSCollectionLayoutItem = .init(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(76)
-            )
-        )
-        let group: NSCollectionLayoutGroup = .vertical(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(76)
-            ),
-            repeatingSubitem: item,
-            count: 1
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
-        section.interGroupSpacing = 16
-        return section
-    }
-    
-    private static func createHistoryHeaderSection() -> NSCollectionLayoutSection {
-        let item: NSCollectionLayoutItem = .init(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(30)
-            )
-        )
-        let group: NSCollectionLayoutGroup = .vertical(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(30)
-            ),
-            repeatingSubitem: item,
-            count: 1
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
-        return section
-    }
-    
-    private static func createActivityHistorySection() -> NSCollectionLayoutSection {
-        let item: NSCollectionLayoutItem = .init(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(76)
-            )
-        )
-        let group: NSCollectionLayoutGroup = .vertical(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(76)
-            ),
-            repeatingSubitem: item,
-            count: 1
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
-        section.interGroupSpacing = 16
+        section.contentInsets = .init(top: topInset, leading: 0, bottom: 0, trailing: 0)
+        section.interGroupSpacing = interGroupSpacing
         return section
     }
 }

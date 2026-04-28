@@ -8,7 +8,7 @@
 import UIKit
 
 final class MiniGameGameOverView: UIView {
-    let restartButton = PrimaryButton(
+    private(set) var restartButton = PrimaryButton(
         title: NSLocalizedString("mini.game.field.restart", comment: ""),
         backgroundColor: Asset.primaryGreen.color,
         textColor: Asset.textGreen.color

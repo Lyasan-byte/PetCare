@@ -10,6 +10,12 @@ import UIKit
 
 final class LoginView: UIView {
     private let containerView = AuthContainerView(headerBottomSpacing: -60)
+    var onHelpTap: (() -> Void)? {
+        didSet {
+            containerView.onHelpTap = onHelpTap
+        }
+    }
+
     let emailFieldView = AuthTextFieldView(
         title: NSLocalizedString("auth.email.title", comment: ""),
         placeholder: NSLocalizedString("auth.email.placeholder", comment: "")
@@ -61,6 +67,9 @@ final class LoginView: UIView {
 
     private func setup() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.onHelpTap = { [weak self] in
+            self?.onHelpTap?()
+        }
         addSubview(containerView)
 
         NSLayoutConstraint.activate([

@@ -60,8 +60,7 @@ final class MiniGameViewController: UIViewController {
 
     private func bindActions() {
         miniGameView.onGameFieldTap = { [weak self] in
-            guard let self else { return }
-            guard let content = self.content else { return }
+            guard let self, let content = self.content else { return }
 
             switch content.stage {
             case .idle:

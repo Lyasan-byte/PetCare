@@ -13,10 +13,40 @@ final class ImageView: UIImageView {
         configure()
     }
 
-    convenience init(contentMode: UIView.ContentMode = .scaleAspectFit, tintColor: UIColor = Asset.accentColor.color) {
+    convenience init(
+        contentMode: UIView.ContentMode = .scaleAspectFit,
+        tintColor: UIColor = Asset.accentColor.color,
+        symbolPointSize: CGFloat? = nil,
+        symbolWeight: UIImage.SymbolWeight = .regular
+    ) {
         self.init(frame: .zero)
         self.contentMode = contentMode
         self.tintColor = tintColor
+
+        if let symbolPointSize {
+            preferredSymbolConfiguration = UIImage.SymbolConfiguration(
+                pointSize: symbolPointSize,
+                weight: symbolWeight
+            )
+        }
+    }
+
+    func setSymbol(
+        _ name: String,
+        pointSize: CGFloat? = nil,
+        weight: UIImage.SymbolWeight = .regular
+    ) {
+        if let pointSize {
+            image = UIImage(
+                systemName: name,
+                withConfiguration: UIImage.SymbolConfiguration(
+                    pointSize: pointSize,
+                    weight: weight
+                )
+            )
+        } else {
+            image = UIImage(systemName: name)
+        }
     }
 
     private func configure() {
