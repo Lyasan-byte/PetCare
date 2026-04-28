@@ -228,11 +228,12 @@ public enum L10n {
       /// Get Started →
       public static let title = L10n.tr("Localizable", "onboardingCommunity.nextButton.title", fallback: "Get Started →")
     }
-    public enum Title {
-      /// Play &
-      public static let first = L10n.tr("Localizable", "onboardingCommunity.title.first", fallback: "Play &")
-      /// Connect
-      public static let second = L10n.tr("Localizable", "onboardingCommunity.title.second", fallback: "Connect")
+      public enum Title {
+          /// Play &
+          public static let first = L10n.tr("Localizable", "onboardingCommunity.title.first", fallback: "Play &")
+          /// Connect
+          public static let second = L10n.tr("Localizable", "onboardingCommunity.title.second", fallback: "Connect")
+      }
     }
 
   public enum PetActivityCreation {
