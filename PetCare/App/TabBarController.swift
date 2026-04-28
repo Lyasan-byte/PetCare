@@ -17,6 +17,17 @@ final class TabBarController: UITabBarController {
     private let imageLoader: ImageLoader = ImageLoadService()
     private let settingsRepository: SettingsRepository = UserDefaultsSettingsService()
     private let settingsApplicationController: SettingsApplicationControlling = SettingsApplicationController()
+    private lazy var translationRepository: TranslationRepository = DeepLTranslationService()
+    private lazy var tipRepository: TipRepository = LocalizedTipService(
+        tipRepository: TipService(),
+        translationRepository: translationRepository,
+        settingsRepository: settingsRepository
+    )
+    private lazy var petFactsRepository: PetFactsRepository = LocalizedPetFactsService(
+        petFactsRepository: PetFactsService(),
+        translationRepository: translationRepository,
+        settingsRepository: settingsRepository
+    )
     private var miniGameCoordinator: MiniGameCoordinator?
     private var bag = Set<AnyCancellable>()
 
@@ -105,7 +116,8 @@ final class TabBarController: UITabBarController {
         let petsMainCoordinator = PetsMainCoordinator(
             navigationController: petsNavigationController,
             petRepository: petRepository,
-            tipRepository: TipService(),
+            tipRepository: tipRepository,
+            petFactsRepository: petFactsRepository,
             ownerId: ownerId,
             reminderController: reminderController,
             cache: petCache,
@@ -133,6 +145,7 @@ final class TabBarController: UITabBarController {
             navigationController: publicPetsNavigationController,
             userId: ownerId,
             petRepository: PublicPetService(),
+            petFactsRepository: petFactsRepository,
             imageLoader: imageLoader
         )
         self.publicPetsCoordinator = publicPetsCoordinator
