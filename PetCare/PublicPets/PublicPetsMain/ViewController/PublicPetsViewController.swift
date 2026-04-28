@@ -117,10 +117,16 @@ extension PublicPetsViewController: UICollectionViewDataSource {
         }
         switch section {
         case .header:
-            return collectionView.dequeueReusableCell(
+            if let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: PublicPetsHeaderCollectionViewCell.identifier,
                 for: indexPath
-            )
+            ) as? PublicPetsHeaderCollectionViewCell {
+                cell.onChangeSortOption = { [weak self] value in
+                    let sortOption = PublicPetsSort(rawValue: value) ?? .gameScore
+                    self?.publicPetsViewModel.trigger(.onSortingMethodChange(sortOption))
+                }
+                return cell
+            }
         case .pets:
             if let content, let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: PublicPetCollectionViewCell.identifier,
@@ -130,8 +136,8 @@ extension PublicPetsViewController: UICollectionViewDataSource {
                 cell.setData(pet: pet, imageLoader: imageLoader)
                 return cell
             }
-            return UICollectionViewCell()
         }
+        return UICollectionViewCell()
     }
 }
 

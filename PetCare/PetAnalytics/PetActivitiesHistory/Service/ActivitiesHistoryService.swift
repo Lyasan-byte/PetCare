@@ -24,7 +24,7 @@ final class ActivitiesHistoryService: ActivitiesHistoryRepository {
         var query = baseQuery(for: petId, pageSize: pageSize)
         
         if let document {
-            query.start(afterDocument: document)
+            query = query.start(afterDocument: document)
         }
         
         return query.getDocumentsPublisher()

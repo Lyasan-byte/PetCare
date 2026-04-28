@@ -10,5 +10,9 @@ import Combine
 import FirebaseFirestore
 
 protocol PublicPetRepository {
-    func fetch(after document: DocumentSnapshot?, pageSize: Int) -> AnyPublisher<PublicPetsPage, Error>
+    func fetch(
+        after document: DocumentSnapshot?,
+        pageSize: Int,
+        sort: PublicPetsSort
+    ) -> AnyPublisher<PublicPetsPage, Error>
 }

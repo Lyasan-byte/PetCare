@@ -109,8 +109,7 @@ final class MiniGameViewModel: MiniGameViewModeling {
     }
 
     private func updateCurrentScore(_ score: Int) {
-        guard content.stage == .started else { return }
-        guard content.currentScore != score else { return }
+        guard content.stage == .started, content.currentScore != score else { return }
 
         content.currentScore = score
         state = .content(content)

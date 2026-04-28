@@ -176,6 +176,7 @@ public enum L10n {
       public static let title = L10n.tr("Localizable", "notifications.walk.title", fallback: "Walk Reminder")
     }
   }
+
   public enum OnboardingCare {
     /// Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.
     public static let description = L10n.tr("Localizable", "onboardingCare.description", fallback: "Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.")
@@ -227,6 +228,45 @@ public enum L10n {
       /// Connect
       public static let second = L10n.tr("Localizable", "onboardingCommunity.title.second", fallback: "Connect")
     }
+
+  public enum PetActivityCreation {
+    public enum Validation {
+      /// Please fill all the fields correctly
+      public static let fillFieldsCorrectly = L10n.tr("Localizable", "petActivityCreation.validation.fillFieldsCorrectly", fallback: "Please fill all the fields correctly")
+      /// Please select a pet
+      public static let selectPet = L10n.tr("Localizable", "petActivityCreation.validation.selectPet", fallback: "Please select a pet")
+      public enum Grooming {
+        /// Please enter grooming cost
+        public static let cost = L10n.tr("Localizable", "petActivityCreation.validation.grooming.cost", fallback: "Please enter grooming cost")
+        /// Grooming cost should be greater than 0
+        public static let costGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.grooming.costGreaterThanZero", fallback: "Grooming cost should be greater than 0")
+        /// Please enter grooming duration
+        public static let duration = L10n.tr("Localizable", "petActivityCreation.validation.grooming.duration", fallback: "Please enter grooming duration")
+        /// Grooming duration should be greater than 0
+        public static let durationGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.grooming.durationGreaterThanZero", fallback: "Grooming duration should be greater than 0")
+      }
+      public enum Vet {
+        /// Please enter vet cost
+        public static let cost = L10n.tr("Localizable", "petActivityCreation.validation.vet.cost", fallback: "Please enter vet cost")
+        /// Vet cost should be greater than 0
+        public static let costGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.vet.costGreaterThanZero", fallback: "Vet cost should be greater than 0")
+      }
+      public enum Walk {
+        /// Please enter actual distance
+        public static let actualDistance = L10n.tr("Localizable", "petActivityCreation.validation.walk.actualDistance", fallback: "Please enter actual distance")
+        /// Actual distance should be greater than 0
+        public static let actualGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.walk.actualGreaterThanZero", fallback: "Actual distance should be greater than 0")
+        /// Actual distance should be less than 40
+        public static let actualMaxLimit = L10n.tr("Localizable", "petActivityCreation.validation.walk.actualMaxLimit", fallback: "Actual distance should be less than 40")
+        /// Please enter goal distance
+        public static let goalDistance = L10n.tr("Localizable", "petActivityCreation.validation.walk.goalDistance", fallback: "Please enter goal distance")
+        /// Goal distance should be greater than 0
+        public static let goalGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.walk.goalGreaterThanZero", fallback: "Goal distance should be greater than 0")
+        /// Goal distance should be less than 30
+        public static let goalMaxLimit = L10n.tr("Localizable", "petActivityCreation.validation.walk.goalMaxLimit", fallback: "Goal distance should be less than 30")
+      }
+    }
+
   }
   public enum PetAnalytics {
     /// Analytics
@@ -622,6 +662,14 @@ public enum L10n {
       public static let surgery = L10n.tr("Localizable", "pets.vet.surgery", fallback: "Surgery")
       /// Vaccination
       public static let vaccination = L10n.tr("Localizable", "pets.vet.vaccination", fallback: "Vaccination")
+    }
+  }
+  public enum PublicPets {
+    public enum Sort {
+      /// Game Score
+      public static let gameScore = L10n.tr("Localizable", "publicPets.sort.gameScore", fallback: "Game Score")
+      /// Name
+      public static let name = L10n.tr("Localizable", "publicPets.sort.name", fallback: "Name")
     }
   }
   public enum Repository {

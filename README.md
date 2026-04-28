@@ -1,77 +1,126 @@
 # Pet Care
 
-Pet Care is a mobile application designed to help pet owners manage their pets’ profiles, track daily care activities, view statistics, set reminders, explore public pet profiles, and enjoy a simple mini-game.
+<p align="center">
+  <img src="Screenshots/onboarding1.jpg" width="220" />
+  &nbsp;
+  <img src="Screenshots/onboarding2.jpg" width="220" />
+  &nbsp;
+  <img src="Screenshots/onboarding3.jpg" width="220" />
+</p>
 
-## Overview
 
-The app combines pet care management, analytics, social features, and interactive elements in one place. Users can store important information about their pets, keep track of routines such as walks or grooming, and monitor activity history over time.
+## About
 
-## Features
+Pet Care is a modern iOS application for pet owners who want to keep their pets’ information, care routines, health events, reminders, and activity statistics organized in one place.
 
-- Sign up and log in with email/password or Google
-- Create and manage multiple pet profiles
-- Add pet details such as photo, name, breed, birth date, gender, weight, and notes
-- Track care activities, including:
-  - Walks
-  - Grooming
-  - Vet visits
-- Set reminders for grooming and veterinary appointments
-- View analytics and pet activity statistics
-- Explore public profiles of other pets
-- Play a mini-game with your pet as the main character
-- Edit user profile and manage app settings
+The app combines profile management, activity tracking, analytics, public pet profiles, notifications, and a playful mini-game to create a useful and engaging pet care experience.
 
-## Screens
+## Core Features
 
-- Registration
-- Login
-- My Pets
-- Pet Profile
-- Add / Edit Pet
-- Activity Creation
-- Analytics
-- Public Profiles
-- Public Pet Profile
-- Game
-- User Profile
-- Settings
+- Authentication with email/password and Google Sign-In
+- Multiple pet profile management
+- Detailed pet cards with photo, breed, birth date, gender, weight, and notes
+- Daily care tracking for walks, grooming, and vet visits
+- Reminder notifications for grooming and veterinary appointments
+- Activity analytics with history, goals, and period filters
+- Public pet profiles for browsing other pets
+- Interactive mini-game featuring the user’s pet
+- User profile editing and app settings
+
+## App Screens
+
+### Pet Management
+
+Users can create and manage multiple pet profiles, store important details, and quickly access each pet’s care history.
+
+<p align="center">
+  <img src="Screenshots/main-light.png" width="220" /> &nbsp;
+  <img src="Screenshots/pet-profile-light.png" width="220" /> <br>
+  <img src="Screenshots/main-dark.png" width="220" /> &nbsp;
+  <img src="Screenshots/pet-profile-dark.png" width="220" />
+</p>
+
+### Activity Tracking
+
+Pet Care allows users to record daily care activities such as walks, grooming sessions, and vet visits.
+
+<p align="center">
+  <img src="Screenshots/activity-light.png" width="220" />
+  <img src="Screenshots/activity-dark.png" width="220" />
+</p>
+
+### Analytics
+
+The analytics screen helps users understand their pet’s activity and care routine through statistics, progress tracking, latest care events, and time-based filters.
+
+<p align="center">
+  <img src="Screenshots/analytics-light.png" width="240" />
+  <img src="Screenshots/analytics-dark.png" width="240" />
+</p>
+
+### Public Profiles
+
+Users can explore public pet profiles and view shared pet information in a clean, social-style interface.
+
+<p align="center">
+  <img src="Screenshots/public-pets-light.png" width="220" /> &nbsp;
+  <img src="Screenshots/public-pet-profile-light.png" width="220" /><br>
+  <img src="Screenshots/public-pets-dark.png" width="220" /> &nbsp;
+  <img src="Screenshots/publi-pet-profile-dark.png" width="220" />
+</p>
+
+### Mini-Game
+
+The app includes a simple mini-game where the user’s pet becomes the main character, adding a playful and engaging part to the experience.
+
+<p align="center">
+  <img src="Screenshots/game.mov" width="260" />
+</p>
+
+### Profile and Settings
+
+Users can manage their personal profile and adjust app preferences from dedicated profile and settings screens.
+
+<p align="center">
+  <img src="Screenshots/settings.mov" width="220" />
+</p>
 
 ## Analytics
 
-The analytics section helps users better understand their pet’s activity and care history. It may include:
+The analytics module provides an overview of the pet’s activity and care history, including:
 
 - Step statistics
 - Walk history
 - Goal progress
-- Information about the latest grooming session
-- Information about the latest vet visit
-- Filters by different time periods
+- Latest grooming session
+- Latest vet visit
+- Activity history
+- Period-based filters
 
 ## Notifications
 
-The app supports reminders for grooming and vet visits. Users can enable notifications and set custom reminder intervals to avoid missing important care events.
+Pet Care uses local notifications to help users stay on top of important care events. Users can set reminders for grooming and veterinary appointments with custom intervals.
 
 ## Tech Stack
 
-### iOS
 - UIKit
 - Firebase
-- CoreData
+- SwiftData
 - UserNotifications
-- Charts
 - SwiftLint
 - SwiftGen
-- SPM
+- Swift Package Manager
 
 ## Future Improvements
 
-Possible future enhancements include:
-
-- AI-based features
-- Comments on public profiles
+- AI-based pet care recommendations
+- Comments on public pet profiles
 - Achievements and rewards
-- Premium functionality
+- Premium features
+- Advanced analytics
+- More mini-games
+- Expanded social features
 
 ## Project Goal
 
-The goal of Pet Care is to create a convenient and modern app that helps pet owners organize pet information, track care routines, monitor activity, and stay engaged through social and game features.
+The goal of Pet Care is to provide pet owners with a polished, convenient, and engaging mobile app for managing pet information, tracking care routines, monitoring activity, and staying connected with their pets every day. можешь чуть чуть больше текста добавить по тз
