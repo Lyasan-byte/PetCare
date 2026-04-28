@@ -106,7 +106,7 @@ final class TabBarController: UITabBarController {
         userProfileCoordinator.start()
         userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
         userProfileNavigationController.tabBarItem.title = nil
-
+        
         setViewControllers(
             [
                 petsNavigationController,

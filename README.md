@@ -35,9 +35,9 @@ Users can create and manage multiple pet profiles, store important details, and 
 
 <p align="center">
   <img src="Screenshots/main-light.png" width="220" /> &nbsp;
-  <img src="Screenshots/pet-profile-dark.png" width="220" /> <br>
+  <img src="Screenshots/pet-profile-light.png" width="220" /> <br>
   <img src="Screenshots/main-dark.png" width="220" /> &nbsp;
-  <img src="Screenshots/pet-profile-light.png" width="220" />
+  <img src="Screenshots/pet-profile-dark.png" width="220" />
 </p>
 
 ### Activity Tracking

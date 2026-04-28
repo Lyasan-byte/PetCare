@@ -38,6 +38,7 @@
 "auth.registration_completion.button" = "Завершить регистрацию";
 
 "common.error" = "Ошибка";
+"common.help" = "Помощь";
 "common.ok" = "ОК";
 "common.cancel" = "Отмена";
 "common.delete" = "Удалить";
@@ -253,6 +254,8 @@
 "pets.age.day.few" = "%d дня";
 "pets.age.day.many" = "%d дней";
 
+"petProfile.birthdayBadge.text" = "С днём рождения!";
+
 //MARK: - Pet Facts
 
 "pets.facts.empty_state" = "По данной породе не найдено информации";
@@ -313,6 +316,31 @@
 // MARK: - Activities History
 
 "activitiesHistory.title" = "История";
+
+// MARK: - Welcome Onboarding
+
+"onboardingCare.title.first" = "Следите за";
+"onboardingCare.title.second" = "уходом";
+"onboardingCare.description" = "Фиксируйте прогулки, груминг и визиты к ветеринару. Держите напоминания под рукой и отслеживайте прогресс питомца в аналитике.";
+"onboardingCare.nextButton.title" = "Далее →";
+"onboardingCare.card.walks.title" = "Ежедневные прогулки";
+"onboardingCare.card.grooming.title" = "Планы груминга";
+"onboardingCare.card.vet.title" = "Вет визиты";
+"onboardingCare.card.analytics.title" = "Умная статистика";
+
+"onboardingCommunity.title.first" = "Играйте и";
+"onboardingCommunity.title.second" = "общайтесь";
+"onboardingCommunity.description" = "Изучайте публичные профили питомцев, делитесь историей и запускайте Pet Runner со своим любимцем.";
+"onboardingCommunity.nextButton.title" = "Начать →";
+"onboardingCommunity.card.publicPets.title" = "Питомцы сообщества";
+
+"welcomeOnboarding.header.text" = "Pet Care";
+"welcomeOnboarding.skipButton.title" = "Пропустить";
+"welcomeOnboarding.title.first" = "Добро пожаловать в";
+"welcomeOnboarding.title.second" = "Pet Care";
+"welcomeOnboarding.description" = "Идеальное место для ваших пушистых друзей. Следите за уходом, здоровьем и не только.";
+"welcomeOnboarding.nextButton.title" = "Далее →";
+"welcomeOnboarding.imageBadge.text" = "ЛУЧШИЙ ДРУГ";
 
 // MARK: - Pet Activity Creation Validation
 

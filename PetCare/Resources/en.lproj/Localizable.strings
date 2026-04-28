@@ -39,6 +39,7 @@
 "auth.registration_completion.button" = "Finish Registration";
 
 "common.error" = "Error";
+"common.help" = "Help";
 "common.ok" = "OK";
 "common.cancel" = "Cancel";
 "common.delete" = "Delete";
@@ -257,6 +258,8 @@
 "pets.age.day.few" = "%d days";
 "pets.age.day.many" = "%d days";
 
+"petProfile.birthdayBadge.text" = "Happy birthday!";
+
 //MARK: - Pet Facts
 
 "pets.facts.empty_state" = "No information was found for this breed";
@@ -318,6 +321,31 @@
 // MARK: - Activities History
 
 "activitiesHistory.title" = "History";
+
+// MARK: - Welcome Onboarding
+
+"onboardingCare.title.first" = "Track Daily";
+"onboardingCare.title.second" = "Care";
+"onboardingCare.description" = "Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.";
+"onboardingCare.nextButton.title" = "Next →";
+"onboardingCare.card.walks.title" = "Daily Walks";
+"onboardingCare.card.grooming.title" = "Grooming Plans";
+"onboardingCare.card.vet.title" = "Vet Visits";
+"onboardingCare.card.analytics.title" = "Smart Stats";
+
+"onboardingCommunity.title.first" = "Play &";
+"onboardingCommunity.title.second" = "Connect";
+"onboardingCommunity.description" = "Explore public pet profiles, share the journey, and jump into Pet Runner with your own companion.";
+"onboardingCommunity.nextButton.title" = "Get Started →";
+"onboardingCommunity.card.publicPets.title" = "Public Pets";
+
+"welcomeOnboarding.header.text" = "Pet Care";
+"welcomeOnboarding.skipButton.title" = "Skip";
+"welcomeOnboarding.title.first" = "Welcome to";
+"welcomeOnboarding.title.second" = "Pet Care";
+"welcomeOnboarding.description" = "The ultimate sanctuary for your furry friends. Track care, health and more.";
+"welcomeOnboarding.nextButton.title" = "Next →";
+"welcomeOnboarding.imageBadge.text" = "KINDRED SPIRIT";
 
 // MARK: - Pet Activity Creation Validation
 

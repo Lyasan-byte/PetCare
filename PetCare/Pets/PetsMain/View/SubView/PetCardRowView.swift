@@ -16,7 +16,8 @@ final class PetCardRowView: UIView {
     }()
 
     private let background = BackgroundView(backgroundColor: .tertiarySystemBackground)
-
+    private let contentContainer = UIView()
+    
     private lazy var hstack = HStack(
         spacing: 20,
         alignment: .top,
@@ -33,8 +34,14 @@ final class PetCardRowView: UIView {
     )
 
     private var petStatusView = CircleIconView()
-    private var petImageContainer = BackgroundView(backgroundColor: .clear, cornerRadius: 0)
-    private var petNameLabel = TextLabel(font: .systemFont(ofSize: 16, weight: .bold), textAlignment: .left)
+    private var petImageContainer = BackgroundView(
+        backgroundColor: .clear,
+        cornerRadius: 0
+    )
+    private var petNameLabel = TextLabel(
+        font: .systemFont(ofSize: 16, weight: .bold),
+        textAlignment: .left
+    )
     private var petBreedLabel = TextLabel(
         font: .systemFont(ofSize: 12, weight: .medium),
         textColor: Asset.petGray.color,
@@ -42,6 +49,15 @@ final class PetCardRowView: UIView {
     )
     
     private let activityBadge = PetCardBadge()
+    private let birthdayBadge = CircleIconView(
+        symbolName: "birthday.cake.fill",
+        iconColor: Asset.pinkAccent.color,
+        circleColor: Asset.backgroundLightPink.color,
+        circleSize: 45,
+        iconSize: 22,
+        borderColor: Asset.petYellow.color.withAlphaComponent(0.6),
+        shadowColor: Asset.petYellow.color
+    )
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,7 +81,9 @@ final class PetCardRowView: UIView {
     }
 
     private func setupHierarchy() {
-        addSubview(background)
+        addSubview(contentContainer)
+        contentContainer.addSubview(background)
+        contentContainer.addSubview(birthdayBadge)
         background.addSubview(hstack)
         petImageContainer.addSubview(petImageView)
         petImageContainer.addSubview(petStatusView)
@@ -73,11 +91,21 @@ final class PetCardRowView: UIView {
 
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
+        contentContainer.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            background.topAnchor.constraint(equalTo: topAnchor),
-            background.leadingAnchor.constraint(equalTo: leadingAnchor),
-            background.trailingAnchor.constraint(equalTo: trailingAnchor),
-            background.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentContainer.topAnchor.constraint(equalTo: topAnchor),
+            contentContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            background.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            background.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            background.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            background.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+            
+            birthdayBadge.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: -5),
+            birthdayBadge.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: 5),
 
             hstack.topAnchor.constraint(equalTo: background.topAnchor, constant: 16),
             hstack.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 16),
@@ -104,10 +132,11 @@ final class PetCardRowView: UIView {
         petStatusView.isHidden = pet.iconStatus == .none
         
         if let activity = pet.lastActivity {
-            activityBadge.configure(activity: activity, height: 25)
+            activityBadge.configure(activity: activity, height: 25, iconSize: 16)
             hstack.alignment = .center
         }
         activityBadge.isHidden = pet.lastActivity == nil
+        birthdayBadge.isHidden = !pet.hasBirthday
     }
 
     required init?(coder: NSCoder) {

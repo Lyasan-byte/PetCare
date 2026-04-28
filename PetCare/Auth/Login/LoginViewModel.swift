@@ -52,6 +52,9 @@ final class LoginViewModel: LoginViewModeling {
 
         case .registerTapped:
             moduleOutput?.tapRegister()
+
+        case .helpTapped:
+            moduleOutput?.moduleWantsToOpenOnboardingHelp()
         }
     }
 
