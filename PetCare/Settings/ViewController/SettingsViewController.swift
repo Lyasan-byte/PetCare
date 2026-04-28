@@ -27,6 +27,7 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         bindViewModel()
+        bindLanguageChanges()
         bindActions()
         render()
     }
@@ -60,6 +61,15 @@ final class SettingsViewController: UIViewController {
         viewModel.stateDidChange
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
+                self?.render()
+            }
+            .store(in: &bag)
+    }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
                 self?.render()
             }
             .store(in: &bag)

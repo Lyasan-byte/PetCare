@@ -27,6 +27,7 @@ final class UserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        bindLanguageChanges()
         setupActions()
         viewModel.trigger(.onDidLoad)
     }
@@ -45,6 +46,16 @@ final class UserProfileViewController: UIViewController {
     private func bind() {
         viewModel.stateDidChange
             .sink { [weak self] in
+                self?.render()
+            }
+            .store(in: &bag)
+    }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.contentView.refreshLocalizedTexts()
                 self?.render()
             }
             .store(in: &bag)

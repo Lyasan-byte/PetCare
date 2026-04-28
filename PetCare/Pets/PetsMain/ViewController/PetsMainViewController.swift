@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 final class PetsMainViewController: UIViewController {
-    private let petsMainView = PetsMainView()
+    private var petsMainView = PetsMainView()
     private let petsMainViewModel: any PetsMainViewModeling
     private let imageLoader: ImageLoader
     private var bag = Set<AnyCancellable>()
@@ -23,14 +23,19 @@ final class PetsMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
+        bindViewModel()
+        bindLanguageChanges()
+        installPetsMainView()
+        render(petsMainViewModel.state)
+
+        petsMainViewModel.trigger(.viewDidLoad)
+    }
+
+    private func installPetsMainView() {
         setupHierarchy()
         setupLayout()
         setupCollectionView()
         bindAction()
-        bindViewModel()
-        render(petsMainViewModel.state)
-
-        petsMainViewModel.trigger(.viewDidLoad)
     }
 
     private func setupHierarchy() {
@@ -80,6 +85,24 @@ final class PetsMainViewController: UIViewController {
                 self.render(self.petsMainViewModel.state)
             }
             .store(in: &bag)
+    }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadLocalizedView()
+            }
+            .store(in: &bag)
+    }
+
+    private func reloadLocalizedView() {
+        guard isViewLoaded else { return }
+
+        petsMainView.removeFromSuperview()
+        petsMainView = PetsMainView()
+        installPetsMainView()
+        render(petsMainViewModel.state)
     }
 
     private func showError(_ message: String) {

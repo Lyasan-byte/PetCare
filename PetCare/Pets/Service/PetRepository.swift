@@ -8,6 +8,10 @@
 import Foundation
 import Combine
 
+extension Notification.Name {
+    static let petDataDidChange = Notification.Name("petDataDidChange")
+}
+
 protocol PetRepository {
     func makeNewPetId() -> String
     func save(pet: Pet, petId: String, selectedPhoto: Data?) -> AnyPublisher<Pet, Error>

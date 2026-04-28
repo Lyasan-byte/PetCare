@@ -139,10 +139,11 @@ final class PetCardBadge: UIView {
     }
 
     private func formatDate(_ date: Date) -> String {
+        let appLocale = Locale(identifier: Locale.preferredLanguages.first ?? SettingsLanguage.defaultValue.rawValue)
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
+        dateFormatter.locale = appLocale
         dateFormatter.dateFormat = "EEEE, d MMM"
-        return dateFormatter.string(from: date).uppercased()
+        return dateFormatter.string(from: date).uppercased(with: appLocale)
     }
 
     required init?(coder: NSCoder) {

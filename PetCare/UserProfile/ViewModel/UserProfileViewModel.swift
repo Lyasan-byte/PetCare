@@ -17,6 +17,7 @@ final class UserProfileViewModel: UserProfileViewModeling {
     }
 
     private let petRepository: PetRepository
+    private let bestScoreRepository: MiniGameBestScoreRepository
     private let userProfileRepository: UserProfileRepository
     private weak var moduleOutput: UserProfileModuleOutput?
     private var bag = Set<AnyCancellable>()
@@ -24,12 +25,15 @@ final class UserProfileViewModel: UserProfileViewModeling {
 
     init(
         petRepository: PetRepository,
+        bestScoreRepository: MiniGameBestScoreRepository,
         userProfileRepository: UserProfileRepository,
         moduleOutput: UserProfileModuleOutput?
     ) {
         self.petRepository = petRepository
+        self.bestScoreRepository = bestScoreRepository
         self.userProfileRepository = userProfileRepository
         self.moduleOutput = moduleOutput
+        bindPetDataChanges()
     }
 
     func trigger(_ intent: UserProfileIntent) {
@@ -62,16 +66,26 @@ final class UserProfileViewModel: UserProfileViewModeling {
                     self?.state = .error(error.localizedDescription)
                 }
             } receiveValue: { [weak self] user, pets in
-                self?.currentUser = user
-                self?.state = .content(
+                guard let self else { return }
+                self.currentUser = user
+                self.state = .content(
                     UserProfileContent(
                         fullName: user.fullName,
                         email: user.email ?? NSLocalizedString("user.profile.email.missing", comment: ""),
                         petsCountText: String(format: "%02d", pets.count),
-                        bestScoreText: "159",
+                        bestScoreText: String(pets.map(self.bestScoreRepository.bestScore(for:)).max() ?? 0),
                         avatarURLString: user.avatarURLString
                     )
                 )
+            }
+            .store(in: &bag)
+    }
+
+    private func bindPetDataChanges() {
+        NotificationCenter.default.publisher(for: .petDataDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.loadProfile()
             }
             .store(in: &bag)
     }

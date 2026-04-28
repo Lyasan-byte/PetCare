@@ -122,9 +122,13 @@ final class MiniGameViewModel: MiniGameViewModeling {
         content.lastRunScore = score
 
         if let selectedPet = content.selectedPet {
-            let newBestScore = max(bestScoreRepository.bestScore(for: selectedPet), score)
+            let previousBestScore = bestScoreRepository.bestScore(for: selectedPet)
+            let newBestScore = max(previousBestScore, score)
             content.bestScore = newBestScore
             bestScoreRepository.saveBestScore(newBestScore, for: selectedPet)
+            if newBestScore > previousBestScore {
+                NotificationCenter.default.post(name: .petDataDidChange, object: nil)
+            }
             saveBestScoreIfNeeded(
                 newBestScore,
                 currentRemoteScore: selectedPet.gameScore,

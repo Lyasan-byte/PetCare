@@ -48,11 +48,13 @@ final class PetFormCoordinator: Coordinator {
 
 extension PetFormCoordinator: PetFormModuleOutput {
     func petFormModuleDidSave(_ pet: Pet) {
+        NotificationCenter.default.post(name: .petDataDidChange, object: nil)
         onFinish?(.saved(pet))
         navigationController.popViewController(animated: true)
     }
 
     func petFormModuleDidDelete() {
+        NotificationCenter.default.post(name: .petDataDidChange, object: nil)
         onFinish?(.deleted)
         navigationController.popViewController(animated: true)
     }
