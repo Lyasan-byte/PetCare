@@ -11,6 +11,11 @@ import FirebaseFirestore
 struct Tip: Identifiable, Codable {
     @DocumentID var id: String?
     let text: String
+
+    init(id: String? = nil, text: String) {
+        self.id = id
+        self.text = text
+    }
 }
 
 extension Tip {
