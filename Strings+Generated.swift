@@ -144,6 +144,12 @@ public enum L10n {
         /// SELECT YOUR RUNNER
         public static let select = L10n.tr("Localizable", "mini.game.runner.select", fallback: "SELECT YOUR RUNNER")
       }
+      public enum Scoreboard {
+        /// HIGH
+        public static let high = L10n.tr("Localizable", "mini.game.scoreboard.high", fallback: "HIGH")
+        /// Score
+        public static let score = L10n.tr("Localizable", "mini.game.scoreboard.score", fallback: "Score")
+      }
       public enum Screen {
         /// Pet Runner
         public static let title = L10n.tr("Localizable", "mini.game.screen.title", fallback: "Pet Runner")
@@ -240,16 +246,22 @@ public enum L10n {
         public static let cost = L10n.tr("Localizable", "petActivityCreation.validation.grooming.cost", fallback: "Please enter grooming cost")
         /// Grooming cost should be greater than 0
         public static let costGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.grooming.costGreaterThanZero", fallback: "Grooming cost should be greater than 0")
+        /// Grooming cost should be less than 1 million
+        public static let costMaxLimit = L10n.tr("Localizable", "petActivityCreation.validation.grooming.costMaxLimit", fallback: "Grooming cost should be less than 1 million")
         /// Please enter grooming duration
         public static let duration = L10n.tr("Localizable", "petActivityCreation.validation.grooming.duration", fallback: "Please enter grooming duration")
         /// Grooming duration should be greater than 0
         public static let durationGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.grooming.durationGreaterThanZero", fallback: "Grooming duration should be greater than 0")
+        /// Grooming duration should not be longer than 5 hours
+        public static let durationMaxLimit = L10n.tr("Localizable", "petActivityCreation.validation.grooming.durationMaxLimit", fallback: "Grooming duration should not be longer than 5 hours")
       }
       public enum Vet {
         /// Please enter vet cost
         public static let cost = L10n.tr("Localizable", "petActivityCreation.validation.vet.cost", fallback: "Please enter vet cost")
         /// Vet cost should be greater than 0
         public static let costGreaterThanZero = L10n.tr("Localizable", "petActivityCreation.validation.vet.costGreaterThanZero", fallback: "Vet cost should be greater than 0")
+        /// Vet cost should be less than 1 million
+        public static let costMaxLimit = L10n.tr("Localizable", "petActivityCreation.validation.vet.costMaxLimit", fallback: "Vet cost should be less than 1 million")
       }
       public enum Walk {
         /// Please enter actual distance

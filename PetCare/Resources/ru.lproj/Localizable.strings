@@ -76,10 +76,10 @@
 "pets.form.save_button" = "Сохранить изменения";
 "pets.form.delete_button" = "Удалить профиль";
 
-"pets.form.validation.enter_pet_name" = "Введите имя питомца";
-"pets.form.validation.enter_breed" = "Введите породу";
-"pets.form.validation.enter_weight" = "Введите вес";
-"pets.form.validation.weight_greater_than_zero" = "Вес должен быть больше 0";
+"pets.form.validation.enter_pet_name" = "Пожалуйста, введите имя питомца";
+"pets.form.validation.enter_breed" = "Пожалуйста, введите породу";
+"pets.form.validation.enter_weight" = "Пожалуйста, введите вес";
+"pets.form.validation.weight_greater_than_zero" = "Вес питомца должен быть больше 0";
 "pets.form.validation.check_form_fields" = "Пожалуйста, проверьте поля формы.";
 
 "pets.profile.age" = "Возраст";
@@ -167,12 +167,12 @@
 "user.profile.edit.photo.title" = "Изменить фото профиля";
 "user.profile.edit.photo.subtitle" = "Нажмите, чтобы обновить аватар";
 "user.profile.edit.first_name.title" = "Имя";
-"user.profile.edit.first_name.placeholder" = "Введите имя";
+"user.profile.edit.first_name.placeholder" = "Пожалуйста, введите имя";
 "user.profile.edit.last_name.title" = "Фамилия";
-"user.profile.edit.last_name.placeholder" = "Введите фамилию";
+"user.profile.edit.last_name.placeholder" = "Пожалуйста, введите фамилию";
 "user.profile.edit.save_button" = "Сохранить изменения";
-"user.profile.edit.validation.first_name" = "Введите имя";
-"user.profile.edit.validation.last_name" = "Введите фамилию";
+"user.profile.edit.validation.first_name" = "Пожалуйста, введите имя";
+"user.profile.edit.validation.last_name" = "Пожалуйста, введите фамилию";
 "pets.public.header.title" = "Публичные профили";
 "pets.public.header.subtitle" = "СООБЩЕСТВО";
 "pets.public.header.feed_title" = "Знакомьтесь с питомцами";
@@ -358,3 +358,7 @@
 "petActivityCreation.validation.vet.cost" = "Пожалуйста, укажите стоимость визита к ветеринару";
 "petActivityCreation.validation.vet.costGreaterThanZero" = "Стоимость визита к ветеринару должна быть больше 0";
 "petActivityCreation.validation.fillFieldsCorrectly" = "Пожалуйста, заполните все поля корректно";
+"petActivityCreation.validation.grooming.durationGreaterThanZero" = "Длительность груминга должна быть больше 0";
+"petActivityCreation.validation.grooming.durationMaxLimit" = "Длительность груминга не должна превышать 5 часов";
+"petActivityCreation.validation.grooming.costMaxLimit" = "Стоимость груминга должна быть меньше 1 миллиона";
+"petActivityCreation.validation.vet.costMaxLimit" = "Стоимость визита к ветеринару должна быть меньше 1 миллиона";

@@ -199,7 +199,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
             return L10n.PetActivityCreation.Validation.Walk.goalGreaterThanZero
         }
         
-        guard walkGoal <= 40 else {
+        guard walkGoal <= ValidationLimits.maxWalkDistance else {
             return L10n.PetActivityCreation.Validation.Walk.goalMaxLimit
         }
 
@@ -207,14 +207,14 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
             return L10n.PetActivityCreation.Validation.Walk.actualDistance
         }
 
-        guard walkActual <= 40 else {
-            return L10n.PetActivityCreation.Validation.Walk.actualMaxLimit
-        }
-        
         guard walkActual > 0 else {
             return L10n.PetActivityCreation.Validation.Walk.actualGreaterThanZero
         }
-
+        
+        guard walkActual <= ValidationLimits.maxWalkDistance else {
+            return L10n.PetActivityCreation.Validation.Walk.actualMaxLimit
+        }
+    
         return nil
     }
 
@@ -227,12 +227,20 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
             return L10n.PetActivityCreation.Validation.Grooming.costGreaterThanZero
         }
 
+        guard groomingCost < ValidationLimits.maxProcedureCost else {
+            return L10n.PetActivityCreation.Validation.Grooming.costMaxLimit
+        }
+        
         guard let groomingDuration = content.groomingDuration else {
             return L10n.PetActivityCreation.Validation.Grooming.duration
         }
         
         guard groomingDuration > 0 else {
             return L10n.PetActivityCreation.Validation.Grooming.durationGreaterThanZero
+        }
+        
+        guard groomingDuration <= ValidationLimits.maxGroomingDurationMinutes else {
+            return L10n.PetActivityCreation.Validation.Grooming.durationMaxLimit
         }
         return nil
     }
@@ -244,6 +252,10 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
 
         guard vetCost > 0 else {
             return L10n.PetActivityCreation.Validation.Vet.costGreaterThanZero
+        }
+        
+        guard vetCost < ValidationLimits.maxProcedureCost else {
+            return L10n.PetActivityCreation.Validation.Vet.costMaxLimit
         }
 
         return nil
@@ -320,5 +332,11 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         }
 
         return Double(normalizedString)
+    }
+    
+    private enum ValidationLimits {
+        static let maxWalkDistance = 40.0
+        static let maxProcedureCost = 1000000.0
+        static let maxGroomingDurationMinutes = 300.0
     }
 }

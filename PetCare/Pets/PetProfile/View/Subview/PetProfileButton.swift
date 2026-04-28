@@ -9,8 +9,7 @@ import UIKit
 
 final class PetProfileButton: UIView {
     var onTap: (() -> Void)?
-
-    var background = BackgroundView(cornerRadius: 20)
+    
     var button = UIButton(type: .system)
 
     override init(frame: CGRect) {
@@ -23,20 +22,23 @@ final class PetProfileButton: UIView {
     convenience init(text: String, image: String, textColor: UIColor, backgroundColor: UIColor) {
         self.init(frame: .zero)
 
-        var configuration = UIButton.Configuration.plain()
+        var configuration = UIButton.Configuration.filled()
         let config = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
 
         configuration.image = UIImage(systemName: image, withConfiguration: config)
         configuration.imagePadding = 5
         configuration.baseForegroundColor = textColor
+        configuration.baseBackgroundColor = backgroundColor
         configuration.contentInsets = .zero
+        
+        configuration.cornerStyle = .fixed
+        configuration.background.cornerRadius = 24
         
         var titleAttributes = AttributeContainer()
         titleAttributes.font = .systemFont(ofSize: 16, weight: .semibold)
         configuration.attributedTitle = AttributedString(text, attributes: titleAttributes)
 
         button.configuration = configuration
-        button.backgroundColor = backgroundColor
     }
 
     private func setupHierarchy() {
@@ -57,7 +59,6 @@ final class PetProfileButton: UIView {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 25
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
         button.addTarget(self, action: #selector(didButtonTap), for: .touchUpInside)
     }

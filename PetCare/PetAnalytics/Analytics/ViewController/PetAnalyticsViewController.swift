@@ -151,7 +151,7 @@ final class PetAnalyticsViewController: UIViewController {
                     withReuseIdentifier: PetAnalyticsChartCell.identifier,
                     for: indexPath
                 ) as? PetAnalyticsChartCell {
-                    cell.setData(barChartData: walkChartData)
+                    cell.setData(barChartData: walkChartData, style: .distance)
                     return cell
                 }
             case .goal(let goalData):
@@ -167,7 +167,7 @@ final class PetAnalyticsViewController: UIViewController {
                     withReuseIdentifier: PetAnalyticsChartCell.identifier,
                     for: indexPath
                 ) as? PetAnalyticsChartCell {
-                    cell.setData(barChartData: costData, color: Asset.petYellow.color)
+                    cell.setData(barChartData: costData, color: Asset.petYellow.color, style: .money)
                     return cell
                 }
             case .stats(let statsData):
