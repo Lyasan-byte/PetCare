@@ -9,6 +9,7 @@ import UIKit
 
 protocol RegisterModuleOutput: AnyObject {
     func tapLogin()
+    func moduleWantsToOpenOnboardingHelp()
     func moduleWantsToOpenMainScreen()
     func moduleWantsToOpenRegistrationCompletion()
     func provideViewControllerForGoogleSignIn() -> UIViewController?

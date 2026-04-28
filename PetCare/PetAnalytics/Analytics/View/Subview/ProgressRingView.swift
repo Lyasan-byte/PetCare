@@ -68,12 +68,12 @@ final class ProgressRingView: UIView {
         updatePath()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        guard traitCollection
-            .hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
-        updateColors()
+    private func registerTraitChanges() {
+        registerForTraitChanges(
+            [UITraitUserInterfaceStyle.self]
+        ) { (self: Self, _) in
+            self.updateColors()
+        }
     }
     
     private func setupHierarchy() {

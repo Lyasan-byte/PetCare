@@ -14,4 +14,5 @@ enum LoginIntent {
     case loginTapped
     case googleTapped
     case registerTapped
+    case helpTapped
 }

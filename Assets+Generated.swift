@@ -27,6 +27,7 @@ public enum Asset {
   public static let accentColor = ColorAsset(name: "AccentColor")
   public static let authCardViewColor = ColorAsset(name: "authCardViewColor")
   public static let backgroundGray = ColorAsset(name: "backgroundGray")
+  public static let backgroundGreen = ColorAsset(name: "backgroundGreen")
   public static let backgroundLightPink = ColorAsset(name: "backgroundLightPink")
   public static let darkPink = ColorAsset(name: "darkPink")
   public static let lightGreen = ColorAsset(name: "lightGreen")
@@ -59,6 +60,7 @@ public enum Asset {
   public static let miniGamePlantLarge = ImageAsset(name: "miniGamePlantLarge")
   public static let miniGamePlantMedium = ImageAsset(name: "miniGamePlantMedium")
   public static let miniGamePlantSmall = ImageAsset(name: "miniGamePlantSmall")
+  public static let onboardingPets = ImageAsset(name: "onboardingPets")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

@@ -63,7 +63,7 @@ final class PetFactsViewController: UIViewController {
                 title: L10n.Pets.Facts.group,
                 value: petFact.group,
                 backgrounColor: Asset.lightGreen.color,
-                valueColor: Asset.primaryGreen.color
+                valueColor: Asset.accentColor.color
             ),
             makeRow(
                 title: L10n.Pets.Facts.lifespan,
