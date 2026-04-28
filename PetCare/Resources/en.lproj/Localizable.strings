@@ -76,10 +76,10 @@
 "pets.form.save_button" = "Save Changes";
 "pets.form.delete_button" = "Delete Profile";
 
-"pets.form.validation.enter_pet_name" = "Enter pet name";
-"pets.form.validation.enter_breed" = "Enter breed";
-"pets.form.validation.enter_weight" = "Enter weight";
-"pets.form.validation.weight_greater_than_zero" = "Weight must be greater than 0";
+"pets.form.validation.enter_pet_name" = "Please enter pet name";
+"pets.form.validation.enter_breed" = "Please enter breed";
+"pets.form.validation.enter_weight" = "Please enter weight";
+"pets.form.validation.weight_greater_than_zero" = "Pet's weight must be greater than 0";
 "pets.form.validation.check_form_fields" = "Please check the form fields.";
 
 "pets.profile.age" = "Age";
@@ -167,12 +167,12 @@
 "user.profile.edit.photo.title" = "Change Profile Photo";
 "user.profile.edit.photo.subtitle" = "Tap to update your avatar";
 "user.profile.edit.first_name.title" = "First Name";
-"user.profile.edit.first_name.placeholder" = "Enter first name";
+"user.profile.edit.first_name.placeholder" = "Please enter first name";
 "user.profile.edit.last_name.title" = "Last Name";
-"user.profile.edit.last_name.placeholder" = "Enter last name";
+"user.profile.edit.last_name.placeholder" = "Please enter last name";
 "user.profile.edit.save_button" = "Save Changes";
-"user.profile.edit.validation.first_name" = "Enter first name";
-"user.profile.edit.validation.last_name" = "Enter last name";
+"user.profile.edit.validation.first_name" = "Please enter first name";
+"user.profile.edit.validation.last_name" = "Please enter last name";
 "pets.public.header.title" = "Public Profiles";
 "pets.public.header.subtitle" = "COMMUNITY FEED";
 "pets.public.header.feed_title" = "Meet the Pack";
@@ -335,5 +335,7 @@
 "petActivityCreation.validation.vet.cost" = "Please enter vet cost";
 "petActivityCreation.validation.vet.costGreaterThanZero" = "Vet cost should be greater than 0";
 "petActivityCreation.validation.fillFieldsCorrectly" = "Please fill all the fields correctly";
-
-
+"petActivityCreation.validation.grooming.durationGreaterThanZero" = "Grooming duration should be greater than 0";
+"petActivityCreation.validation.grooming.durationMaxLimit" = "Grooming duration should not be longer than 5 hours";
+"petActivityCreation.validation.grooming.costMaxLimit" = "Grooming cost should be less than 1 million";
+"petActivityCreation.validation.vet.costMaxLimit" = "Vet cost should be less than 1 million";

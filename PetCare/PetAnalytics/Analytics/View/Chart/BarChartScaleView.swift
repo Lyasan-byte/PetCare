@@ -96,9 +96,7 @@ final class BarChartScaleView: UIView {
     private func formatCompact(_ value: Double) -> String {
         let absValue = abs(value)
 
-        if absValue >= 1_000_000 {
-            return formatted(value / 1_000_000) + "M"
-        } else if absValue >= 1_000 {
+        if absValue >= 1_000 {
             return formatted(value / 1_000) + "K"
         } else {
             return formatted(value)

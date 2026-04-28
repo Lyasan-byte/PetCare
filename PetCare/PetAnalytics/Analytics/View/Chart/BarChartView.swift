@@ -9,8 +9,20 @@ import UIKit
 
 final class BarChartView: UIView {
     private let stack = UIStackView()
-    private var columnViews: [BarChartColumnView] = []
     private let scale = BarChartScaleView()
+    
+    private var columnViews: [BarChartColumnView] = []
+    private var stackLeadingConstraint: NSLayoutConstraint?
+
+    private var valueStyle: BarChartValueStyle = .distance {
+        didSet {
+            stackLeadingConstraint?.constant = stackLeadingInset
+        }
+    }
+
+    private var stackLeadingInset: CGFloat {
+        valueStyle == .distance ? 30 : 45
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,6 +42,13 @@ final class BarChartView: UIView {
     
     private func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
+        
+        let stackLeadingConstraint = stack.leadingAnchor.constraint(
+            equalTo: leadingAnchor,
+            constant: stackLeadingInset
+        )
+        self.stackLeadingConstraint = stackLeadingConstraint
+        
         NSLayoutConstraint.activate([
             scale.topAnchor.constraint(equalTo: stack.topAnchor, constant: 6),
             scale.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -37,13 +56,14 @@ final class BarChartView: UIView {
             scale.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
             
             stack.topAnchor.constraint(equalTo: topAnchor),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            stackLeadingConstraint,
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),
             stack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
     func configure(items: [BarChartItem], color: UIColor = Asset.accentColor.color, style: BarChartValueStyle) {
+        self.valueStyle = style
         rebuildColumnsIfNeeded(count: items.count)
         
         let maxValue = items.map(\.value).max() ?? 0
