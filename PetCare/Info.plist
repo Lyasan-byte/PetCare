@@ -21,6 +21,10 @@
 	<string>do7dnw8rl</string>
 	<key>CLOUDINARY_UPLOAD_PRESET</key>
 	<string>petcare_unsigned_pets</string>
+	<key>DEEPL_API_BASE_URL</key>
+	<string>https://api-free.deepl.com</string>
+	<key>DEEPL_API_KEY</key>
+	<string>42023222-d3b9-4679-99d7-b2b73fbe84fa:fx</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
