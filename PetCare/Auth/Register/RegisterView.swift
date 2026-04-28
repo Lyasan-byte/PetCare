@@ -10,6 +10,11 @@ import UIKit
 
 final class RegisterView: UIView {
     private let containerView = AuthContainerView(headerBottomSpacing: -24)
+    var onHelpTap: (() -> Void)? {
+        didSet {
+            containerView.onHelpTap = onHelpTap
+        }
+    }
 
     let emailFieldView = AuthTextFieldView(
         title: NSLocalizedString("auth.email.title", comment: ""),
@@ -67,6 +72,9 @@ final class RegisterView: UIView {
 
     private func setup() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.onHelpTap = { [weak self] in
+            self?.onHelpTap?()
+        }
         addSubview(containerView)
 
         NSLayoutConstraint.activate([
