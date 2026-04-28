@@ -5,7 +5,7 @@
 //  Created by Artur Bagautdinov on 29.03.2026.
 //
 
-import Foundation
+import Swinject
 import UIKit
 import FirebaseAuth
 
@@ -14,7 +14,17 @@ final class AppCoordinator {
     private var authCoordinator: AuthCoordinator?
     private var onboardingCoordinator: OnboardingCoordinator?
     private var stateDidChangeHandle: AuthStateDidChangeListenerHandle?
-    private let onboardingStateRepository: OnboardingStateRepository = UserDefaultsOnboardingStateService()
+    
+    private let resolver: Resolver
+    private let onboardingStateRepository: OnboardingStateRepository
+    
+    init(
+        resolver: Resolver,
+        onboardingStateRepository: OnboardingStateRepository
+    ) {
+        self.resolver = resolver
+        self.onboardingStateRepository = onboardingStateRepository
+    }
 
     func start(_ scene: UIWindowScene) -> UIWindow {
         let window = UIWindow(windowScene: scene)
@@ -74,7 +84,7 @@ final class AppCoordinator {
     func showMainFlow() {
         authCoordinator = nil
         onboardingCoordinator = nil
-        let nav = TabBarController()
+        let nav = resolver.resolveOrFail(TabBarController.self)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
