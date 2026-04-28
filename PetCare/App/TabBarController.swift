@@ -5,31 +5,30 @@
 //  Created by Ляйсан on 27/3/26.
 //
 
+import Combine
+import Swinject
 import UIKit
 import FirebaseAuth
-import Combine
-import SwiftData
 
 final class TabBarController: UITabBarController {
     private var petsMainCoordinator: PetsMainCoordinator?
     private var userProfileCoordinator: UserProfileCoordinator?
     private var publicPetsCoordinator: PublicPetsCoordinator?
-    private let imageLoader: ImageLoader = ImageLoadService()
-    private let settingsRepository: SettingsRepository = UserDefaultsSettingsService()
-    private let settingsApplicationController: SettingsApplicationControlling = SettingsApplicationController()
-    private lazy var translationRepository: TranslationRepository = DeepLTranslationService()
-    private lazy var tipRepository: TipRepository = LocalizedTipService(
-        tipRepository: TipService(),
-        translationRepository: translationRepository,
-        settingsRepository: settingsRepository
-    )
-    private lazy var petFactsRepository: PetFactsRepository = LocalizedPetFactsService(
-        petFactsRepository: PetFactsService(),
-        translationRepository: translationRepository,
-        settingsRepository: settingsRepository
-    )
     private var miniGameCoordinator: MiniGameCoordinator?
+
+    private let resolver: Resolver
+
     private var bag = Set<AnyCancellable>()
+
+    init(resolver: Resolver) {
+        self.resolver = resolver
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,22 +38,6 @@ final class TabBarController: UITabBarController {
 
     private func setupTabs() {
         setViewControllers(makeTabViewControllers(), animated: true)
-    }
-
-    private func makePetCache() -> PetCacheRepository? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            assertionFailure("Failed to get AppDelegate")
-            return nil
-        }
-
-        return PetCacheService(modelContext: appDelegate.modelContainer.mainContext)
-    }
-
-    private func makeFallbackNavigationController(systemImageName: String) -> UINavigationController {
-        let navigationController = UINavigationController()
-        navigationController.tabBarItem.image = UIImage(systemName: systemImageName)
-        navigationController.tabBarItem.title = nil
-        return navigationController
     }
 
     private func bindLanguageChanges() {
@@ -68,16 +51,18 @@ final class TabBarController: UITabBarController {
 
     private func reloadInactiveTabsForCurrentLanguage() {
         guard let currentViewControllers = viewControllers,
-            currentViewControllers.indices.contains(selectedIndex) else {
+              currentViewControllers.indices.contains(selectedIndex) else {
             setupTabs()
             return
         }
 
         let selectedViewController = currentViewControllers[selectedIndex]
+
         let refreshedViewControllers = makeTabViewControllers(
             preservingViewController: selectedViewController,
             at: selectedIndex
         )
+
         setViewControllers(refreshedViewControllers, animated: false)
         selectedIndex = min(selectedIndex, refreshedViewControllers.count - 1)
     }
@@ -89,10 +74,26 @@ final class TabBarController: UITabBarController {
         let ownerId = Auth.auth().currentUser?.uid ?? "test_owner_id"
 
         return [
-            makePetsNavigationController(ownerId: ownerId, preservedViewController, preservedIndex == 0),
-            makePublicPetsNavigationController(ownerId: ownerId, preservedViewController, preservedIndex == 1),
-            makeMiniGameNavigationController(ownerId: ownerId, preservedViewController, preservedIndex == 2),
-            makeUserProfileNavigationController(ownerId: ownerId, preservedViewController, preservedIndex == 3)
+            makePetsNavigationController(
+                ownerId: ownerId,
+                preservedViewController,
+                preservedIndex == 0
+            ),
+            makePublicPetsNavigationController(
+                ownerId: ownerId,
+                preservedViewController,
+                preservedIndex == 1
+            ),
+            makeMiniGameNavigationController(
+                ownerId: ownerId,
+                preservedViewController,
+                preservedIndex == 2
+            ),
+            makeUserProfileNavigationController(
+                ownerId: ownerId,
+                preservedViewController,
+                preservedIndex == 3
+            )
         ]
     }
 
@@ -105,42 +106,21 @@ final class TabBarController: UITabBarController {
             return preservedViewController
         }
 
-        let imageUploader = ImageUploadService()
-        guard let petCache = makePetCache() else {
-            return makeFallbackNavigationController(systemImageName: "pawprint.fill")
-        }
+        let navigationController = UINavigationController()
 
-        let petRepository = PetService(
-            cache: petCache,
-            imageService: imageUploader
-        )
-        let imageLoader = ImageLoadService()
-        let reminderController = PetActivityReminderController(
-            ownerId: ownerId,
-            settingsRepository: settingsRepository,
-            localNotificationsRepository: UserNotificationCenterService(),
-            reminderStoreRepository: UserDefaultsPetActivityReminderStore()
+        let coordinator = resolver.resolveOrFail(
+            PetsMainCoordinator.self,
+            arguments: navigationController,
+            ownerId
         )
 
-        reminderController.syncReminders(requestAuthorizationIfNeeded: false)
+        self.petsMainCoordinator = coordinator
+        coordinator.start()
 
-        let petsNavigationController = UINavigationController()
-        let petsMainCoordinator = PetsMainCoordinator(
-            navigationController: petsNavigationController,
-            petRepository: petRepository,
-            tipRepository: tipRepository,
-            petFactsRepository: petFactsRepository,
-            ownerId: ownerId,
-            reminderController: reminderController,
-            cache: petCache,
-            imageLoader: imageLoader
-        )
-        self.petsMainCoordinator = petsMainCoordinator
+        navigationController.tabBarItem.image = UIImage(systemName: "pawprint.fill")
+        navigationController.tabBarItem.title = nil
 
-        petsMainCoordinator.start()
-        petsNavigationController.tabBarItem.image = UIImage(systemName: "pawprint.fill")
-        petsNavigationController.tabBarItem.title = nil
-        return petsNavigationController
+        return navigationController
     }
 
     private func makePublicPetsNavigationController(
@@ -152,20 +132,21 @@ final class TabBarController: UITabBarController {
             return preservedViewController
         }
 
-        let publicPetsNavigationController = UINavigationController()
-        let publicPetsCoordinator = PublicPetsCoordinator(
-            navigationController: publicPetsNavigationController,
-            userId: ownerId,
-            petRepository: PublicPetService(),
-            petFactsRepository: petFactsRepository,
-            imageLoader: imageLoader
-        )
-        self.publicPetsCoordinator = publicPetsCoordinator
+        let navigationController = UINavigationController()
 
-        publicPetsCoordinator.start()
-        publicPetsNavigationController.tabBarItem.image = UIImage(systemName: "globe.americas.fill")
-        publicPetsNavigationController.tabBarItem.title = nil
-        return publicPetsNavigationController
+        let coordinator = resolver.resolveOrFail(
+            PublicPetsCoordinator.self,
+            arguments: navigationController,
+            ownerId
+        )
+
+        self.publicPetsCoordinator = coordinator
+        coordinator.start()
+
+        navigationController.tabBarItem.image = UIImage(systemName: "globe.americas.fill")
+        navigationController.tabBarItem.title = nil
+
+        return navigationController
     }
 
     private func makeMiniGameNavigationController(
@@ -177,29 +158,21 @@ final class TabBarController: UITabBarController {
             return preservedViewController
         }
 
-        let imageUploader = ImageUploadService()
-        guard let petCache = makePetCache() else {
-            return makeFallbackNavigationController(systemImageName: "gamecontroller.fill")
-        }
+        let navigationController = UINavigationController()
 
-        let petRepository = PetService(
-            cache: petCache,
-            imageService: imageUploader
+        let coordinator = resolver.resolveOrFail(
+            MiniGameCoordinator.self,
+            arguments: navigationController,
+            ownerId
         )
-        let miniGameNavigationController = UINavigationController()
-        let miniGameCoordinator = MiniGameCoordinator(
-            navigationController: miniGameNavigationController,
-            petRepository: petRepository,
-            ownerId: ownerId,
-            imageLoader: imageLoader,
-            bestScoreRepository: UserDefaultsMiniGameBestScoreService()
-        )
-        self.miniGameCoordinator = miniGameCoordinator
 
-        miniGameCoordinator.start()
-        miniGameNavigationController.tabBarItem.image = UIImage(systemName: "gamecontroller.fill")
-        miniGameNavigationController.tabBarItem.title = nil
-        return miniGameNavigationController
+        self.miniGameCoordinator = coordinator
+        coordinator.start()
+
+        navigationController.tabBarItem.image = UIImage(systemName: "gamecontroller.fill")
+        navigationController.tabBarItem.title = nil
+
+        return navigationController
     }
 
     private func makeUserProfileNavigationController(
@@ -211,38 +184,20 @@ final class TabBarController: UITabBarController {
             return preservedViewController
         }
 
-        let imageUploader = ImageUploadService()
-        guard let petCache = makePetCache() else {
-            return makeFallbackNavigationController(systemImageName: "person.fill")
-        }
+        let navigationController = UINavigationController()
 
-        let petRepository = PetService(
-            cache: petCache,
-            imageService: imageUploader
+        let coordinator = resolver.resolveOrFail(
+            UserProfileCoordinator.self,
+            arguments: navigationController,
+            ownerId
         )
-        let userProfileRepository = FirebaseUserProfileService(imageService: imageUploader)
-        let reminderController = PetActivityReminderController(
-            ownerId: ownerId,
-            settingsRepository: settingsRepository,
-            localNotificationsRepository: UserNotificationCenterService(),
-            reminderStoreRepository: UserDefaultsPetActivityReminderStore()
-        )
-        let userProfileNavigationController = UINavigationController()
-        let userProfileCoordinator = UserProfileCoordinator(
-            navigationController: userProfileNavigationController,
-            petRepository: petRepository,
-            userProfileRepository: userProfileRepository,
-            settingsRepository: settingsRepository,
-            settingsApplicationController: settingsApplicationController,
-            reminderController: reminderController,
-            bestScoreRepository: UserDefaultsMiniGameBestScoreService(),
-            imageLoader: imageLoader
-        )
-        self.userProfileCoordinator = userProfileCoordinator
 
-        userProfileCoordinator.start()
-        userProfileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
-        userProfileNavigationController.tabBarItem.title = nil
-        return userProfileNavigationController
+        self.userProfileCoordinator = coordinator
+        coordinator.start()
+
+        navigationController.tabBarItem.image = UIImage(systemName: "person.fill")
+        navigationController.tabBarItem.title = nil
+
+        return navigationController
     }
 }
