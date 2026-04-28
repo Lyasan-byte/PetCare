@@ -10,7 +10,6 @@ import UIKit
 final class PublicPetsCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let petRepository: PublicPetRepository
-    private let petFactsRepository: PetFactsRepository
     private let userId: String
     private let imageLoader: ImageLoader
 
@@ -20,13 +19,11 @@ final class PublicPetsCoordinator: Coordinator {
         navigationController: UINavigationController,
         userId: String,
         petRepository: PublicPetRepository,
-        petFactsRepository: PetFactsRepository,
         imageLoader: ImageLoader
     ) {
         self.userId = userId
         self.navigationController = navigationController
         self.petRepository = petRepository
-        self.petFactsRepository = petFactsRepository
         self.imageLoader = imageLoader
     }
 
@@ -47,7 +44,6 @@ final class PublicPetsCoordinator: Coordinator {
         let publicPetProfileCoordinator = PublicPetProfileCoordinator(
             navigationController: navigationController,
             pet: pet,
-            petFactsRepository: petFactsRepository,
             imageLoader: imageLoader
         )
 

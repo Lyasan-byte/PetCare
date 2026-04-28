@@ -16,7 +16,6 @@ final class PetProfileCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let ownerId: String
     private let petRepository: PetRepository
-    private let petFactsRepository: PetFactsRepository
     private var petProfileViewModel: PetProfileViewModel?
     private let pet: Pet
     private let reminderController: PetActivityReminderControlling
@@ -32,7 +31,6 @@ final class PetProfileCoordinator: Coordinator {
         navigationController: UINavigationController,
         ownerId: String,
         petRepository: PetRepository,
-        petFactsRepository: PetFactsRepository,
         pet: Pet,
         reminderController: PetActivityReminderControlling,
         cache: PetCacheRepository,
@@ -41,7 +39,6 @@ final class PetProfileCoordinator: Coordinator {
         self.navigationController = navigationController
         self.ownerId = ownerId
         self.petRepository = petRepository
-        self.petFactsRepository = petFactsRepository
         self.pet = pet
         self.reminderController = reminderController
         self.cache = cache
@@ -51,7 +48,7 @@ final class PetProfileCoordinator: Coordinator {
     func start() {
         let viewModel = PetProfileViewModel(
             pet: pet,
-            petFactsRepository: petFactsRepository,
+            petFactsRepository: PetFactsService(),
             moduleOutput: self
         )
         self.petProfileViewModel = viewModel
