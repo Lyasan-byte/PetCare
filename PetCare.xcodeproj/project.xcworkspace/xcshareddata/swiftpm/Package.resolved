@@ -1,5 +1,5 @@
 {
-  "originHash" : "b13b7fc384d6cf0ab63d0270cefd06ad80c85f7ba1c742a53891c1cef2b58758",
+  "originHash" : "42f437d33a310fb3cee3264ea4c67428fc05d5802b5201e5a56bb17379bfec85",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -40,7 +40,7 @@
     {
       "identity" : "firebase-ios-sdk",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/firebase/firebase-ios-sdk",
+      "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
         "revision" : "52548902007e7beda99fcdca31f62eccc4befe38",
         "version" : "12.11.0"
@@ -161,6 +161,15 @@
       "state" : {
         "revision" : "879b85a470cacd70c19e22eb7e11a3aed66f4068",
         "version" : "6.6.2"
+      }
+    },
+    {
+      "identity" : "swinject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Swinject/Swinject.git",
+      "state" : {
+        "revision" : "b685b549fe4d8ae265fc7a2f27d0789720425d69",
+        "version" : "2.10.0"
       }
     }
   ],

@@ -51,7 +51,7 @@ final class PetsMainCoordinator: Coordinator {
         self.petsMainViewModel = petsMainViewModel
         let viewController = PetsMainViewController(
             petsMainviewModel: petsMainViewModel,
-            imageLoader: ImageLoadService()
+            imageLoader: imageLoader
         )
 
         navigationController.setViewControllers([viewController], animated: true)

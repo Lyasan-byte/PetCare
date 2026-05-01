@@ -9,10 +9,20 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    private let appCoordinator = AppCoordinator()
-    private let settingsRepository: SettingsRepository = UserDefaultsSettingsService()
-    private let settingsApplicationController: SettingsApplicationControlling = SettingsApplicationController()
+    private let appContainer = AppContainer()
 
+    private lazy var appCoordinator: AppCoordinator = {
+        appContainer.resolver.resolveOrFail(AppCoordinator.self)
+    }()
+
+    private lazy var settingsRepository: SettingsRepository = {
+        appContainer.resolver.resolveOrFail(SettingsRepository.self)
+    }()
+
+    private lazy var settingsApplicationController: SettingsApplicationControlling = {
+        appContainer.resolver.resolveOrFail(SettingsApplicationControlling.self)
+    }()
+    
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
