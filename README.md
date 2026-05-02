@@ -123,4 +123,4 @@ Pet Care uses local notifications to help users stay on top of important care ev
 
 ## Project Goal
 
-The goal of Pet Care is to provide pet owners with a polished, convenient, and engaging mobile app for managing pet information, tracking care routines, monitoring activity, and staying connected with their pets every day. можешь чуть чуть больше текста добавить по тз
+The goal of Pet Care is to provide pet owners with a polished, convenient, and engaging mobile app for managing pet information, tracking care routines, monitoring activity, and staying connected with their pets every day.
