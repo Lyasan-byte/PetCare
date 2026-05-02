@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3C1EF8DE2F749502004A9D33 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 3C1EF8DD2F749502004A9D33 /* swiftgen.yml */; };
-		3C7E100B2FA1541900FB8B14 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 3C7E100A2FA1541900FB8B14 /* Swinject */; };
 		3CA09ED42F7324DE008800BC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09ED32F7324DE008800BC /* FirebaseAnalytics */; };
 		3CA09ED62F7324DE008800BC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09ED52F7324DE008800BC /* FirebaseAuth */; };
 		3CA09ED82F7324DE008800BC /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09ED72F7324DE008800BC /* FirebaseAuthCombine-Community */; };
@@ -16,6 +15,7 @@
 		3CA09EDC2F7324DE008800BC /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDB2F7324DE008800BC /* FirebaseFirestoreCombine-Community */; };
 		3CA09EDE2F7324DE008800BC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDD2F7324DE008800BC /* FirebaseStorage */; };
 		3CA09EE02F7324DE008800BC /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA09EDF2F7324DE008800BC /* FirebaseStorageCombine-Community */; };
+		3CFB4B122FA4E65B00692FE9 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 3CFB4B112FA4E65B00692FE9 /* Swinject */; };
 		B93436F42F7EBAF7005A44E3 /* Cloudinary in Frameworks */ = {isa = PBXBuildFile; productRef = B93436F32F7EBAF7005A44E3 /* Cloudinary */; };
 		B9388BCF2F7420CA003D1667 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B9388BCE2F7420CA003D1667 /* GoogleSignIn */; };
 		B9388BD12F7420CA003D1667 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B9388BD02F7420CA003D1667 /* GoogleSignInSwift */; };
@@ -58,7 +58,7 @@
 				B93436F42F7EBAF7005A44E3 /* Cloudinary in Frameworks */,
 				B9388BCF2F7420CA003D1667 /* GoogleSignIn in Frameworks */,
 				3CA09EE02F7324DE008800BC /* FirebaseStorageCombine-Community in Frameworks */,
-				3C7E100B2FA1541900FB8B14 /* Swinject in Frameworks */,
+				3CFB4B122FA4E65B00692FE9 /* Swinject in Frameworks */,
 				3CA09EDA2F7324DE008800BC /* FirebaseFirestore in Frameworks */,
 				3CA09ED82F7324DE008800BC /* FirebaseAuthCombine-Community in Frameworks */,
 				3CA09EDC2F7324DE008800BC /* FirebaseFirestoreCombine-Community in Frameworks */,
@@ -120,7 +120,7 @@
 				B9388BCE2F7420CA003D1667 /* GoogleSignIn */,
 				B9388BD02F7420CA003D1667 /* GoogleSignInSwift */,
 				B93436F32F7EBAF7005A44E3 /* Cloudinary */,
-				3C7E100A2FA1541900FB8B14 /* Swinject */,
+				3CFB4B112FA4E65B00692FE9 /* Swinject */,
 			);
 			productName = PetCare;
 			productReference = B9420F042F72945A00ED997A /* PetCare.app */;
@@ -156,7 +156,7 @@
 				3C1EF8DC2F7494B6004A9D33 /* XCRemoteSwiftPackageReference "SwiftGenPlugin" */,
 				B9388BCD2F7420CA003D1667 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B93436F22F7EBAF7005A44E3 /* XCRemoteSwiftPackageReference "cloudinary_ios" */,
-				3C7E10092FA1541900FB8B14 /* XCRemoteSwiftPackageReference "Swinject" */,
+				3CFB4B102FA4E65B00692FE9 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9420F052F72945A00ED997A /* Products */;
@@ -235,7 +235,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YWCK7662S6;
@@ -268,7 +267,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YWCK7662S6;
@@ -453,20 +451,20 @@
 				minimumVersion = 6.6.2;
 			};
 		};
-		3C7E10092FA1541900FB8B14 /* XCRemoteSwiftPackageReference "Swinject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/Swinject.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.10.0;
-			};
-		};
 		3CA09ED22F7324DE008800BC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 12.11.0;
+			};
+		};
+		3CFB4B102FA4E65B00692FE9 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
 			};
 		};
 		B93436F22F7EBAF7005A44E3 /* XCRemoteSwiftPackageReference "cloudinary_ios" */ = {
@@ -488,11 +486,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3C7E100A2FA1541900FB8B14 /* Swinject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3C7E10092FA1541900FB8B14 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = Swinject;
-		};
 		3CA09ED32F7324DE008800BC /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3CA09ED22F7324DE008800BC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -527,6 +520,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3CA09ED22F7324DE008800BC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		3CFB4B112FA4E65B00692FE9 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3CFB4B102FA4E65B00692FE9 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
 		};
 		B93436F32F7EBAF7005A44E3 /* Cloudinary */ = {
 			isa = XCSwiftPackageProductDependency;

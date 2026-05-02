@@ -9,6 +9,7 @@ import UIKit
 
 final class ActivitiesHistoryView: UIView {
     private let loader = UIActivityIndicatorView()
+    private let emptyView = EmptyStateView()
     
     private let collection: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
@@ -39,6 +40,7 @@ final class ActivitiesHistoryView: UIView {
     private func setupHierarchy() {
         addSubview(collection)
         addSubview(loader)
+        addSubview(emptyView)
     }
     
     private func setupLayout() {
@@ -49,7 +51,11 @@ final class ActivitiesHistoryView: UIView {
             collection.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             loader.centerXAnchor.constraint(equalTo: centerXAnchor),
-            loader.centerYAnchor.constraint(equalTo: centerYAnchor)
+            loader.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            emptyView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            emptyView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            emptyView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
@@ -90,6 +96,18 @@ final class ActivitiesHistoryView: UIView {
         
         loader.isHidden = !isLoading
         collection.isHidden = isLoading
+    }
+    
+    func showEmptyView(_ isShowing: Bool, title: String? = nil) {
+        if isShowing, let title {
+            emptyView
+                .configure(
+                    title: title,
+                    description: L10n.ActivitiesHistory.emptyDescription,
+                    image: "pawprint.fill"
+                )
+        }
+        emptyView.isHidden = !isShowing
     }
     
     required init?(coder: NSCoder) {

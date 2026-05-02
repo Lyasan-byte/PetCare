@@ -13,6 +13,7 @@ protocol ActivitiesHistoryRepository {
     func fetchActivities(
         for petId: String,
         after documet: DocumentSnapshot?,
-        pageSize: Int
+        pageSize: Int,
+        filter: ActivitiesFilter
     ) -> AnyPublisher<ActivitiesHistoryPage, Error>
 }

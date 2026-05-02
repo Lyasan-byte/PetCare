@@ -28,9 +28,7 @@ final class EmptyStateView: UIView {
 
     convenience init(title: String, subtitle: String, image: String) {
         self.init(frame: .zero)
-        self.title.text = title
-        self.subtitle.text = subtitle
-        self.imageView.image = UIImage(systemName: image)
+        configure(title: title, description: subtitle, image: image)
     }
 
     private func setupHierarchy() {
@@ -48,6 +46,12 @@ final class EmptyStateView: UIView {
             imageView.heightAnchor.constraint(equalToConstant: 30),
             imageView.widthAnchor.constraint(equalToConstant: 30)
         ])
+    }
+    
+    func configure(title: String, description: String, image: String) {
+        self.title.text = title
+        self.subtitle.text = description
+        self.imageView.image = UIImage(systemName: image)
     }
 
     required init?(coder: NSCoder) {

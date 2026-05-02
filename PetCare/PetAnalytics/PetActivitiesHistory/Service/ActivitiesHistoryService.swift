@@ -19,9 +19,10 @@ final class ActivitiesHistoryService: ActivitiesHistoryRepository {
     func fetchActivities(
         for petId: String,
         after document: DocumentSnapshot?,
-        pageSize: Int
+        pageSize: Int,
+        filter: ActivitiesFilter
     ) -> AnyPublisher<ActivitiesHistoryPage, Error> {
-        var query = baseQuery(for: petId, pageSize: pageSize)
+        var query = baseQuery(for: petId, pageSize: pageSize, filter: filter)
         
         if let document {
             query = query.start(afterDocument: document)
@@ -40,10 +41,21 @@ final class ActivitiesHistoryService: ActivitiesHistoryRepository {
             .eraseToAnyPublisher()
     }
     
-    private func baseQuery(for petId: String, pageSize: Int) -> Query {
-        firestore.collection("activities")
+    private func baseQuery(for petId: String, pageSize: Int, filter: ActivitiesFilter) -> Query {
+        var query = firestore.collection("activities")
             .whereField(PetActivity.CodingKeys.petId.rawValue, isEqualTo: petId)
-            .order(by: PetActivity.CodingKeys.date.rawValue, descending: true)
-            .limit(to: pageSize)
+        
+        switch filter {
+        case .all:
+            break
+        case .walk, .grooming, .vet:
+            query = query.whereField(
+                PetActivity.CodingKeys.type.rawValue,
+                isEqualTo: filter.rawValue
+            )
+        }
+        return query
+                    .order(by: PetActivity.CodingKeys.date.rawValue, descending: true)
+                    .limit(to: pageSize)
     }
 }
