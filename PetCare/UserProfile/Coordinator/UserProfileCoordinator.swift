@@ -5,47 +5,38 @@
 //  Created by Artur Bagautdinov on 03.04.2026.
 //
 
+import Swinject
 import UIKit
 
 final class UserProfileCoordinator: Coordinator {
     private let navigationController: UINavigationController
-    private let petRepository: PetRepository
-    private let userProfileRepository: UserProfileRepository
-    private let settingsRepository: SettingsRepository
-    private let settingsApplicationController: SettingsApplicationControlling
-    private let reminderController: PetActivityReminderControlling
-    private let bestScoreRepository: MiniGameBestScoreRepository
-    private let imageLoader: ImageLoader
+    private let resolver: Resolver
+    private let ownerId: String
 
     private var userProfileViewModel: UserProfileViewModel?
     private var childCoordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController,
-        petRepository: PetRepository,
-        userProfileRepository: UserProfileRepository,
-        settingsRepository: SettingsRepository,
-        settingsApplicationController: SettingsApplicationControlling,
-        reminderController: PetActivityReminderControlling,
-        bestScoreRepository: MiniGameBestScoreRepository,
-        imageLoader: ImageLoader
+        resolver: Resolver,
+        ownerId: String
     ) {
         self.navigationController = navigationController
-        self.petRepository = petRepository
-        self.userProfileRepository = userProfileRepository
-        self.settingsRepository = settingsRepository
-        self.settingsApplicationController = settingsApplicationController
-        self.reminderController = reminderController
-        self.bestScoreRepository = bestScoreRepository
-        self.imageLoader = imageLoader
+        self.resolver = resolver
+        self.ownerId = ownerId
     }
 
     private func showSettings() {
+        let settingsRepository: SettingsRepository = resolver.resolve()
+        let settingsApplicationController: SettingsApplicationControlling = resolver.resolve()
+        let accountRepository: SettingsAccountRepository = resolver.resolve()
+        let reminderController: PetActivityReminderControlling = resolver.resolve(argument: ownerId)
+        
         let settingsCoordinator = SettingsCoordinator(
             navigationController: navigationController,
             settingsRepository: settingsRepository,
             settingsApplicationController: settingsApplicationController,
-            accountRepository: FirebaseSettingsAccountService(),
+            accountRepository: accountRepository,
             reminderController: reminderController
         )
         childCoordinators.append(settingsCoordinator)
@@ -61,6 +52,11 @@ final class UserProfileCoordinator: Coordinator {
     }
 
     func start() {
+        let petRepository: PetRepository = resolver.resolve()
+        let bestScoreRepository: MiniGameBestScoreRepository = resolver.resolve()
+        let userProfileRepository: UserProfileRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let viewModel = UserProfileViewModel(
             petRepository: petRepository,
             bestScoreRepository: bestScoreRepository,
@@ -85,6 +81,9 @@ final class UserProfileCoordinator: Coordinator {
     }
 
     private func showEditProfile(for user: UserProfileUser) {
+        let userProfileRepository: UserProfileRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let viewModel = UserProfileEditViewModel(
             user: user,
             userProfileRepository: userProfileRepository,

@@ -5,38 +5,38 @@
 //  Created by Ляйсан on 2/4/26.
 //
 
+import Swinject
 import UIKit
 
 final class PublicPetsCoordinator: Coordinator {
     private let navigationController: UINavigationController
-    private let petRepository: PublicPetRepository
-    private let petFactsRepository: PetFactsRepository
+    private let resolver: Resolver
     private let userId: String
-    private let imageLoader: ImageLoader
 
     private var childCoordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController,
-        userId: String,
-        petRepository: PublicPetRepository,
-        petFactsRepository: PetFactsRepository,
-        imageLoader: ImageLoader
+        resolver: Resolver,
+        userId: String
     ) {
-        self.userId = userId
         self.navigationController = navigationController
-        self.petRepository = petRepository
-        self.petFactsRepository = petFactsRepository
-        self.imageLoader = imageLoader
+        self.resolver = resolver
+        self.userId = userId
     }
 
     func start() {
+        let petRepository: PublicPetRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
+        let viewModel = PublicPetsViewModel(
+            userId: userId,
+            petRepository: petRepository,
+            moduleOutput: self
+        )
+
         let viewController = PublicPetsViewController(
-            publicPetsViewModel: PublicPetsViewModel(
-                userId: userId,
-                petRepository: petRepository,
-                moduleOutput: self
-            ),
+            publicPetsViewModel: viewModel,
             imageLoader: imageLoader
         )
 
@@ -44,6 +44,9 @@ final class PublicPetsCoordinator: Coordinator {
     }
 
     private func showPetProfile(_ pet: Pet) {
+        let petFactsRepository: PetFactsRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let publicPetProfileCoordinator = PublicPetProfileCoordinator(
             navigationController: navigationController,
             pet: pet,

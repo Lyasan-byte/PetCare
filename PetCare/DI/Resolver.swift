@@ -9,32 +9,17 @@ import Swinject
 import Foundation
 
 extension Resolver {
-    func resolveOrFail<Service>(_ serviceType: Service.Type = Service.self) -> Service {
-        guard let service = resolve(serviceType) else {
-            fatalError("Dependency \(serviceType) is not registered in DI container")
+    func resolve<T>() -> T {
+        guard let result = resolve(T.self) else {
+            fatalError("Could not resolve \(T.self)")
         }
-        return service
+        return result
     }
 
-    func resolveOrFail<Service, Arg1>(
-        _ serviceType: Service.Type = Service.self,
-        argument: Arg1
-    ) -> Service {
-        guard let service = resolve(serviceType, argument: argument) else {
-            fatalError("Dependency \(serviceType) with argument \(Arg1.self) is not registered in DI container")
+    func resolve<T, Argument>(argument: Argument) -> T {
+        guard let result = resolve(T.self, argument: argument) else {
+            fatalError("Could not resolve \(T.self) with argument \(argument)")
         }
-        return service
-    }
-
-    func resolveOrFail<Service, Arg1, Arg2>(
-        _ serviceType: Service.Type = Service.self,
-        arguments arg1: Arg1, _ arg2: Arg2
-    ) -> Service {
-        guard let service = resolve(serviceType, arguments: arg1, arg2) else {
-            fatalError(
-                "Dependency \(serviceType) with arguments \(Arg1.self), \(Arg2.self) is not registered in DI container"
-            )
-        }
-        return service
+        return result
     }
 }

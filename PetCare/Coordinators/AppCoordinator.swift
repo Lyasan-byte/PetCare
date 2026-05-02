@@ -15,15 +15,13 @@ final class AppCoordinator {
     private var onboardingCoordinator: OnboardingCoordinator?
     private var stateDidChangeHandle: AuthStateDidChangeListenerHandle?
     
-    private let resolver: Resolver
     private let onboardingStateRepository: OnboardingStateRepository
+    private let resolver: Resolver
     
-    init(
-        resolver: Resolver,
-        onboardingStateRepository: OnboardingStateRepository
-    ) {
+    init(resolver: Resolver) {
         self.resolver = resolver
-        self.onboardingStateRepository = onboardingStateRepository
+        
+        self.onboardingStateRepository = resolver.resolve()
     }
 
     func start(_ scene: UIWindowScene) -> UIWindow {
@@ -84,7 +82,7 @@ final class AppCoordinator {
     func showMainFlow() {
         authCoordinator = nil
         onboardingCoordinator = nil
-        let nav = resolver.resolveOrFail(TabBarController.self)
+        let nav = TabBarController(resolver: resolver)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
