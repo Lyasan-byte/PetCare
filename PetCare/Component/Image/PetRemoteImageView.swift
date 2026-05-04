@@ -12,7 +12,9 @@ final class PetRemoteImageView: UIImageView {
     private var imageLoadCancellable: AnyCancellable?
     private var currentURL: URL?
 
-    init(contentMode: UIView.ContentMode = .scaleAspectFill) {
+    init(
+        contentMode: UIView.ContentMode = .scaleAspectFill
+    ) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         self.contentMode = contentMode

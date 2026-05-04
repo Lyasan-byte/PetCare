@@ -10,7 +10,23 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum L10n {
+  public enum ActivitiesFilter {
+    /// All
+    public static let all = L10n.tr("Localizable", "activitiesFilter.all", fallback: "All")
+    /// Grooming
+    public static let grooming = L10n.tr("Localizable", "activitiesFilter.grooming", fallback: "Grooming")
+    /// Vet
+    public static let vet = L10n.tr("Localizable", "activitiesFilter.vet", fallback: "Vet")
+    /// Walk
+    public static let walk = L10n.tr("Localizable", "activitiesFilter.walk", fallback: "Walk")
+  }
   public enum ActivitiesHistory {
+    /// No %@ Activities
+    public static func empty(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "activitiesHistory.empty", String(describing: p1), fallback: "No %@ Activities")
+    }
+    /// Add an activity to see it here
+    public static let emptyDescription = L10n.tr("Localizable", "activitiesHistory.emptyDescription", fallback: "Add an activity to see it here")
     /// History
     public static let title = L10n.tr("Localizable", "activitiesHistory.title", fallback: "History")
   }
@@ -182,7 +198,6 @@ public enum L10n {
       public static let title = L10n.tr("Localizable", "notifications.walk.title", fallback: "Walk Reminder")
     }
   }
-
   public enum OnboardingCare {
     /// Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.
     public static let description = L10n.tr("Localizable", "onboardingCare.description", fallback: "Log walks, grooming, and vet visits. Stay on top of reminders and follow your pet's progress in analytics.")
@@ -234,7 +249,7 @@ public enum L10n {
       /// Connect
       public static let second = L10n.tr("Localizable", "onboardingCommunity.title.second", fallback: "Connect")
     }
-
+  }
   public enum PetActivityCreation {
     public enum Validation {
       /// Please fill all the fields correctly
@@ -279,7 +294,6 @@ public enum L10n {
       }
     }
   }
-
   public enum PetAnalytics {
     /// Analytics
     public static let title = L10n.tr("Localizable", "petAnalytics.title", fallback: "Analytics")
@@ -551,14 +565,14 @@ public enum L10n {
       public enum Validation {
         /// Please check the form fields.
         public static let checkFormFields = L10n.tr("Localizable", "pets.form.validation.check_form_fields", fallback: "Please check the form fields.")
-        /// Enter breed
-        public static let enterBreed = L10n.tr("Localizable", "pets.form.validation.enter_breed", fallback: "Enter breed")
-        /// Enter pet name
-        public static let enterPetName = L10n.tr("Localizable", "pets.form.validation.enter_pet_name", fallback: "Enter pet name")
-        /// Enter weight
-        public static let enterWeight = L10n.tr("Localizable", "pets.form.validation.enter_weight", fallback: "Enter weight")
-        /// Weight must be greater than 0
-        public static let weightGreaterThanZero = L10n.tr("Localizable", "pets.form.validation.weight_greater_than_zero", fallback: "Weight must be greater than 0")
+        /// Please enter breed
+        public static let enterBreed = L10n.tr("Localizable", "pets.form.validation.enter_breed", fallback: "Please enter breed")
+        /// Please enter pet name
+        public static let enterPetName = L10n.tr("Localizable", "pets.form.validation.enter_pet_name", fallback: "Please enter pet name")
+        /// Please enter weight
+        public static let enterWeight = L10n.tr("Localizable", "pets.form.validation.enter_weight", fallback: "Please enter weight")
+        /// Pet's weight must be greater than 0
+        public static let weightGreaterThanZero = L10n.tr("Localizable", "pets.form.validation.weight_greater_than_zero", fallback: "Pet's weight must be greater than 0")
       }
       public enum Weight {
         /// 28.5
@@ -766,14 +780,14 @@ public enum L10n {
         /// Save Changes
         public static let saveButton = L10n.tr("Localizable", "user.profile.edit.save_button", fallback: "Save Changes")
         public enum FirstName {
-          /// Enter first name
-          public static let placeholder = L10n.tr("Localizable", "user.profile.edit.first_name.placeholder", fallback: "Enter first name")
+          /// Please enter first name
+          public static let placeholder = L10n.tr("Localizable", "user.profile.edit.first_name.placeholder", fallback: "Please enter first name")
           /// First Name
           public static let title = L10n.tr("Localizable", "user.profile.edit.first_name.title", fallback: "First Name")
         }
         public enum LastName {
-          /// Enter last name
-          public static let placeholder = L10n.tr("Localizable", "user.profile.edit.last_name.placeholder", fallback: "Enter last name")
+          /// Please enter last name
+          public static let placeholder = L10n.tr("Localizable", "user.profile.edit.last_name.placeholder", fallback: "Please enter last name")
           /// Last Name
           public static let title = L10n.tr("Localizable", "user.profile.edit.last_name.title", fallback: "Last Name")
         }
@@ -788,10 +802,10 @@ public enum L10n {
           public static let title = L10n.tr("Localizable", "user.profile.edit.photo.title", fallback: "Change Profile Photo")
         }
         public enum Validation {
-          /// Enter first name
-          public static let firstName = L10n.tr("Localizable", "user.profile.edit.validation.first_name", fallback: "Enter first name")
-          /// Enter last name
-          public static let lastName = L10n.tr("Localizable", "user.profile.edit.validation.last_name", fallback: "Enter last name")
+          /// Please enter first name
+          public static let firstName = L10n.tr("Localizable", "user.profile.edit.validation.first_name", fallback: "Please enter first name")
+          /// Please enter last name
+          public static let lastName = L10n.tr("Localizable", "user.profile.edit.validation.last_name", fallback: "Please enter last name")
         }
       }
       public enum Email {

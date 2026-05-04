@@ -10,6 +10,8 @@ import UIKit
 
 final class ActivitiesHistoryViewController: UIViewController {
     private let activitiesHistoryView = ActivitiesHistoryView()
+    private let filterButton = MenuBarButton()
+    
     private let activitiesHistoryViewModel: any ActivitiesHistoryViewModeling
 
     private var bag = Set<AnyCancellable>()
@@ -31,7 +33,9 @@ final class ActivitiesHistoryViewController: UIViewController {
         setupAppearance()
         setupLayout()
         setupCollection()
+        configure()
         bindViewModel()
+        bindAction()
 
         render()
         activitiesHistoryViewModel.trigger(.onDidLoad)
@@ -46,6 +50,7 @@ final class ActivitiesHistoryViewController: UIViewController {
         title = L10n.ActivitiesHistory.title
         view.backgroundColor = .secondarySystemBackground
         view.addSubview(activitiesHistoryView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: filterButton)
     }
 
     private func setupLayout() {
@@ -55,6 +60,10 @@ final class ActivitiesHistoryViewController: UIViewController {
             activitiesHistoryView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             activitiesHistoryView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    private func configure() {
+        filterButton.configure(options: ActivitiesFilter.allCases.map(\.title))
     }
 
     private func bindViewModel() {
@@ -66,17 +75,31 @@ final class ActivitiesHistoryViewController: UIViewController {
             }
             .store(in: &bag)
     }
+    
+    private func bindAction() {
+        filterButton.onSelect = { [weak self] filterOption in
+            let option = ActivitiesFilter.allCases[filterOption]
+            self?.activitiesHistoryViewModel.trigger(.onChangeFilterOption(option))
+        }
+    }
 
     private func render() {
         switch activitiesHistoryViewModel.state {
         case .loading:
             activitiesHistoryView.setLoader(true)
+            activitiesHistoryView.showEmptyView(false)
         case .content:
             activitiesHistoryView.setLoader(false)
+            activitiesHistoryView.showEmptyView(false)
             activitiesHistoryView.reloadData()
         case .error(let error):
             activitiesHistoryView.setLoader(false)
+            activitiesHistoryView.showEmptyView(false)
             showError(error)
+        case .empty(let description):
+            activitiesHistoryView.reloadData()
+            activitiesHistoryView.setLoader(false)
+            activitiesHistoryView.showEmptyView(true, title: description)
         }
     }
 

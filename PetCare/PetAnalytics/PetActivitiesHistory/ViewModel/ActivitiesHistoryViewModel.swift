@@ -46,7 +46,19 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
             }
         case .onDismissAlert:
             state = .content(content)
+        case .onChangeFilterOption(let option):
+            guard content.filterOption != option else { return }
+            content.filterOption = option
+            resetAndFetch()
         }
+    }
+    
+    private func resetAndFetch() {
+        bag.removeAll()
+        lastDocumentSnapshot = nil
+        content.hasMore = true
+        content.activities = []
+        fetchActivities()
     }
     
     private func fetchActivities() {
@@ -59,7 +71,12 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
         }
         
         activitiesHistoryRepository
-            .fetchActivities(for: content.petId, after: lastDocumentSnapshot, pageSize: pageSize)
+            .fetchActivities(
+                for: content.petId,
+                after: lastDocumentSnapshot,
+                pageSize: pageSize,
+                filter: content.filterOption
+            )
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
@@ -69,17 +86,21 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
             } receiveValue: { [weak self] page in
                 guard let self else { return }
                 
-                let historyData = buildContent(from: page.activities)
-                if isFirstPage {
-                    self.content.activities = historyData
+                if page.activities.isEmpty {
+                    self.state = .empty(L10n.ActivitiesHistory.empty(self.content.filterOption.title))
                 } else {
-                    self.content.activities.append(contentsOf: historyData)
-                }
-                
-                self.lastDocumentSnapshot = page.lastDocument
-                self.content.hasMore = page.hasMore
-                
-                self.state = .content(self.content)
+                    let historyData = buildContent(from: page.activities)
+                    if isFirstPage {
+                        self.content.activities = historyData
+                    } else {
+                        self.content.activities.append(contentsOf: historyData)
+                    }
+                    
+                    self.lastDocumentSnapshot = page.lastDocument
+                    self.content.hasMore = page.hasMore
+                    
+                    self.state = .content(self.content)
+                }                
             }
             .store(in: &bag)
     }

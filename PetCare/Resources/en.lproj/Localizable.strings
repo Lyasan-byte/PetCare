@@ -367,3 +367,12 @@
 "petActivityCreation.validation.grooming.durationMaxLimit" = "Grooming duration should not be longer than 5 hours";
 "petActivityCreation.validation.grooming.costMaxLimit" = "Grooming cost should be less than 1 million";
 "petActivityCreation.validation.vet.costMaxLimit" = "Vet cost should be less than 1 million";
+
+// MARK: - Activities Filter
+
+"activitiesFilter.all" = "All";
+"activitiesFilter.walk" = "Walk";
+"activitiesFilter.grooming" = "Grooming";
+"activitiesFilter.vet" = "Vet";
+"activitiesHistory.empty" = "No %@ Activities";
+"activitiesHistory.emptyDescription" = "Add an activity to see it here";

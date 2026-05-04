@@ -10,5 +10,6 @@ import Foundation
 enum ActivitiesHistoryIntent {
     case onDidLoad
     case onReachedItem(Int)
+    case onChangeFilterOption(ActivitiesFilter)
     case onDismissAlert
 }

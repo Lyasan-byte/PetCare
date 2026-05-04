@@ -362,3 +362,12 @@
 "petActivityCreation.validation.grooming.durationMaxLimit" = "Длительность груминга не должна превышать 5 часов";
 "petActivityCreation.validation.grooming.costMaxLimit" = "Стоимость груминга должна быть меньше 1 миллиона";
 "petActivityCreation.validation.vet.costMaxLimit" = "Стоимость визита к ветеринару должна быть меньше 1 миллиона";
+
+// MARK: - Activities Filter
+
+"activitiesFilter.all" = "Все";
+"activitiesFilter.walk" = "Прогулка";
+"activitiesFilter.grooming" = "Груминг";
+"activitiesFilter.vet" = "Ветеренар";
+"activitiesHistory.empty" = "Нет активностей: %@";
+"activitiesHistory.emptyDescription" = "Добавьте активность, чтобы увидеть её здесь";
