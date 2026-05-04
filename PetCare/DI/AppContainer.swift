@@ -18,8 +18,7 @@ final class AppContainer {
     init() {
         assembler = Assembler([
             CoreAssembly(),
-            RepositoryAssembly(),
-            CoordinatorAssembly()
+            RepositoryAssembly()
         ])
     }
 }

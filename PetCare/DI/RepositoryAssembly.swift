@@ -14,26 +14,32 @@ final class RepositoryAssembly: Assembly {
         container.register(TipService.self) { _ in
             TipService()
         }
+        .inObjectScope(.container)
         
         container.register(PetFactsService.self) { _ in
             PetFactsService()
         }
+        .inObjectScope(.container)
         
         container.register(TipRepository.self) { resolver in
-            LocalizedTipService(
-                tipRepository: resolver.resolveOrFail(TipService.self),
-                translationRepository: resolver.resolveOrFail(TranslationRepository.self),
-                settingsRepository: resolver.resolveOrFail(SettingsRepository.self)
+            let tipRepository: TipService = resolver.resolve()
+            return LocalizedTipService(
+                tipRepository: tipRepository,
+                translationRepository: resolver.resolve(),
+                settingsRepository: resolver.resolve()
             )
         }
+        .inObjectScope(.container)
         
         container.register(PetFactsRepository.self) { resolver in
-            LocalizedPetFactsService(
-                petFactsRepository: resolver.resolveOrFail(PetFactsService.self),
-                translationRepository: resolver.resolveOrFail(TranslationRepository.self),
-                settingsRepository: resolver.resolveOrFail(SettingsRepository.self)
+            let petFactsRepository: PetFactsService = resolver.resolve()
+            return LocalizedPetFactsService(
+                petFactsRepository: petFactsRepository,
+                translationRepository: resolver.resolve(),
+                settingsRepository: resolver.resolve()
             )
         }
+        .inObjectScope(.container)
         
         container.register(PetCacheRepository.self) { _ in
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -41,26 +47,36 @@ final class RepositoryAssembly: Assembly {
             }
             return PetCacheService(modelContext: appDelegate.modelContainer.mainContext)
         }
+        .inObjectScope(.container)
         
         container.register(PetRepository.self) { resolver in
             PetService(
-                cache: resolver.resolveOrFail(PetCacheRepository.self),
-                imageService: resolver.resolveOrFail(ImageUploader.self)
+                cache: resolver.resolve(),
+                imageService: resolver.resolve()
             )
         }
+        .inObjectScope(.container)
         
         container.register(PublicPetRepository.self) { _ in
             PublicPetService()
         }
+        .inObjectScope(.container)
         
         container.register(UserProfileRepository.self) { resolver in
             FirebaseUserProfileService(
-                imageService: resolver.resolveOrFail(ImageUploader.self)
+                imageService: resolver.resolve()
             )
         }
+        .inObjectScope(.container)
         
         container.register(MiniGameBestScoreRepository.self) { _ in
             UserDefaultsMiniGameBestScoreService()
         }
+        .inObjectScope(.container)
+        
+        container.register(SettingsAccountRepository.self) { _ in
+            FirebaseSettingsAccountService()
+        }
+        .inObjectScope(.container)
     }
 }

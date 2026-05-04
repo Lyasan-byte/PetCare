@@ -50,8 +50,7 @@ final class TabBarController: UITabBarController {
     }
 
     private func reloadInactiveTabsForCurrentLanguage() {
-        guard let currentViewControllers = viewControllers,
-              currentViewControllers.indices.contains(selectedIndex) else {
+        guard let currentViewControllers = viewControllers, currentViewControllers.indices.contains(selectedIndex) else {
             setupTabs()
             return
         }
@@ -108,10 +107,10 @@ final class TabBarController: UITabBarController {
 
         let navigationController = UINavigationController()
 
-        let coordinator = resolver.resolveOrFail(
-            PetsMainCoordinator.self,
-            arguments: navigationController,
-            ownerId
+        let coordinator = PetsMainCoordinator(
+            navigationController: navigationController,
+            resolver: resolver,
+            ownerId: ownerId
         )
 
         self.petsMainCoordinator = coordinator
@@ -134,10 +133,10 @@ final class TabBarController: UITabBarController {
 
         let navigationController = UINavigationController()
 
-        let coordinator = resolver.resolveOrFail(
-            PublicPetsCoordinator.self,
-            arguments: navigationController,
-            ownerId
+        let coordinator = PublicPetsCoordinator(
+            navigationController: navigationController,
+            resolver: resolver,
+            userId: ownerId
         )
 
         self.publicPetsCoordinator = coordinator
@@ -160,10 +159,10 @@ final class TabBarController: UITabBarController {
 
         let navigationController = UINavigationController()
 
-        let coordinator = resolver.resolveOrFail(
-            MiniGameCoordinator.self,
-            arguments: navigationController,
-            ownerId
+        let coordinator = MiniGameCoordinator(
+            navigationController: navigationController,
+            resolver: resolver,
+            ownerId: ownerId
         )
 
         self.miniGameCoordinator = coordinator
@@ -186,10 +185,10 @@ final class TabBarController: UITabBarController {
 
         let navigationController = UINavigationController()
 
-        let coordinator = resolver.resolveOrFail(
-            UserProfileCoordinator.self,
-            arguments: navigationController,
-            ownerId
+        let coordinator = UserProfileCoordinator(
+            navigationController: navigationController,
+            resolver: resolver,
+            ownerId: ownerId
         )
 
         self.userProfileCoordinator = coordinator

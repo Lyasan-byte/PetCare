@@ -48,6 +48,14 @@ final class CoreAssembly: Assembly {
         container.register(SettingsApplicationControlling.self) { _ in
             SettingsApplicationController()
         }
-        .inObjectScope(.container)
+        
+        container.register(PetActivityReminderControlling.self) { (resolver, ownerId: String) in
+            PetActivityReminderController(
+                ownerId: ownerId,
+                settingsRepository: resolver.resolve(),
+                localNotificationsRepository: resolver.resolve(),
+                reminderStoreRepository: resolver.resolve()
+            )
+        }
     }
 }

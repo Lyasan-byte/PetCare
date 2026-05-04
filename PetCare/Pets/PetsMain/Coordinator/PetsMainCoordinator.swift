@@ -5,43 +5,32 @@
 //  Created by Ляйсан on 29/3/26.
 //
 
+import Swinject
 import UIKit
 
 final class PetsMainCoordinator: Coordinator {
     private let navigationController: UINavigationController
-    private let petRepository: PetRepository
-    private let tipRepository: TipRepository
-    private let petFactsRepository: PetFactsRepository
+    private let resolver: Resolver
     private let ownerId: String
-    private let cache: PetCacheRepository
-    private let imageLoader: ImageLoader
-    private let reminderController: PetActivityReminderControlling
-
+    
     private var petsMainViewModel: PetsMainViewModel?
-
     private var childCoordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController,
-        petRepository: PetRepository,
-        tipRepository: TipRepository,
-        petFactsRepository: PetFactsRepository,
-        ownerId: String,
-        reminderController: PetActivityReminderControlling,
-        cache: PetCacheRepository,
-        imageLoader: ImageLoader
+        resolver: Resolver,
+        ownerId: String
     ) {
         self.navigationController = navigationController
-        self.petRepository = petRepository
-        self.tipRepository = tipRepository
-        self.petFactsRepository = petFactsRepository
+        self.resolver = resolver
         self.ownerId = ownerId
-        self.reminderController = reminderController
-        self.cache = cache
-        self.imageLoader = imageLoader
     }
 
     func start() {
+        let petRepository: PetRepository = resolver.resolve()
+        let tipRepository: TipRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let petsMainViewModel = PetsMainViewModel(
             petRepository: petRepository,
             tipRepository: tipRepository,
@@ -58,6 +47,9 @@ final class PetsMainCoordinator: Coordinator {
     }
 
     private func showAddPetView() {
+        let petRepository: PetRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let petFormCoordinator = PetFormCoordinator(
             navigationController: navigationController,
             petRepository: petRepository,
@@ -83,6 +75,12 @@ final class PetsMainCoordinator: Coordinator {
     }
 
     private func showPet(_ pet: Pet) {
+        let petRepository: PetRepository = resolver.resolve()
+        let reminderController: PetActivityReminderControlling = resolver.resolve(argument: ownerId)
+        let petFactsRepository: PetFactsRepository = resolver.resolve()
+        let cache: PetCacheRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let petProfileCoordinator = PetProfileCoordinator(
             navigationController: navigationController,
             ownerId: ownerId,
@@ -115,6 +113,11 @@ final class PetsMainCoordinator: Coordinator {
     }
 
     private func showAddActivity(_ activity: PetActivityType) {
+        let petRepository: PetRepository = resolver.resolve()
+        let reminderController: PetActivityReminderControlling = resolver.resolve(argument: ownerId)
+        let cache: PetCacheRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let petActivityCreationCoordinator = PetActivityCreationCoordinator(
             initialActivity: activity,
             initialSelectedPet: nil,

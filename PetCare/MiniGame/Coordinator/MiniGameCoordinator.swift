@@ -5,30 +5,29 @@
 //  Created by Artur Bagautdinov on 09/04/26.
 //
 
+import Swinject
 import UIKit
 
 final class MiniGameCoordinator: Coordinator {
     private let navigationController: UINavigationController
-    private let petRepository: PetRepository
+    private let resolver: Resolver
     private let ownerId: String
-    private let imageLoader: ImageLoader
-    private let bestScoreRepository: MiniGameBestScoreRepository
 
     init(
         navigationController: UINavigationController,
-        petRepository: PetRepository,
-        ownerId: String,
-        imageLoader: ImageLoader,
-        bestScoreRepository: MiniGameBestScoreRepository
+        resolver: Resolver,
+        ownerId: String
     ) {
         self.navigationController = navigationController
-        self.petRepository = petRepository
+        self.resolver = resolver
         self.ownerId = ownerId
-        self.imageLoader = imageLoader
-        self.bestScoreRepository = bestScoreRepository
     }
 
     func start() {
+        let petRepository: PetRepository = resolver.resolve()
+        let bestScoreRepository: MiniGameBestScoreRepository = resolver.resolve()
+        let imageLoader: ImageLoader = resolver.resolve()
+        
         let miniGameViewModel = MiniGameViewModel(
             petRepository: petRepository,
             bestScoreRepository: bestScoreRepository,

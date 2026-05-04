@@ -11,17 +11,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private let appContainer = AppContainer()
 
-    private lazy var appCoordinator: AppCoordinator = {
-        appContainer.resolver.resolveOrFail(AppCoordinator.self)
-    }()
-
-    private lazy var settingsRepository: SettingsRepository = {
-        appContainer.resolver.resolveOrFail(SettingsRepository.self)
-    }()
-
-    private lazy var settingsApplicationController: SettingsApplicationControlling = {
-        appContainer.resolver.resolveOrFail(SettingsApplicationControlling.self)
-    }()
+    private lazy var appCoordinator = AppCoordinator(resolver: appContainer.resolver)
+    private lazy var settingsRepository: SettingsRepository = appContainer.resolver.resolve()
+    private lazy var settingsApplicationController: SettingsApplicationControlling =
+        appContainer.resolver.resolve()
     
     func scene(
         _ scene: UIScene,
