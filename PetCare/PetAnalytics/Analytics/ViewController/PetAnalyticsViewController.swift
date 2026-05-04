@@ -31,6 +31,7 @@ final class PetAnalyticsViewController: UIViewController {
         setupCollectionLayout()
         setupDataSource()
         bindViewModel()
+        bindLanguageChanges()
         
         render()
         petAnalyticsViewModel.trigger(.onDidLoad)
@@ -90,6 +91,15 @@ final class PetAnalyticsViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.render()
+            }
+            .store(in: &bag)
+    }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadLocalizedView()
             }
             .store(in: &bag)
     }
@@ -241,6 +251,11 @@ final class PetAnalyticsViewController: UIViewController {
     private func applyEmptySnapshot() {
         let snapshot = NSDiffableDataSourceSnapshot<PetAnalyticsSection, PetAnalyticsItem>()
         dataSource?.apply(snapshot)
+    }
+
+    private func reloadLocalizedView() {
+        title = L10n.PetAnalytics.title
+        petAnalyticsViewModel.trigger(.onLanguageDidChange)
     }
     
     required init?(coder: NSCoder) {

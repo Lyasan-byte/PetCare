@@ -19,6 +19,7 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
     private(set) var stateDidChange =  ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
     private var content: ActivitiesHistoryContent
+    private var fetchedActivities: [PetActivity] = []
     private var lastDocumentSnapshot: DocumentSnapshot?
     
     private let activitiesHistoryRepository: ActivitiesHistoryRepository
@@ -50,6 +51,8 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
             guard content.filterOption != option else { return }
             content.filterOption = option
             resetAndFetch()
+        case .onLanguageDidChange:
+            rebuildLocalizedContent()
         }
     }
     
@@ -58,6 +61,7 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
         lastDocumentSnapshot = nil
         content.hasMore = true
         content.activities = []
+        fetchedActivities = []
         fetchActivities()
     }
     
@@ -89,11 +93,17 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
                 if page.activities.isEmpty {
                     self.state = .empty(L10n.ActivitiesHistory.empty(self.content.filterOption.title))
                 } else {
-                    let historyData = buildContent(from: page.activities)
+                    if isFirstPage {
+                        self.fetchedActivities = page.activities
+                    } else {
+                        self.fetchedActivities.append(contentsOf: page.activities)
+                    }
+
+                    let historyData = buildContent(from: self.fetchedActivities)
                     if isFirstPage {
                         self.content.activities = historyData
                     } else {
-                        self.content.activities.append(contentsOf: historyData)
+                        self.content.activities = historyData
                     }
                     
                     self.lastDocumentSnapshot = page.lastDocument
@@ -112,5 +122,17 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
     
     private func buildContent(from activities: [PetActivity]) -> [PetAnalyticsHistoryData] {
         contentBuilder.buildHistoryData(from: activities)
+    }
+
+    private func rebuildLocalizedContent() {
+        if fetchedActivities.isEmpty {
+            if case .empty = state {
+                state = .empty(L10n.ActivitiesHistory.empty(content.filterOption.title))
+            }
+            return
+        }
+
+        content.activities = buildContent(from: fetchedActivities)
+        state = .content(content)
     }
 }

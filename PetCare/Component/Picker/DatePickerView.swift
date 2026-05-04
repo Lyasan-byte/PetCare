@@ -81,7 +81,16 @@ final class DatePickerView: UIView {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.locale = SettingsLanguage.current.locale
         datePicker.addTarget(self, action: #selector(dateDidChange), for: .valueChanged)
+    }
+
+    func updateLocale(_ locale: Locale) {
+        datePicker.locale = locale
+    }
+
+    func setTitle(_ title: String) {
+        pickerTitle.text = title
     }
 
     @objc private func dateDidChange() {

@@ -11,4 +11,5 @@ enum PetAnalyticsIntent {
     case onDidLoad
     case onChangePeriod(PetAnalyticsPeriod)
     case onHistoryButtonTap
+    case onLanguageDidChange
 }

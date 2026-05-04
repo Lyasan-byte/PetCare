@@ -111,7 +111,7 @@
 "pets.main.tip.title" = "Совет по здоровью питомца";
 
 //MARK: - Mini game
-"mini.game.screen.title" = "Pet Runner";
+"mini.game.screen.title" = "Хвостатый забег";
 "mini.game.runner.select" = "ВЫБЕРИТЕ БЕГУНА";
 "mini.game.empty.title" = "Нет питомцев для выбора раннера";
 "mini.game.empty.subtitle" = "Добавьте питомца во вкладке Мои питомцы, чтобы выбрать его для мини-игры.";
@@ -330,7 +330,7 @@
 
 "onboardingCommunity.title.first" = "Играйте и";
 "onboardingCommunity.title.second" = "общайтесь";
-"onboardingCommunity.description" = "Изучайте публичные профили питомцев, делитесь историей и запускайте Pet Runner со своим любимцем.";
+"onboardingCommunity.description" = "Изучайте публичные профили питомцев, делитесь историями и запускайте «Хвостатый забег» со своим любимцем.";
 "onboardingCommunity.nextButton.title" = "Начать →";
 "onboardingCommunity.card.publicPets.title" = "Питомцы сообщества";
 
