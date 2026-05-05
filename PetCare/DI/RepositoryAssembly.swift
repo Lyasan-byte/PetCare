@@ -11,13 +11,31 @@ import UIKit
 
 final class RepositoryAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(TipService.self) { _ in
-            TipService()
+        container.register(TipCacheRepository.self) { _ in
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                fatalError("Failed to get AppDelegate")
+            }
+            return SwiftDataTipCacheService(modelContext: appDelegate.modelContainer.mainContext)
         }
         .inObjectScope(.container)
         
-        container.register(PetFactsService.self) { _ in
-            PetFactsService()
+        container.register(TipService.self) { resolver in
+            TipService(cache: resolver.resolve())
+        }
+        .inObjectScope(.container)
+        
+        container.register(PetFactsCacheRepository.self) { _ in
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                fatalError("Failed to get AppDelegate")
+            }
+            return SwiftDataPetFactsCacheService(
+                modelContext: appDelegate.modelContainer.mainContext
+            )
+        }
+        .inObjectScope(.container)
+        
+        container.register(PetFactsService.self) { resolver in
+            PetFactsService(cache: resolver.resolve())
         }
         .inObjectScope(.container)
         
