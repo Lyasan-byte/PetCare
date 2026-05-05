@@ -46,6 +46,7 @@ final class PetActivityCreationView: UIView {
             activityDetailsContainer,
             noteTextField,
             notificationsSwitch,
+            reminderTimePicker,
             saveButton
         ]
     )
@@ -62,6 +63,12 @@ final class PetActivityCreationView: UIView {
     )
 
     let datePicker = DatePickerView(title: L10n.Pets.Activity.date)
+    let reminderTimePicker = DatePickerView(
+        title: L10n.Pets.Activity.Reminder.time,
+        symbolName: "clock.fill",
+        mode: .time,
+        preferredStyle: .wheels
+    )
     let noteTextField = NoteTextView(title: L10n.Pets.Activity.notes)
     let notificationsSwitch = SwitchOptionView(
         title: L10n.Pets.Activity.Reminder.title,
@@ -159,7 +166,8 @@ final class PetActivityCreationView: UIView {
     func setData(
         selectedPet: Pet?,
         selectedActivity: PetActivityType = .walk,
-        isNotificationsOn: Bool
+        isNotificationsOn: Bool,
+        reminderTime: Date
     ) {
         let index = PetActivityType.allCases.firstIndex(of: selectedActivity) ?? 0
         activityPicker.setSelectedIndex(index)
@@ -167,8 +175,10 @@ final class PetActivityCreationView: UIView {
         walkDetails.isHidden = selectedActivity != .walk
         groomingDetails.isHidden = selectedActivity != .grooming
         vetDetails.isHidden = selectedActivity != .vet
-        notificationsSwitch.subtitleLabel.text = selectedActivity.reminderSubtitle
+        notificationsSwitch.subtitleLabel.text = selectedActivity.reminderSubtitle(at: reminderTime)
         notificationsSwitch.switchControl.setOn(isNotificationsOn, animated: window != nil)
+        reminderTimePicker.isHidden = !isNotificationsOn
+        reminderTimePicker.datePicker.setDate(reminderTime, animated: window != nil)
     }
 
     func configure() {

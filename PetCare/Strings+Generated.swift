@@ -403,15 +403,21 @@ public enum L10n {
       public enum Reminder {
         /// Get notified for next session.
         public static var subtitle: String { L10n.tr("Localizable", "pets.activity.reminder.subtitle", fallback: "Get notified for next session.") }
+        /// REMINDER TIME
+        public static var time: String { L10n.tr("Localizable", "pets.activity.reminder.time", fallback: "REMINDER TIME") }
         /// Set Reminder
         public static var title: String { L10n.tr("Localizable", "pets.activity.reminder.title", fallback: "Set Reminder") }
         public enum Daily {
-          /// Receive a reminder every day at 9:00.
-          public static var subtitle: String { L10n.tr("Localizable", "pets.activity.reminder.daily.subtitle", fallback: "Receive a reminder every day at 9:00.") }
+          /// Receive a reminder every day at %@.
+          public static func subtitle(_ p1: Any) -> String {
+            L10n.tr("Localizable", "pets.activity.reminder.daily.subtitle", String(describing: p1), fallback: "Receive a reminder every day at %@.")
+          }
         }
         public enum Monthly {
-          /// Receive a reminder every month at 9:00.
-          public static var subtitle: String { L10n.tr("Localizable", "pets.activity.reminder.monthly.subtitle", fallback: "Receive a reminder every month at 9:00.") }
+          /// Receive a reminder every month at %@.
+          public static func subtitle(_ p1: Any) -> String {
+            L10n.tr("Localizable", "pets.activity.reminder.monthly.subtitle", String(describing: p1), fallback: "Receive a reminder every month at %@.")
+          }
         }
       }
       public enum Screen {
