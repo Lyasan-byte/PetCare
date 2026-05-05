@@ -7,5 +7,5 @@
 
 import Foundation
 
-protocol ActivitiesHistoryViewModeling: UIKitViewModel where State == ActivitiesHistoryState,
-                                                             Intent == ActivitiesHistoryIntent {}
+protocol ActivitiesHistoryViewModeling: UIKitViewModel
+where State == ActivitiesHistoryState, Intent == ActivitiesHistoryIntent {}

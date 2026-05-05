@@ -17,8 +17,9 @@ enum SettingsLanguage: String, CaseIterable {
     }
 
     static var current: SettingsLanguage {
-        if let rawValue = UserDefaults.standard.string(forKey: "settings.appearance.language"),
-           let language = SettingsLanguage(rawValue: rawValue) {
+        let rawValue = UserDefaults.standard.string(forKey: "settings.appearance.language")
+
+        if let rawValue, let language = SettingsLanguage(rawValue: rawValue) {
             return language
         }
 

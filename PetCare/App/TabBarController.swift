@@ -50,7 +50,10 @@ final class TabBarController: UITabBarController {
     }
 
     private func reloadInactiveTabsForCurrentLanguage() {
-        guard let currentViewControllers = viewControllers, currentViewControllers.indices.contains(selectedIndex) else {
+        guard
+            let currentViewControllers = viewControllers,
+            currentViewControllers.indices.contains(selectedIndex)
+        else {
             setupTabs()
             return
         }

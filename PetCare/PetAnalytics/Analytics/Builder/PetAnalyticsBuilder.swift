@@ -29,7 +29,7 @@ final class PetAnalyticsBuilder: PetAnalyticsBuilding {
         let monthFormatter = DateFormatter()
         monthFormatter.dateFormat = "MMM"
         self.monthFormatter = monthFormatter
-        
+
         let shortMonthLetterFormatter = DateFormatter()
         shortMonthLetterFormatter.dateFormat = "MMMMM"
         self.shortMonthLetterFormatter = shortMonthLetterFormatter
@@ -76,7 +76,7 @@ private extension PetAnalyticsBuilder {
         let start: Date
         let end: Date
     }
-    
+
     func makeHeaderData(from pet: Pet, period: PetAnalyticsPeriod) -> PetAnalyticsHeaderData {
         PetAnalyticsHeaderData(
             petName: pet.name,
@@ -96,8 +96,12 @@ private extension PetAnalyticsBuilder {
         var values = Array(repeating: 0.0, count: buckets.count)
 
         for activity in activities {
-            guard let bucketIndex = bucketIndex(for: activity.date, in: buckets),
-                  case let .walk(details) = activity.details else { continue }
+            guard
+                let bucketIndex = bucketIndex(for: activity.date, in: buckets),
+                case let .walk(details) = activity.details
+            else {
+                continue
+            }
 
             values[bucketIndex] += details.actual
         }

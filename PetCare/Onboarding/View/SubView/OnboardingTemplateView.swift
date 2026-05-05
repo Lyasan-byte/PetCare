@@ -98,7 +98,10 @@ final class OnboardingTemplateView: UIView {
             contentStack.topAnchor.constraint(greaterThanOrEqualTo: headerStack.bottomAnchor, constant: 24),
             contentStack.leadingAnchor.constraint(equalTo: gradientBackground.leadingAnchor, constant: 16),
             contentStack.trailingAnchor.constraint(equalTo: gradientBackground.trailingAnchor, constant: -16),
-            contentStack.bottomAnchor.constraint(lessThanOrEqualTo: gradientBackground.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            contentStack.bottomAnchor.constraint(
+                lessThanOrEqualTo: gradientBackground.safeAreaLayoutGuide.bottomAnchor,
+                constant: -12
+            ),
             centeredConstraint,
 
             heroContainer.heightAnchor.constraint(equalToConstant: content.heroHeight),

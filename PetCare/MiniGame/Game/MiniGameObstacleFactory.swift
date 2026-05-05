@@ -46,6 +46,7 @@ final class MiniGameObstacleFactory {
         ]
     }()
 
+    // swiftlint:disable:next function_parameter_count
     func makeObstacle(
         currentWorldSpeed: CGFloat,
         baseWorldSpeed: CGFloat,
@@ -149,117 +150,163 @@ final class MiniGameObstacleFactory {
     private func obstacleParts(for kind: ObstacleKind) -> [ObstaclePart] {
         switch kind {
         case .largePlant:
-            return [
-                ObstaclePart(
-                    texture: obstacleTextures[.largePlant] ?? SKTexture(),
-                    size: CGSize(width: 144, height: 144),
-                    x: 0,
-                    bodySize: CGSize(width: 60, height: 38),
-                    bodyCenterYOffset: 24
-                )
-            ]
+            return largePlantParts()
         case .mediumPlant:
-            return [
-                ObstaclePart(
-                    texture: obstacleTextures[.mediumPlant] ?? SKTexture(),
-                    size: CGSize(width: 124, height: 124),
-                    x: 0,
-                    bodySize: CGSize(width: 52, height: 32),
-                    bodyCenterYOffset: 21
-                )
-            ]
+            return mediumPlantParts()
         case .smallPlant:
-            return [
-                ObstaclePart(
-                    texture: obstacleTextures[.smallPlant] ?? SKTexture(),
-                    size: CGSize(width: 118, height: 150),
-                    x: 0,
-                    bodySize: CGSize(width: 46, height: 40),
-                    bodyCenterYOffset: 24
-                )
-            ]
+            return smallPlantParts()
         case .smallPair:
-            return [
-                ObstaclePart(
-                    texture: obstacleTextures[.smallPair] ?? SKTexture(),
-                    size: CGSize(width: 94, height: 126),
-                    x: -22,
-                    bodySize: CGSize(width: 34, height: 34),
-                    bodyCenterYOffset: 21
-                ),
-                ObstaclePart(
-                    texture: obstacleTextures[.smallPair] ?? SKTexture(),
-                    size: CGSize(width: 94, height: 126),
-                    x: 22,
-                    bodySize: CGSize(width: 34, height: 34),
-                    bodyCenterYOffset: 21
-                )
-            ]
+            return smallPairParts()
         case .mediumWithSmall:
-            return [
-                ObstaclePart(
-                    texture: obstacleTextures[.mediumWithSmall] ?? SKTexture(),
-                    size: CGSize(width: 116, height: 116),
-                    x: -22,
-                    bodySize: CGSize(width: 48, height: 30),
-                    bodyCenterYOffset: 20
-                ),
-                ObstaclePart(
-                    texture: obstacleTextures[.smallPlant] ?? SKTexture(),
-                    size: CGSize(width: 90, height: 120),
-                    x: 58,
-                    bodySize: CGSize(width: 34, height: 30),
-                    bodyCenterYOffset: 19
-                )
-            ]
+            return mediumWithSmallParts()
         case .longSmallCluster:
-            return [
-                ObstaclePart(
-                    texture: obstacleTextures[.longSmallCluster] ?? SKTexture(),
-                    size: CGSize(width: 88, height: 112),
-                    x: -72,
-                    bodySize: CGSize(width: 32, height: 28),
-                    bodyCenterYOffset: 18
-                ),
-                ObstaclePart(
-                    texture: obstacleTextures[.longSmallCluster] ?? SKTexture(),
-                    size: CGSize(width: 98, height: 132),
-                    x: 0,
-                    bodySize: CGSize(width: 36, height: 34),
-                    bodyCenterYOffset: 21
-                ),
-                ObstaclePart(
-                    texture: obstacleTextures[.longSmallCluster] ?? SKTexture(),
-                    size: CGSize(width: 88, height: 112),
-                    x: 72,
-                    bodySize: CGSize(width: 32, height: 28),
-                    bodyCenterYOffset: 18
-                )
-            ]
+            return longSmallClusterParts()
         case .longMixedCluster:
-            return [
-                ObstaclePart(
-                    texture: obstacleTextures[.smallPlant] ?? SKTexture(),
-                    size: CGSize(width: 82, height: 104),
-                    x: -96,
-                    bodySize: CGSize(width: 30, height: 24),
-                    bodyCenterYOffset: 16
-                ),
-                ObstaclePart(
-                    texture: obstacleTextures[.longMixedCluster] ?? SKTexture(),
-                    size: CGSize(width: 116, height: 116),
-                    x: -18,
-                    bodySize: CGSize(width: 48, height: 30),
-                    bodyCenterYOffset: 20
-                ),
-                ObstaclePart(
-                    texture: obstacleTextures[.smallPlant] ?? SKTexture(),
-                    size: CGSize(width: 90, height: 120),
-                    x: 74,
-                    bodySize: CGSize(width: 34, height: 28),
-                    bodyCenterYOffset: 18
-                )
-            ]
+            return longMixedClusterParts()
         }
+    }
+}
+
+private extension MiniGameObstacleFactory {
+    private func largePlantParts() -> [ObstaclePart] {
+        [
+            obstaclePart(
+                .largePlant,
+                size: CGSize(width: 144, height: 144),
+                x: 0,
+                bodySize: CGSize(width: 60, height: 38),
+                bodyCenterYOffset: 24
+            )
+        ]
+    }
+
+    private func mediumPlantParts() -> [ObstaclePart] {
+        [
+            obstaclePart(
+                .mediumPlant,
+                size: CGSize(width: 124, height: 124),
+                x: 0,
+                bodySize: CGSize(width: 52, height: 32),
+                bodyCenterYOffset: 21
+            )
+        ]
+    }
+
+    private func smallPlantParts() -> [ObstaclePart] {
+        [
+            obstaclePart(
+                .smallPlant,
+                size: CGSize(width: 118, height: 150),
+                x: 0,
+                bodySize: CGSize(width: 46, height: 40),
+                bodyCenterYOffset: 24
+            )
+        ]
+    }
+
+    private func smallPairParts() -> [ObstaclePart] {
+        [
+            obstaclePart(
+                .smallPair,
+                size: CGSize(width: 94, height: 126),
+                x: -22,
+                bodySize: CGSize(width: 34, height: 34),
+                bodyCenterYOffset: 21
+            ),
+            obstaclePart(
+                .smallPair,
+                size: CGSize(width: 94, height: 126),
+                x: 22,
+                bodySize: CGSize(width: 34, height: 34),
+                bodyCenterYOffset: 21
+            )
+        ]
+    }
+
+    private func mediumWithSmallParts() -> [ObstaclePart] {
+        [
+            obstaclePart(
+                .mediumWithSmall,
+                size: CGSize(width: 116, height: 116),
+                x: -22,
+                bodySize: CGSize(width: 48, height: 30),
+                bodyCenterYOffset: 20
+            ),
+            obstaclePart(
+                .smallPlant,
+                size: CGSize(width: 90, height: 120),
+                x: 58,
+                bodySize: CGSize(width: 34, height: 30),
+                bodyCenterYOffset: 19
+            )
+        ]
+    }
+
+    private func longSmallClusterParts() -> [ObstaclePart] {
+        [
+            obstaclePart(
+                .longSmallCluster,
+                size: CGSize(width: 88, height: 112),
+                x: -72,
+                bodySize: CGSize(width: 32, height: 28),
+                bodyCenterYOffset: 18
+            ),
+            obstaclePart(
+                .longSmallCluster,
+                size: CGSize(width: 98, height: 132),
+                x: 0,
+                bodySize: CGSize(width: 36, height: 34),
+                bodyCenterYOffset: 21
+            ),
+            obstaclePart(
+                .longSmallCluster,
+                size: CGSize(width: 88, height: 112),
+                x: 72,
+                bodySize: CGSize(width: 32, height: 28),
+                bodyCenterYOffset: 18
+            )
+        ]
+    }
+
+    private func longMixedClusterParts() -> [ObstaclePart] {
+        [
+            obstaclePart(
+                .smallPlant,
+                size: CGSize(width: 82, height: 104),
+                x: -96,
+                bodySize: CGSize(width: 30, height: 24),
+                bodyCenterYOffset: 16
+            ),
+            obstaclePart(
+                .longMixedCluster,
+                size: CGSize(width: 116, height: 116),
+                x: -18,
+                bodySize: CGSize(width: 48, height: 30),
+                bodyCenterYOffset: 20
+            ),
+            obstaclePart(
+                .smallPlant,
+                size: CGSize(width: 90, height: 120),
+                x: 74,
+                bodySize: CGSize(width: 34, height: 28),
+                bodyCenterYOffset: 18
+            )
+        ]
+    }
+
+    private func obstaclePart(
+        _ textureKey: ObstacleKind,
+        size: CGSize,
+        x: CGFloat,
+        bodySize: CGSize,
+        bodyCenterYOffset: CGFloat
+    ) -> ObstaclePart {
+        ObstaclePart(
+            texture: obstacleTextures[textureKey] ?? SKTexture(),
+            size: size,
+            x: x,
+            bodySize: bodySize,
+            bodyCenterYOffset: bodyCenterYOffset
+        )
     }
 }

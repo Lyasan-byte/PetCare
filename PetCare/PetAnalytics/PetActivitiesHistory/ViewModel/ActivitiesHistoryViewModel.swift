@@ -15,17 +15,17 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
             stateDidChange.send()
         }
     }
-    
-    private(set) var stateDidChange =  ObservableObjectPublisher()
+
+    private(set) var stateDidChange = ObservableObjectPublisher()
     private var bag = Set<AnyCancellable>()
     private var content: ActivitiesHistoryContent
     private var fetchedActivities: [PetActivity] = []
     private var lastDocumentSnapshot: DocumentSnapshot?
-    
+
     private let activitiesHistoryRepository: ActivitiesHistoryRepository
     private let contentBuilder: ActivitiesHistoryBuilding
     private let pageSize = 10
-    
+
     init(
         petId: String,
         activitiesHistoryRepository: ActivitiesHistoryRepository,
@@ -36,7 +36,7 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
         self.activitiesHistoryRepository = activitiesHistoryRepository
         self.contentBuilder = contentBuilder
     }
-    
+
     func trigger(_ intent: ActivitiesHistoryIntent) {
         switch intent {
         case .onDidLoad:
@@ -55,7 +55,7 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
             rebuildLocalizedContent()
         }
     }
-    
+
     private func resetAndFetch() {
         bag.removeAll()
         lastDocumentSnapshot = nil
@@ -64,16 +64,16 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
         fetchedActivities = []
         fetchActivities()
     }
-    
+
     private func fetchActivities() {
         guard content.hasMore else { return }
-        
+
         let isFirstPage = lastDocumentSnapshot == nil
-        
+
         if isFirstPage {
             state = .loading
         }
-        
+
         activitiesHistoryRepository
             .fetchActivities(
                 for: content.petId,
@@ -89,7 +89,7 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
                 }
             } receiveValue: { [weak self] page in
                 guard let self else { return }
-                
+
                 if page.activities.isEmpty {
                     self.state = .empty(L10n.ActivitiesHistory.empty(self.content.filterOption.title))
                 } else {
@@ -100,26 +100,22 @@ final class ActivitiesHistoryViewModel: ActivitiesHistoryViewModeling {
                     }
 
                     let historyData = buildContent(from: self.fetchedActivities)
-                    if isFirstPage {
-                        self.content.activities = historyData
-                    } else {
-                        self.content.activities = historyData
-                    }
-                    
+                    self.content.activities = historyData
+
                     self.lastDocumentSnapshot = page.lastDocument
                     self.content.hasMore = page.hasMore
-                    
+
                     self.state = .content(self.content)
-                }                
+                }
             }
             .store(in: &bag)
     }
-    
+
     private func shouldLoadMore(_ index: Int) -> Bool {
         let threshold = max(content.activities.count - 3, 0)
         return index >= threshold
     }
-    
+
     private func buildContent(from activities: [PetActivity]) -> [PetAnalyticsHistoryData] {
         contentBuilder.buildHistoryData(from: activities)
     }
