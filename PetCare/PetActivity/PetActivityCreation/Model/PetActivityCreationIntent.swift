@@ -14,6 +14,7 @@ enum PetActivityCreationIntent {
     case onChangeDate(Date)
     case onChangeNote(String)
     case onSwitchingNotifications(Bool)
+    case onChangeReminderTime(Date)
 
     case onChangeWalkGoal(String)
     case onChangeWalkActual(String)

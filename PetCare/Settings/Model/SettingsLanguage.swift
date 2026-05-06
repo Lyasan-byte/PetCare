@@ -16,6 +16,20 @@ enum SettingsLanguage: String, CaseIterable {
         return preferredLanguage.lowercased().hasPrefix(Self.russian.rawValue) ? .russian : .english
     }
 
+    static var current: SettingsLanguage {
+        let rawValue = UserDefaults.standard.string(forKey: "settings.appearance.language")
+
+        if let rawValue, let language = SettingsLanguage(rawValue: rawValue) {
+            return language
+        }
+
+        return defaultValue
+    }
+
+    var locale: Locale {
+        Locale(identifier: rawValue)
+    }
+
     var localizedTitle: String {
         switch self {
         case .russian:

@@ -32,8 +32,27 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureTabBarAppearance()
+        registerForTraitChanges(
+            [UITraitUserInterfaceStyle.self]
+        ) { (self: Self, _) in
+            self.configureTabBarAppearance()
+        }
         setupTabs()
         bindLanguageChanges()
+    }
+
+    private func configureTabBarAppearance() {
+        let selectedColor = Asset.accentColor.color.resolvedColor(with: traitCollection)
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.stackedLayoutAppearance.selected.iconColor = selectedColor
+        appearance.inlineLayoutAppearance.selected.iconColor = selectedColor
+        appearance.compactInlineLayoutAppearance.selected.iconColor = selectedColor
+
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+        tabBar.tintColor = selectedColor
     }
 
     private func setupTabs() {
@@ -50,7 +69,10 @@ final class TabBarController: UITabBarController {
     }
 
     private func reloadInactiveTabsForCurrentLanguage() {
-        guard let currentViewControllers = viewControllers, currentViewControllers.indices.contains(selectedIndex) else {
+        guard
+            let currentViewControllers = viewControllers,
+            currentViewControllers.indices.contains(selectedIndex)
+        else {
             setupTabs()
             return
         }

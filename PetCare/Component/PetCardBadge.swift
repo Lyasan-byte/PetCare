@@ -49,6 +49,7 @@ final class PetCardBadge: UIView {
         setCornerRadius(height: height)
     }
 
+    // swiftlint:disable:next function_parameter_count
     private func setData(
         backgroundColor: UIColor,
         color: UIColor,

@@ -21,8 +21,11 @@ final class SettingsAccountActionRowView: UIControl {
         configure()
     }
 
-    func configure(title: String) {
+    func configure(title: String, tintColor: UIColor = Asset.petGray.color) {
         titleLabel.text = title
+        iconImageView.tintColor = tintColor
+        titleLabel.textColor = tintColor
+        chevronImageView.tintColor = tintColor
     }
 
     private func setupHierarchy() {

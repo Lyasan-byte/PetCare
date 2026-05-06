@@ -89,6 +89,10 @@ final class PetActivityCreationViewController: UIViewController {
             self?.petActivityCreationViewModel.trigger(.onSwitchingNotifications(isOn))
         }
 
+        petActivityCreationView.reminderTimePicker.onDateChange = { [weak self] time in
+            self?.petActivityCreationViewModel.trigger(.onChangeReminderTime(time))
+        }
+
         petActivityCreationView.onWalkGoalChange = { [weak self] goalString in
             self?.petActivityCreationViewModel.trigger(.onChangeWalkGoal(goalString))
         }
@@ -140,7 +144,8 @@ final class PetActivityCreationViewController: UIViewController {
             petActivityCreationView.setData(
                 selectedPet: content.selectedPet,
                 selectedActivity: content.activity,
-                isNotificationsOn: content.isNotificationsOn
+                isNotificationsOn: content.isNotificationsOn,
+                reminderTime: content.reminderTime
             )
             petActivityCreationView.reloadData()
         }

@@ -71,50 +71,6 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         }
     }
 
-    private func handleSelectionChanges(_ intent: PetActivityCreationIntent) -> Bool {
-        switch intent {
-        case .onChangePet(let pet):
-            content.selectedPet = pet
-            state = .content(content)
-        case .onChangeActivity(let petActivityType):
-            content.activity = petActivityType
-            state = .content(content)
-        case .onChangeDate(let date):
-            content.date = date
-        case .onChangeNote(let note):
-            content.note = note
-        default:
-            return false
-        }
-
-        return true
-    }
-
-    private func handleActivityInputChanges(_ intent: PetActivityCreationIntent) -> Bool {
-        switch intent {
-        case .onSwitchingNotifications(let isOn):
-            content.isNotificationsOn = isOn
-        case .onChangeWalkGoal(let goalString):
-            content.walkGoal = makeDouble(from: goalString)
-        case .onChangeWalkActual(let actualString):
-            content.walkActual = makeDouble(from: actualString)
-        case .onChangeGroomingProcedureType(let procedureType):
-            content.groomingProcedureType = procedureType
-        case .onChangeGroomingCost(let costString):
-            content.groomingCost = makeDouble(from: costString)
-        case .onChangeGroomingDuration(let durationString):
-            content.groomingDuration = makeDouble(from: durationString)
-        case .onChangeVetProcedureType(let procedureType):
-            content.vetProcedureType = procedureType
-        case .onChangeVetCost(let costString):
-            content.vetCost = makeDouble(from: costString)
-        default:
-            return false
-        }
-
-        return true
-    }
-
     private func getPets() {
         state = .loading
 
@@ -169,13 +125,67 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
                     return
                 }
 
-                self.reminderController.registerReminder(for: activity, petName: selectedPet.name)
+                self.reminderController.registerReminder(
+                    for: activity,
+                    petName: selectedPet.name,
+                    time: self.content.reminderTime
+                )
                 self.moduleOutput?.moduleWantsToClose()
             }
             .store(in: &bag)
     }
+}
 
-    private func validate() -> String? {
+private extension PetActivityCreationViewModel {
+    func handleSelectionChanges(_ intent: PetActivityCreationIntent) -> Bool {
+        switch intent {
+        case .onChangePet(let pet):
+            content.selectedPet = pet
+            state = .content(content)
+        case .onChangeActivity(let petActivityType):
+            content.activity = petActivityType
+            state = .content(content)
+        case .onChangeDate(let date):
+            content.date = date
+        case .onChangeNote(let note):
+            content.note = note
+        default:
+            return false
+        }
+
+        return true
+    }
+
+    func handleActivityInputChanges(_ intent: PetActivityCreationIntent) -> Bool {
+        switch intent {
+        case .onSwitchingNotifications(let isOn):
+            content.isNotificationsOn = isOn
+            state = .content(content)
+        case .onChangeReminderTime(let time):
+            content.reminderTime = time
+            state = .content(content)
+        case .onChangeWalkGoal(let goalString):
+            content.walkGoal = makeDouble(from: goalString)
+        case .onChangeWalkActual(let actualString):
+            content.walkActual = makeDouble(from: actualString)
+        case .onChangeGroomingProcedureType(let procedureType):
+            content.groomingProcedureType = procedureType
+        case .onChangeGroomingCost(let costString):
+            content.groomingCost = makeDouble(from: costString)
+        case .onChangeGroomingDuration(let durationString):
+            content.groomingDuration = makeDouble(from: durationString)
+        case .onChangeVetProcedureType(let procedureType):
+            content.vetProcedureType = procedureType
+        case .onChangeVetCost(let costString):
+            content.vetCost = makeDouble(from: costString)
+        default:
+            return false
+        }
+
+        return true
+    }
+
+    func validate() -> String? {
         guard content.selectedPet != nil else {
             return L10n.PetActivityCreation.Validation.selectPet
         }
@@ -190,7 +200,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         }
     }
 
-    private func validateWalk() -> String? {
+    func validateWalk() -> String? {
         guard let walkGoal = content.walkGoal else {
             return L10n.PetActivityCreation.Validation.Walk.goalDistance
         }
@@ -198,7 +208,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         guard walkGoal > 0 else {
             return L10n.PetActivityCreation.Validation.Walk.goalGreaterThanZero
         }
-        
+
         guard walkGoal <= ValidationLimits.maxWalkDistance else {
             return L10n.PetActivityCreation.Validation.Walk.goalMaxLimit
         }
@@ -210,15 +220,15 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         guard walkActual > 0 else {
             return L10n.PetActivityCreation.Validation.Walk.actualGreaterThanZero
         }
-        
+
         guard walkActual <= ValidationLimits.maxWalkDistance else {
             return L10n.PetActivityCreation.Validation.Walk.actualMaxLimit
         }
-    
+
         return nil
     }
 
-    private func validateGrooming() -> String? {
+    func validateGrooming() -> String? {
         guard let groomingCost = content.groomingCost else {
             return L10n.PetActivityCreation.Validation.Grooming.cost
         }
@@ -230,22 +240,23 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         guard groomingCost < ValidationLimits.maxProcedureCost else {
             return L10n.PetActivityCreation.Validation.Grooming.costMaxLimit
         }
-        
+
         guard let groomingDuration = content.groomingDuration else {
             return L10n.PetActivityCreation.Validation.Grooming.duration
         }
-        
+
         guard groomingDuration > 0 else {
             return L10n.PetActivityCreation.Validation.Grooming.durationGreaterThanZero
         }
-        
+
         guard groomingDuration <= ValidationLimits.maxGroomingDurationMinutes else {
             return L10n.PetActivityCreation.Validation.Grooming.durationMaxLimit
         }
+
         return nil
     }
 
-    private func validateVet() -> String? {
+    func validateVet() -> String? {
         guard let vetCost = content.vetCost else {
             return L10n.PetActivityCreation.Validation.Vet.cost
         }
@@ -253,7 +264,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         guard vetCost > 0 else {
             return L10n.PetActivityCreation.Validation.Vet.costGreaterThanZero
         }
-        
+
         guard vetCost < ValidationLimits.maxProcedureCost else {
             return L10n.PetActivityCreation.Validation.Vet.costMaxLimit
         }
@@ -261,9 +272,11 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         return nil
     }
 
-    private func makeActivity() -> PetActivity? {
-        guard let selectedPet = content.selectedPet,
-            let petId = selectedPet.id else {
+    func makeActivity() -> PetActivity? {
+        guard
+            let selectedPet = content.selectedPet,
+            let petId = selectedPet.id
+        else {
             return nil
         }
 
@@ -271,8 +284,10 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
 
         switch content.activity {
         case .walk:
-            guard let walkGoal = content.walkGoal,
-                let walkActual = content.walkActual else {
+            guard
+                let walkGoal = content.walkGoal,
+                let walkActual = content.walkActual
+            else {
                 return nil
             }
 
@@ -284,9 +299,11 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
             )
 
         case .grooming:
-            guard let procedureType = content.groomingProcedureType,
+            guard
+                let procedureType = content.groomingProcedureType,
                 let groomingCost = content.groomingCost,
-                let duration = content.groomingDuration else {
+                let duration = content.groomingDuration
+            else {
                 return nil
             }
 
@@ -299,8 +316,10 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
             )
 
         case .vet:
-            guard let procedureType = content.vetProcedureType,
-                let vetCost = content.vetCost else {
+            guard
+                let procedureType = content.vetProcedureType,
+                let vetCost = content.vetCost
+            else {
                 return nil
             }
 
@@ -311,6 +330,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
                 )
             )
         }
+
         return PetActivity(
             id: content.activityId,
             petId: petId,
@@ -322,7 +342,7 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
         )
     }
 
-    private func makeDouble(from string: String) -> Double? {
+    func makeDouble(from string: String) -> Double? {
         let normalizedString = string
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: ",", with: ".")
@@ -333,8 +353,8 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
 
         return Double(normalizedString)
     }
-    
-    private enum ValidationLimits {
+
+    enum ValidationLimits {
         static let maxWalkDistance = 40.0
         static let maxProcedureCost = 1000000.0
         static let maxGroomingDurationMinutes = 300.0

@@ -30,6 +30,7 @@ final class PetFormViewController: UIViewController {
         setupLayout()
         bindActions()
         bindViewModel()
+        bindLanguageChanges()
         render(state: petFormViewModel.state)
     }
 
@@ -108,6 +109,15 @@ final class PetFormViewController: UIViewController {
             .sink { [weak self] in
                 guard let self else { return }
                 self.render(state: self.petFormViewModel.state)
+            }
+            .store(in: &bag)
+    }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadLocalizedView()
             }
             .store(in: &bag)
     }
@@ -221,6 +231,12 @@ final class PetFormViewController: UIViewController {
 
     private func configure() {
         view.backgroundColor = .secondarySystemBackground
+    }
+
+    private func reloadLocalizedView() {
+        title = petFormViewModel.state.title
+        petFormView.petDateOfBirthPicker.setTitle(L10n.Pets.Form.BirthDate.title)
+        petFormView.petDateOfBirthPicker.updateLocale(SettingsLanguage.current.locale)
     }
 
     required init?(coder: NSCoder) {

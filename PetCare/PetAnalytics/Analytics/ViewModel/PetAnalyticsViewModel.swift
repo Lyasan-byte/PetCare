@@ -48,6 +48,12 @@ final class PetAnalyticsViewModel: PetAnalyticsViewModeling {
             fetchActivities()
         case .onHistoryButtonTap:
             moduleOutput?.moduleWantsToOpenHistory(petInput.petId)
+        case .onLanguageDidChange:
+            if allActivities.isEmpty {
+                state = .empty
+            } else {
+                rebuildContent()
+            }
         }
     }
     

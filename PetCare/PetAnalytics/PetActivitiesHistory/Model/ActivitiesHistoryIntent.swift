@@ -11,5 +11,6 @@ enum ActivitiesHistoryIntent {
     case onDidLoad
     case onReachedItem(Int)
     case onChangeFilterOption(ActivitiesFilter)
+    case onLanguageDidChange
     case onDismissAlert
 }

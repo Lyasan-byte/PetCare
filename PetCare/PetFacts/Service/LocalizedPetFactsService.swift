@@ -138,29 +138,25 @@ final class LocalizedPetFactsService: PetFactsRepository {
         var weight = petFact.weight
 
         for (field, translatedText) in zip(fields, translatedTexts) {
-            switch field {
-            case .name:
-                name = translatedText
-            case .location(let index):
+            if case .location(let index) = field {
                 guard locations.indices.contains(index) else { continue }
                 locations[index] = translatedText
-            case .diet:
-                diet = translatedText
-            case .commonName:
-                commonName = translatedText
-            case .skinType:
-                skinType = translatedText
-            case .group:
-                group = translatedText
-            case .slogan:
-                slogan = translatedText
-            case .lifespan:
-                lifespan = translatedText
-            case .temperament:
-                temperament = translatedText
-            case .weight:
-                weight = translatedText
+                continue
             }
+
+            applyScalarTranslation(
+                field,
+                translatedText: translatedText,
+                name: &name,
+                diet: &diet,
+                commonName: &commonName,
+                skinType: &skinType,
+                group: &group,
+                slogan: &slogan,
+                lifespan: &lifespan,
+                temperament: &temperament,
+                weight: &weight
+            )
         }
 
         return PetFact(
@@ -175,5 +171,43 @@ final class LocalizedPetFactsService: PetFactsRepository {
             temperament: temperament,
             weight: weight
         )
+    }
+
+    // swiftlint:disable:next function_parameter_count
+    private static func applyScalarTranslation(
+        _ field: TranslationField,
+        translatedText: String,
+        name: inout String,
+        diet: inout String?,
+        commonName: inout String?,
+        skinType: inout String?,
+        group: inout String?,
+        slogan: inout String?,
+        lifespan: inout String?,
+        temperament: inout String?,
+        weight: inout String?
+    ) {
+        switch field {
+        case .name:
+            name = translatedText
+        case .diet:
+            diet = translatedText
+        case .commonName:
+            commonName = translatedText
+        case .skinType:
+            skinType = translatedText
+        case .group:
+            group = translatedText
+        case .slogan:
+            slogan = translatedText
+        case .lifespan:
+            lifespan = translatedText
+        case .temperament:
+            temperament = translatedText
+        case .weight:
+            weight = translatedText
+        case .location:
+            break
+        }
     }
 }

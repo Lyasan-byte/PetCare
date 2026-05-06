@@ -8,27 +8,27 @@
 import Foundation
 import Combine
 
+private struct DeepLTranslationRequestBody: Encodable {
+    let text: [String]
+    let sourceLang: String
+    let targetLang: String
+
+    enum CodingKeys: String, CodingKey {
+        case text
+        case sourceLang = "source_lang"
+        case targetLang = "target_lang"
+    }
+}
+
+private struct DeepLTranslationResponse: Decodable {
+    let translations: [DeepLTranslationItem]
+}
+
+private struct DeepLTranslationItem: Decodable {
+    let text: String
+}
+
 final class DeepLTranslationService: TranslationRepository {
-    private struct TranslationRequestBody: Encodable {
-        let text: [String]
-        let sourceLang: String
-        let targetLang: String
-
-        enum CodingKeys: String, CodingKey {
-            case text
-            case sourceLang = "source_lang"
-            case targetLang = "target_lang"
-        }
-    }
-
-    private struct TranslationResponse: Decodable {
-        let translations: [TranslationItem]
-    }
-
-    private struct TranslationItem: Decodable {
-        let text: String
-    }
-
     private let urlSession: URLSession
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
@@ -121,7 +121,7 @@ final class DeepLTranslationService: TranslationRepository {
             return Fail(error: DeepLTranslationServiceError.invalidURL).eraseToAnyPublisher()
         }
 
-        let requestBody = TranslationRequestBody(
+        let requestBody = DeepLTranslationRequestBody(
             text: texts,
             sourceLang: sourceLanguageCode,
             targetLang: targetLanguageCode
@@ -139,14 +139,16 @@ final class DeepLTranslationService: TranslationRepository {
 
         return urlSession.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let response = output.response as? HTTPURLResponse,
-                      (200..<300).contains(response.statusCode) else {
+                guard
+                    let response = output.response as? HTTPURLResponse,
+                    (200..<300).contains(response.statusCode)
+                else {
                     throw DeepLTranslationServiceError.invalidResponse
                 }
 
                 return output.data
             }
-            .decode(type: TranslationResponse.self, decoder: decoder)
+            .decode(type: DeepLTranslationResponse.self, decoder: decoder)
             .tryMap { response in
                 let translatedTexts = response.translations.map(\.text)
 
@@ -196,7 +198,7 @@ final class DeepLTranslationService: TranslationRepository {
         sourceLanguageCode: String,
         targetLanguageCode: String
     ) -> Int {
-        let requestBody = TranslationRequestBody(
+        let requestBody = DeepLTranslationRequestBody(
             text: texts,
             sourceLang: sourceLanguageCode,
             targetLang: targetLanguageCode

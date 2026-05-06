@@ -18,23 +18,19 @@ final class PetAnalyticsBuilder: PetAnalyticsBuilding {
         self.calendar = calendar
 
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = .current
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         self.dateFormatter = dateFormatter
 
         let shortWeekdayFormatter = DateFormatter()
-        shortWeekdayFormatter.locale = .current
         shortWeekdayFormatter.dateFormat = "E"
         self.shortWeekdayFormatter = shortWeekdayFormatter
 
         let monthFormatter = DateFormatter()
-        monthFormatter.locale = .current
         monthFormatter.dateFormat = "MMM"
         self.monthFormatter = monthFormatter
-        
+
         let shortMonthLetterFormatter = DateFormatter()
-        shortMonthLetterFormatter.locale = .current
         shortMonthLetterFormatter.dateFormat = "MMMMM"
         self.shortMonthLetterFormatter = shortMonthLetterFormatter
     }
@@ -45,6 +41,8 @@ final class PetAnalyticsBuilder: PetAnalyticsBuilding {
         petActivities: [PetActivity],
         period: PetAnalyticsPeriod
     ) -> PetAnalyticsContent {
+        updateFormattersLocale()
+
         let sortedActivities = petActivities.sorted { $0.date > $1.date }
         let walkActivities = sortedActivities.filter { $0.type == .walk }
         let spendingActivities = sortedActivities.filter {
@@ -65,12 +63,20 @@ final class PetAnalyticsBuilder: PetAnalyticsBuilding {
 }
 
 private extension PetAnalyticsBuilder {
+    func updateFormattersLocale() {
+        let locale = SettingsLanguage.current.locale
+        dateFormatter.locale = locale
+        shortWeekdayFormatter.locale = locale
+        monthFormatter.locale = locale
+        shortMonthLetterFormatter.locale = locale
+    }
+
     struct ChartBucket {
         let title: String
         let start: Date
         let end: Date
     }
-    
+
     func makeHeaderData(from pet: Pet, period: PetAnalyticsPeriod) -> PetAnalyticsHeaderData {
         PetAnalyticsHeaderData(
             petName: pet.name,
@@ -90,8 +96,12 @@ private extension PetAnalyticsBuilder {
         var values = Array(repeating: 0.0, count: buckets.count)
 
         for activity in activities {
-            guard let bucketIndex = bucketIndex(for: activity.date, in: buckets),
-                  case let .walk(details) = activity.details else { continue }
+            guard
+                let bucketIndex = bucketIndex(for: activity.date, in: buckets),
+                case let .walk(details) = activity.details
+            else {
+                continue
+            }
 
             values[bucketIndex] += details.actual
         }
