@@ -29,7 +29,7 @@ final class PetActivityReminderController: PetActivityReminderControlling {
         self.calendar = calendar
     }
 
-    func registerReminder(for activity: PetActivity, petName: String) {
+    func registerReminder(for activity: PetActivity, petName: String, time: Date) {
         guard let activityId = activity.id else { return }
 
         if activity.isReminder {
@@ -39,7 +39,8 @@ final class PetActivityReminderController: PetActivityReminderControlling {
                 petId: activity.petId,
                 petName: petName,
                 activityType: activity.type,
-                date: activity.date
+                date: activity.date,
+                time: time
             )
             reminderStoreRepository.save(reminder)
             syncReminders(requestAuthorizationIfNeeded: true)
@@ -146,8 +147,8 @@ final class PetActivityReminderController: PetActivityReminderControlling {
         var dateComponents = DateComponents()
         dateComponents.calendar = calendar
         dateComponents.timeZone = calendar.timeZone
-        dateComponents.hour = 9
-        dateComponents.minute = 0
+        dateComponents.hour = calendar.component(.hour, from: reminder.time)
+        dateComponents.minute = calendar.component(.minute, from: reminder.time)
 
         switch reminder.activityType {
         case .walk:

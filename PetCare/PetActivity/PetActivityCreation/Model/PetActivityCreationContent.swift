@@ -15,6 +15,7 @@ struct PetActivityCreationContent {
     var activityId: String
     var activity: PetActivityType = .walk
     var date = Date()
+    var reminderTime = PetActivityReminder.defaultTime()
     var note: String = ""
     var isNotificationsOn: Bool = false
 

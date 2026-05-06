@@ -125,7 +125,11 @@ final class PetActivityCreationViewModel: PetActivityCreationViewModeling {
                     return
                 }
 
-                self.reminderController.registerReminder(for: activity, petName: selectedPet.name)
+                self.reminderController.registerReminder(
+                    for: activity,
+                    petName: selectedPet.name,
+                    time: self.content.reminderTime
+                )
                 self.moduleOutput?.moduleWantsToClose()
             }
             .store(in: &bag)
@@ -156,6 +160,10 @@ private extension PetActivityCreationViewModel {
         switch intent {
         case .onSwitchingNotifications(let isOn):
             content.isNotificationsOn = isOn
+            state = .content(content)
+        case .onChangeReminderTime(let time):
+            content.reminderTime = time
+            state = .content(content)
         case .onChangeWalkGoal(let goalString):
             content.walkGoal = makeDouble(from: goalString)
         case .onChangeWalkActual(let actualString):

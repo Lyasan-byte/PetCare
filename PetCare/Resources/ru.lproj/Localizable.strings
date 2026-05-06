@@ -222,9 +222,10 @@
 "pets.activity.date" = "ДАТА АКТИВНОСТИ";
 "pets.activity.notes" = "ЗАМЕТКИ ОБ АКТИВНОСТИ";
 "pets.activity.reminder.title" = "Установить напоминание";
+"pets.activity.reminder.time" = "ВРЕМЯ НАПОМИНАНИЯ";
 "pets.activity.reminder.subtitle" = "Получите уведомление о следующей сессии.";
-"pets.activity.reminder.daily.subtitle" = "Получайте напоминание каждый день в 9:00.";
-"pets.activity.reminder.monthly.subtitle" = "Получайте напоминание каждый месяц в 9:00.";
+"pets.activity.reminder.daily.subtitle" = "Получайте напоминание каждый день в %@.";
+"pets.activity.reminder.monthly.subtitle" = "Получайте напоминание каждый месяц в %@.";
 "pets.activity.save_button" = "Сохранить активность";
 "pets.activity.screen.title" = "Создать активность";
 

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PetActivityReminderControlling {
-    func registerReminder(for activity: PetActivity, petName: String)
+    func registerReminder(for activity: PetActivity, petName: String, time: Date)
     func syncReminders(requestAuthorizationIfNeeded: Bool)
     func removeReminder(activityId: String)
     func removeAllReminders()
