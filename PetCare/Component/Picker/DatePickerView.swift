@@ -20,15 +20,7 @@ final class DatePickerView: UIView {
         textAlignment: .left
     )
 
-    private let dateIcon: UIImageView = {
-        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
-        let imageView = UIImageView(
-            image: UIImage(systemName: "calendar", withConfiguration: config)
-        )
-        imageView.tintColor = Asset.accentColor.color
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    private let dateIcon = UIImageView()
 
     var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
@@ -49,9 +41,17 @@ final class DatePickerView: UIView {
         configure()
     }
 
-    convenience init(title: String) {
+    convenience init(
+        title: String,
+        symbolName: String = "calendar",
+        mode: UIDatePicker.Mode = .date,
+        preferredStyle: UIDatePickerStyle = .automatic
+    ) {
         self.init(frame: .zero)
         pickerTitle.text = title
+        configureIcon(symbolName: symbolName)
+        datePicker.datePickerMode = mode
+        datePicker.preferredDatePickerStyle = preferredStyle
     }
 
     private func setupHierarchy() {
@@ -80,8 +80,26 @@ final class DatePickerView: UIView {
 
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
+        dateIcon.translatesAutoresizingMaskIntoConstraints = false
         datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.locale = SettingsLanguage.current.locale
         datePicker.addTarget(self, action: #selector(dateDidChange), for: .valueChanged)
+        configureIcon(symbolName: "calendar")
+    }
+
+    private func configureIcon(symbolName: String) {
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+        dateIcon.preferredSymbolConfiguration = config
+        dateIcon.image = UIImage(systemName: symbolName, withConfiguration: config)
+        dateIcon.tintColor = Asset.accentColor.color
+    }
+
+    func updateLocale(_ locale: Locale) {
+        datePicker.locale = locale
+    }
+
+    func setTitle(_ title: String) {
+        pickerTitle.text = title
     }
 
     @objc private func dateDidChange() {

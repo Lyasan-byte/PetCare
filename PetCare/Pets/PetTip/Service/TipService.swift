@@ -14,11 +14,27 @@ enum TipServiceError: Error {
 }
 
 final class TipService: TipRepository {
+    private let cache: TipCacheRepository
+    
     private let tipsCollection = Firestore.firestore().collection("tips")
+    
+    init(cache: TipCacheRepository) {
+        self.cache = cache
+    }
 
     func fetchTips() -> AnyPublisher<[Tip], any Error> {
         Future { [weak self] promise in
             guard let self else { return promise(.failure(TipServiceError.tipServiceDeallocated))}
+            
+            do {
+                let cachedTips = try self.cache.getTips()
+                if !cachedTips.isEmpty {
+                    promise(.success(cachedTips))
+                    return
+                }
+            } catch {
+                print("Cache read error:", error)
+            }
 
             tipsCollection.getDocuments { snapshot, error in
                 if let error {
@@ -32,6 +48,12 @@ final class TipService: TipRepository {
                 }
                 do {
                     let tips = try snapshot.documents.map { try $0.data(as: Tip.self) }
+                    
+                    do {
+                        try self.cache.save(tips: tips)
+                    } catch {
+                        print("Failed to cache tips", error)
+                    }
                     promise(.success(tips))
                 } catch {
                     promise(.failure(error))

@@ -13,7 +13,11 @@ import SwiftData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var modelContainer: ModelContainer = {
         do {
-            return try ModelContainer(for: CachedPet.self)
+            return try ModelContainer(
+                for: CachedPet.self,
+                CachedPetFact.self,
+                CachedTip.self
+            )
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }

@@ -224,9 +224,10 @@
 "pets.activity.date" = "ACTIVITY DATE";
 "pets.activity.notes" = "ACTIVITY NOTES";
 "pets.activity.reminder.title" = "Set Reminder";
+"pets.activity.reminder.time" = "REMINDER TIME";
 "pets.activity.reminder.subtitle" = "Get notified for next session.";
-"pets.activity.reminder.daily.subtitle" = "Receive a reminder every day at 9:00.";
-"pets.activity.reminder.monthly.subtitle" = "Receive a reminder every month at 9:00.";
+"pets.activity.reminder.daily.subtitle" = "Receive a reminder every day at %@.";
+"pets.activity.reminder.monthly.subtitle" = "Receive a reminder every month at %@.";
 "pets.activity.save_button" = "Save Activity";
 
 "pets.activity.screen.title" = "Create Activity";

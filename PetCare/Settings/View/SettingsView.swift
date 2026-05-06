@@ -233,7 +233,8 @@ final class SettingsView: UIView {
             circleColor: Asset.petPinkAction.color
         )
         deleteAccountRow.configure(
-            title: NSLocalizedString("settings.account.delete", comment: "")
+            title: NSLocalizedString("settings.account.delete", comment: ""),
+            tintColor: Asset.redAccent.color
         )
     }
 

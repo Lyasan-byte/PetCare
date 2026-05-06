@@ -19,12 +19,12 @@ enum DeepLTranslationServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL,
-             .invalidBaseURL,
-             .missingAPIKey,
-             .invalidResponse,
-             .invalidRequestBody,
-             .unexpectedTranslationCount,
-             .serviceDeallocated:
+            .invalidBaseURL,
+            .missingAPIKey,
+            .invalidResponse,
+            .invalidRequestBody,
+            .unexpectedTranslationCount,
+            .serviceDeallocated:
             return NSLocalizedString("error.common.try_again", comment: "")
         }
     }

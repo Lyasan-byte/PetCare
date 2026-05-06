@@ -56,12 +56,14 @@ enum PetActivityType: String, Codable, CaseIterable, Hashable, Sendable {
         }
     }
 
-    var reminderSubtitle: String {
+    func reminderSubtitle(at time: Date) -> String {
+        let formattedTime = Self.makeReminderTimeString(from: time)
+
         switch self {
         case .walk:
-            NSLocalizedString("pets.activity.reminder.daily.subtitle", comment: "")
+            return L10n.Pets.Activity.Reminder.Daily.subtitle(formattedTime)
         case .grooming, .vet:
-            NSLocalizedString("pets.activity.reminder.monthly.subtitle", comment: "")
+            return L10n.Pets.Activity.Reminder.Monthly.subtitle(formattedTime)
         }
     }
 
@@ -89,6 +91,14 @@ enum PetActivityType: String, Codable, CaseIterable, Hashable, Sendable {
 }
 
 extension PetActivityType {
+    private static func makeReminderTimeString(from time: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = SettingsLanguage.current.locale
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter.string(from: time)
+    }
+
     var activityBackgroundColor: UIColor {
         switch self {
         case .walk:

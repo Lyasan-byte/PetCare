@@ -9,16 +9,33 @@ import Foundation
 import Combine
 
 final class PetFactsService: PetFactsRepository {
+    private let cache: PetFactsCacheRepository
     private let urlSession: URLSession
     private let decoder: JSONDecoder
 
-    init(urlSession: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
+    init(
+        cache: PetFactsCacheRepository,
+        urlSession: URLSession = .shared,
+        decoder: JSONDecoder = JSONDecoder()
+    ) {
+        self.cache = cache
         self.urlSession = urlSession
         self.decoder = decoder
     }
 
     func fetcFact(for breed: String) -> AnyPublisher<PetFact?, Error> {
-        print("DEBUG: \(breed)")
+        let cacheKey = breed.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        do {
+            if let fact = try cache.getFact(for: breed) {
+                return Just(fact)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
+        } catch {
+            print("Cache read error:", error)
+        }
+        
         guard let baseURL = APIConfig.baseURL else {
             return Fail(error: PetFactsServiceError.invalidBaseURL).eraseToAnyPublisher()
         }
@@ -54,9 +71,53 @@ final class PetFactsService: PetFactsRepository {
                 return output.data
             }
             .decode(type: [PetFactDTO].self, decoder: decoder)
-            .map { facts in
-                return facts.map { $0.toDomain() }.first
+            .map { [weak self] facts in
+                guard let self else {
+                    return nil
+                }
+
+                let fact = self.bestMatch(from: facts, for: breed)?.toDomain()
+
+                if let fact {
+                    try? self.cache.save(fact: fact, breed: cacheKey)
+                }
+
+                return fact
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func bestMatch(from facts: [PetFactDTO], for breed: String) -> PetFactDTO? {
+        let query = breed.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+
+        guard !query.isEmpty else {
+            return facts.first
+        }
+
+        return facts.max {
+            matchQuality(for: $0.name, query: query) < matchQuality(for: $1.name, query: query)
+        }
+    }
+
+    private func matchQuality(for name: String, query: String) -> Int {
+        let name = name.lowercased()
+
+        if name == query {
+            return 3
+        }
+
+        let words = name
+            .split { !$0.isLetter && !$0.isNumber }
+            .map(String.init)
+
+        if words.contains(query) {
+            return 2
+        }
+
+        if name.contains(query) {
+            return 1
+        }
+
+        return 0
     }
 }

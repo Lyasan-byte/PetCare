@@ -11,8 +11,9 @@ enum DeepLConfig {
     static let translatePath = "/v2/translate"
 
     static var baseURL: URL? {
-        if let rawValue = Bundle.main.object(forInfoDictionaryKey: "DEEPL_API_BASE_URL") as? String,
-           !rawValue.isEmpty {
+        let rawValue = Bundle.main.object(forInfoDictionaryKey: "DEEPL_API_BASE_URL") as? String
+
+        if let rawValue, !rawValue.isEmpty {
             return URL(string: rawValue)
         }
 
@@ -20,8 +21,10 @@ enum DeepLConfig {
     }
 
     static var apiKey: String? {
-        guard let value = Bundle.main.object(forInfoDictionaryKey: "DEEPL_API_KEY") as? String,
-              !value.isEmpty else {
+        guard
+            let value = Bundle.main.object(forInfoDictionaryKey: "DEEPL_API_KEY") as? String,
+            !value.isEmpty
+        else {
             return nil
         }
 

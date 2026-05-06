@@ -35,6 +35,7 @@ final class ActivitiesHistoryViewController: UIViewController {
         setupCollection()
         configure()
         bindViewModel()
+        bindLanguageChanges()
         bindAction()
 
         render()
@@ -75,6 +76,15 @@ final class ActivitiesHistoryViewController: UIViewController {
             }
             .store(in: &bag)
     }
+
+    private func bindLanguageChanges() {
+        NotificationCenter.default.publisher(for: .settingsLanguageDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadLocalizedView()
+            }
+            .store(in: &bag)
+    }
     
     private func bindAction() {
         filterButton.onSelect = { [weak self] filterOption in
@@ -101,6 +111,15 @@ final class ActivitiesHistoryViewController: UIViewController {
             activitiesHistoryView.setLoader(false)
             activitiesHistoryView.showEmptyView(true, title: description)
         }
+    }
+
+    private func reloadLocalizedView() {
+        title = L10n.ActivitiesHistory.title
+
+        let selectedIndex = ActivitiesFilter.allCases.firstIndex(of: content?.filterOption ?? .all) ?? 0
+        filterButton.configure(options: ActivitiesFilter.allCases.map(\.title), selectedIndex: selectedIndex)
+
+        activitiesHistoryViewModel.trigger(.onLanguageDidChange)
     }
 
     private func showError(_ message: String) {

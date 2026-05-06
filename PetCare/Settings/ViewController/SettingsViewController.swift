@@ -26,6 +26,11 @@ final class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
+        registerForTraitChanges(
+            [UITraitUserInterfaceStyle.self]
+        ) { (self: Self, _) in
+            self.applyNavigationBarAppearance()
+        }
         bindViewModel()
         bindLanguageChanges()
         bindActions()
@@ -35,10 +40,7 @@ final class SettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.tintColor = Asset.accentColor.color
-        navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: Asset.accentColor.color
-        ]
+        applyNavigationBarAppearance()
         tabBarController?.tabBar.isHidden = true
     }
 
@@ -55,6 +57,14 @@ final class SettingsViewController: UIViewController {
         if isMovingFromParent {
             viewModel.trigger(.backTapped)
         }
+    }
+
+    private func applyNavigationBarAppearance() {
+        let accentColor = Asset.accentColor.color.resolvedColor(with: traitCollection)
+        navigationController?.navigationBar.tintColor = accentColor
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: accentColor
+        ]
     }
 
     private func bindViewModel() {

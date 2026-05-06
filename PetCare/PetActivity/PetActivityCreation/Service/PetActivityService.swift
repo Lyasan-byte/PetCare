@@ -34,40 +34,41 @@ final class PetActivityService: PetActivityRepository {
 
             let activities = firestore.collection(activities).document(activityId)
             let pets = firestore.collection(pets).document(activity.petId)
-            
+
             do {
                 try activities.setData(from: activity) { [weak self] error in
                     guard let self else { return }
                     if let error {
                         return promise(.failure(error))
                     }
-                    
-                    pets.getDocument() { snapshot, error in
+
+                    pets.getDocument { snapshot, error in
                         if let error {
                             return promise(.failure(error))
                         }
-                        
-                        let lastActivity = snapshot?.data()?[Pet.CodingKeys.lastActivity.rawValue] as? [String:Any]
+
+                        let lastActivity = snapshot?.data()?[Pet.CodingKeys.lastActivity.rawValue] as? [String: Any]
                         let lastActivityDate = lastActivity?[PetLastActivity.CodingKeys.date.rawValue] as? Date
-                        
+
                         var shouldUpdate = true
                         if let lastActivityDate {
                             shouldUpdate = activity.date > lastActivityDate
                         }
-                        
+
                         guard shouldUpdate else {
                             return promise(.success(()))
                         }
-                        
+
                         let activityToUpdate: [String: Any] = [
                             PetLastActivity.CodingKeys.id.rawValue: activityId,
                             PetLastActivity.CodingKeys.type.rawValue: activity.type.rawValue,
                             PetLastActivity.CodingKeys.date.rawValue: activity.date
                         ]
-                        
-                        pets.setData([
+                        let updatedPetData = [
                             Pet.CodingKeys.lastActivity.rawValue: activityToUpdate
-                        ], merge: true) { error in
+                        ]
+
+                        pets.setData(updatedPetData, merge: true) { error in
                             if let error {
                                 promise(.failure(error))
                             }

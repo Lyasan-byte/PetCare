@@ -43,8 +43,9 @@ final class PublicPetService: PublicPetRepository {
     }
 
     private func baseQuery(_ size: Int, sort: PublicPetsSort) -> Query {
-         let query = firestore.collection("pets")
-                        .whereField(Pet.CodingKeys.isPublic.rawValue, isEqualTo: true)                        
+        let query = firestore.collection("pets")
+            .whereField(Pet.CodingKeys.isPublic.rawValue, isEqualTo: true)
+
         switch sort {
         case .gameScore:
             return query

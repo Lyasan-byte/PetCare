@@ -8,6 +8,7 @@
 import SpriteKit
 import UIKit
 
+// swiftlint:disable file_length
 final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
     private enum PhysicsCategory {
         static let runner: UInt32 = 1 << 0
@@ -164,8 +165,10 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         createGround()
         createRunner()
     }
+}
 
-    private func createGround() {
+private extension MiniGameScene {
+    func createGround() {
         let groundSize = CGSize(width: size.width + 120, height: groundHeight)
 
         for index in 0..<2 {
@@ -185,7 +188,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private func createRunner() {
+    func createRunner() {
         shadowNode = SKShapeNode(ellipseOf: shadowBaseSize)
         shadowNode.fillColor = UIColor.black.withAlphaComponent(0.18)
         shadowNode.strokeColor = .clear
@@ -210,7 +213,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         performIntroBounce()
     }
 
-    private func layoutGround() {
+    func layoutGround() {
         let groundWidth = size.width + 120
         for (index, groundNode) in groundNodes.enumerated() {
             groundNode.size.width = groundWidth
@@ -218,7 +221,9 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
                 x: CGFloat(index) * groundWidth,
                 y: groundCenterY
             )
-            groundNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: groundWidth, height: groundHeight))
+            groundNode.physicsBody = SKPhysicsBody(
+                rectangleOf: CGSize(width: groundWidth, height: groundHeight)
+            )
             groundNode.physicsBody?.isDynamic = false
             groundNode.physicsBody?.categoryBitMask = PhysicsCategory.ground
             groundNode.physicsBody?.collisionBitMask = PhysicsCategory.runner
@@ -226,13 +231,13 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private func layoutRunnerIfNeeded() {
+    func layoutRunnerIfNeeded() {
         guard !isGameOver else { return }
         runnerNode.position = CGPoint(x: size.width * 0.22, y: max(runnerNode.position.y, runnerRestY))
         shadowNode.position.x = runnerNode.position.x
     }
 
-    private func moveGround(deltaTime: TimeInterval) {
+    func moveGround(deltaTime: TimeInterval) {
         let distance = currentWorldSpeed * deltaTime
 
         for groundNode in groundNodes {
@@ -247,7 +252,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private func moveObstacles(deltaTime: TimeInterval) {
+    func moveObstacles(deltaTime: TimeInterval) {
         let distance = currentWorldSpeed * deltaTime
 
         for obstacle in obstacleNodes {
@@ -267,7 +272,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private func spawnObstacle() {
+    func spawnObstacle() {
         let obstacle = obstacleFactory.makeObstacle(
             currentWorldSpeed: currentWorldSpeed,
             baseWorldSpeed: baseWorldSpeed,
@@ -281,7 +286,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         obstacleNodes.append(obstacle)
     }
 
-    private func updateScoreIfNeeded(for obstacle: SKNode) {
+    func updateScoreIfNeeded(for obstacle: SKNode) {
         guard obstacle.userData?["didScore"] as? Bool != true else { return }
         guard obstacle.frame.maxX < runnerNode.frame.minX else { return }
 
@@ -290,7 +295,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         output?.miniGameSceneDidUpdateScore(currentScore)
     }
 
-    private func consumeBufferedJumpIfNeeded(at currentTime: TimeInterval) {
+    func consumeBufferedJumpIfNeeded(at currentTime: TimeInterval) {
         guard let pendingJumpRequestTime else { return }
         guard currentTime - pendingJumpRequestTime <= jumpBufferDuration else {
             self.pendingJumpRequestTime = nil
@@ -306,7 +311,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         animateJumpLaunch()
     }
 
-    private func endGame() {
+    func endGame() {
         guard !isGameOver else { return }
 
         isGameOver = true
@@ -315,7 +320,7 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         output?.miniGameSceneDidEndGame(score: currentScore)
     }
 
-    private func isRunnerGrounded(at currentTime: TimeInterval) -> Bool {
+    func isRunnerGrounded(at currentTime: TimeInterval) -> Bool {
         if groundContactCount > 0 {
             return true
         }
@@ -326,20 +331,18 @@ final class MiniGameScene: SKScene, SKPhysicsContactDelegate {
         return isNearGround || isWithinCoyoteWindow
     }
 
-    private var groundCenterY: CGFloat {
+    var groundCenterY: CGFloat {
         groundOffset + groundHeight / 2
     }
 
-    private var groundTopY: CGFloat {
+    var groundTopY: CGFloat {
         groundOffset + groundHeight
     }
 
-    private var runnerRestY: CGFloat {
+    var runnerRestY: CGFloat {
         groundTopY + runnerSize.height / 2
     }
-}
 
-private extension MiniGameScene {
     func updateRunnerPresentation(at currentTime: TimeInterval) {
         let isGrounded = isRunnerGrounded(at: currentTime)
         if isGrounded, !wasRunnerGrounded {
@@ -428,3 +431,4 @@ private extension MiniGameScene {
         runnerNode.run(landingAnimation, withKey: "runnerLandingBounce")
     }
 }
+// swiftlint:enable file_length

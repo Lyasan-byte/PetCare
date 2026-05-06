@@ -12,14 +12,15 @@ final class ActivitiesHistoryBuilder: ActivitiesHistoryBuilding {
     
     init() {
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = .current
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         self.dateFormatter = dateFormatter
     }
     
     func buildHistoryData(from activities: [PetActivity]) -> [PetAnalyticsHistoryData] {
-        activities.map { activity in
+        dateFormatter.locale = SettingsLanguage.current.locale
+
+        return activities.map { activity in
             PetAnalyticsHistoryData(
                 activityType: activity.type,
                 date: dateFormatter.string(from: activity.date),
