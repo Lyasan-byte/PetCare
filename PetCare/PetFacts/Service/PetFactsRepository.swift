@@ -9,5 +9,5 @@ import Foundation
 import Combine
 
 protocol PetFactsRepository {
-    func fetcFact(for breed: String) -> AnyPublisher<PetFact?, Error>
+    func fetchFact(for breed: String) -> AnyPublisher<PetFact?, Error>
 }

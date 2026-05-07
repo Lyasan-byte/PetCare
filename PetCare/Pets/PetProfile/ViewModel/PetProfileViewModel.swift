@@ -55,7 +55,7 @@ final class PetProfileViewModel: PetProfileViewModeling {
     }
 
     private func getPetInfo(breed: String) {
-        petFactsRepository.fetcFact(for: breed)
+        petFactsRepository.fetchFact(for: breed)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure = completion {

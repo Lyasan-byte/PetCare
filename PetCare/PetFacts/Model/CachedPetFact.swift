@@ -12,6 +12,9 @@ import Foundation
 final class CachedPetFact {
     @Attribute(.unique)
     var id: String
+    
+    var cachedAt: Date
+    
     var name: String
     var locations: [String]
     var diet: String?
@@ -25,6 +28,7 @@ final class CachedPetFact {
     
     init(
         id: String,
+        cachedAt: Date = Date(),
         name: String,
         locations: [String],
         diet: String? = nil,
@@ -37,6 +41,7 @@ final class CachedPetFact {
         weight: String? = nil
     ) {
         self.id = id
+        self.cachedAt = cachedAt
         self.name = name
         self.locations = locations
         self.diet = diet
@@ -52,6 +57,7 @@ final class CachedPetFact {
     convenience init(breed: String, petFact: PetFact) {
         self.init(
             id: breed,
+            cachedAt: Date(),
             name: petFact.name,
             locations: petFact.locations,
             diet: petFact.diet,

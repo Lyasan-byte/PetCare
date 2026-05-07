@@ -23,7 +23,7 @@ final class PetFactsService: PetFactsRepository {
         self.decoder = decoder
     }
 
-    func fetcFact(for breed: String) -> AnyPublisher<PetFact?, Error> {
+    func fetchFact(for breed: String) -> AnyPublisher<PetFact?, Error> {
         let cacheKey = breed.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         
         do {

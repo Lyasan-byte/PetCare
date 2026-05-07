@@ -36,10 +36,10 @@ final class LocalizedPetFactsService: PetFactsRepository {
         self.settingsRepository = settingsRepository
     }
 
-    func fetcFact(for breed: String) -> AnyPublisher<PetFact?, Error> {
+    func fetchFact(for breed: String) -> AnyPublisher<PetFact?, Error> {
         let language = settingsRepository.loadSettings().language
 
-        return petFactsRepository.fetcFact(for: breed)
+        return petFactsRepository.fetchFact(for: breed)
             .flatMap { [translationRepository] petFact in
                 guard let petFact else {
                     return Just<PetFact?>(nil)

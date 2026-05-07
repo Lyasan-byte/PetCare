@@ -67,7 +67,7 @@ final class PublicPetProfileViewModel: PublicPetProfileViewModeling {
     }
     
     private func fetchPetFacts() {
-        petFactsRepository.fetcFact(for: content.pet.breed)
+        petFactsRepository.fetchFact(for: content.pet.breed)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
