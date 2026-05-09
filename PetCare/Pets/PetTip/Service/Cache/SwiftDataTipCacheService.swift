@@ -10,6 +10,7 @@ import Foundation
 
 final class SwiftDataTipCacheService: TipCacheRepository {
     private let modelContext: ModelContext
+    private let cacheLifetime: TimeInterval = 24 * 60 * 60
 
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -25,8 +26,23 @@ final class SwiftDataTipCacheService: TipCacheRepository {
     }
 
     func getTips() throws -> [Tip] {
-        try modelContext
-            .fetch(FetchDescriptor<CachedTip>())
-            .map { $0.toDomain() }
+        let fetchDescriptor = FetchDescriptor<CachedTip>()
+        
+        let cachedTips = try modelContext.fetch(fetchDescriptor)
+        
+        guard !cachedTips.isEmpty else {
+            return []
+        }
+
+        let isExpired = cachedTips.contains {
+            Date().timeIntervalSince($0.cachedAt) > cacheLifetime
+        }
+
+        if isExpired {
+            try modelContext.delete(model: CachedTip.self)
+            try modelContext.save()
+            return []
+        }
+        return cachedTips.map { $0.toDomain() }
     }
 }
