@@ -106,6 +106,7 @@ Pet Care uses local notifications to help users stay on top of important care ev
 - UIKit
 - Firebase
 - SwiftData
+- SpriteKit
 - UserNotifications
 - SwiftLint
 - SwiftGen
